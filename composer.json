@@ -1,0 +1,37 @@
+{
+    "name": "GinoPane/php-open-world",
+    "type": "library",
+    "description": "World's internationalization library. Format currencies, numbers, dates and more in nice and easy way. All data is provided by Unicode Common Locale Data Repository.",
+    "keywords": [
+		"localization",
+        "l10n",
+        "internationalization",
+        "i18n",
+        "translations",
+        "translate",
+        "php",
+        "unicode",
+        "cldr",
+        "currency"
+	],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sergey Karavay",
+            "homepage": "",
+            "email": "sergey.karavay@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "GinoPane\\OpenWorld\\": "src/"
+        }
+    },
+    "bin": [
+
+    ]
+}
