@@ -1,4 +1,9 @@
 <?php
+
+iconv_set_encoding('input_encoding', 'UTF-8');
+iconv_set_encoding('internal_encoding', 'UTF-8');
+iconv_set_encoding('output_encoding', 'UTF-8');
+
 /**
  *
  * Service class for XML handling, converts xml to arrays and arrays to xml
@@ -377,71 +382,17 @@ function handleCldrCheckoutError($directory, $code, $output)
     }
 }
 
-set_error_handler('handleError');
+function checkFileExistence($fileName)
+{
+    echo "Checking \"$fileName\"...\n";
 
-try {
-    echo 'Initializing... ';
-    define('CLDR_VERSION', '29-beta-1');
-    define('ROOT_DIR', dirname(__DIR__));
-    define('SOURCE_DIR', ROOT_DIR . DIRECTORY_SEPARATOR . 'bin' . DIRECTORY_SEPARATOR . 'temp');
-    define('DESTINATION_DIR', ROOT_DIR . DIRECTORY_SEPARATOR . 'data');
-
-    if (isset($argv)) {
-        foreach ($argv as $i => $arg) {
-            if ($i > 0) {
-                if ((strcasecmp($arg, 'debug') === 0) || (strcasecmp($arg, '--debug') === 0)) {
-                    defined('DEBUG') or define('DEBUG', true);
-                }
-                if ((strcasecmp($arg, 'full') === 0) || (strcasecmp($arg, '--full') === 0)) {
-                    defined('FULL_JSON') or define('FULL_JSON', true);
-                }
-                if ((strcasecmp($arg, 'post-clean') === 0) || (strcasecmp($arg, '--post-clean') === 0)) {
-                    defined('POST_CLEAN') or define('POST_CLEAN', true);
-                }
-            }
-        }
-    }
-    defined('DEBUG') or define('DEBUG', false);
-    defined('FULL_JSON') or define('FULL_JSON', false);
-    define('LOCAL_VCS_DIR', SOURCE_DIR . DIRECTORY_SEPARATOR . 'cldr-' . CLDR_VERSION . '-source');
-    defined('POST_CLEAN') or define('POST_CLEAN', false);
-
-    if (!is_dir(SOURCE_DIR)) {
-        if (mkdir(SOURCE_DIR, 0777, true) === false) {
-            echo 'Failed to create ' . SOURCE_DIR . "\n";
-            die(1);
-        }
-    }
-    echo "done.\n";
-
-    if (is_dir(DESTINATION_DIR)) {
-        echo 'Cleanup old data folder... ';
-        deleteFromFilesystem(DESTINATION_DIR);
-        echo "done.\n";
-    }
-    echo 'Creating data folder... ';
-    if (mkdir(DESTINATION_DIR, 0777, false) === false) {
-        echo 'Failed to create ' . DESTINATION_DIR . "\n";
-        die(1);
-    }
-    echo "done.\n";
-
-    if (!is_dir(LOCAL_VCS_DIR)) {
-        checkoutCLDR();
+    if (!is_readable($fileName)) {
+        throw new Exception("$fileName is not found or is not readable! \n");
     }
 
-    buildCLDRJson();
+    echo "File is available. Processing...\n";
 
-    //copyData();
-    if (POST_CLEAN) {
-        echo "Cleanup temporary data folder... \n";
-        deleteFromFilesystem(SOURCE_DIR);
-        echo "done.\n";
-    }
-    die(0);
-} catch (Exception $x) {
-    echo $x->getMessage(), "\n";
-    die(1);
+    return true;
 }
 
 function checkoutCLDR()
@@ -486,108 +437,106 @@ function checkoutCLDR()
     }
 }
 
+/*
+ * Build specific data for locales (every or only most popular)
+ */
+function buildLocaleSpecificData()
+{
+    die();
+    echo 'Determining the list of the available locales... ';
+    $availableLocales = array();
+    $contents = @scandir(LOCAL_VCS_DIR . DIRECTORY_SEPARATOR . 'main');
+
+    if ($contents === false) {
+        throw new Exception('Error reading contents of the directory ' . LOCAL_VCS_DIR . '/main');
+    }
+
+    $match = null;
+
+    foreach ($contents as $item) {
+        if (preg_match('/^(.+)\.xml$/', $item, $match)) {
+            $availableLocales[] = str_replace('_', '-', $match[1]);
+        }
+    }
+
+    if (empty($availableLocales)) {
+        throw new Exception('No locales found!');
+    }
+
+    sort($availableLocales);
+
+    echo count($availableLocales) . " locales found.\n";
+
+    if (FULL_JSON) {
+        $locales = $availableLocales;
+    } else {
+        echo "Checking standard locales... \n";
+        // Same locales as of CLDR 26 not-full distribution
+        $locales = array('ar', 'ca', 'cs', 'da', 'de', 'el', 'en', 'en-001', 'en-AU', 'en-CA', 'en-GB', 'en-HK', 'en-IN', 'es', 'fi', 'fr', 'he', 'hi', 'hr', 'hu', 'it', 'ja', 'ko', 'nb', 'nl', 'nn', 'pl', 'pt', 'pt-PT', 'ro', 'root', 'ru', 'sk', 'sl', 'sr', 'sv', 'th', 'tr', 'uk', 'vi', 'zh', 'zh-Hant');
+        $diff = array_diff($locales, $availableLocales);
+        if (!empty($diff)) {
+            throw new Exception("The following locales were not found:\n- " . implode("\n- ", $diff));
+        }
+        echo "Done.\n";
+    }
+
+    foreach ($locales as $locale) {
+        echo "Building json data for $locale... \n";
+
+        $cmd = 'java';
+        $cmd .= ' -DCLDR_DIR=' . escapeshellarg(LOCAL_VCS_DIR);
+        $cmd .= ' -DCLDR_GEN_DIR=' . escapeshellarg(SOURCE_DIR_DATA . '/main/' . $locale);
+        $cmd .= ' -jar ' . escapeshellarg(LOCAL_VCS_DIR . '/tools/java/cldr.jar');
+        $cmd .= ' ldml2json';
+        $cmd .= ' -o true'; // (true|false) Whether to write out the 'other' section, which contains any unmatched paths
+        $cmd .= ' -t main'; // (main|supplemental|segments) Type of CLDR data being generated, main, supplemental, or segments.
+        $cmd .= ' -r true'; // (true|false) Whether the output JSON for the main directory should be based on resolved or unresolved data
+        $cmd .= ' -m ' . escapeshellarg(str_replace('-', '_', $locale)); // Regular expression to define only specific locales or files to be generated
+        $output = array();
+        $rc = null;
+        @exec($cmd . ' 2>&1', $output, $rc);
+        if ($rc !== 0) {
+            throw new Exception("Error!\n" . implode("\n", $output));
+        }
+        if (!is_dir(SOURCE_DIR_DATA . '/main/' . $locale)) {
+            throw new Exception("No data generated!\nTool output:\n" . implode("\n", $output));
+        }
+        echo "Done.\n";
+    }
+}
+
+/*
+ * Build supplemental data for CLDR
+ */
+function buildSupplementalData()
+{
+    echo "Building supplemental data... \n";
+
+    /*
+     * Process supplementalData.xml
+     */
+    $supplementalDataFile = LOCAL_VCS_DIR . str_replace("/", DIRECTORY_SEPARATOR, "/supplemental/supplementalData.xml");
+
+    if (checkFileExistence($supplementalDataFile)) {
+
+    }
+
+    die();
+    $result = XmlWrapper::getParser()->xmlToArray(LOCAL_VCS_DIR .
+        str_replace("/", DIRECTORY_SEPARATOR, "/supplemental/supplementalData.xml"));
+    print_r(array_keys($result['supplementalData']['currencyData']));
+
+    //file_put_contents("$locale.json", json_encode($result['ldml']['numbers']['currencies']['currency'], JSON_UNESCAPED_UNICODE));
+}
+
 function buildCLDRJson()
 {
     try {
-        echo 'Determining the list of the available locales... ';
-        $availableLocales = array();
-        $contents = @scandir(LOCAL_VCS_DIR . '/main');
 
-        if ($contents === false) {
-            throw new Exception('Error reading contents of the directory ' . LOCAL_VCS_DIR . '/common/main');
-        }
+        buildSupplementalData();
 
-        $match = null;
+        buildLocaleSpecificData();
 
-        foreach ($contents as $item) {
-            if (preg_match('/^(.+)\.xml$/', $item, $match)) {
-                $availableLocales[] = str_replace('_', '-', $match[1]);
-            }
-        }
-
-        if (empty($availableLocales)) {
-            throw new Exception('No locales found!');
-        }
-
-        sort($availableLocales);
-
-        echo count($availableLocales) . " locales found.\n";
-
-        if (FULL_JSON) {
-            $locales = $availableLocales;
-        } else {
-            echo "Checking standard locales... \n";
-            // Same locales as of CLDR 26 not-full distribution
-            $locales = array('ar', 'ca', 'cs', 'da', 'de', 'el', 'en', 'en-001', 'en-AU', 'en-CA', 'en-GB', 'en-HK', 'en-IN', 'es', 'fi', 'fr', 'he', 'hi', 'hr', 'hu', 'it', 'ja', 'ko', 'nb', 'nl', 'nn', 'pl', 'pt', 'pt-PT', 'ro', 'root', 'ru', 'sk', 'sl', 'sr', 'sv', 'th', 'tr', 'uk', 'vi', 'zh', 'zh-Hant');
-            $diff = array_diff($locales, $availableLocales);
-            if (!empty($diff)) {
-                throw new Exception("The following locales were not found:\n- " . implode("\n- ", $diff));
-            }
-            echo "Done.\n";
-        }
-
-        iconv_set_encoding('input_encoding', 'UTF-8');
-        iconv_set_encoding('internal_encoding', 'UTF-8');
-        iconv_set_encoding('output_encoding', 'UTF-8');
-
-        foreach ($locales as $locale) {
-
-            echo "Building json data for $locale... \n";
-
-            $result = XmlWrapper::getParser()->xmlToArray(LOCAL_VCS_DIR .
-                str_replace("/", DIRECTORY_SEPARATOR, "/supplemental/supplementalData.xml"));
-            print_r(array_keys($result['supplementalData']['currencyData']));
-
-            //file_put_contents("$locale.json", json_encode($result['ldml']['numbers']['currencies']['currency'], JSON_UNESCAPED_UNICODE));
-            die();
-            $cmd = 'java';
-            $cmd .= ' -DCLDR_DIR=' . escapeshellarg(LOCAL_VCS_DIR);
-            $cmd .= ' -DCLDR_GEN_DIR=' . escapeshellarg(SOURCE_DIR_DATA . '/main/' . $locale);
-            $cmd .= ' -jar ' . escapeshellarg(LOCAL_VCS_DIR . '/tools/java/cldr.jar');
-            $cmd .= ' ldml2json';
-            $cmd .= ' -o true'; // (true|false) Whether to write out the 'other' section, which contains any unmatched paths
-            $cmd .= ' -t main'; // (main|supplemental|segments) Type of CLDR data being generated, main, supplemental, or segments.
-            $cmd .= ' -r true'; // (true|false) Whether the output JSON for the main directory should be based on resolved or unresolved data
-            $cmd .= ' -m ' . escapeshellarg(str_replace('-', '_', $locale)); // Regular expression to define only specific locales or files to be generated
-            $output = array();
-            $rc = null;
-            @exec($cmd . ' 2>&1', $output, $rc);
-            if ($rc !== 0) {
-                throw new Exception("Error!\n" . implode("\n", $output));
-            }
-            if (!is_dir(SOURCE_DIR_DATA . '/main/' . $locale)) {
-                throw new Exception("No data generated!\nTool output:\n" . implode("\n", $output));
-            }
-            echo "Done.\n";
-        }
-        echo 'Building json supplemental data... ';
-        $cmd = 'java';
-        $cmd .= ' -DCLDR_DIR=' . escapeshellarg(LOCAL_VCS_DIR);
-        $cmd .= ' -DCLDR_GEN_DIR=' . escapeshellarg(SOURCE_DIR_DATA . '/supplemental');
-        $cmd .= ' -jar ' . escapeshellarg(LOCAL_VCS_DIR . '/tools/java/cldr.jar');
-        $cmd .= ' ldml2json';
-        $cmd .= ' -o true'; // (true|false) Whether to write out the 'other' section, which contains any unmatched paths
-        $cmd .= ' -t supplemental'; // (main|supplemental|segments) Type of CLDR data being generated, main, supplemental, or segments.
-        $output = array();
-        @exec($cmd . ' 2>&1', $output, $rc);
-        if ($rc !== 0) {
-            throw new Exception("Error!\n" . implode("\n", $output));
-        }
-        echo "Done.\n";
-        echo 'Building json segments data... ';
-        $cmd = 'java';
-        $cmd .= ' -DCLDR_DIR=' . escapeshellarg(LOCAL_VCS_DIR);
-        $cmd .= ' -DCLDR_GEN_DIR=' . escapeshellarg(SOURCE_DIR_DATA . '/segments');
-        $cmd .= ' -jar ' . escapeshellarg(LOCAL_VCS_DIR . '/tools/java/cldr.jar');
-        $cmd .= ' ldml2json';
-        $cmd .= ' -o true'; // (true|false) Whether to write out the 'other' section, which contains any unmatched paths
-        $cmd .= ' -t segments'; // (main|supplemental|segments) Type of CLDR data being generated, main, supplemental, or segments.
-        $output = array();
-        @exec($cmd . ' 2>&1', $output, $rc);
-        if ($rc !== 0) {
-            throw new Exception("Error!\n" . implode("\n", $output));
-        }
-        echo "Done.\n";
     } catch (Exception $x) {
         try {
             deleteFromFilesystem(SOURCE_DIR_DATA);
@@ -935,4 +884,71 @@ function numberFormatToRegularExpressions($symbols, $isoPattern)
     }
 
     return $result;
+}
+
+set_error_handler('handleError');
+
+try {
+    echo 'Initializing... ';
+    define('CLDR_VERSION', '29-beta-1');
+    define('ROOT_DIR', dirname(__DIR__));
+    define('SOURCE_DIR', ROOT_DIR . DIRECTORY_SEPARATOR . 'bin' . DIRECTORY_SEPARATOR . 'temp');
+    define('DESTINATION_DIR', ROOT_DIR . DIRECTORY_SEPARATOR . 'data');
+
+    if (isset($argv)) {
+        foreach ($argv as $i => $arg) {
+            if ($i > 0) {
+                if ((strcasecmp($arg, 'debug') === 0) || (strcasecmp($arg, '--debug') === 0)) {
+                    defined('DEBUG') or define('DEBUG', true);
+                }
+                if ((strcasecmp($arg, 'full') === 0) || (strcasecmp($arg, '--full') === 0)) {
+                    defined('FULL_JSON') or define('FULL_JSON', true);
+                }
+                if ((strcasecmp($arg, 'post-clean') === 0) || (strcasecmp($arg, '--post-clean') === 0)) {
+                    defined('POST_CLEAN') or define('POST_CLEAN', true);
+                }
+            }
+        }
+    }
+    defined('DEBUG') or define('DEBUG', false);
+    defined('FULL_JSON') or define('FULL_JSON', false);
+    define('LOCAL_VCS_DIR', SOURCE_DIR . DIRECTORY_SEPARATOR . 'cldr-' . CLDR_VERSION . '-source');
+    defined('POST_CLEAN') or define('POST_CLEAN', false);
+
+    if (!is_dir(SOURCE_DIR)) {
+        if (mkdir(SOURCE_DIR, 0777, true) === false) {
+            echo 'Failed to create ' . SOURCE_DIR . "\n";
+            die(1);
+        }
+    }
+    echo "done.\n";
+
+    if (is_dir(DESTINATION_DIR)) {
+        echo 'Cleanup old data folder... ';
+        deleteFromFilesystem(DESTINATION_DIR);
+        echo "done.\n";
+    }
+    echo 'Creating data folder... ';
+    if (mkdir(DESTINATION_DIR, 0777, false) === false) {
+        echo 'Failed to create ' . DESTINATION_DIR . "\n";
+        die(1);
+    }
+    echo "done.\n";
+
+    if (!is_dir(LOCAL_VCS_DIR)) {
+        checkoutCLDR();
+    }
+
+    buildCLDRJson();
+
+    //copyData();
+    if (POST_CLEAN) {
+        echo "Cleanup temporary data folder... \n";
+        deleteFromFilesystem(SOURCE_DIR);
+        echo "done.\n";
+    }
+    die(0);
+} catch (Exception $x) {
+    echo $x->getMessage(), "\n";
+    die(1);
 }
