@@ -4,6 +4,34 @@ iconv_set_encoding('input_encoding', 'UTF-8');
 iconv_set_encoding('internal_encoding', 'UTF-8');
 iconv_set_encoding('output_encoding', 'UTF-8');
 
+define('CLDR_VERSION', '29-beta-1');
+define('ROOT_DIR', dirname(__DIR__));
+define('SOURCE_DIR', ROOT_DIR . DIRECTORY_SEPARATOR . 'bin' . DIRECTORY_SEPARATOR . 'temp');
+define('DESTINATION_DIR', ROOT_DIR . DIRECTORY_SEPARATOR . 'data');
+define('DESTINATION_GENERAL_DIR', DESTINATION_DIR . DIRECTORY_SEPARATOR . 'general');
+define('DESTINATION_LOCALES_DIR', DESTINATION_DIR . DIRECTORY_SEPARATOR . 'locales');
+define('LOCAL_VCS_DIR', SOURCE_DIR . DIRECTORY_SEPARATOR . 'cldr-' . CLDR_VERSION . '-source');
+
+if (isset($argv)) {
+    foreach ($argv as $i => $arg) {
+        if ($i > 0) {
+            if ((strcasecmp($arg, 'debug') === 0) || (strcasecmp($arg, '--debug') === 0)) {
+                defined('DEBUG') or define('DEBUG', true);
+            }
+            if ((strcasecmp($arg, 'full') === 0) || (strcasecmp($arg, '--full') === 0)) {
+                defined('FULL_JSON') or define('FULL_JSON', true);
+            }
+            if ((strcasecmp($arg, 'post-clean') === 0) || (strcasecmp($arg, '--post-clean') === 0)) {
+                defined('POST_CLEAN') or define('POST_CLEAN', true);
+            }
+        }
+    }
+}
+
+defined('DEBUG') or define('DEBUG', false);
+defined('FULL_JSON') or define('FULL_JSON', false);
+defined('POST_CLEAN') or define('POST_CLEAN', false);
+
 /**
  *
  * Service class for XML handling, converts xml to arrays and arrays to xml
@@ -356,6 +384,16 @@ function showStatus($done, $total, $size = 30)
     }
 }
 
+/**
+ *
+ * Custom error handler
+ *
+ * @param $errno
+ * @param $errstr
+ * @param $errfile
+ * @param $errline
+ * @throws Exception
+ */
 function handleError($errno, $errstr, $errfile, $errline)
 {
     if ($errno == E_NOTICE || $errno == E_WARNING) {
@@ -363,6 +401,15 @@ function handleError($errno, $errstr, $errfile, $errline)
     }
 }
 
+/**
+ *
+ * Handle errors from CLDR checkout
+ *
+ * @param $directory
+ * @param $code
+ * @param $output
+ * @throws Exception
+ */
 function handleCldrCheckoutError($directory, $code, $output)
 {
     if ($code === 0) {
@@ -382,6 +429,110 @@ function handleCldrCheckoutError($directory, $code, $output)
     }
 }
 
+/**
+ *
+ * Check existence, create directory and handle possible error
+ *
+ * @param string $directory
+ * @return bool
+ */
+function handleCreateDirectory($directory = "")
+{
+    echo "Creating \"$directory\" folder... ";
+
+    if (!is_dir($directory)) {
+        if (mkdir($directory, 0777, false) === false) {
+            echo "Failed to create \"$directory\"\n";
+            return false;
+        }
+    }
+
+    echo "Done.\n";
+    return true;
+}
+
+/**
+ *
+ * Extract currency fractions and region data
+ *
+ * @param array $supplementalData
+ */
+function handleGeneralCurrencyData($supplementalData = array())
+{
+    echo "Extract currency fractions data... ";
+
+    if (!isset($supplementalData['supplementalData']['currencyData']['fractions']['info'])) {
+        throw new Exception('Currency fractions data is not available!');
+    } else {
+        $fractions = array();
+
+        foreach($supplementalData['supplementalData']['currencyData']['fractions']['info'] as $key => $fraction) {
+            if (!empty($fraction['@attributes'])) {
+                $isoCode = $fraction['@attributes']['iso4217'];
+
+                unset($fraction['@attributes']['iso4217']);
+
+                $fractions[$isoCode] = $fraction['@attributes'];
+            } else {
+                throw new Exception("Wrong fractions data provided (data key: $key)!");
+            }
+        }
+
+        echo "Done.\n";
+
+        saveJsonFile($fractions, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'currency.fractions.json');
+    }
+
+    echo "Extract currency regions data... ";
+
+    if (!isset($supplementalData['supplementalData']['currencyData']['region'])) {
+        throw new Exception('Currency regions data is not available!');
+    } else {
+        $regions = array();
+
+        foreach($supplementalData['supplementalData']['currencyData']['region'] as $key => $region) {
+            if (!empty($region['@attributes'])) {
+                $isoRegionCode = $region['@attributes']['iso3166'];
+
+                $currencies = array();
+
+                if (isset($region['currency']['@attributes']) && isset($region['currency']['@value'])) {
+                    $isoCode = $region['currency']['@attributes']['iso4217'];
+
+                    unset($region['currency']['@attributes']['iso4217']);
+
+                    $currencies[$isoCode] = $region['currency']['@attributes'];
+                } else {
+                    foreach($region['currency'] as $currencyKey => $currency) {
+                        if (!empty($currency['@attributes'])) {
+                            $isoCode = $currency['@attributes']['iso4217'];
+
+                            unset($currency['@attributes']['iso4217']);
+
+                            $currencies[$isoCode] = $currency['@attributes'];
+                        } else {
+                            throw new Exception("Wrong currency data provided for region \"$isoRegionCode\" (data key: $currencyKey)!");
+                        }
+                    }
+                }
+
+                $regions[$isoRegionCode] = $currencies;
+            } else {
+                throw new Exception("Wrong region data provided (data key: $key)!");
+            }
+        }
+
+        echo "Done.\n";
+
+        saveJsonFile($regions, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'currency.regions.json');
+    }
+}
+
+/**
+ * @param $fileName
+ * @return bool
+ * @throws Exception
+ */
 function checkFileExistence($fileName)
 {
     echo "Checking \"$fileName\"...\n";
@@ -425,7 +576,7 @@ function checkoutCLDR()
             handleCldrCheckoutError($directory, $rc, $output);
         }
 
-        echo "done.\n";
+        echo "Done.\n";
     } catch (Exception $x) {
         if (file_exists(LOCAL_VCS_DIR)) {
             try {
@@ -518,13 +669,16 @@ function buildSupplementalData()
     $supplementalDataFile = LOCAL_VCS_DIR . str_replace("/", DIRECTORY_SEPARATOR, "/supplemental/supplementalData.xml");
 
     if (checkFileExistence($supplementalDataFile)) {
+        $supplementalData = XmlWrapper::getParser()->xmlToArray(LOCAL_VCS_DIR .
+            str_replace("/", DIRECTORY_SEPARATOR, "/supplemental/supplementalData.xml"));
 
+        handleGeneralCurrencyData($supplementalData);
+
+        //print_r($supplementalData['supplementalData']['currencyData']['fractions']);
     }
 
     die();
-    $result = XmlWrapper::getParser()->xmlToArray(LOCAL_VCS_DIR .
-        str_replace("/", DIRECTORY_SEPARATOR, "/supplemental/supplementalData.xml"));
-    print_r(array_keys($result['supplementalData']['currencyData']));
+
 
     //file_put_contents("$locale.json", json_encode($result['ldml']['numbers']['currencies']['currency'], JSON_UNESCAPED_UNICODE));
 }
@@ -660,19 +814,20 @@ function readJsonFile($file)
 {
     $json = file_get_contents($file);
     if ($json === false) {
-        throw new Exception("Failed to read from $file");
+        throw new Exception("Failed to read from \"$file\"");
     }
     $data = json_decode($json, true);
     if ($data === null) {
-        throw new Exception("Failed to decode data in $file");
+        throw new Exception("Failed to decode data in \"$file\"");
     }
 
     return $data;
 }
 
-function saveJsonFile($data, $file)
+function saveJsonFile($data, $file, $jsonFlags = 0)
 {
-    $jsonFlags = 0;
+    echo "Saving data to \"$file\"... ";
+
     if (version_compare(PHP_VERSION, '5.4.0') >= 0) {
         $jsonFlags |= JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE;
         if (DEBUG) {
@@ -681,14 +836,16 @@ function saveJsonFile($data, $file)
     }
     $json = json_encode($data, $jsonFlags);
     if ($json === false) {
-        throw new Exception("Failed to serialize data for $file");
+        throw new Exception("Failed to serialize data for \"$file\"");
     }
     if (is_file($file)) {
         deleteFromFilesystem($file);
     }
     if (file_put_contents($file, $json) === false) {
-        throw new Exception("Failed write to $file");
+        throw new Exception("Failed write to \"$file\"");
     }
+
+    echo "Done \n";
 }
 
 function deleteFromFilesystem($path)
@@ -889,51 +1046,27 @@ function numberFormatToRegularExpressions($symbols, $isoPattern)
 set_error_handler('handleError');
 
 try {
-    echo 'Initializing... ';
-    define('CLDR_VERSION', '29-beta-1');
-    define('ROOT_DIR', dirname(__DIR__));
-    define('SOURCE_DIR', ROOT_DIR . DIRECTORY_SEPARATOR . 'bin' . DIRECTORY_SEPARATOR . 'temp');
-    define('DESTINATION_DIR', ROOT_DIR . DIRECTORY_SEPARATOR . 'data');
+    echo "Initializing...\n";
 
-    if (isset($argv)) {
-        foreach ($argv as $i => $arg) {
-            if ($i > 0) {
-                if ((strcasecmp($arg, 'debug') === 0) || (strcasecmp($arg, '--debug') === 0)) {
-                    defined('DEBUG') or define('DEBUG', true);
-                }
-                if ((strcasecmp($arg, 'full') === 0) || (strcasecmp($arg, '--full') === 0)) {
-                    defined('FULL_JSON') or define('FULL_JSON', true);
-                }
-                if ((strcasecmp($arg, 'post-clean') === 0) || (strcasecmp($arg, '--post-clean') === 0)) {
-                    defined('POST_CLEAN') or define('POST_CLEAN', true);
-                }
-            }
-        }
-    }
-    defined('DEBUG') or define('DEBUG', false);
-    defined('FULL_JSON') or define('FULL_JSON', false);
-    define('LOCAL_VCS_DIR', SOURCE_DIR . DIRECTORY_SEPARATOR . 'cldr-' . CLDR_VERSION . '-source');
-    defined('POST_CLEAN') or define('POST_CLEAN', false);
-
-    if (!is_dir(SOURCE_DIR)) {
-        if (mkdir(SOURCE_DIR, 0777, true) === false) {
-            echo 'Failed to create ' . SOURCE_DIR . "\n";
-            die(1);
-        }
-    }
-    echo "done.\n";
-
-    if (is_dir(DESTINATION_DIR)) {
-        echo 'Cleanup old data folder... ';
-        deleteFromFilesystem(DESTINATION_DIR);
-        echo "done.\n";
-    }
-    echo 'Creating data folder... ';
-    if (mkdir(DESTINATION_DIR, 0777, false) === false) {
-        echo 'Failed to create ' . DESTINATION_DIR . "\n";
+    if (!handleCreateDirectory(SOURCE_DIR)) {
         die(1);
     }
-    echo "done.\n";
+
+    if (is_dir(DESTINATION_DIR)) {
+        echo "Cleanup old data folder... ";
+        deleteFromFilesystem(DESTINATION_DIR);
+        echo "Done.\n";
+    }
+
+    if (
+        !handleCreateDirectory(DESTINATION_DIR)
+        ||
+        !handleCreateDirectory(DESTINATION_GENERAL_DIR)
+        ||
+        !handleCreateDirectory(DESTINATION_LOCALES_DIR))
+    {
+        die(1);
+    }
 
     if (!is_dir(LOCAL_VCS_DIR)) {
         checkoutCLDR();
@@ -945,10 +1078,12 @@ try {
     if (POST_CLEAN) {
         echo "Cleanup temporary data folder... \n";
         deleteFromFilesystem(SOURCE_DIR);
-        echo "done.\n";
+        echo "Done.\n";
     }
     die(0);
 } catch (Exception $x) {
+    deleteFromFilesystem(DESTINATION_DIR);
+
     echo $x->getMessage(), "\n";
     die(1);
 }
