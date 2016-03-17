@@ -529,12 +529,19 @@ function handleGeneralCurrencyData($supplementalData = array())
     }
 }
 
+/**
+ *
+ * Extract territory info data
+ *
+ * @param array $supplementalData
+ * @throws Exception
+ */
 function handleGeneralTerritoryInfoData($supplementalData = array())
 {
     echo "Extract territory info data... ";
 
     if (!isset($supplementalData['supplementalData']['territoryInfo']['territory'])) {
-        throw new Exception('Currency regions data is not available!');
+        throw new Exception('Territory info data is not available!');
     } else {
         $territories = array();
 
@@ -589,7 +596,36 @@ function handleGeneralTerritoryInfoData($supplementalData = array())
 
 function handleGeneralTerritoryContainmentData($supplementalData = array())
 {
+    echo "Extract territory containment data... ";
 
+    if (!isset($supplementalData['supplementalData']['territoryContainment']['group'])) {
+        throw new Exception('Currency regions data is not available!');
+    } else {
+        $territories = array();
+
+        foreach ($supplementalData['supplementalData']['territoryContainment']['group'] as $key => $territory) {
+            if (!empty($territory['@attributes'])) {
+                $territoryCode = $territory['@attributes']['type'];
+
+                unset($territory['@attributes']['type']);
+
+                $languageData = array();
+
+                if ($languageData) {
+                    $territory['@attributes']['languageData'] = $languageData;
+                }
+
+                $territories[$territoryCode] = $territory['@attributes'];
+            } else {
+                throw new Exception("Wrong territory containment data provided (data key: $key)!");
+            }
+        }
+
+        echo "Done.\n";
+
+        saveJsonFile($territories, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'territory.containment.json');
+    }
+    print_r($supplementalData['supplementalData']['territoryContainment']['group']);
 }
 
 /**
@@ -610,6 +646,12 @@ function checkFileExistence($fileName)
     return true;
 }
 
+/**
+ *
+ * SVN checkout CLDR data
+ *
+ * @throws Exception
+ */
 function checkoutCLDR()
 {
     if (file_exists(LOCAL_VCS_DIR)) {
@@ -738,7 +780,7 @@ function buildSupplementalData()
 
         //handleGeneralCurrencyData($supplementalData);
 
-        handleGeneralTerritoryInfoData($supplementalData);
+        //handleGeneralTerritoryInfoData($supplementalData);
 
         handleGeneralTerritoryContainmentData($supplementalData);
 
