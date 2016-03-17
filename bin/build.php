@@ -1,5 +1,44 @@
 <?php
 
+/**
+ * Worlds most popular languages
+ * Sources:
+ * https://en.wikipedia.org/wiki/List_of_languages_by_number_of_native_speakers,
+ * https://www.loc.gov/standards/iso639-2/php/code_list.php.
+ *
+ * 1. Mandarin - ZH
+ * 2. Spanish - ES
+ * 3. English - EN
+ * 4. Hindi - HI
+ * 5. Arabic - AR
+ * 6. Portuguese - PT
+ * 7. Bengali - BN
+ * 8. Russian - RU
+ * 9. Japanese - JA
+ * 10. Punjabi - PA
+ * 11. German - DE
+ * 12. Javanese - JV
+ * 13. Wu - WUU
+ * 14. Malay - MS
+ * 15. Telugu - TE
+ * 16. Vietnamese - VI
+ * 17. Korean - KO
+ * 18. French - FR
+ * 19. Marathi - MR
+ * 20. Tamil - TA
+ * 21. Urdu - UR
+ * 22. Turkish - TR
+ * 23. Italian - IT
+ * 24. Yue - YUE
+ * 25. Thai - TH
+ * 26. Gujarati - GU
+ * 27. Jin - ZH
+ * 28. Southern Min - NAN
+ * 29. Persian - FA
+ * 30. Polish - PL
+ *
+ */
+
 iconv_set_encoding('input_encoding', 'UTF-8');
 iconv_set_encoding('internal_encoding', 'UTF-8');
 iconv_set_encoding('output_encoding', 'UTF-8');
