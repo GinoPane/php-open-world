@@ -456,6 +456,7 @@ function handleCreateDirectory($directory = "")
  * Extract currency fractions and region data
  *
  * @param array $supplementalData
+ * @throws Exception
  */
 function handleGeneralCurrencyData($supplementalData = array())
 {
@@ -526,6 +527,69 @@ function handleGeneralCurrencyData($supplementalData = array())
 
         saveJsonFile($regions, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'currency.regions.json');
     }
+}
+
+function handleGeneralTerritoryInfoData($supplementalData = array())
+{
+    echo "Extract territory info data... ";
+
+    if (!isset($supplementalData['supplementalData']['territoryInfo']['territory'])) {
+        throw new Exception('Currency regions data is not available!');
+    } else {
+        $territories = array();
+
+        foreach ($supplementalData['supplementalData']['territoryInfo']['territory'] as $key => $territory) {
+            if (!empty($territory['@attributes'])) {
+                $isoRegionCode = $territory['@attributes']['type'];
+
+                unset($territory['@attributes']['type']);
+
+                $languageData = array();
+
+                if (isset($territory['languagePopulation'])) {
+
+                    if (isset($territory['languagePopulation']['@attributes']) && isset($territory['languagePopulation']['@value'])) {
+                        $languageCode = $territory['languagePopulation']['@attributes']['type'];
+
+                        unset($territory['languagePopulation']['@attributes']['type']);
+
+                        $languageData[$languageCode] = $territory['languagePopulation']['@attributes'];
+                    } else {
+                        foreach ($territory['languagePopulation'] as $languageKey => $language) {
+                            if (!empty($language['@attributes'])) {
+                                $languageCode = $language['@attributes']['type'];
+
+                                unset($language['@attributes']['type']);
+
+                                $languageData[$languageCode] = $language['@attributes'];
+                            } else {
+                                throw new Exception("Wrong language data provided for region \"$isoRegionCode\" (data key: $languageKey)!");
+                            }
+                        }
+                    }
+                }
+
+                unset($territory['languagePopulation']);
+
+                if ($languageData) {
+                    $territory['@attributes']['languageData'] = $languageData;
+                }
+
+                $territories[$isoRegionCode] = $territory['@attributes'];
+            } else {
+                throw new Exception("Wrong territory data provided (data key: $key)!");
+            }
+        }
+
+        echo "Done.\n";
+
+        saveJsonFile($territories, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'territory.info.json');
+    }
+}
+
+function handleGeneralTerritoryContainmentData($supplementalData = array())
+{
+
 }
 
 /**
@@ -672,7 +736,11 @@ function buildSupplementalData()
         $supplementalData = XmlWrapper::getParser()->xmlToArray(LOCAL_VCS_DIR .
             str_replace("/", DIRECTORY_SEPARATOR, "/supplemental/supplementalData.xml"));
 
-        handleGeneralCurrencyData($supplementalData);
+        //handleGeneralCurrencyData($supplementalData);
+
+        handleGeneralTerritoryInfoData($supplementalData);
+
+        handleGeneralTerritoryContainmentData($supplementalData);
 
         //print_r($supplementalData['supplementalData']['currencyData']['fractions']);
     }
