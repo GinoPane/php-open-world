@@ -1,5 +1,37 @@
 <?php
 
+iconv_set_encoding('input_encoding', 'UTF-8');
+iconv_set_encoding('internal_encoding', 'UTF-8');
+iconv_set_encoding('output_encoding', 'UTF-8');
+
+define('CLDR_VERSION', '29-beta-1');
+define('ROOT_DIR', dirname(__DIR__));
+define('SOURCE_DIR', ROOT_DIR . DIRECTORY_SEPARATOR . 'bin' . DIRECTORY_SEPARATOR . 'temp');
+define('DESTINATION_DIR', ROOT_DIR . DIRECTORY_SEPARATOR . 'data');
+define('DESTINATION_GENERAL_DIR', DESTINATION_DIR . DIRECTORY_SEPARATOR . 'general');
+define('DESTINATION_LOCALES_DIR', DESTINATION_DIR . DIRECTORY_SEPARATOR . 'locales');
+define('LOCAL_VCS_DIR', SOURCE_DIR . DIRECTORY_SEPARATOR . 'cldr-' . CLDR_VERSION . '-source');
+
+if (isset($argv)) {
+    foreach ($argv as $i => $arg) {
+        if ($i > 0) {
+            if ((strcasecmp($arg, 'debug') === 0) || (strcasecmp($arg, '--debug') === 0)) {
+                defined('DEBUG') or define('DEBUG', true);
+            }
+            if ((strcasecmp($arg, 'full') === 0) || (strcasecmp($arg, '--full') === 0)) {
+                defined('FULL_JSON') or define('FULL_JSON', true);
+            }
+            if ((strcasecmp($arg, 'post-clean') === 0) || (strcasecmp($arg, '--post-clean') === 0)) {
+                defined('POST_CLEAN') or define('POST_CLEAN', true);
+            }
+        }
+    }
+}
+
+defined('DEBUG') or define('DEBUG', false);
+defined('FULL_JSON') or define('FULL_JSON', false);
+defined('POST_CLEAN') or define('POST_CLEAN', false);
+
 /**
  * Worlds most popular languages
  * Sources:
@@ -38,38 +70,10 @@
  * 30. Polish - PL
  *
  */
-
-iconv_set_encoding('input_encoding', 'UTF-8');
-iconv_set_encoding('internal_encoding', 'UTF-8');
-iconv_set_encoding('output_encoding', 'UTF-8');
-
-define('CLDR_VERSION', '29-beta-1');
-define('ROOT_DIR', dirname(__DIR__));
-define('SOURCE_DIR', ROOT_DIR . DIRECTORY_SEPARATOR . 'bin' . DIRECTORY_SEPARATOR . 'temp');
-define('DESTINATION_DIR', ROOT_DIR . DIRECTORY_SEPARATOR . 'data');
-define('DESTINATION_GENERAL_DIR', DESTINATION_DIR . DIRECTORY_SEPARATOR . 'general');
-define('DESTINATION_LOCALES_DIR', DESTINATION_DIR . DIRECTORY_SEPARATOR . 'locales');
-define('LOCAL_VCS_DIR', SOURCE_DIR . DIRECTORY_SEPARATOR . 'cldr-' . CLDR_VERSION . '-source');
-
-if (isset($argv)) {
-    foreach ($argv as $i => $arg) {
-        if ($i > 0) {
-            if ((strcasecmp($arg, 'debug') === 0) || (strcasecmp($arg, '--debug') === 0)) {
-                defined('DEBUG') or define('DEBUG', true);
-            }
-            if ((strcasecmp($arg, 'full') === 0) || (strcasecmp($arg, '--full') === 0)) {
-                defined('FULL_JSON') or define('FULL_JSON', true);
-            }
-            if ((strcasecmp($arg, 'post-clean') === 0) || (strcasecmp($arg, '--post-clean') === 0)) {
-                defined('POST_CLEAN') or define('POST_CLEAN', true);
-            }
-        }
-    }
-}
-
-defined('DEBUG') or define('DEBUG', false);
-defined('FULL_JSON') or define('FULL_JSON', false);
-defined('POST_CLEAN') or define('POST_CLEAN', false);
+$defaultLocales = array(
+    'zh', 'es', 'en', 'hi', 'ar', 'pt', 'bn', 'ru', 'ja', 'pa', 'de', 'jv', 'wuu', 'ms', 'te',
+    'vi', 'ko', 'fr', 'mr', 'ta', 'ur', 'tr', 'it', 'yue', 'th', 'gu', 'zh', 'nan', 'fa', 'pl'
+);
 
 /**
  *
@@ -640,7 +644,7 @@ function handleGeneralTerritoryContainmentData($supplementalData = array())
     if (!isset($supplementalData['supplementalData']['territoryContainment']['group'])) {
         throw new Exception('Currency regions data is not available!');
     } else {
-        $territories = array();
+        $containment = array();
 
         foreach ($supplementalData['supplementalData']['territoryContainment']['group'] as $key => $territory) {
             if (!empty($territory['@attributes'])) {
@@ -654,25 +658,43 @@ function handleGeneralTerritoryContainmentData($supplementalData = array())
                     $territory['@attributes']['languageData'] = $languageData;
                 }
 
-                $territories[$territoryCode] = $territory['@attributes'];
+                $containment[$territoryCode] = $territory['@attributes'];
             } else {
                 throw new Exception("Wrong territory containment data provided (data key: $key)!");
             }
         }
 
-        echo "Done.\n";
+        $flatTerritoryParentData = array();
 
-        saveJsonFile($territories, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'territory.containment.json');
+        foreach ($containment as $parentTerritoryId => $data) {
+            if (!empty($data['contains'])) {
+                $children = explode(' ', $data['contains']);
+
+                foreach($children as $childCode) {
+                    $flatTerritoryParentData[$childCode] = (string)$parentTerritoryId;
+                }
+            }
+        }
+
+        ksort($flatTerritoryParentData);
+
+        $territories = array(
+            'containment'   => $containment,
+            'flat'          => $flatTerritoryParentData
+        );
+
+        saveJsonFile($territories, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'territory.containment.json', JSON_FORCE_OBJECT);
+
+        echo "Done.\n";
     }
-    print_r($supplementalData['supplementalData']['territoryContainment']['group']);
 }
 
 /**
  * @param $fileName
- * @return bool
+ * @return array
  * @throws Exception
  */
-function checkFileExistence($fileName)
+function getXmlDataFileContentsAsArray($fileName)
 {
     echo "Checking \"$fileName\"...\n";
 
@@ -682,7 +704,29 @@ function checkFileExistence($fileName)
 
     echo "File is available. Processing...\n";
 
-    return true;
+    return XmlWrapper::getParser()->xmlToArray($fileName);
+}
+
+/**
+ * @param $fileName
+ * @param array $handlers
+ * @throws Exception
+ */
+function processDataFileWithHandlers($fileName, $handlers = array())
+{
+    if ($fileName) {
+        if ($data = getXmlDataFileContentsAsArray($fileName)) {
+            foreach($handlers as $handler) {
+                if (is_callable($handler)) {
+                    call_user_func($handler, $data);
+                } else {
+                    throw new Exception("Bad handler passed: $handler");
+                }
+            }
+        } else {
+            throw new Exception("Failed to get data from datafile: $fileName");
+        }
+    }
 }
 
 /**
@@ -768,11 +812,13 @@ function buildLocaleSpecificData()
     } else {
         echo "Checking standard locales... \n";
         // Same locales as of CLDR 26 not-full distribution
-        $locales = array('ar', 'ca', 'cs', 'da', 'de', 'el', 'en', 'en-001', 'en-AU', 'en-CA', 'en-GB', 'en-HK', 'en-IN', 'es', 'fi', 'fr', 'he', 'hi', 'hr', 'hu', 'it', 'ja', 'ko', 'nb', 'nl', 'nn', 'pl', 'pt', 'pt-PT', 'ro', 'root', 'ru', 'sk', 'sl', 'sr', 'sv', 'th', 'tr', 'uk', 'vi', 'zh', 'zh-Hant');
+        $locales = $defaultLocales + array('root');
         $diff = array_diff($locales, $availableLocales);
+
         if (!empty($diff)) {
             throw new Exception("The following locales were not found:\n- " . implode("\n- ", $diff));
         }
+
         echo "Done.\n";
     }
 
@@ -806,30 +852,37 @@ function buildLocaleSpecificData()
  */
 function buildSupplementalData()
 {
-    echo "Building supplemental data... \n";
-
-    /*
-     * Process supplementalData.xml
-     */
     $supplementalDataFile = LOCAL_VCS_DIR . str_replace("/", DIRECTORY_SEPARATOR, "/supplemental/supplementalData.xml");
+    $numberingSystemsDataFile = LOCAL_VCS_DIR . str_replace("/", DIRECTORY_SEPARATOR, "/supplemental/numberingSystems.xml");
 
-    if (checkFileExistence($supplementalDataFile)) {
-        $supplementalData = XmlWrapper::getParser()->xmlToArray(LOCAL_VCS_DIR .
-            str_replace("/", DIRECTORY_SEPARATOR, "/supplemental/supplementalData.xml"));
+    $dataHandlers = array(
+        'supplemental'  => array(
+            $supplementalDataFile => array(
+                //'handleGeneralCurrencyData',
+                //'handleGeneralTerritoryInfoData',
+                'handleGeneralTerritoryContainmentData'
+            )
+        ),
+        'numeric'       => array(
+            $numberingSystemsDataFile = array(
 
-        //handleGeneralCurrencyData($supplementalData);
+            )
+        )
+    );
 
-        //handleGeneralTerritoryInfoData($supplementalData);
+    foreach($dataHandlers as $dataCategory => $handlersPerFile) {
+        if ($handlersPerFile) {
+            echo "Building $dataCategory data... \n";
 
-        handleGeneralTerritoryContainmentData($supplementalData);
+            foreach ($handlersPerFile as $fileName => $handlers) {
+                processDataFileWithHandlers($fileName, $handlers);
+            }
 
-        //print_r($supplementalData['supplementalData']['currencyData']['fractions']);
+            echo "$dataCategory data was built. \n";
+        }
     }
 
     die();
-
-
-    //file_put_contents("$locale.json", json_encode($result['ldml']['numbers']['currencies']['currency'], JSON_UNESCAPED_UNICODE));
 }
 
 function buildCLDRJson()
@@ -1234,5 +1287,14 @@ try {
     deleteFromFilesystem(DESTINATION_DIR);
 
     echo $x->getMessage(), "\n";
+
+    if (POST_CLEAN) {
+        echo "Cleanup generated data folder... ";
+        deleteFromFilesystem(SOURCE_DIR);
+        echo "Done.\n";
+    } else {
+        echo "Some data files probably were not generated. Check \"" . DESTINATION_DIR . "\" folder.\n";
+    }
+
     die(1);
 }
