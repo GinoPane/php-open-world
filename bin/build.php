@@ -637,12 +637,19 @@ function handleGeneralTerritoryInfoData($supplementalData = array())
     }
 }
 
+/**
+ *
+ * Extract territory containment info and flat info for quick search
+ *
+ * @param array $supplementalData
+ * @throws Exception
+ */
 function handleGeneralTerritoryContainmentData($supplementalData = array())
 {
     echo "Extract territory containment data... ";
 
     if (!isset($supplementalData['supplementalData']['territoryContainment']['group'])) {
-        throw new Exception('Currency regions data is not available!');
+        throw new Exception('Territory containment data is not available!');
     } else {
         $containment = array();
 
@@ -688,6 +695,38 @@ function handleGeneralTerritoryContainmentData($supplementalData = array())
         echo "Done.\n";
     }
 }
+
+function handleNumberingSystemsData($numbersData = array())
+{
+    echo "Extract numbering systems data... ";
+//var_dump(array_keys($numbersData['supplementalData']['numberingSystems']['numberingSystem'])); die();
+    if (!isset($numbersData['supplementalData']['numberingSystems']['numberingSystem'])) {
+        throw new Exception('Numbering systems data is not available!');
+    } else {
+        $numberingSystems = array();
+
+        foreach ($numbersData['supplementalData']['numberingSystems']['numberingSystem'] as $key => $system) {
+            if (!empty($system['@attributes'])) {
+                $systemCode = $system['@attributes']['id'];
+
+                unset($system['@attributes']['type']);
+
+                if (isset($system['@attributes']['digits'])) {
+                    $system['@attributes']['digits'] = preg_split('/(?<!^)(?!$)/u', $system['@attributes']['digits']);
+                }
+
+                $numberingSystems[$systemCode] = $system;
+            } else {
+                throw new Exception("Wrong numbering system data provided (data key: $key)!");
+            }
+        }
+
+        saveJsonFile($numberingSystems, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'number.systems.json', JSON_FORCE_OBJECT);
+
+        echo "Done.\n";
+    }
+}
+
 
 /**
  * @param $fileName
@@ -858,14 +897,14 @@ function buildSupplementalData()
     $dataHandlers = array(
         'supplemental'  => array(
             $supplementalDataFile => array(
-                //'handleGeneralCurrencyData',
-                //'handleGeneralTerritoryInfoData',
+                'handleGeneralCurrencyData',
+                'handleGeneralTerritoryInfoData',
                 'handleGeneralTerritoryContainmentData'
             )
         ),
         'numeric'       => array(
-            $numberingSystemsDataFile = array(
-
+            $numberingSystemsDataFile => array(
+                'handleNumberingSystemsData'
             )
         )
     );
