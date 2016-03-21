@@ -192,10 +192,12 @@ class XmlWrapper
     }
 
     /**
+     *
      * Convert an Array to XML
-     * @param string $node_name - name of the root node to be converted
-     * @param array $arr - aray to be converterd
-     * @return DOMNode
+     *
+     * @param $nodeName
+     * @param array $arr
+     * @return DOMElement
      */
     private function _convertArrayToXml($nodeName, $arr = array())
     {
@@ -378,11 +380,12 @@ class XmlWrapper
  *
  * @param   int $done how many items are completed
  * @param   int $total how many items are to be done total
+ * @param   string $text additional text to be shown
  * @param   int $size optional size of the status bar
  * @return  void
  *
  */
-function showStatus($done, $total, $size = 30)
+function showStatus($done, $total, $text = '', $size = 30)
 {
     static $startTime;
 
@@ -415,7 +418,7 @@ function showStatus($done, $total, $size = 30)
 
     $elapsed = $now - $startTime;
 
-    $statusBar .= " remaining: " . number_format($eta) . " sec.  elapsed: " . number_format($elapsed) . " sec.";
+    $statusBar .= $text . "; remaining: " . number_format($eta) . " sec.  elapsed: " . number_format($elapsed) . " sec.";
 
     echo "$statusBar  ";
 
@@ -478,6 +481,7 @@ function handleCldrCheckoutError($directory, $code, $output)
  *
  * @param string $directory
  * @return bool
+ * @throws Exception
  */
 function handleCreateDirectory($directory = "")
 {
@@ -485,8 +489,7 @@ function handleCreateDirectory($directory = "")
 
     if (!is_dir($directory)) {
         if (mkdir($directory, 0777, false) === false) {
-            echo "Failed to create \"$directory\"\n";
-            return false;
+            throw new Exception("Failed to create \"$directory\"\n");
         }
     }
 
@@ -699,7 +702,7 @@ function handleGeneralTerritoryContainmentData($supplementalData = array())
 function handleNumberingSystemsData($numbersData = array())
 {
     echo "Extract numbering systems data... ";
-//var_dump(array_keys($numbersData['supplementalData']['numberingSystems']['numberingSystem'])); die();
+
     if (!isset($numbersData['supplementalData']['numberingSystems']['numberingSystem'])) {
         throw new Exception('Numbering systems data is not available!');
     } else {
@@ -724,6 +727,22 @@ function handleNumberingSystemsData($numbersData = array())
         saveJsonFile($numberingSystems, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'number.systems.json', JSON_FORCE_OBJECT);
 
         echo "Done.\n";
+    }
+}
+
+function handleSingleLocaleData($locale, $localeFile)
+{
+    $localeData = getXmlDataFileContentsAsArray($localeFile);
+
+    if ($localeData) {
+        $localeDirectory = DESTINATION_LOCALES_DIR . DIRECTORY_SEPARATOR . $locale;
+
+        if (handleCreateDirectory($localeDirectory)) {
+
+        }
+
+    } else {
+        throw new Exception("Failed to get \"$locale\" locale data");
     }
 }
 
@@ -821,13 +840,15 @@ function checkoutCLDR()
  */
 function buildLocaleSpecificData()
 {
-    die();
-    echo 'Determining the list of the available locales... ';
+    echo "Determining the list of the available locales... ";
+
     $availableLocales = array();
-    $contents = @scandir(LOCAL_VCS_DIR . DIRECTORY_SEPARATOR . 'main');
+    $localesDirectory = LOCAL_VCS_DIR . DIRECTORY_SEPARATOR . 'main';
+
+    $contents = @scandir($localesDirectory);
 
     if ($contents === false) {
-        throw new Exception('Error reading contents of the directory ' . LOCAL_VCS_DIR . '/main');
+        throw new Exception("Error reading contents of the directory \"$localesDirectory\"");
     }
 
     $match = null;
@@ -839,51 +860,38 @@ function buildLocaleSpecificData()
     }
 
     if (empty($availableLocales)) {
-        throw new Exception('No locales found!');
+        throw new Exception("No locales found!");
     }
-
-    sort($availableLocales);
-
-    echo count($availableLocales) . " locales found.\n";
 
     if (FULL_JSON) {
         $locales = $availableLocales;
     } else {
-        echo "Checking standard locales... \n";
-        // Same locales as of CLDR 26 not-full distribution
+        echo "Checking default locales based on statistics of most popular languages... \n";
+
+        global $defaultLocales;
+
         $locales = $defaultLocales + array('root');
-        $diff = array_diff($locales, $availableLocales);
+        $available = array_intersect($locales, $availableLocales);
 
-        if (!empty($diff)) {
-            throw new Exception("The following locales were not found:\n- " . implode("\n- ", $diff));
+        if (!count($available) !== count($locales)) {
+             echo "Notice: the following locales were not found:\n- " . implode("\n- ", array_diff($locales, $availableLocales)) . "\n";
         }
 
-        echo "Done.\n";
+        $locales = $available;
     }
 
-    foreach ($locales as $locale) {
-        echo "Building json data for $locale... \n";
+    sort($locales);
 
-        $cmd = 'java';
-        $cmd .= ' -DCLDR_DIR=' . escapeshellarg(LOCAL_VCS_DIR);
-        $cmd .= ' -DCLDR_GEN_DIR=' . escapeshellarg(SOURCE_DIR_DATA . '/main/' . $locale);
-        $cmd .= ' -jar ' . escapeshellarg(LOCAL_VCS_DIR . '/tools/java/cldr.jar');
-        $cmd .= ' ldml2json';
-        $cmd .= ' -o true'; // (true|false) Whether to write out the 'other' section, which contains any unmatched paths
-        $cmd .= ' -t main'; // (main|supplemental|segments) Type of CLDR data being generated, main, supplemental, or segments.
-        $cmd .= ' -r true'; // (true|false) Whether the output JSON for the main directory should be based on resolved or unresolved data
-        $cmd .= ' -m ' . escapeshellarg(str_replace('-', '_', $locale)); // Regular expression to define only specific locales or files to be generated
-        $output = array();
-        $rc = null;
-        @exec($cmd . ' 2>&1', $output, $rc);
-        if ($rc !== 0) {
-            throw new Exception("Error!\n" . implode("\n", $output));
-        }
-        if (!is_dir(SOURCE_DIR_DATA . '/main/' . $locale)) {
-            throw new Exception("No data generated!\nTool output:\n" . implode("\n", $output));
-        }
-        echo "Done.\n";
+    $overallCount = count($locales);
+    echo $overallCount . " locales available (including root).\n";
+
+    foreach ($locales as $key => $locale) {
+        handleSingleLocaleData($locale, $localesDirectory . DIRECTORY_SEPARATOR . $locale . "xml");
+
+        showStatus($key + 1, $overallCount, " Processed \"$locale\"", 50);
     }
+
+    echo "Done.\n";
 }
 
 /*
@@ -897,14 +905,14 @@ function buildSupplementalData()
     $dataHandlers = array(
         'supplemental'  => array(
             $supplementalDataFile => array(
-                'handleGeneralCurrencyData',
-                'handleGeneralTerritoryInfoData',
-                'handleGeneralTerritoryContainmentData'
+                //'handleGeneralCurrencyData',
+                //'handleGeneralTerritoryInfoData',
+                //'handleGeneralTerritoryContainmentData'
             )
         ),
         'numeric'       => array(
             $numberingSystemsDataFile => array(
-                'handleNumberingSystemsData'
+                //'handleNumberingSystemsData'
             )
         )
     );
@@ -920,25 +928,13 @@ function buildSupplementalData()
             echo "$dataCategory data was built. \n";
         }
     }
-
-    die();
 }
 
 function buildCLDRJson()
 {
-    try {
+    buildSupplementalData();
 
-        buildSupplementalData();
-
-        buildLocaleSpecificData();
-
-    } catch (Exception $x) {
-        try {
-            deleteFromFilesystem(SOURCE_DIR_DATA);
-        } catch (Exception $foo) {
-        }
-        throw $x;
-    }
+    buildLocaleSpecificData();
 }
 
 function copyData()
@@ -1289,9 +1285,7 @@ set_error_handler('handleError');
 try {
     echo "Initializing...\n";
 
-    if (!handleCreateDirectory(SOURCE_DIR)) {
-        die(1);
-    }
+    handleCreateDirectory(SOURCE_DIR);
 
     if (is_dir(DESTINATION_DIR)) {
         echo "Cleanup old data folder... ";
@@ -1299,15 +1293,9 @@ try {
         echo "Done.\n";
     }
 
-    if (
-        !handleCreateDirectory(DESTINATION_DIR)
-        ||
-        !handleCreateDirectory(DESTINATION_GENERAL_DIR)
-        ||
-        !handleCreateDirectory(DESTINATION_LOCALES_DIR))
-    {
-        die(1);
-    }
+    handleCreateDirectory(DESTINATION_DIR);
+    handleCreateDirectory(DESTINATION_GENERAL_DIR);
+    handleCreateDirectory(DESTINATION_LOCALES_DIR);
 
     if (!is_dir(LOCAL_VCS_DIR)) {
         checkoutCLDR();
@@ -1315,7 +1303,6 @@ try {
 
     buildCLDRJson();
 
-    //copyData();
     if (POST_CLEAN) {
         echo "Cleanup temporary data folder... \n";
         deleteFromFilesystem(SOURCE_DIR);
