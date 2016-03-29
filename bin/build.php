@@ -1,5 +1,18 @@
 <?php
 
+/**
+ *
+ *
+ * Script for building initial OpenWorld's data.
+ *
+ * There's no need to split the script into many files, that's why everything what it needs is placed in the same file.
+ * For better understanding, readability and error handling code was split into multiple functions.
+ *
+ *
+ * Initially Based on Punic's build script (https://github.com/punic/punic)
+ *
+ */
+
 iconv_set_encoding('input_encoding', 'UTF-8');
 iconv_set_encoding('internal_encoding', 'UTF-8');
 iconv_set_encoding('output_encoding', 'UTF-8');
@@ -81,7 +94,7 @@ $defaultLocales = array(
  * @see XmlWrapper::arrayToXml, XmlWrapper::xmlToArray
  *
  *
- * @author Sergey Karavay
+ * @author GinoPane
  *
  */
 class XmlWrapper
@@ -733,12 +746,15 @@ function handleNumberingSystemsData($numbersData = array())
 function handleSingleLocaleData($locale, $localeFile)
 {
     $localeData = getXmlDataFileContentsAsArray($localeFile);
-
+print_r($localeData['ldml']['identity']['language']);
     if ($localeData) {
         $localeDirectory = DESTINATION_LOCALES_DIR . DIRECTORY_SEPARATOR . $locale;
 
         if (handleCreateDirectory($localeDirectory)) {
-
+            //handleSingleLocaleDataIdentity();
+            //handleSingleLocaleDataNumbers();
+            //handleSingleLocaleDataTerritories();
+            //handleSingleLocaleDataCurrencies();
         }
 
     } else {
@@ -886,8 +902,8 @@ function buildLocaleSpecificData()
     echo $overallCount . " locales available (including root).\n";
 
     foreach ($locales as $key => $locale) {
-        handleSingleLocaleData($locale, $localesDirectory . DIRECTORY_SEPARATOR . $locale . "xml");
-
+        handleSingleLocaleData($locale, $localesDirectory . DIRECTORY_SEPARATOR . $locale . ".xml");
+die();
         showStatus($key + 1, $overallCount, " Processed \"$locale\"", 50);
     }
 
