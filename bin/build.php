@@ -431,7 +431,7 @@ function showStatus($done, $total, $text = '', $size = 30)
 
     $elapsed = $now - $startTime;
 
-    $statusBar .= $text . "; remaining: " . number_format($eta) . " sec.  elapsed: " . number_format($elapsed) . " sec.";
+    $statusBar .= $text . "; remaining: " . number_format($eta) . " sec.  elapsed: " . number_format($elapsed) . " sec.\n";
 
     echo "$statusBar  ";
 
@@ -743,15 +743,40 @@ function handleNumberingSystemsData($numbersData = array())
     }
 }
 
+function handleSingleLocaleDataIdentity($identityData = array(), $destinationDir = "")
+{
+    if (!isset($identityData['version']) || !isset($identityData['language'])) {
+        throw new Exception('Bad identity data detected!');
+    } else {
+        $version = filter_var($identityData['version']['@attributes']['number'], FILTER_SANITIZE_NUMBER_INT);
+        $language = $identityData['language']['@attributes']['type'];
+
+        $identity = array(
+            'version'   => $version,
+            'language'  => $language
+        );
+
+        if (isset($identityData['territory'])) {
+            $identity['territory'] = $identityData['territory']['@attributes']['type'];
+        }
+
+        saveJsonFile($identity, $destinationDir . DIRECTORY_SEPARATOR . 'identity.json', JSON_FORCE_OBJECT);
+    }
+}
+
 function handleSingleLocaleData($locale, $localeFile)
 {
     $localeData = getXmlDataFileContentsAsArray($localeFile);
-print_r($localeData['ldml']['identity']['language']);
+
     if ($localeData) {
+        if (!isset($localeData['ldml']['identity'])) {
+            throw new Exception("Failed to identify \"$locale\" locale data");
+        }
+
         $localeDirectory = DESTINATION_LOCALES_DIR . DIRECTORY_SEPARATOR . $locale;
 
         if (handleCreateDirectory($localeDirectory)) {
-            //handleSingleLocaleDataIdentity();
+            handleSingleLocaleDataIdentity($localeData['ldml']['identity'], $localeDirectory);
             //handleSingleLocaleDataNumbers();
             //handleSingleLocaleDataTerritories();
             //handleSingleLocaleDataCurrencies();
@@ -903,7 +928,7 @@ function buildLocaleSpecificData()
 
     foreach ($locales as $key => $locale) {
         handleSingleLocaleData($locale, $localesDirectory . DIRECTORY_SEPARATOR . $locale . ".xml");
-die();
+
         showStatus($key + 1, $overallCount, " Processed \"$locale\"", 50);
     }
 
