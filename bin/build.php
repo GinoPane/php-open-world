@@ -745,6 +745,59 @@ function handleGeneralTerritoryContainmentData($supplementalData = array())
     }
 }
 
+
+/**
+ *
+ * Extract territory codes mapping data
+ *
+ * @param array $supplementalData
+ * @throws Exception
+ */
+function handleGeneralTerritoryMapping($supplementalData = array())
+{
+    echo "Extract territory codes mapping... ";
+
+    if (!isset($supplementalData['supplementalData']['codeMappings']['territoryCodes'])) {
+        throw new Exception('Territory codes mapping data!');
+    } else {
+
+        $iso3166Alpha2 = array();
+        $iso3166Alpha3Map = array();
+        $iso3166NumericMap = array();
+        $fips10Map = array();
+
+        foreach($supplementalData['supplementalData']['codeMappings']['territoryCodes'] as $codesMap) {
+            $codes = $codesMap['@attributes'];
+
+            $iso3166Alpha2[] = $codes['type'];
+
+            if (isset($codes['alpha3'])) {
+                $iso3166Alpha3Map[$codes['alpha3']] = $codes['type'];
+            }
+
+            if (isset($codes['numeric'])) {
+                $iso3166NumericMap[(string)$codes['numeric']] = $codes['type'];
+            }
+
+            if (isset($codes['fips10'])) {
+                $fips10Map[$codes['fips10']] = $codes['type'];
+            }
+        }
+
+        $territoryCodes = array(
+            'iso3166alpha2' => $iso3166Alpha2,
+            'iso3166alpha3_to_iso3166alpha2' => $iso3166Alpha3Map,
+            'iso3166numeric_to_iso3166alpha2' => $iso3166NumericMap,
+            'fips10_to_iso3166alpha2' => $fips10Map
+        );
+
+        saveJsonFile($territoryCodes, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'territory.codes.json');
+
+        echo "Done.\n";
+    }
+}
+
+
 /**
  *
  * Extract numbering systems data
@@ -840,6 +893,14 @@ function handleSingleLocaleDataSimpleNames($type, $rawData, $destinationDir, $fi
     saveJsonFile($data, $destinationDir . DIRECTORY_SEPARATOR . $fileName, JSON_FORCE_OBJECT);
 }
 
+/**
+ * 
+ * Build different kinds of data for a single locale
+ * 
+ * @param $locale
+ * @param $localeFile
+ * @throws Exception
+ */
 function handleSingleLocaleData($locale, $localeFile)
 {
     $localeData = getXmlDataFileContentsAsArray($localeFile);
@@ -1045,7 +1106,8 @@ function buildSupplementalData()
             $supplementalDataFile => array(
                 //'handleGeneralCurrencyData',
                 //'handleGeneralTerritoryInfoData',
-                //'handleGeneralTerritoryContainmentData'
+                //'handleGeneralTerritoryContainmentData',
+                'handleGeneralTerritoryMapping'
             )
         ),
         'numeric'       => array(
