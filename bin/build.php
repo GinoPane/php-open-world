@@ -46,6 +46,32 @@ defined('FULL_JSON') or define('FULL_JSON', false);
 defined('POST_CLEAN') or define('POST_CLEAN', false);
 
 /**
+ * Enable/Disable supporting output of some functions
+ */
+$disableOutput = false;
+
+function disableOutput()
+{
+    global $disableOutput;
+
+    $disableOutput = true;
+}
+
+function enableOutput()
+{
+    global $disableOutput;
+
+    $disableOutput = false;
+}
+
+function outputEnabled()
+{
+    global $disableOutput;
+
+    return $disableOutput == false;
+}
+
+/**
  * Worlds most popular languages
  * Sources:
  * https://en.wikipedia.org/wiki/List_of_languages_by_number_of_native_speakers,
@@ -379,7 +405,7 @@ class XmlWrapper
 }
 
 /**
- * show a status bar in the console
+ * Show a status bar in the console
  *
  * <code>
  * for($x=1;$x<=100;$x++){
@@ -396,6 +422,8 @@ class XmlWrapper
  * @param   string $text additional text to be shown
  * @param   int $size optional size of the status bar
  * @return  void
+ *
+ * @link    http://stackoverflow.com/questions/2124195/command-line-progress-bar-in-php
  *
  */
 function showStatus($done, $total, $text = '', $size = 30)
@@ -431,7 +459,7 @@ function showStatus($done, $total, $text = '', $size = 30)
 
     $elapsed = $now - $startTime;
 
-    $statusBar .= $text . "; remaining: " . number_format($eta) . " sec.  elapsed: " . number_format($elapsed) . " sec.\n";
+    $statusBar .= $text . "; remaining: " . number_format($eta) . " sec.  elapsed: " . number_format($elapsed) . " sec.";
 
     echo "$statusBar  ";
 
@@ -498,7 +526,9 @@ function handleCldrCheckoutError($directory, $code, $output)
  */
 function handleCreateDirectory($directory = "")
 {
-    echo "Creating \"$directory\" folder... ";
+    if (outputEnabled()) {
+        echo "Creating \"$directory\" folder... ";
+    }
 
     if (!is_dir($directory)) {
         if (mkdir($directory, 0777, false) === false) {
@@ -506,7 +536,10 @@ function handleCreateDirectory($directory = "")
         }
     }
 
-    echo "Done.\n";
+    if (outputEnabled()) {
+        echo "Done.\n";
+    }
+
     return true;
 }
 
@@ -712,6 +745,13 @@ function handleGeneralTerritoryContainmentData($supplementalData = array())
     }
 }
 
+/**
+ *
+ * Extract numbering systems data
+ *
+ * @param array $numbersData
+ * @throws Exception
+ */
 function handleNumberingSystemsData($numbersData = array())
 {
     echo "Extract numbering systems data... ";
@@ -743,6 +783,14 @@ function handleNumberingSystemsData($numbersData = array())
     }
 }
 
+/**
+ *
+ * Extract identity data for single locale
+ *
+ * @param array $identityData
+ * @param string $destinationDir
+ * @throws Exception
+ */
 function handleSingleLocaleDataIdentity($identityData = array(), $destinationDir = "")
 {
     if (!isset($identityData['version']) || !isset($identityData['language'])) {
@@ -764,6 +812,34 @@ function handleSingleLocaleDataIdentity($identityData = array(), $destinationDir
     }
 }
 
+/**
+ *
+ * Extract naming data for such simple data lists as territory, language, script names
+ *
+ * @param $type
+ * @param $rawData
+ * @param $destinationDir
+ * @param $fileName
+ * @throws Exception
+ */
+function handleSingleLocaleDataSimpleNames($type, $rawData, $destinationDir, $fileName)
+{
+    $data = array();
+
+    foreach($rawData as $rawRowData) {
+        if (!isset($rawRowData['@value']) || !isset($rawRowData['@attributes']['type'])) {
+            throw new Exception("Bad $type data detected!");
+        } else {
+            $code = $rawRowData['@attributes']['type'];
+            $name = $rawRowData['@value'];
+
+            $data[$code] = $name;
+        }
+    }
+
+    saveJsonFile($data, $destinationDir . DIRECTORY_SEPARATOR . $fileName, JSON_FORCE_OBJECT);
+}
+
 function handleSingleLocaleData($locale, $localeFile)
 {
     $localeData = getXmlDataFileContentsAsArray($localeFile);
@@ -776,9 +852,22 @@ function handleSingleLocaleData($locale, $localeFile)
         $localeDirectory = DESTINATION_LOCALES_DIR . DIRECTORY_SEPARATOR . $locale;
 
         if (handleCreateDirectory($localeDirectory)) {
-            handleSingleLocaleDataIdentity($localeData['ldml']['identity'], $localeDirectory);
+            //handleSingleLocaleDataIdentity($localeData['ldml']['identity'], $localeDirectory);
+
+            if (isset($localeData['ldml']['localeDisplayNames']['territories']['territory'])) {
+                handleSingleLocaleDataSimpleNames('territory', $localeData['ldml']['localeDisplayNames']['territories']['territory'], $localeDirectory, 'territory.names.json');
+            }
+
+            if (isset($localeData['ldml']['localeDisplayNames']['languages']['language'])) {
+                handleSingleLocaleDataSimpleNames('language', $localeData['ldml']['localeDisplayNames']['languages']['language'], $localeDirectory, 'language.names.json');
+            }
+
+            if (isset($localeData['ldml']['localeDisplayNames']['scripts']['script'])) {
+                handleSingleLocaleDataSimpleNames('script', $localeData['ldml']['localeDisplayNames']['scripts']['script'], $localeDirectory, 'script.names.json');
+            }
+
             //handleSingleLocaleDataNumbers();
-            //handleSingleLocaleDataTerritories();
+            //handleSingleLocaleDataTerritoryNames();
             //handleSingleLocaleDataCurrencies();
         }
 
@@ -787,7 +876,6 @@ function handleSingleLocaleData($locale, $localeFile)
     }
 }
 
-
 /**
  * @param $fileName
  * @return array
@@ -795,13 +883,17 @@ function handleSingleLocaleData($locale, $localeFile)
  */
 function getXmlDataFileContentsAsArray($fileName)
 {
-    echo "Checking \"$fileName\"...\n";
+    if (outputEnabled()) {
+        echo "Checking \"$fileName\"...\n";
+    }
 
     if (!is_readable($fileName)) {
         throw new Exception("$fileName is not found or is not readable! \n");
     }
 
-    echo "File is available. Processing...\n";
+    if (outputEnabled()) {
+        echo "File is available. Processing...\n";
+    }
 
     return XmlWrapper::getParser()->xmlToArray($fileName);
 }
@@ -911,26 +1003,31 @@ function buildLocaleSpecificData()
 
         global $defaultLocales;
 
-        $locales = $defaultLocales + array('root');
+        $locales = array_merge($defaultLocales, array('root'));
         $available = array_intersect($locales, $availableLocales);
 
         if (!count($available) !== count($locales)) {
              echo "Notice: the following locales were not found:\n- " . implode("\n- ", array_diff($locales, $availableLocales)) . "\n";
         }
 
-        $locales = $available;
+        $locales = array_unique($available);
     }
 
     sort($locales);
 
     $overallCount = count($locales);
+
     echo $overallCount . " locales available (including root).\n";
+
+    disableOutput();
 
     foreach ($locales as $key => $locale) {
         handleSingleLocaleData($locale, $localesDirectory . DIRECTORY_SEPARATOR . $locale . ".xml");
 
         showStatus($key + 1, $overallCount, " Processed \"$locale\"", 50);
     }
+
+    enableOutput();
 
     echo "Done.\n";
 }
@@ -1091,10 +1188,13 @@ function copyData()
 function readJsonFile($file)
 {
     $json = file_get_contents($file);
+
     if ($json === false) {
         throw new Exception("Failed to read from \"$file\"");
     }
+
     $data = json_decode($json, true);
+
     if ($data === null) {
         throw new Exception("Failed to decode data in \"$file\"");
     }
@@ -1104,7 +1204,9 @@ function readJsonFile($file)
 
 function saveJsonFile($data, $file, $jsonFlags = 0)
 {
-    echo "Saving data to \"$file\"... ";
+    if (outputEnabled()) {
+        echo "Saving data to \"$file\"... ";
+    }
 
     if (version_compare(PHP_VERSION, '5.4.0') >= 0) {
         $jsonFlags |= JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE;
@@ -1123,7 +1225,9 @@ function saveJsonFile($data, $file, $jsonFlags = 0)
         throw new Exception("Failed write to \"$file\"");
     }
 
-    echo "Done \n";
+    if (outputEnabled()) {
+        echo "Done \n";
+    }
 }
 
 function deleteFromFilesystem($path)
