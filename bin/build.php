@@ -617,7 +617,7 @@ function handleGeneralCurrencyData($supplementalData = array())
 
         echo "Done.\n";
 
-        saveJsonFile($regions, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'currency.regions.json');
+        saveJsonFile($regions, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'territory.currencies.json');
     }
 }
 
@@ -903,6 +903,28 @@ function handleSingleLocaleDataIdentity($identityData = array(), $destinationDir
 
 /**
  *
+ * Extract currency data for single locale
+ *
+ * @param array $currenciesData
+ * @param string $destinationDir
+ * @throws Exception
+ */
+function handleSingleLocaleDataCurrencies($currenciesData = array(), $destinationDir = "")
+{
+
+    foreach($currenciesData as $currency) {
+        if (!isset($currency['@attributes']['type']) || !isset($currency['displayName'])) {
+            throw new Exception('Bad data for currency!');
+        }
+    }
+
+    saveJsonFile($identity, $destinationDir . DIRECTORY_SEPARATOR . 'currency.json', JSON_FORCE_OBJECT);
+}
+
+
+
+/**
+ *
  * Extract naming data for such simple data lists as territory, language, script names
  *
  * @param $type
@@ -952,15 +974,19 @@ function handleSingleLocaleData($locale, $localeFile)
             //handleSingleLocaleDataIdentity($localeData['ldml']['identity'], $localeDirectory);
 
             if (isset($localeData['ldml']['localeDisplayNames']['territories']['territory'])) {
-                handleSingleLocaleDataSimpleNames('territory', $localeData['ldml']['localeDisplayNames']['territories']['territory'], $localeDirectory, 'territory.names.json');
+                //handleSingleLocaleDataSimpleNames('territory', $localeData['ldml']['localeDisplayNames']['territories']['territory'], $localeDirectory, 'territory.names.json');
             }
 
             if (isset($localeData['ldml']['localeDisplayNames']['languages']['language'])) {
-                handleSingleLocaleDataSimpleNames('language', $localeData['ldml']['localeDisplayNames']['languages']['language'], $localeDirectory, 'language.names.json');
+                //handleSingleLocaleDataSimpleNames('language', $localeData['ldml']['localeDisplayNames']['languages']['language'], $localeDirectory, 'language.names.json');
             }
 
             if (isset($localeData['ldml']['localeDisplayNames']['scripts']['script'])) {
-                handleSingleLocaleDataSimpleNames('script', $localeData['ldml']['localeDisplayNames']['scripts']['script'], $localeDirectory, 'script.names.json');
+                //handleSingleLocaleDataSimpleNames('script', $localeData['ldml']['localeDisplayNames']['scripts']['script'], $localeDirectory, 'script.names.json');
+            }
+
+            if (isset($localeData['ldml']['numbers']['currencies']['currency'])) {
+                handleSingleLocaleDataCurrencies($localeData['ldml']['numbers']['currencies']['currency'], $localeDirectory);
             }
 
             //handleSingleLocaleDataNumbers();
@@ -1144,7 +1170,7 @@ function buildSupplementalData()
                 //'handleGeneralTerritoryInfoData',
                 //'handleGeneralTerritoryContainmentData',
                 //'handleGeneralTerritoryMapping',
-                'handleGeneralCurrencyMapping'
+                //'handleGeneralCurrencyMapping'
             )
         ),
         'numeric'       => array(
@@ -1165,7 +1191,6 @@ function buildSupplementalData()
             echo "$dataCategory data was built. \n";
         }
     }
-    die();
 }
 
 function buildCLDRJson()
