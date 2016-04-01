@@ -758,9 +758,8 @@ function handleGeneralTerritoryMapping($supplementalData = array())
     echo "Extract territory codes mapping... ";
 
     if (!isset($supplementalData['supplementalData']['codeMappings']['territoryCodes'])) {
-        throw new Exception('Territory codes mapping data!');
+        throw new Exception('Bad territory codes mapping data!');
     } else {
-
         $iso3166Alpha2 = array();
         $iso3166Alpha3Map = array();
         $iso3166NumericMap = array();
@@ -797,6 +796,43 @@ function handleGeneralTerritoryMapping($supplementalData = array())
     }
 }
 
+/**
+ *
+ * Extract territory codes mapping data
+ *
+ * @param array $supplementalData
+ * @throws Exception
+ */
+function handleGeneralCurrencyMapping($supplementalData = array())
+{
+    echo "Extract currency codes mapping... ";
+
+    if (!isset($supplementalData['supplementalData']['codeMappings']['currencyCodes'])) {
+        throw new Exception('Bad currency codes mapping data!');
+    } else {
+        $iso4217Alpha = array();
+        $iso4217Numeric = array();
+
+        foreach($supplementalData['supplementalData']['codeMappings']['currencyCodes'] as $codesMap) {
+            $codes = $codesMap['@attributes'];
+
+            $iso4217Alpha[] = $codes['type'];
+
+            if (isset($codes['numeric'])) {
+                $iso4217Numeric[sprintf('%03d', $codes['numeric'])] = $codes['type'];
+            }
+        }
+
+        $currencyCodes = array(
+            'iso4217alpha' => $iso4217Alpha,
+            'iso4217numeric_to_iso4217alpha' => $iso4217Numeric
+        );
+
+        saveJsonFile($currencyCodes, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'currency.codes.json');
+
+        echo "Done.\n";
+    }
+}
 
 /**
  *
@@ -1107,7 +1143,8 @@ function buildSupplementalData()
                 //'handleGeneralCurrencyData',
                 //'handleGeneralTerritoryInfoData',
                 //'handleGeneralTerritoryContainmentData',
-                'handleGeneralTerritoryMapping'
+                //'handleGeneralTerritoryMapping',
+                'handleGeneralCurrencyMapping'
             )
         ),
         'numeric'       => array(
@@ -1128,6 +1165,7 @@ function buildSupplementalData()
             echo "$dataCategory data was built. \n";
         }
     }
+    die();
 }
 
 function buildCLDRJson()
