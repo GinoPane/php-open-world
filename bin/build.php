@@ -911,14 +911,70 @@ function handleSingleLocaleDataIdentity($identityData = array(), $destinationDir
  */
 function handleSingleLocaleDataCurrencies($currenciesData = array(), $destinationDir = "")
 {
+    $currencies = array();
 
-    foreach($currenciesData as $currency) {
-        if (!isset($currency['@attributes']['type']) || !isset($currency['displayName'])) {
+    foreach($currenciesData as $rawCurrencyData) {
+        if (!isset($rawCurrencyData['@attributes']['type'])) {
             throw new Exception('Bad data for currency!');
         }
+
+        $currencyData = array();
+        $currencyData['names'] = array();
+
+        if (isset($rawCurrencyData['displayName'])) {
+            if (is_array($rawCurrencyData['displayName'])) {
+                if (!isset($rawCurrencyData['displayName']['@value'])) {
+                    foreach($rawCurrencyData['displayName'] as $nameData) {
+                        if (is_array($nameData)) {
+                            if (isset($nameData['@attributes']['count'])) {
+                                $currencyData['names'][$nameData['@attributes']['count']] = $nameData['@value'];
+                            } else {
+                                $currencyData['names']['default'] = $nameData['@value'];
+                            }
+                        } else {
+                            $currencyData['names']['default'] = $nameData;
+                        }
+                    }
+                } else {
+                    $currencyData['names']['default'] = $rawCurrencyData['displayName']['@value'];
+                }
+            } else {
+                $currencyData['names']['default'] = $rawCurrencyData['displayName'];
+            }
+        } else {
+            $currencyData['names']['default'] = '';
+        }
+
+        $currencyData['symbols'] = array();
+
+        if (isset($rawCurrencyData['symbol'])) {
+            if (is_array($rawCurrencyData['symbol'])) {
+                if (!isset($rawCurrencyData['symbol']['@value'])) {
+                    foreach($rawCurrencyData['symbol'] as $symbolData) {
+                        if (is_array($symbolData)) {
+                            if (isset($symbolData['@attributes']['alt'])) {
+                                $currencyData['symbols'][$symbolData['@attributes']['alt']] = $symbolData['@value'];
+                            } else {
+                                $currencyData['symbols']['default'] = $symbolData['@value'];
+                            }
+                        } else {
+                            $currencyData['symbols']['default'] = $symbolData;
+                        }
+                    }
+                } else {
+                    $currencyData['symbols']['default'] = $rawCurrencyData['symbol']['@value'];
+                }
+            } else {
+                $currencyData['symbols']['default'] = $rawCurrencyData['symbol'];
+            }
+        } else {
+            $currencyData['symbols']['default'] = '';
+        }
+
+        $currencies[$rawCurrencyData['@attributes']['type']] = $currencyData;
     }
 
-    saveJsonFile($identity, $destinationDir . DIRECTORY_SEPARATOR . 'currency.json', JSON_FORCE_OBJECT);
+    saveJsonFile($currencies, $destinationDir . DIRECTORY_SEPARATOR . 'currency.json', JSON_FORCE_OBJECT);
 }
 
 
