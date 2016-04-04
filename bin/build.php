@@ -874,7 +874,7 @@ function handleNumberingSystemsData($numbersData = array())
 
 /**
  *
- * Extract identity data for single locale
+ * Extract identity data for a single locale
  *
  * @param array $identityData
  * @param string $destinationDir
@@ -903,7 +903,7 @@ function handleSingleLocaleDataIdentity($identityData = array(), $destinationDir
 
 /**
  *
- * Extract currency data for single locale
+ * Extract currency data for a single locale
  *
  * @param array $currenciesData
  * @param string $destinationDir
@@ -974,10 +974,61 @@ function handleSingleLocaleDataCurrencies($currenciesData = array(), $destinatio
         $currencies[$rawCurrencyData['@attributes']['type']] = $currencyData;
     }
 
-    saveJsonFile($currencies, $destinationDir . DIRECTORY_SEPARATOR . 'currency.json', JSON_FORCE_OBJECT);
+    saveJsonFile($currencies, $destinationDir . DIRECTORY_SEPARATOR . 'currency.names.json', JSON_FORCE_OBJECT);
 }
 
 
+/**
+ *
+ * Extract symbols data for a single locale
+ *
+ * @param array $symbolsData
+ * @param string $destinationDir
+ * @throws Exception
+ */
+function handleSingleLocaleDataSymbols($symbolsData = array(), $destinationDir = "")
+{
+    $handleSingleNumberingSystem  = function($symbolsData, &$symbols) {
+        if (isset($symbolsData['@attributes']['numberSystem'])) {
+            $numberingSystem = $symbolsData['@attributes']['numberSystem'];
+            $data = array();
+
+            unset($symbolsData['@attributes']);
+
+            foreach($symbolsData as $name => $value) {
+                if (!is_array($value)) {
+                    $data[$name] = $value;
+                } else {
+                    if ($name !== 'alias') {
+                        $data[$name] = $value['@value'];
+                    } else {
+                        $matches= array();
+
+                        preg_match("/'(.+)'/", $value['@attributes']['path'], $matches);
+
+                        if ($matches[1]) {
+                            $data[$name] = $matches[1];
+                        }
+                    }
+                }
+            }
+
+            $symbols[$numberingSystem] = $data;
+        }
+    };
+
+    $symbols = array();
+
+    if (isset($symbolsData['@attributes'])) {
+        $handleSingleNumberingSystem($symbolsData, $symbols);
+    } else {
+        foreach ($symbolsData as $numberingSystemSymbolData) {
+            $handleSingleNumberingSystem($numberingSystemSymbolData, $symbols);
+        }
+    }
+
+    saveJsonFile($symbols, $destinationDir . DIRECTORY_SEPARATOR . 'number.symbols.json', JSON_FORCE_OBJECT);
+}
 
 /**
  *
@@ -1042,7 +1093,11 @@ function handleSingleLocaleData($locale, $localeFile)
             }
 
             if (isset($localeData['ldml']['numbers']['currencies']['currency'])) {
-                handleSingleLocaleDataCurrencies($localeData['ldml']['numbers']['currencies']['currency'], $localeDirectory);
+                //handleSingleLocaleDataCurrencies($localeData['ldml']['numbers']['currencies']['currency'], $localeDirectory);
+            }
+
+            if (isset($localeData['ldml']['numbers']['symbols'])) {
+                handleSingleLocaleDataSymbols($localeData['ldml']['numbers']['symbols'], $localeDirectory);
             }
 
             //handleSingleLocaleDataNumbers();
