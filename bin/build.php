@@ -1032,6 +1032,62 @@ function handleSingleLocaleDataSymbols($symbolsData = array(), $destinationDir =
 
 /**
  *
+ * Extract symbols data for a single locale
+ *
+ * @param array $symbolsData
+ * @param string $destinationDir
+ * @throws Exception
+ */
+function handleSingleLocaleDataCurrencyFormats($formatsData = array(), $destinationDir = "")
+{
+    foreach($formatsData as $format) {
+        print_r($format);
+    }
+die();
+    $handleSingleNumberingSystem  = function($symbolsData, &$symbols) {
+        if (isset($symbolsData['@attributes']['numberSystem'])) {
+            $numberingSystem = $symbolsData['@attributes']['numberSystem'];
+            $data = array();
+
+            unset($symbolsData['@attributes']);
+
+            foreach($symbolsData as $name => $value) {
+                if (!is_array($value)) {
+                    $data[$name] = $value;
+                } else {
+                    if ($name !== 'alias') {
+                        $data[$name] = $value['@value'];
+                    } else {
+                        $matches= array();
+
+                        preg_match("/'(.+)'/", $value['@attributes']['path'], $matches);
+
+                        if ($matches[1]) {
+                            $data[$name] = $matches[1];
+                        }
+                    }
+                }
+            }
+
+            $symbols[$numberingSystem] = $data;
+        }
+    };
+
+    $symbols = array();
+
+    if (isset($symbolsData['@attributes'])) {
+        $handleSingleNumberingSystem($symbolsData, $symbols);
+    } else {
+        foreach ($symbolsData as $numberingSystemSymbolData) {
+            $handleSingleNumberingSystem($numberingSystemSymbolData, $symbols);
+        }
+    }
+
+    saveJsonFile($symbols, $destinationDir . DIRECTORY_SEPARATOR . 'number.symbols.json', JSON_FORCE_OBJECT);
+}
+
+/**
+ *
  * Extract naming data for such simple data lists as territory, language, script names
  *
  * @param $type
@@ -1068,6 +1124,7 @@ function handleSingleLocaleDataSimpleNames($type, $rawData, $destinationDir, $fi
  */
 function handleSingleLocaleData($locale, $localeFile)
 {
+    $localeFile = 'd:\Projects\php-open-world\php-open-world\bin\temp\cldr-29-beta-1-source\main\root.xml';
     $localeData = getXmlDataFileContentsAsArray($localeFile);
 
     if ($localeData) {
@@ -1097,14 +1154,18 @@ function handleSingleLocaleData($locale, $localeFile)
             }
 
             if (isset($localeData['ldml']['numbers']['symbols'])) {
-                handleSingleLocaleDataSymbols($localeData['ldml']['numbers']['symbols'], $localeDirectory);
+                //handleSingleLocaleDataSymbols($localeData['ldml']['numbers']['symbols'], $localeDirectory);
+            }
+
+            if (isset($localeData['ldml']['numbers']['currencyFormats'])) {
+                handleSingleLocaleDataCurrencyFormats($localeData['ldml']['numbers']['currencyFormats'], $localeDirectory);
             }
 
             //handleSingleLocaleDataNumbers();
             //handleSingleLocaleDataTerritoryNames();
             //handleSingleLocaleDataCurrencies();
         }
-
+die();
     } else {
         throw new Exception("Failed to get \"$locale\" locale data");
     }
