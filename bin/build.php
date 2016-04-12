@@ -1044,6 +1044,22 @@ function handleSingleLocaleDataCurrencyFormats($formatsData = array(), $destinat
         print_r($format);
     }
 die();
+    $currencyFormats = array();
+
+    foreach($formatsData as $format) {
+        if (isset($format['alias']) && isset($format['@attributes']['numberSystem'])) {
+            $matches= array();
+
+            preg_match("/'(.+)'/", $format['alias']['@attributes']['path'], $matches);
+
+            if ($matches[1]) {
+                $currencyFormats[$format['@attributes']['numberSystem']] = $matches[1];
+            }
+        } elseif (isset($format['currencyFormatLength'])) {
+
+        }
+    }
+
     $handleSingleNumberingSystem  = function($symbolsData, &$symbols) {
         if (isset($symbolsData['@attributes']['numberSystem'])) {
             $numberingSystem = $symbolsData['@attributes']['numberSystem'];
