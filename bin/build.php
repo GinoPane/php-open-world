@@ -1034,33 +1034,14 @@ function handleSingleLocaleDataSymbols($symbolsData = array(), $destinationDir =
  *
  * Extract symbols data for a single locale
  *
- * @param array $symbolsData
+ * @param array $formatsData
  * @param string $destinationDir
  * @throws Exception
  */
 function handleSingleLocaleDataCurrencyFormats($formatsData = array(), $destinationDir = "")
 {
-    foreach($formatsData as $format) {
-        print_r($format);
-    }
-die();
-    $currencyFormats = array();
-
-    foreach($formatsData as $format) {
-        if (isset($format['alias']) && isset($format['@attributes']['numberSystem'])) {
-            $matches= array();
-
-            preg_match("/'(.+)'/", $format['alias']['@attributes']['path'], $matches);
-
-            if ($matches[1]) {
-                $currencyFormats[$format['@attributes']['numberSystem']] = $matches[1];
-            }
-        } elseif (isset($format['currencyFormatLength'])) {
-
-        }
-    }
-
-    $handleSingleNumberingSystem  = function($symbolsData, &$symbols) {
+    $handleSingleCurrencyFormat  = function($formatData, &$currencyFormats) {
+        var_dump($formatData); die();
         if (isset($symbolsData['@attributes']['numberSystem'])) {
             $numberingSystem = $symbolsData['@attributes']['numberSystem'];
             $data = array();
@@ -1085,21 +1066,57 @@ die();
                 }
             }
 
-            $symbols[$numberingSystem] = $data;
+            $currencyFormats[$numberingSystem] = $data;
         }
     };
 
-    $symbols = array();
+    $currencyFormats = array();
 
-    if (isset($symbolsData['@attributes'])) {
-        $handleSingleNumberingSystem($symbolsData, $symbols);
+    if (isset($currencyFormats['@attributes'])) {
+        $handleSingleCurrencyFormat($formatsData, $currencyFormats);
     } else {
-        foreach ($symbolsData as $numberingSystemSymbolData) {
-            $handleSingleNumberingSystem($numberingSystemSymbolData, $symbols);
+        foreach ($formatsData as $formatData) {
+            $handleSingleCurrencyFormat($formatData, $currencyFormats);
+        }
+    }
+die();
+    $currencyFormats = array();
+
+    foreach($formatsData as $format) {
+        if (isset($format['alias']) && isset($format['@attributes']['numberSystem'])) {
+            $matches= array();
+
+            preg_match("/'(.+)'/", $format['alias']['@attributes']['path'], $matches);
+
+            if ($matches[1]) {
+                $currencyFormats[$format['@attributes']['numberSystem']] = array('alias' => $matches[1]);
+            }
+        } elseif (isset($format['currencyFormatLength']) && isset($format['@attributes']['numberSystem'])) {
+            foreach($format['currencyFormatLength'] as $formats) {
+                if (isset($formats['currencyFormat'])) {
+                    if (isset($formats['currencyFormat']['pattern']) && isset($formats['currencyFormat']['@attributes']['type'])) {
+
+                    } else {
+                        foreach($formats['currencyFormat'] as $currencyFormat) {
+                            if (isset($currencyFormat['alias'])) {
+                                $matches= array();
+
+                                preg_match("/'(.+)'/", $currencyFormat['alias']['@attributes']['path'], $matches);
+
+                                if ($matches[1]) {
+                                    $currencyFormats[$format['@attributes']['numberSystem']][$currencyFormat['@attributes']['type']] = array('alias' => $matches[1]);
+                                }
+                            } else {
+
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
-    saveJsonFile($symbols, $destinationDir . DIRECTORY_SEPARATOR . 'number.symbols.json', JSON_FORCE_OBJECT);
+    saveJsonFile($currencyFormats, $destinationDir . DIRECTORY_SEPARATOR . 'number.currencies.json', JSON_FORCE_OBJECT);
 }
 
 /**
