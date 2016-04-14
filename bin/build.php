@@ -854,13 +854,13 @@ function handleNumberingSystemsData($numbersData = array())
             if (!empty($system['@attributes'])) {
                 $systemCode = $system['@attributes']['id'];
 
-                unset($system['@attributes']['type']);
+                unset($system['@attributes']['id']);
 
                 if (isset($system['@attributes']['digits'])) {
                     $system['@attributes']['digits'] = preg_split('/(?<!^)(?!$)/u', $system['@attributes']['digits']);
                 }
 
-                $numberingSystems[$systemCode] = $system;
+                $numberingSystems[$systemCode] = $system['@attributes'];
             } else {
                 throw new Exception("Wrong numbering system data provided (data key: $key)!");
             }
@@ -1040,79 +1040,75 @@ function handleSingleLocaleDataSymbols($symbolsData = array(), $destinationDir =
  */
 function handleSingleLocaleDataCurrencyFormats($formatsData = array(), $destinationDir = "")
 {
-    $handleSingleCurrencyFormat  = function($formatData, &$currencyFormats) {
-        var_dump($formatData); die();
-        if (isset($symbolsData['@attributes']['numberSystem'])) {
-            $numberingSystem = $symbolsData['@attributes']['numberSystem'];
-            $data = array();
+    $handleSingleNumberingSystemCurrencyFormat  = function($formatData, &$currencyFormats) {
+        $handleSingleCurrencyFormatLength = function($currencyFormatLength, &$numberingSystemCurrencyFormats) {
+            $handleSinglePatternType = function($patternType, &$currencyFormatType) {
+                if (isset($patternType['alias'])) {
+                    $matches= array();
 
-            unset($symbolsData['@attributes']);
+                    preg_match("/'(.+)'/", $patternType['alias']['@attributes']['path'], $matches);
 
-            foreach($symbolsData as $name => $value) {
-                if (!is_array($value)) {
-                    $data[$name] = $value;
+                    if ($matches[1]) {
+                        $currencyFormatType[$patternType['@attributes']['type']] = array('alias' => $matches[1]);
+                    }
                 } else {
-                    if ($name !== 'alias') {
-                        $data[$name] = $value['@value'];
-                    } else {
-                        $matches= array();
+                    if (is_array($patternType['pattern'])) {
+                        $patterns = array();
 
-                        preg_match("/'(.+)'/", $value['@attributes']['path'], $matches);
-
-                        if ($matches[1]) {
-                            $data[$name] = $matches[1];
+                        foreach($patternType['pattern'] as $patternData) {
+                            $patterns[$patternData['@attributes']['type']][$patternData['@attributes']['count']] = $patternData['@value'];
                         }
+
+                        $currencyFormatType[$patternType['@attributes']['type']] = $patterns;
+                    } else {
+                        $currencyFormatType[$patternType['@attributes']['type']] = $patternType['pattern'];
                     }
                 }
+            };
+
+            $currencyFormatType = 'default';
+
+            if (isset($currencyFormatLength['@attributes']['type'])) {
+                $currencyFormatType = $currencyFormatLength['@attributes']['type'];
             }
 
-            $currencyFormats[$numberingSystem] = $data;
+            if (isset($currencyFormatLength['currencyFormat']['pattern'])) {
+                $handleSinglePatternType($currencyFormatLength['currencyFormat'], $numberingSystemCurrencyFormats[$currencyFormatType]);
+            } else {
+                foreach ($currencyFormatLength['currencyFormat'] as $patternType) {
+                    $handleSinglePatternType($patternType, $numberingSystemCurrencyFormats[$currencyFormatType]);
+                }
+            }
+        };
+
+        if (isset($formatData['alias']) && isset($formatData['@attributes']['numberSystem'])) {
+            $matches= array();
+
+            preg_match("/'(.+)'/", $formatData['alias']['@attributes']['path'], $matches);
+
+            if ($matches[1]) {
+                $currencyFormats[$formatData['@attributes']['numberSystem']] = array('alias' => $matches[1]);
+            }
+        } elseif (isset($formatData['currencyFormatLength']) && isset($formatData['@attributes']['numberSystem'])) {
+            $currencyFormats[$formatData['@attributes']['numberSystem']] = array();
+
+            if (isset($formatData['currencyFormatLength']['currencyFormat'])) {
+                $handleSingleCurrencyFormatLength($formatData['currencyFormatLength'], $currencyFormats[$formatData['@attributes']['numberSystem']]);
+            } else {
+                foreach ($formatData['currencyFormatLength'] as $currencyFormatLength) {
+                    $handleSingleCurrencyFormatLength($currencyFormatLength, $currencyFormats[$formatData['@attributes']['numberSystem']]);
+                }
+            }
         }
     };
 
     $currencyFormats = array();
 
-    if (isset($currencyFormats['@attributes'])) {
-        $handleSingleCurrencyFormat($formatsData, $currencyFormats);
+    if (isset($formatsData['@attributes'])) {
+        $handleSingleNumberingSystemCurrencyFormat($formatsData, $currencyFormats);
     } else {
         foreach ($formatsData as $formatData) {
-            $handleSingleCurrencyFormat($formatData, $currencyFormats);
-        }
-    }
-die();
-    $currencyFormats = array();
-
-    foreach($formatsData as $format) {
-        if (isset($format['alias']) && isset($format['@attributes']['numberSystem'])) {
-            $matches= array();
-
-            preg_match("/'(.+)'/", $format['alias']['@attributes']['path'], $matches);
-
-            if ($matches[1]) {
-                $currencyFormats[$format['@attributes']['numberSystem']] = array('alias' => $matches[1]);
-            }
-        } elseif (isset($format['currencyFormatLength']) && isset($format['@attributes']['numberSystem'])) {
-            foreach($format['currencyFormatLength'] as $formats) {
-                if (isset($formats['currencyFormat'])) {
-                    if (isset($formats['currencyFormat']['pattern']) && isset($formats['currencyFormat']['@attributes']['type'])) {
-
-                    } else {
-                        foreach($formats['currencyFormat'] as $currencyFormat) {
-                            if (isset($currencyFormat['alias'])) {
-                                $matches= array();
-
-                                preg_match("/'(.+)'/", $currencyFormat['alias']['@attributes']['path'], $matches);
-
-                                if ($matches[1]) {
-                                    $currencyFormats[$format['@attributes']['numberSystem']][$currencyFormat['@attributes']['type']] = array('alias' => $matches[1]);
-                                }
-                            } else {
-
-                            }
-                        }
-                    }
-                }
-            }
+            $handleSingleNumberingSystemCurrencyFormat($formatData, $currencyFormats);
         }
     }
 
@@ -1157,7 +1153,7 @@ function handleSingleLocaleDataSimpleNames($type, $rawData, $destinationDir, $fi
  */
 function handleSingleLocaleData($locale, $localeFile)
 {
-    $localeFile = 'd:\Projects\php-open-world\php-open-world\bin\temp\cldr-29-beta-1-source\main\root.xml';
+    //$localeFile = 'd:\Projects\php-open-world\php-open-world\bin\temp\cldr-29-beta-1-source\main\root.xml';
     $localeData = getXmlDataFileContentsAsArray($localeFile);
 
     if ($localeData) {
@@ -1168,37 +1164,33 @@ function handleSingleLocaleData($locale, $localeFile)
         $localeDirectory = DESTINATION_LOCALES_DIR . DIRECTORY_SEPARATOR . $locale;
 
         if (handleCreateDirectory($localeDirectory)) {
-            //handleSingleLocaleDataIdentity($localeData['ldml']['identity'], $localeDirectory);
+            handleSingleLocaleDataIdentity($localeData['ldml']['identity'], $localeDirectory);
 
             if (isset($localeData['ldml']['localeDisplayNames']['territories']['territory'])) {
-                //handleSingleLocaleDataSimpleNames('territory', $localeData['ldml']['localeDisplayNames']['territories']['territory'], $localeDirectory, 'territory.names.json');
+                handleSingleLocaleDataSimpleNames('territory', $localeData['ldml']['localeDisplayNames']['territories']['territory'], $localeDirectory, 'territory.names.json');
             }
 
             if (isset($localeData['ldml']['localeDisplayNames']['languages']['language'])) {
-                //handleSingleLocaleDataSimpleNames('language', $localeData['ldml']['localeDisplayNames']['languages']['language'], $localeDirectory, 'language.names.json');
+                handleSingleLocaleDataSimpleNames('language', $localeData['ldml']['localeDisplayNames']['languages']['language'], $localeDirectory, 'language.names.json');
             }
 
             if (isset($localeData['ldml']['localeDisplayNames']['scripts']['script'])) {
-                //handleSingleLocaleDataSimpleNames('script', $localeData['ldml']['localeDisplayNames']['scripts']['script'], $localeDirectory, 'script.names.json');
+                handleSingleLocaleDataSimpleNames('script', $localeData['ldml']['localeDisplayNames']['scripts']['script'], $localeDirectory, 'script.names.json');
             }
 
             if (isset($localeData['ldml']['numbers']['currencies']['currency'])) {
-                //handleSingleLocaleDataCurrencies($localeData['ldml']['numbers']['currencies']['currency'], $localeDirectory);
+                handleSingleLocaleDataCurrencies($localeData['ldml']['numbers']['currencies']['currency'], $localeDirectory);
             }
 
             if (isset($localeData['ldml']['numbers']['symbols'])) {
-                //handleSingleLocaleDataSymbols($localeData['ldml']['numbers']['symbols'], $localeDirectory);
+                handleSingleLocaleDataSymbols($localeData['ldml']['numbers']['symbols'], $localeDirectory);
             }
 
             if (isset($localeData['ldml']['numbers']['currencyFormats'])) {
                 handleSingleLocaleDataCurrencyFormats($localeData['ldml']['numbers']['currencyFormats'], $localeDirectory);
             }
-
-            //handleSingleLocaleDataNumbers();
-            //handleSingleLocaleDataTerritoryNames();
-            //handleSingleLocaleDataCurrencies();
         }
-die();
+
     } else {
         throw new Exception("Failed to get \"$locale\" locale data");
     }
@@ -1371,16 +1363,16 @@ function buildSupplementalData()
     $dataHandlers = array(
         'supplemental'  => array(
             $supplementalDataFile => array(
-                //'handleGeneralCurrencyData',
-                //'handleGeneralTerritoryInfoData',
-                //'handleGeneralTerritoryContainmentData',
-                //'handleGeneralTerritoryMapping',
-                //'handleGeneralCurrencyMapping'
+                'handleGeneralCurrencyData',
+                'handleGeneralTerritoryInfoData',
+                'handleGeneralTerritoryContainmentData',
+                'handleGeneralTerritoryMapping',
+                'handleGeneralCurrencyMapping'
             )
         ),
         'numeric'       => array(
             $numberingSystemsDataFile => array(
-                //'handleNumberingSystemsData'
+                'handleNumberingSystemsData'
             )
         )
     );
@@ -1403,116 +1395,6 @@ function buildCLDRJson()
     buildSupplementalData();
 
     buildLocaleSpecificData();
-}
-
-function copyData()
-{
-    $copy = array(
-        'ca-gregorian.json' => array('kind' => 'main', 'save-as' => 'calendar.json', 'roots' => array('dates', 'calendars', 'gregorian')),
-        'timeZoneNames.json' => array('kind' => 'main', 'roots' => array('dates', 'timeZoneNames')),
-        'listPatterns.json' => array('kind' => 'main', 'roots' => array('listPatterns')),
-        'units.json' => array('kind' => 'main', 'roots' => array('units')),
-        'dateFields.json' => array('kind' => 'main', 'roots' => array('dates', 'fields')),
-        'languages.json' => array('kind' => 'main', 'roots' => array('localeDisplayNames', 'languages')),
-        'territories.json' => array('kind' => 'main', 'roots' => array('localeDisplayNames', 'territories')),
-        'localeDisplayNames.json' => array('kind' => 'main', 'roots' => array('localeDisplayNames')),
-        'numbers.json' => array('kind' => 'main', 'roots' => array('numbers')),
-        'layout.json' => array('kind' => 'main', 'roots' => array('layout', 'orientation')),
-        'measurementSystemNames.json' => array('kind' => 'main', 'roots' => array('localeDisplayNames', 'measurementSystemNames')),
-        'currencies.json' => array('kind' => 'main', 'roots' => array('numbers', 'currencies')),
-        /*
-        'characters.json' => array('kind' => 'main', 'roots' => array('characters')),
-        'contextTransforms.json' => array('kind' => 'main', 'roots' => array('contextTransforms')),
-
-        'delimiters.json' => array('kind' => 'main', 'roots' => array('delimiters')),
-        'scripts.json' => array('kind' => 'main', 'roots' => array('localeDisplayNames', 'scripts')),
-        'transformNames.json' => array('kind' => 'main', 'roots' => array('localeDisplayNames', 'transformNames')),
-        'variants.json' => array('kind' => 'main', 'roots' => array('localeDisplayNames', 'variants')),
-        */
-        'telephoneCodeData.json' => array('kind' => 'supplemental', 'roots' => array('supplemental', 'telephoneCodeData')),
-        'territoryInfo.json' => array('kind' => 'supplemental', 'roots' => array('supplemental', 'territoryInfo')),
-        'weekData.json' => array('kind' => 'supplemental', 'roots' => array('supplemental', 'weekData')),
-        'parentLocales.json' => array('kind' => 'supplemental', 'roots' => array('supplemental', 'parentLocales', 'parentLocale')),
-        'likelySubtags.json' => array('kind' => 'supplemental', 'roots' => array('supplemental', 'likelySubtags')),
-        'territoryContainment.json' => array('kind' => 'supplemental', 'roots' => array('supplemental', 'territoryContainment')),
-        'metaZones.json' => array('kind' => 'supplemental', 'roots' => array('supplemental', 'metaZones')),
-        'plurals.json' => array('kind' => 'supplemental', 'roots' => array('supplemental', 'plurals-type-cardinal')),
-        'measurementData.json' => array('kind' => 'supplemental', 'roots' => array('supplemental', 'measurementData')),
-        'currencyData.json' => array('kind' => 'supplemental', 'roots' => array('supplemental', 'currencyData')),
-    );
-    $src = SOURCE_DIR_DATA . DIRECTORY_SEPARATOR . 'main';
-    $locales = scandir($src);
-    if ($locales === false) {
-        throw new Exception("Failed to retrieve the file list of $src");
-    }
-    $locales = array_diff($locales, array('.', '..', 'en-001'));
-    foreach ($locales as $locale) {
-        if (is_dir($src . DIRECTORY_SEPARATOR . $locale)) {
-            echo "Parsing locale $locale... ";
-            $destFolder = DESTINATION_DIR . DIRECTORY_SEPARATOR . $locale;
-            if (is_dir($destFolder)) {
-                deleteFromFilesystem($destFolder);
-            }
-            if (mkdir($destFolder) === false) {
-                throw new Exception("Failed to create $destFolder\n");
-            }
-            foreach ($copy as $copyFrom => $info) {
-                if ($info['kind'] === 'main') {
-                    $copyTo = array_key_exists('save-as', $info) ? $info['save-as'] : $copyFrom;
-                    if ($copyTo === false) {
-                        $copyTo = $copyFrom;
-                    }
-                    $dstFile = $destFolder . DIRECTORY_SEPARATOR . $copyTo;
-                    $useLocale = $locale;
-                    $srcFile = $src . DIRECTORY_SEPARATOR . $useLocale . DIRECTORY_SEPARATOR . $copyFrom;
-                    if (!is_file($srcFile)) {
-                        $useLocale = 'en';
-                        $srcFile = $src . DIRECTORY_SEPARATOR . $useLocale . DIRECTORY_SEPARATOR . $copyFrom;
-                        if (!is_file($srcFile)) {
-                            throw new Exception("File not found: $srcFile");
-                        }
-                    }
-                    $info['roots'] = array_merge(array('main', $useLocale), $info['roots']);
-                    $info['unsetByPath'] = array_merge(
-                        isset($info['unsetByPath']) ? $info['unsetByPath'] : array(),
-                        array(
-                            "/main/$useLocale" => array('identity'),
-                        )
-                    );
-                    copyDataFile($srcFile, $info, $dstFile);
-                }
-            }
-            echo "Done.\n";
-        }
-    }
-    $defaultCurrencyData = readJsonFile(DESTINATION_DIR . DIRECTORY_SEPARATOR . 'en' . DIRECTORY_SEPARATOR . 'currencies.json');
-    foreach ($locales as $locale) {
-        if ($locale !== 'en') {
-            if (is_dir($src . DIRECTORY_SEPARATOR . $locale)) {
-                copyMissingData_currency($defaultCurrencyData, DESTINATION_DIR . DIRECTORY_SEPARATOR . $locale . DIRECTORY_SEPARATOR . 'currencies.json');
-            }
-        }
-    }
-    echo 'Parsing supplemental files... ';
-    $src = SOURCE_DIR_DATA . DIRECTORY_SEPARATOR . 'supplemental';
-    foreach ($copy as $copyFrom => $info) {
-        if ($info['kind'] === 'supplemental') {
-            $copyTo = array_key_exists('save-as', $info) ? $info['save-as'] : $copyFrom;
-            $dstFile = DESTINATION_DIR . DIRECTORY_SEPARATOR . $copyTo;
-            $srcFile = $src . DIRECTORY_SEPARATOR . $copyFrom;
-            if (!is_file($srcFile)) {
-                throw new Exception("File not found: $srcFile");
-            }
-            $info['unsetByPath'] = array_merge(
-                isset($info['unsetByPath']) ? $info['unsetByPath'] : array(),
-                array(
-                    '/supplemental' => array('version', 'generation'),
-                )
-            );
-            copyDataFile($srcFile, $info, $dstFile);
-        }
-    }
-    echo "Done.\n";
 }
 
 function readJsonFile($file)
@@ -1578,181 +1460,6 @@ function deleteFromFilesystem($path)
             throw new Exception("Failed to delete directory $path");
         }
     }
-}
-
-function toPhpSprintf($fmt)
-{
-    $result = $fmt;
-    if (is_string($fmt)) {
-        $result = str_replace('%', '%%', $result);
-        $result = preg_replace_callback(
-            '/\\{(\\d+)\\}/',
-            function ($matches) {
-                return '%' . (1 + intval($matches[1])) . '$s';
-            },
-            $fmt
-        );
-    }
-
-    return $result;
-}
-
-function fixMetazoneInfo($a)
-{
-    checkOneKey($a, 'usesMetazone');
-    $a = $a['usesMetazone'];
-    foreach (array_keys($a) as $key) {
-        switch ($key) {
-            case '_mzone':
-            case '_from':
-            case '_to':
-                $a[substr($key, 1)] = $a[$key];
-                unset($a[$key]);
-                break;
-            default:
-                throw new Exception('Invalid metazoneInfo node');
-        }
-    }
-
-    return $a;
-}
-
-function checkOneKey($node, $key)
-{
-    if (!is_array($node)) {
-        throw new Exception("$node is not an array");
-    }
-    if (count($node) !== 1) {
-        throw new Exception("Expected just one node '$key', found these keys: " . implode(', ', array_keys($node)));
-    }
-    if (!array_key_exists($key, $node)) {
-        throw new Exception("Expected just one node '$key', found this key: " . implode(', ', array_keys($node)));
-    }
-}
-
-function numberFormatToRegularExpressions($symbols, $isoPattern)
-{
-    $p = explode(';', $isoPattern);
-    $patterns = array(
-        '+' => $p[0],
-        '-' => (count($p) == 1) ? "-{$p[0]}" : $p[1],
-    );
-    $result = array();
-    $m = null;
-    foreach ($patterns as $patternKey => $pattern) {
-        $rxPost = $rxPre = '';
-        if (preg_match('/(-)?([^0#E,\\.\\-+]*)(.+?)([^0#E,\\.\\-+]*)(-)?$/', $pattern, $m)) {
-            for ($i = 1; $i < 6; ++$i) {
-                if (!isset($m[$i])) {
-                    $m[$i] = '';
-                }
-            }
-            if (strlen($m[2]) > 0) {
-                $rxPre = preg_quote($m[2]);
-            }
-            $pattern = $m[1] . $m[3] . $m[5];
-            if (strlen($m[4]) > 0) {
-                $rxPost = preg_quote($m[4]);
-            }
-        }
-        $rx = '';
-        if (strpos($pattern, '.') !== false) {
-            list($intPattern, $decimalPattern) = explode('.', $pattern, 2);
-        } else {
-            $intPattern = $pattern;
-            $decimalPattern = '';
-        }
-        if (strpos($intPattern, 'E') !== false) {
-            switch ($intPattern) {
-                case '#E0':
-                case '#E00':
-                    $rx .= '(' . preg_quote($symbols['plusSign']) . ')?[0-9]+((' . preg_quote($symbols['decimal']) . ')[0-9]+)*[eE]((' . preg_quote($symbols['minusSign']) . ')|(' . preg_quote($symbols['plusSign']) . '))?[0-9]+';
-                    break;
-                case '-#E0':
-                case '-#E00':
-                    $rx .= '(' . preg_quote($symbols['minusSign']) . ')?[0-9]+((' . preg_quote($symbols['decimal']) . ')[0-9]+)*[eE]((' . preg_quote($symbols['minusSign']) . ')|(' . preg_quote($symbols['plusSign']) . '))?[0-9]+';
-                    break;
-                default:
-                    throw new \Exception("Invalid chunk ('$intPattern') in pattern '$pattern'");
-            }
-        } elseif (strpos($intPattern, ',') !== false) {
-            $chunks = explode(',', $intPattern);
-            $maxChunkIndex = count($chunks) - 1;
-            $prevChunk = null;
-            for ($chunkIndex = 0; $chunkIndex <= $maxChunkIndex; ++$chunkIndex) {
-                $chunk = $chunks[$chunkIndex];
-                $nextChunk = ($chunkIndex == $maxChunkIndex) ? null : $chunks[$chunkIndex + 1];
-                switch ($chunk) {
-                    case '#':
-                    case '-#':
-                        if ($chunk === '-#') {
-                            $rx .= '(' . preg_quote($symbols['minusSign']) . ')?';
-                        } else {
-                            $rx .= '(' . preg_quote($symbols['plusSign']) . ')?';
-                        }
-                        if ($nextChunk === '##0') {
-                            $rx .= '[0-9]{1,3}';
-                        } elseif ($nextChunk === '##') {
-                            $rx .= '[0-9]{1,2}';
-                        } else {
-                            throw new \Exception("Invalid chunk #$chunkIndex ('$chunk') in pattern '$pattern'");
-                        }
-                        break;
-                    case '##':
-                        if ($nextChunk === '##0') {
-                            $rx .= '((' . preg_quote($symbols['group']) . ')?[0-9]{2})*';
-                        } else {
-                            throw new \Exception("Invalid chunk #$chunkIndex ('$chunk') in pattern '$pattern'");
-                        }
-                        break;
-                    case '##0':
-                        if ($prevChunk === '##') {
-                            $rx .= '[0-9]';
-                        } elseif (($prevChunk === '#') || ($prevChunk === '-#')) {
-                            $rx .= '((' . preg_quote($symbols['group']) . ')?[0-9]{3})*';
-                        } else {
-                            throw new \Exception("Invalid chunk #$chunkIndex ('$chunk') in pattern '$pattern'");
-                        }
-                        break;
-                    case '#0':
-                        if ($chunkIndex === 0) {
-                            $rx .= '[0-9]*';
-                        } else {
-                            throw new \Exception("Invalid chunk #$chunkIndex ('$chunk') in pattern '$pattern'");
-                        }
-                        break;
-                }
-                $prevChunk = $chunk;
-            }
-        } else {
-            throw new \Exception("Invalid chunk ('$intPattern') in pattern '$pattern'");
-        }
-
-        if (strlen($decimalPattern) > 0) {
-            switch ($decimalPattern) {
-                case '###':
-                    $rx .= '((' . preg_quote($symbols['decimal']) . ')[0-9]+)?';
-                    break;
-                case '###-':
-                    $rx .= '((' . preg_quote($symbols['decimal']) . ')[0-9]+)?(' . preg_quote($symbols['minusSign']) . ')';
-                    break;
-                default:
-                    $m = null;
-                    if (preg_match('/^(0+)(-?)$/', $decimalPattern, $m)) {
-                        $rx .= '(' . preg_quote($symbols['decimal']) . ')[0-9]{' . strlen($m[1]) . '}';
-                        if (substr($decimalPattern, -1) === '-') {
-                            $rx .= '(' . preg_quote($symbols['minusSign']) . ')';
-                        }
-                    } else {
-                        throw new \Exception("Invalid chunk ('$decimalPattern') in pattern '$pattern'");
-                    }
-            }
-        }
-
-        $result[$patternKey] = '/^' . $rxPre . $rx . $rxPost . '$/u';
-    }
-
-    return $result;
 }
 
 set_error_handler('handleError');
