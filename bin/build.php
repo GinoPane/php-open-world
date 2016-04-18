@@ -83,7 +83,7 @@ function outputEnabled()
 }
 
 /**
- * Worlds most popular languages
+ * World's most popular languages
  * 
  * Sources:
  * https://en.wikipedia.org/wiki/List_of_languages_by_number_of_native_speakers,
