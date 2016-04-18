@@ -913,7 +913,7 @@ function handleSingleLocaleDataCurrencies($currenciesData = array(), $destinatio
 {
     $currencies = array();
 
-    foreach($currenciesData as $rawCurrencyData) {
+    $handleSingleCurrency = function($rawCurrencyData, &$currencies) {
         if (!isset($rawCurrencyData['@attributes']['type'])) {
             throw new Exception('Bad data for currency!');
         }
@@ -972,6 +972,14 @@ function handleSingleLocaleDataCurrencies($currenciesData = array(), $destinatio
         }
 
         $currencies[$rawCurrencyData['@attributes']['type']] = $currencyData;
+    };
+
+    if (!isset($currenciesData['@attributes']['type'])) {
+        foreach($currenciesData as $rawCurrencyData) {
+            $handleSingleCurrency($rawCurrencyData, $currencies);
+        }
+    } else {
+        $handleSingleCurrency($currenciesData, $currencies);
     }
 
     saveJsonFile($currencies, $destinationDir . DIRECTORY_SEPARATOR . 'currency.names.json', JSON_FORCE_OBJECT);
@@ -1000,7 +1008,17 @@ function handleSingleLocaleDataSymbols($symbolsData = array(), $destinationDir =
                     $data[$name] = $value;
                 } else {
                     if ($name !== 'alias') {
-                        $data[$name] = $value['@value'];
+                        if (isset($value['@value'])) {
+                            $data[$name] = $value['@value'];
+                        } else {
+                            foreach($value as $subValue) {
+                                if (is_string($subValue)) {
+                                    $data[$name]['default'] = $subValue;
+                                } elseif(isset($subValue['@value']) && isset($subValue['@attributes']['alt'])) {
+                                    $data[$name][$subValue['@attributes']['alt']] = $subValue['@value'];
+                                }
+                            }
+                        }
                     } else {
                         $matches= array();
 
@@ -1052,7 +1070,7 @@ function handleSingleLocaleDataCurrencyFormats($formatsData = array(), $destinat
                         $currencyFormatType[$patternType['@attributes']['type']] = array('alias' => $matches[1]);
                     }
                 } else {
-                    if (is_array($patternType['pattern'])) {
+                    if (is_array($patternType['pattern']) && !isset($patternType['pattern']['@attributes'])) {
                         $patterns = array();
 
                         foreach($patternType['pattern'] as $patternData) {
@@ -1061,7 +1079,8 @@ function handleSingleLocaleDataCurrencyFormats($formatsData = array(), $destinat
 
                         $currencyFormatType[$patternType['@attributes']['type']] = $patterns;
                     } else {
-                        $currencyFormatType[$patternType['@attributes']['type']] = $patternType['pattern'];
+                        $currencyFormatType[(isset($patternType['pattern']['@attributes']['type']) ? $patternType['pattern']['@attributes']['type'] : 'default')] =
+                            isset($patternType['pattern']['@value']) ? $patternType['pattern']['@value'] : (string)$patternType['pattern'];
                     }
                 }
             };
@@ -1129,7 +1148,7 @@ function handleSingleLocaleDataSimpleNames($type, $rawData, $destinationDir, $fi
 {
     $data = array();
 
-    foreach($rawData as $rawRowData) {
+    $handleSingleRowData = function($rawRowData, $type, &$data) {
         if (!isset($rawRowData['@value']) || !isset($rawRowData['@attributes']['type'])) {
             throw new Exception("Bad $type data detected!");
         } else {
@@ -1138,6 +1157,14 @@ function handleSingleLocaleDataSimpleNames($type, $rawData, $destinationDir, $fi
 
             $data[$code] = $name;
         }
+    };
+
+    if (!isset($rawData['@value'])) {
+        foreach($rawData as $rawRowData) {
+            $handleSingleRowData($rawRowData, $type, $data);
+        }
+    } else {
+        $handleSingleRowData($rawData, $type, $data);
     }
 
     saveJsonFile($data, $destinationDir . DIRECTORY_SEPARATOR . $fileName, JSON_FORCE_OBJECT);
@@ -1153,7 +1180,6 @@ function handleSingleLocaleDataSimpleNames($type, $rawData, $destinationDir, $fi
  */
 function handleSingleLocaleData($locale, $localeFile)
 {
-    //$localeFile = 'd:\Projects\php-open-world\php-open-world\bin\temp\cldr-29-beta-1-source\main\root.xml';
     $localeData = getXmlDataFileContentsAsArray($localeFile);
 
     if ($localeData) {
@@ -1342,7 +1368,7 @@ function buildLocaleSpecificData()
     disableOutput();
 
     foreach ($locales as $key => $locale) {
-        handleSingleLocaleData($locale, $localesDirectory . DIRECTORY_SEPARATOR . $locale . ".xml");
+        handleSingleLocaleData($locale, $localesDirectory . DIRECTORY_SEPARATOR . str_replace('-', '_', $locale) . ".xml");
 
         showStatus($key + 1, $overallCount, " Processed \"$locale\"", 50);
     }
