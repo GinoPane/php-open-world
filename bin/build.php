@@ -50,6 +50,9 @@ defined('POST_CLEAN') or define('POST_CLEAN', false);
  */
 $disableOutput = false;
 
+/**
+ * Set flag of disabled output
+ */
 function disableOutput()
 {
     global $disableOutput;
@@ -57,6 +60,9 @@ function disableOutput()
     $disableOutput = true;
 }
 
+/**
+ * Set flag of enabled output
+ */
 function enableOutput()
 {
     global $disableOutput;
@@ -64,6 +70,11 @@ function enableOutput()
     $disableOutput = false;
 }
 
+/**
+ * Check output flag
+ *
+ * @return bool
+ */
 function outputEnabled()
 {
     global $disableOutput;
@@ -73,6 +84,7 @@ function outputEnabled()
 
 /**
  * Worlds most popular languages
+ * 
  * Sources:
  * https://en.wikipedia.org/wiki/List_of_languages_by_number_of_native_speakers,
  * https://www.loc.gov/standards/iso639-2/php/code_list.php.
@@ -115,7 +127,6 @@ $defaultLocales = array(
 );
 
 /**
- *
  * Service class for XML handling, converts xml to arrays and arrays to xml
  * @see XmlWrapper::arrayToXml, XmlWrapper::xmlToArray
  *
@@ -472,7 +483,6 @@ function showStatus($done, $total, $text = '', $size = 30)
 }
 
 /**
- *
  * Custom error handler
  *
  * @param $errno
@@ -489,7 +499,6 @@ function handleError($errno, $errstr, $errfile, $errline)
 }
 
 /**
- *
  * Handle errors from CLDR checkout
  *
  * @param $directory
@@ -517,8 +526,7 @@ function handleCldrCheckoutError($directory, $code, $output)
 }
 
 /**
- *
- * Check existence, create directory and handle possible error
+ * Check existence, create directory and handle any possible error
  *
  * @param string $directory
  * @return bool
@@ -544,7 +552,6 @@ function handleCreateDirectory($directory = "")
 }
 
 /**
- *
  * Extract currency fractions and region data
  *
  * @param array $supplementalData
@@ -622,7 +629,6 @@ function handleGeneralCurrencyData($supplementalData = array())
 }
 
 /**
- *
  * Extract territory info data
  *
  * @param array $supplementalData
@@ -687,7 +693,6 @@ function handleGeneralTerritoryInfoData($supplementalData = array())
 }
 
 /**
- *
  * Extract territory containment info and flat info for quick search
  *
  * @param array $supplementalData
@@ -745,9 +750,7 @@ function handleGeneralTerritoryContainmentData($supplementalData = array())
     }
 }
 
-
 /**
- *
  * Extract territory codes mapping data
  *
  * @param array $supplementalData
@@ -797,7 +800,6 @@ function handleGeneralTerritoryMapping($supplementalData = array())
 }
 
 /**
- *
  * Extract territory codes mapping data
  *
  * @param array $supplementalData
@@ -835,7 +837,6 @@ function handleGeneralCurrencyMapping($supplementalData = array())
 }
 
 /**
- *
  * Extract numbering systems data
  *
  * @param array $numbersData
@@ -873,7 +874,6 @@ function handleNumberingSystemsData($numbersData = array())
 }
 
 /**
- *
  * Extract identity data for a single locale
  *
  * @param array $identityData
@@ -902,7 +902,6 @@ function handleSingleLocaleDataIdentity($identityData = array(), $destinationDir
 }
 
 /**
- *
  * Extract currency data for a single locale
  *
  * @param array $currenciesData
@@ -985,9 +984,7 @@ function handleSingleLocaleDataCurrencies($currenciesData = array(), $destinatio
     saveJsonFile($currencies, $destinationDir . DIRECTORY_SEPARATOR . 'currency.names.json', JSON_FORCE_OBJECT);
 }
 
-
 /**
- *
  * Extract symbols data for a single locale
  *
  * @param array $symbolsData
@@ -1049,7 +1046,6 @@ function handleSingleLocaleDataSymbols($symbolsData = array(), $destinationDir =
 }
 
 /**
- *
  * Extract symbols data for a single locale
  *
  * @param array $formatsData
@@ -1135,7 +1131,6 @@ function handleSingleLocaleDataCurrencyFormats($formatsData = array(), $destinat
 }
 
 /**
- *
  * Extract naming data for such simple data lists as territory, language, script names
  *
  * @param $type
@@ -1171,7 +1166,6 @@ function handleSingleLocaleDataSimpleNames($type, $rawData, $destinationDir, $fi
 }
 
 /**
- * 
  * Build different kinds of data for a single locale
  * 
  * @param $locale
@@ -1223,6 +1217,8 @@ function handleSingleLocaleData($locale, $localeFile)
 }
 
 /**
+ * Read an xml file and get its contents as array
+ *
  * @param $fileName
  * @return array
  * @throws Exception
@@ -1245,6 +1241,8 @@ function getXmlDataFileContentsAsArray($fileName)
 }
 
 /**
+ * Process xml data file with processing handlers
+ *
  * @param $fileName
  * @param array $handlers
  * @throws Exception
@@ -1267,7 +1265,6 @@ function processDataFileWithHandlers($fileName, $handlers = array())
 }
 
 /**
- *
  * SVN checkout CLDR data
  *
  * @throws Exception
@@ -1314,7 +1311,7 @@ function checkoutCLDR()
     }
 }
 
-/*
+/**
  * Build specific data for locales (every or only most popular)
  */
 function buildLocaleSpecificData()
@@ -1378,7 +1375,7 @@ function buildLocaleSpecificData()
     echo "Done.\n";
 }
 
-/*
+/**
  * Build supplemental data for CLDR
  */
 function buildSupplementalData()
@@ -1416,6 +1413,11 @@ function buildSupplementalData()
     }
 }
 
+/**
+ * Build CLDR json data
+ *
+ * @throws Exception
+ */
 function buildCLDRJson()
 {
     buildSupplementalData();
@@ -1423,23 +1425,14 @@ function buildCLDRJson()
     buildLocaleSpecificData();
 }
 
-function readJsonFile($file)
-{
-    $json = file_get_contents($file);
-
-    if ($json === false) {
-        throw new Exception("Failed to read from \"$file\"");
-    }
-
-    $data = json_decode($json, true);
-
-    if ($data === null) {
-        throw new Exception("Failed to decode data in \"$file\"");
-    }
-
-    return $data;
-}
-
+/**
+ * Put data into a json file
+ *
+ * @param $data
+ * @param $file
+ * @param int $jsonFlags
+ * @throws Exception
+ */
 function saveJsonFile($data, $file, $jsonFlags = 0)
 {
     if (outputEnabled()) {
@@ -1468,6 +1461,12 @@ function saveJsonFile($data, $file, $jsonFlags = 0)
     }
 }
 
+/**
+ * Delete object specified by its path from the filesystem
+ *
+ * @param $path
+ * @throws Exception
+ */
 function deleteFromFilesystem($path)
 {
     if (is_file($path)) {
