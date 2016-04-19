@@ -1,8 +1,6 @@
 <?php
 
 /**
- *
- *
  * Script for building initial OpenWorld's data.
  *
  * There's no need to split the script into many files, that's why everything what it needs is placed in the same file.
@@ -10,6 +8,8 @@
  *
  *
  * Initially Based on Punic's build script (https://github.com/punic/punic)
+ *
+ * @author Sergey <Gino Pane> Karavay
  *
  */
 
@@ -131,7 +131,7 @@ $defaultLocales = array(
  * @see XmlWrapper::arrayToXml, XmlWrapper::xmlToArray
  *
  *
- * @author GinoPane
+ * @author Sergey <Gino Pane> Karavay
  *
  */
 class XmlWrapper
