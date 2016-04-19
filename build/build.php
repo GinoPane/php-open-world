@@ -22,7 +22,7 @@ iconv_set_encoding('output_encoding', 'UTF-8');
 
 define('CLDR_VERSION', '29-beta-1');
 define('ROOT_DIR', dirname(__DIR__));
-define('SOURCE_DIR', ROOT_DIR . DIRECTORY_SEPARATOR . 'bin' . DIRECTORY_SEPARATOR . 'temp');
+define('SOURCE_DIR', ROOT_DIR . DIRECTORY_SEPARATOR . 'build' . DIRECTORY_SEPARATOR . 'temp');
 define('DESTINATION_DIR', ROOT_DIR . DIRECTORY_SEPARATOR . 'data');
 define('DESTINATION_GENERAL_DIR', DESTINATION_DIR . DIRECTORY_SEPARATOR . 'general');
 define('DESTINATION_LOCALES_DIR', DESTINATION_DIR . DIRECTORY_SEPARATOR . 'locales');
