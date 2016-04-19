@@ -9,6 +9,9 @@
  *
  * Initially Based on Punic's build script (https://github.com/punic/punic)
  *
+ * Data is provided by CLDR (Unicode Common Locale Data Repository) - http://cldr.unicode.org/
+ * Information about data files markup can be found at LDML documentation (Locale Data Markup Language) - http://unicode.org/reports/tr35/
+ *
  * @author Sergey <Gino Pane> Karavay
  *
  */
