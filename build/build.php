@@ -840,6 +840,56 @@ function handleGeneralCurrencyMapping($supplementalData = array())
 }
 
 /**
+ * Extract language alias data
+ *
+ * @param array $supplementalData
+ * @throws Exception
+ */
+function handleLanguageAlias($supplementalData = array())
+{
+    echo "Extract language alias mapping... ";
+
+    if (!isset($supplementalData['supplementalData']['metadata']['alias']['languageAlias'])) {
+        throw new Exception('Bad language alias data!');
+    } else {
+        $languageAlias = array();
+
+        foreach($supplementalData['supplementalData']['metadata']['alias']['languageAlias'] as $alias) {
+            $languageAlias[$alias['@attributes']['type']] = $alias['@attributes']['replacement'];
+        }
+
+        saveJsonFile($languageAlias, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'language.alias.json');
+
+        echo "Done.\n";
+    }
+}
+
+/**
+ * Extract territory alias data
+ *
+ * @param array $supplementalData
+ * @throws Exception
+ */
+function handleTerritoryAlias($supplementalData = array())
+{
+    echo "Extract territory alias mapping... ";
+
+    if (!isset($supplementalData['supplementalData']['metadata']['alias']['territoryAlias'])) {
+        throw new Exception('Bad territory alias data!');
+    } else {
+        $territoryAlias = array();
+
+        foreach($supplementalData['supplementalData']['metadata']['alias']['territoryAlias'] as $alias) {
+            $territoryAlias[$alias['@attributes']['type']] = $alias['@attributes']['replacement'];
+        }
+
+        saveJsonFile($territoryAlias, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'territory.alias.json');
+
+        echo "Done.\n";
+    }
+}
+
+/**
  * Extract numbering systems data
  *
  * @param array $numbersData
@@ -1384,6 +1434,7 @@ function buildLocaleSpecificData()
 function buildSupplementalData()
 {
     $supplementalDataFile = LOCAL_VCS_DIR . str_replace("/", DIRECTORY_SEPARATOR, "/supplemental/supplementalData.xml");
+    $supplementalMetaDataFile = LOCAL_VCS_DIR . str_replace("/", DIRECTORY_SEPARATOR, "/supplemental/supplementalMetadata.xml");
     $numberingSystemsDataFile = LOCAL_VCS_DIR . str_replace("/", DIRECTORY_SEPARATOR, "/supplemental/numberingSystems.xml");
 
     $dataHandlers = array(
@@ -1394,6 +1445,10 @@ function buildSupplementalData()
                 'handleGeneralTerritoryContainmentData',
                 'handleGeneralTerritoryMapping',
                 'handleGeneralCurrencyMapping'
+            ),
+            $supplementalMetaDataFile => array(
+                'handleLanguageAlias',
+                'handleTerritoryAlias',
             )
         ),
         'numeric'       => array(
