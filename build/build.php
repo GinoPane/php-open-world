@@ -1436,6 +1436,7 @@ function buildSupplementalData()
     $supplementalDataFile = LOCAL_VCS_DIR . str_replace("/", DIRECTORY_SEPARATOR, "/supplemental/supplementalData.xml");
     $supplementalMetaDataFile = LOCAL_VCS_DIR . str_replace("/", DIRECTORY_SEPARATOR, "/supplemental/supplementalMetadata.xml");
     $numberingSystemsDataFile = LOCAL_VCS_DIR . str_replace("/", DIRECTORY_SEPARATOR, "/supplemental/numberingSystems.xml");
+    $likelySubtagsDataFile = LOCAL_VCS_DIR . str_replace("/", DIRECTORY_SEPARATOR, "/supplemental/likelySubtags.xml");
 
     $dataHandlers = array(
         'supplemental'  => array(
@@ -1449,6 +1450,11 @@ function buildSupplementalData()
             $supplementalMetaDataFile => array(
                 'handleLanguageAlias',
                 'handleTerritoryAlias',
+            )
+        ),
+        'likelySubtags'       => array(
+            $likelySubtagsDataFile => array(
+                'handleLikelySubtagsData'
             )
         ),
         'numeric'       => array(
