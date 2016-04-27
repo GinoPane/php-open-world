@@ -890,6 +890,37 @@ function handleTerritoryAlias($supplementalData = array())
 }
 
 /**
+ * Extract likely subtags data
+ *
+ * @param array $supplementalData
+ * @throws Exception
+ */
+function handleLikelySubtagsData($supplementalData = array())
+{
+    echo "Extract likely subtags data mapping... ";
+
+    if (!isset($supplementalData['supplementalData']['likelySubtags']['likelySubtag'])) {
+        throw new Exception('Bad likely subtags data!');
+    } else {
+        $likelySubtags = array();
+
+        foreach($supplementalData['supplementalData']['likelySubtags']['likelySubtag'] as $data) {
+            list($locale, $script, $territory) = explode('_', $data['@attributes']['to']);
+
+            $likelySubtags[$data['@attributes']['from']] = array(
+                'locale'    => $locale,
+                'script'    => $script,
+                'territory' => $territory
+            );
+        }
+
+        saveJsonFile($likelySubtags, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'likely.subtags.json');
+
+        echo "Done.\n";
+    }
+}
+
+/**
  * Extract numbering systems data
  *
  * @param array $numbersData
