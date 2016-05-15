@@ -645,6 +645,7 @@ function handleGeneralTerritoryInfoData($supplementalData = array())
         throw new Exception('Territory info data is not available!');
     } else {
         $territories = array();
+        $languageInfo = array();
 
         foreach ($supplementalData['supplementalData']['territoryInfo']['territory'] as $key => $territory) {
             if (!empty($territory['@attributes'])) {
@@ -681,6 +682,16 @@ function handleGeneralTerritoryInfoData($supplementalData = array())
 
                 if ($languageData) {
                     $territory['@attributes']['languageData'] = $languageData;
+
+                    $languages = array_keys($languageData);
+
+                    foreach($languages as $language) {
+                        if (!isset($languageInfo[$language])) {
+                            $languageInfo[$language] = array();
+                        }
+
+                        $languageInfo[$language][] = $isoRegionCode;
+                    }
                 }
 
                 $territories[$isoRegionCode] = $territory['@attributes'];
@@ -691,7 +702,10 @@ function handleGeneralTerritoryInfoData($supplementalData = array())
 
         echo "Done.\n";
 
+        ksort($languageInfo);
+
         saveJsonFile($territories, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'territory.info.json');
+        saveJsonFile($languageInfo, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'language.territories.json');
     }
 }
 
@@ -715,12 +729,6 @@ function handleGeneralTerritoryContainmentData($supplementalData = array())
                 $territoryCode = $territory['@attributes']['type'];
 
                 unset($territory['@attributes']['type']);
-
-                $languageData = array();
-
-                if ($languageData) {
-                    $territory['@attributes']['languageData'] = $languageData;
-                }
 
                 $containment[$territoryCode] = $territory['@attributes'];
             } else {
