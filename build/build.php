@@ -473,7 +473,7 @@ function showStatus($done, $total, $text = '', $size = 30)
 
     $elapsed = $now - $startTime;
 
-    $statusBar .= $text . "; remaining: " . number_format($eta) . " sec.  elapsed: " . number_format($elapsed) . " sec.";
+    $statusBar .= $text . "; " . number_format($eta) . " / " . number_format($elapsed) . " sec";
 
     echo "$statusBar  ";
 
@@ -1459,7 +1459,7 @@ function buildLocaleSpecificData()
     foreach ($locales as $key => $locale) {
         handleSingleLocaleData($locale, $localesDirectory . DIRECTORY_SEPARATOR . str_replace('-', '_', $locale) . ".xml");
 
-        showStatus($key + 1, $overallCount, " Processed \"$locale\"", 50);
+        showStatus($key + 1, $overallCount, " Locale \"$locale\"", 50);
     }
 
     enableOutput();

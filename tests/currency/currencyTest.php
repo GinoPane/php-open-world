@@ -1,6 +1,6 @@
 <?php
 
-class DataTest extends PHPUnit_Framework_TestCase
+class CurrencyTest extends PHPUnit_Framework_TestCase
 {
     protected function setUp()
     {
