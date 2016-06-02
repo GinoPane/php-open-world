@@ -1,16 +1,16 @@
 <phpunit colors="true" bootstrap="./tests/bootstrap.php">
 	<testsuites>
 		<testsuite name="Data tests">
-			<directory>./tests/data/</directory>
+			<directory>./tests/suites/data/</directory>
 		</testsuite>
         <testsuite name="Territory tests">
-            <directory>./tests/territory/</directory>
+            <directory>./tests/suites/territory/</directory>
         </testsuite>
         <testsuite name="Number tests">
-            <directory>./tests/number/</directory>
+            <directory>./tests/suites/number/</directory>
         </testsuite>
         <testsuite name="Currency tests">
-            <directory>./tests/currency/</directory>
+            <directory>./tests/suites/currency/</directory>
         </testsuite>
 	</testsuites>
 </phpunit>
