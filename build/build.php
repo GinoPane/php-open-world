@@ -848,6 +848,34 @@ function handleGeneralCurrencyMapping($supplementalData = array())
 }
 
 /**
+ * Extract parent locales mapping data
+ *
+ * @param array $supplementalData
+ * @throws Exception
+ */
+function handleGeneralParentLocales($supplementalData = array())
+{
+    echo "Extract parent locales mapping... ";
+
+    if (!isset($supplementalData['supplementalData']['parentLocales']['parentLocale'])) {
+        throw new Exception('Bad parent locales mapping data!');
+    } else {
+        $localeParents = array();
+
+        foreach($supplementalData['supplementalData']['parentLocales']['parentLocale'] as $parentLocaleMapping) {
+            $parent = $parentLocaleMapping['@attributes']['parent'];
+            $locales = $parentLocaleMapping['@attributes']['locales'];
+
+            $localeParents = array_merge($localeParents, array_fill_keys(explode(" ", $locales), $parent));
+        }
+
+        saveJsonFile($localeParents, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'locale.parents.json');
+
+        echo "Done.\n";
+    }
+}
+
+/**
  * Extract language alias data
  *
  * @param array $supplementalData
@@ -1490,7 +1518,8 @@ function buildSupplementalData()
                 'handleGeneralTerritoryInfoData',
                 'handleGeneralTerritoryContainmentData',
                 'handleGeneralTerritoryMapping',
-                'handleGeneralCurrencyMapping'
+                'handleGeneralCurrencyMapping',
+                'handleGeneralParentLocales'
             ),
             $supplementalMetaDataFile => array(
                 'handleLanguageAlias',
