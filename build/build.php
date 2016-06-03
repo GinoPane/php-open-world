@@ -863,7 +863,10 @@ function handleLanguageAlias($supplementalData = array())
         $languageAlias = array();
 
         foreach($supplementalData['supplementalData']['metadata']['alias']['languageAlias'] as $alias) {
-            $languageAlias[$alias['@attributes']['type']] = $alias['@attributes']['replacement'];
+            $languageAlias[$alias['@attributes']['type']] = array(
+                'replacement' => $alias['@attributes']['replacement'],
+                'reason' => $alias['@attributes']['reason']
+            );
         }
 
         saveJsonFile($languageAlias, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'language.alias.json');
@@ -888,7 +891,10 @@ function handleTerritoryAlias($supplementalData = array())
         $territoryAlias = array();
 
         foreach($supplementalData['supplementalData']['metadata']['alias']['territoryAlias'] as $alias) {
-            $territoryAlias[$alias['@attributes']['type']] = $alias['@attributes']['replacement'];
+            $territoryAlias[$alias['@attributes']['type']] = array(
+                'replacement' => $alias['@attributes']['replacement'],
+                'reason' => $alias['@attributes']['reason']
+            );
         }
 
         saveJsonFile($territoryAlias, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'territory.alias.json');
