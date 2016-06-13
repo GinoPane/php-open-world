@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenWorld;
+namespace OpenWorld\Data;
 
 class DataFile {
 

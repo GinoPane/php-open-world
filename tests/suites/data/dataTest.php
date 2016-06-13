@@ -1,16 +1,18 @@
 <?php
 
-use OpenWorld\DataFile;
+use OpenWorld\Data\DataFile;
 
 class DataTest extends PHPUnit_Framework_TestCase
 {
-    protected $dataProvider = null;
+    protected $localDataProvider = null;
+    protected $globalDataProvider = null;
 
     protected function setUp()
     {
-        $this->dataProvider = new DataFile();
+        $this->localDataProvider = new DataFile();
+        $this->globalDataProvider = new DataFile();
 
-        $this->markTestSkipped('This test has not been implemented yet.');
+        //$this->markTestSkipped('This test has not been implemented yet.');
     }
 
     public function generalFilesProvider()
@@ -56,25 +58,25 @@ class DataTest extends PHPUnit_Framework_TestCase
     {
         return [
             [
-                'currency.names.json'
+                'en', 'currency.names.json'
             ],
             [
-                'identity.json'
+                'en', 'identity.json'
             ],
             [
-                'language.names.json'
+                'en', 'language.names.json'
             ],
             [
-                'number.currencies.json'
+                'en', 'number.currencies.json'
             ],
             [
-                'number.symbols.json'
+                'en', 'number.symbols.json'
             ],
             [
-                'script.names.json'
+                'en', 'script.names.json'
             ],
             [
-                'territory.names.json'
+                'en', 'territory.names.json'
             ]
         ];
     }
@@ -99,6 +101,6 @@ class DataTest extends PHPUnit_Framework_TestCase
      */
     public function testLoadLocaleSpecificFiles($locale, $fileName)
     {
-
+        var_dump($locale, $fileName);
     }
 }

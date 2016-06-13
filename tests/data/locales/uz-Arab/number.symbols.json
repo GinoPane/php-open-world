@@ -1,0 +1,14 @@
+{
+    "arabext": {
+        "decimal": "٫",
+        "group": "٬",
+        "percentSign": "٪",
+        "exponential": "×۱۰^"
+    },
+    "latn": {
+        "decimal": ",",
+        "group": ".",
+        "plusSign": "‎+",
+        "minusSign": "‎−"
+    }
+}
