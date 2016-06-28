@@ -2,10 +2,7 @@
 
 namespace OpenWorld\Data\Provider;
 
-use OpenWorld\Data\DataFileAbstract;
-use OpenWorld\Data\DataFileInterface;
-
-class LocaleDataFile extends DataFileAbstract implements DataFileInterface {
+class LocaleDataFile extends DataProviderAbstract implements DataProviderInterface {
 
     public function load($fileName = '')
     {
