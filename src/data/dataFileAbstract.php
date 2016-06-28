@@ -2,6 +2,11 @@
 
 namespace OpenWorld\Data;
 
-class DataFileAbstract {
+abstract class DataFileAbstract {
+
+    protected function loadFile($path = '')
+    {
+
+    }
 
 }
