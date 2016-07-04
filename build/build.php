@@ -1577,12 +1577,12 @@ function saveJsonFile($data, $file, $jsonFlags = 0)
         echo "Saving data to \"$file\"... ";
     }
 
-    if (version_compare(PHP_VERSION, '5.4.0') >= 0) {
-        $jsonFlags |= JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE;
-        if (DEBUG) {
-            $jsonFlags |= JSON_PRETTY_PRINT;
-        }
+    $jsonFlags |= JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE;
+
+    if (DEBUG) {
+        $jsonFlags |= JSON_PRETTY_PRINT;
     }
+
     $json = json_encode($data, $jsonFlags);
     if ($json === false) {
         throw new Exception("Failed to serialize data for \"$file\"");
