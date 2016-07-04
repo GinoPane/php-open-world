@@ -32,21 +32,21 @@ if (isset($argv)) {
     foreach ($argv as $i => $arg) {
         if ($i > 0) {
             if ((strcasecmp($arg, 'debug') === 0) || (strcasecmp($arg, '--debug') === 0)) {
-                defined('DEBUG') or define('DEBUG', true);
+                define('DEBUG', true);
             }
             if ((strcasecmp($arg, 'full') === 0) || (strcasecmp($arg, '--full') === 0)) {
-                defined('FULL_JSON') or define('FULL_JSON', true);
+                define('FULL_JSON', true);
             }
             if ((strcasecmp($arg, 'post-clean') === 0) || (strcasecmp($arg, '--post-clean') === 0)) {
-                defined('POST_CLEAN') or define('POST_CLEAN', true);
+                define('POST_CLEAN', true);
             }
         }
     }
+} else {
+    define('DEBUG', false);
+    define('FULL_JSON', false);
+    define('POST_CLEAN', false);
 }
-
-defined('DEBUG') or define('DEBUG', false);
-defined('FULL_JSON') or define('FULL_JSON', false);
-defined('POST_CLEAN') or define('POST_CLEAN', false);
 
 /**
  * Enable/Disable supporting output of some functions
@@ -87,7 +87,7 @@ function outputEnabled()
 
 /**
  * World's most popular languages
- * 
+ *
  * Sources:
  * https://en.wikipedia.org/wiki/List_of_languages_by_number_of_native_speakers,
  * https://www.loc.gov/standards/iso639-2/php/code_list.php.
@@ -124,9 +124,11 @@ function outputEnabled()
  * 30. Polish - PL
  *
  */
-$defaultLocales = array(
-    'zh', 'es', 'en', 'hi', 'ar', 'pt', 'bn', 'ru', 'ja', 'pa', 'de', 'jv', 'wuu', 'ms', 'te',
-    'vi', 'ko', 'fr', 'mr', 'ta', 'ur', 'tr', 'it', 'yue', 'th', 'gu', 'zh', 'nan', 'fa', 'pl'
+define('DEFAULT_LOCALES',
+    [
+        'zh', 'es', 'en', 'hi', 'ar', 'pt', 'bn', 'ru', 'ja', 'pa', 'de', 'jv', 'wuu', 'ms', 'te',
+        'vi', 'ko', 'fr', 'mr', 'ta', 'ur', 'tr', 'it', 'yue', 'th', 'gu', 'zh', 'nan', 'fa', 'pl'
+    ]
 );
 
 /**
@@ -141,9 +143,9 @@ class XmlWrapper
 {
     private $_xml = null;
     private $_encoding = 'UTF-8';
-    private $_options = array();
+    private $_options = [];
 
-    private function __construct($options = array())
+    private function __construct($options = [])
     {
         $version = "1.0";
         $formatOutput = true;
@@ -171,7 +173,7 @@ class XmlWrapper
      *
      * @return XmlWrapper
      */
-    public static function getParser($options = array())
+    public static function getParser($options = [])
     {
         return new XmlWrapper($options);
     }
@@ -185,7 +187,7 @@ class XmlWrapper
      * @see XmlWrapper::getParser() for more
      * @return DomDocument
      */
-    public function arrayToXml(array $data, $options = array())
+    public function arrayToXml(array $data, $options = [])
     {
         $xml = $this->_getXMLRoot();
 
@@ -233,7 +235,7 @@ class XmlWrapper
         }
 
         if (!$error) {
-            $output = array();
+            $output = [];
 
             $output[$xml->documentElement->tagName] =
                 $this->_convertXmlToArray($xml->documentElement);
@@ -252,7 +254,7 @@ class XmlWrapper
      * @param array $arr
      * @return DOMElement
      */
-    private function _convertArrayToXml($nodeName, $arr = array())
+    private function _convertArrayToXml($nodeName, $arr = [])
     {
         $node = $this->_xml->createElement($nodeName);
 
@@ -286,7 +288,7 @@ class XmlWrapper
                     trigger_error("Illegal tag name: \"{$key}\" in node \"{$nodeName}\"");
                 }
                 if (is_array($value) && is_numeric(key($value))) {
-                    $numericKeyName = isset($this->_options['numericKeysName']) ? $this->_options['numericKeysName'] : $key;
+                    $numericKeyName = $this->_options['numericKeysName'] ?? $key;
                     foreach ($value as $subValue) {
                         $node->appendChild($this->_convertArrayToXml(
                             $numericKeyName,
@@ -315,7 +317,7 @@ class XmlWrapper
      */
     private function _convertXmlToArray(DOMNode $node)
     {
-        $output = array();
+        $output = [];
 
         switch ($node->nodeType) {
             case XML_CDATA_SECTION_NODE:
@@ -336,7 +338,7 @@ class XmlWrapper
 
                         // assume more nodes of same kind are coming
                         if (!isset($output[$t])) {
-                            $output[$t] = array();
+                            $output[$t] = [];
                         }
                         $output[$t][] = $v;
                     } else {
@@ -368,7 +370,7 @@ class XmlWrapper
                     }
                     // if its an leaf node, store the value in @value instead of directly storing it.
                     if (!is_array($output)) {
-                        $output = array('@value' => $output);
+                        $output = ['@value' => $output];
                     }
                     $output['@attributes'] = $a;
                 }
@@ -412,7 +414,7 @@ class XmlWrapper
 
     private function _isValidTagName($tag)
     {
-        $matches = array();
+        $matches = [];
         $pattern = '/^[a-z_]+[a-z0-9\:\-\.\_]*[^:]*$/i';
         return preg_match($pattern, $tag, $matches) && $matches[0] == $tag;
     }
@@ -560,16 +562,16 @@ function handleCreateDirectory($directory = "")
  * @param array $supplementalData
  * @throws Exception
  */
-function handleGeneralCurrencyData($supplementalData = array())
+function handleGeneralCurrencyData($supplementalData = [])
 {
     echo "Extract currency fractions data... ";
 
     if (!isset($supplementalData['supplementalData']['currencyData']['fractions']['info'])) {
         throw new Exception('Currency fractions data is not available!');
     } else {
-        $fractions = array();
+        $fractions = [];
 
-        foreach($supplementalData['supplementalData']['currencyData']['fractions']['info'] as $key => $fraction) {
+        foreach ($supplementalData['supplementalData']['currencyData']['fractions']['info'] as $key => $fraction) {
             if (!empty($fraction['@attributes'])) {
                 $isoCode = $fraction['@attributes']['iso4217'];
 
@@ -593,11 +595,11 @@ function handleGeneralCurrencyData($supplementalData = array())
     } else {
         $regions = array();
 
-        foreach($supplementalData['supplementalData']['currencyData']['region'] as $key => $region) {
+        foreach ($supplementalData['supplementalData']['currencyData']['region'] as $key => $region) {
             if (!empty($region['@attributes'])) {
                 $isoRegionCode = $region['@attributes']['iso3166'];
 
-                $currencies = array();
+                $currencies = [];
 
                 if (isset($region['currency']['@attributes']) && isset($region['currency']['@value'])) {
                     $isoCode = $region['currency']['@attributes']['iso4217'];
@@ -606,7 +608,7 @@ function handleGeneralCurrencyData($supplementalData = array())
 
                     $currencies[$isoCode] = $region['currency']['@attributes'];
                 } else {
-                    foreach($region['currency'] as $currencyKey => $currency) {
+                    foreach ($region['currency'] as $currencyKey => $currency) {
                         if (!empty($currency['@attributes'])) {
                             $isoCode = $currency['@attributes']['iso4217'];
 
@@ -637,15 +639,15 @@ function handleGeneralCurrencyData($supplementalData = array())
  * @param array $supplementalData
  * @throws Exception
  */
-function handleGeneralTerritoryInfoData($supplementalData = array())
+function handleGeneralTerritoryInfoData($supplementalData = [])
 {
     echo "Extract territory info data... ";
 
     if (!isset($supplementalData['supplementalData']['territoryInfo']['territory'])) {
         throw new Exception('Territory info data is not available!');
     } else {
-        $territories = array();
-        $languageInfo = array();
+        $territories = [];
+        $languageInfo = [];
 
         foreach ($supplementalData['supplementalData']['territoryInfo']['territory'] as $key => $territory) {
             if (!empty($territory['@attributes'])) {
@@ -653,7 +655,7 @@ function handleGeneralTerritoryInfoData($supplementalData = array())
 
                 unset($territory['@attributes']['type']);
 
-                $languageData = array();
+                $languageData = [];
 
                 if (isset($territory['languagePopulation'])) {
 
@@ -685,9 +687,9 @@ function handleGeneralTerritoryInfoData($supplementalData = array())
 
                     $languages = array_keys($languageData);
 
-                    foreach($languages as $language) {
+                    foreach ($languages as $language) {
                         if (!isset($languageInfo[$language])) {
-                            $languageInfo[$language] = array();
+                            $languageInfo[$language] = [];
                         }
 
                         $languageInfo[$language][] = $isoRegionCode;
@@ -715,14 +717,14 @@ function handleGeneralTerritoryInfoData($supplementalData = array())
  * @param array $supplementalData
  * @throws Exception
  */
-function handleGeneralTerritoryContainmentData($supplementalData = array())
+function handleGeneralTerritoryContainmentData($supplementalData = [])
 {
     echo "Extract territory containment data... ";
 
     if (!isset($supplementalData['supplementalData']['territoryContainment']['group'])) {
         throw new Exception('Territory containment data is not available!');
     } else {
-        $containment = array();
+        $containment = [];
 
         foreach ($supplementalData['supplementalData']['territoryContainment']['group'] as $key => $territory) {
             if (!empty($territory['@attributes'])) {
@@ -736,13 +738,13 @@ function handleGeneralTerritoryContainmentData($supplementalData = array())
             }
         }
 
-        $flatTerritoryParentData = array();
+        $flatTerritoryParentData = [];
 
         foreach ($containment as $parentTerritoryId => $data) {
             if (!empty($data['contains'])) {
                 $children = explode(' ', $data['contains']);
 
-                foreach($children as $childCode) {
+                foreach ($children as $childCode) {
                     $flatTerritoryParentData[$childCode] = (string)$parentTerritoryId;
                 }
             }
@@ -750,10 +752,10 @@ function handleGeneralTerritoryContainmentData($supplementalData = array())
 
         ksort($flatTerritoryParentData);
 
-        $territories = array(
-            'containment'   => $containment,
-            'flat'          => $flatTerritoryParentData
-        );
+        $territories = [
+            'containment' => $containment,
+            'flat' => $flatTerritoryParentData
+        ];
 
         saveJsonFile($territories, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'territory.containment.json', JSON_FORCE_OBJECT);
 
@@ -767,19 +769,19 @@ function handleGeneralTerritoryContainmentData($supplementalData = array())
  * @param array $supplementalData
  * @throws Exception
  */
-function handleGeneralTerritoryMapping($supplementalData = array())
+function handleGeneralTerritoryMapping($supplementalData = [])
 {
     echo "Extract territory codes mapping... ";
 
     if (!isset($supplementalData['supplementalData']['codeMappings']['territoryCodes'])) {
         throw new Exception('Bad territory codes mapping data!');
     } else {
-        $iso3166Alpha2 = array();
-        $iso3166Alpha3Map = array();
-        $iso3166NumericMap = array();
-        $fips10Map = array();
+        $iso3166Alpha2 = [];
+        $iso3166Alpha3Map = [];
+        $iso3166NumericMap = [];
+        $fips10Map = [];
 
-        foreach($supplementalData['supplementalData']['codeMappings']['territoryCodes'] as $codesMap) {
+        foreach ($supplementalData['supplementalData']['codeMappings']['territoryCodes'] as $codesMap) {
             $codes = $codesMap['@attributes'];
 
             $iso3166Alpha2[] = $codes['type'];
@@ -797,12 +799,12 @@ function handleGeneralTerritoryMapping($supplementalData = array())
             }
         }
 
-        $territoryCodes = array(
+        $territoryCodes = [
             'iso3166alpha2' => $iso3166Alpha2,
             'iso3166alpha3_to_iso3166alpha2' => $iso3166Alpha3Map,
             'iso3166numeric_to_iso3166alpha2' => $iso3166NumericMap,
             'fips10_to_iso3166alpha2' => $fips10Map
-        );
+        ];
 
         saveJsonFile($territoryCodes, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'territory.codes.json');
 
@@ -816,17 +818,17 @@ function handleGeneralTerritoryMapping($supplementalData = array())
  * @param array $supplementalData
  * @throws Exception
  */
-function handleGeneralCurrencyMapping($supplementalData = array())
+function handleGeneralCurrencyMapping($supplementalData = [])
 {
     echo "Extract currency codes mapping... ";
 
     if (!isset($supplementalData['supplementalData']['codeMappings']['currencyCodes'])) {
         throw new Exception('Bad currency codes mapping data!');
     } else {
-        $iso4217Alpha = array();
-        $iso4217Numeric = array();
+        $iso4217Alpha = [];
+        $iso4217Numeric = [];
 
-        foreach($supplementalData['supplementalData']['codeMappings']['currencyCodes'] as $codesMap) {
+        foreach ($supplementalData['supplementalData']['codeMappings']['currencyCodes'] as $codesMap) {
             $codes = $codesMap['@attributes'];
 
             $iso4217Alpha[] = $codes['type'];
@@ -836,10 +838,10 @@ function handleGeneralCurrencyMapping($supplementalData = array())
             }
         }
 
-        $currencyCodes = array(
+        $currencyCodes = [
             'iso4217alpha' => $iso4217Alpha,
             'iso4217numeric_to_iso4217alpha' => $iso4217Numeric
-        );
+        ];
 
         saveJsonFile($currencyCodes, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'currency.codes.json');
 
@@ -853,16 +855,16 @@ function handleGeneralCurrencyMapping($supplementalData = array())
  * @param array $supplementalData
  * @throws Exception
  */
-function handleGeneralParentLocales($supplementalData = array())
+function handleGeneralParentLocales($supplementalData = [])
 {
     echo "Extract parent locales mapping... ";
 
     if (!isset($supplementalData['supplementalData']['parentLocales']['parentLocale'])) {
         throw new Exception('Bad parent locales mapping data!');
     } else {
-        $localeParents = array();
+        $localeParents = [];
 
-        foreach($supplementalData['supplementalData']['parentLocales']['parentLocale'] as $parentLocaleMapping) {
+        foreach ($supplementalData['supplementalData']['parentLocales']['parentLocale'] as $parentLocaleMapping) {
             $parent = $parentLocaleMapping['@attributes']['parent'];
             $locales = $parentLocaleMapping['@attributes']['locales'];
 
@@ -881,20 +883,20 @@ function handleGeneralParentLocales($supplementalData = array())
  * @param array $supplementalData
  * @throws Exception
  */
-function handleLanguageAlias($supplementalData = array())
+function handleLanguageAlias($supplementalData = [])
 {
     echo "Extract language alias mapping... ";
 
     if (!isset($supplementalData['supplementalData']['metadata']['alias']['languageAlias'])) {
         throw new Exception('Bad language alias data!');
     } else {
-        $languageAlias = array();
+        $languageAlias = [];
 
-        foreach($supplementalData['supplementalData']['metadata']['alias']['languageAlias'] as $alias) {
-            $languageAlias[$alias['@attributes']['type']] = array(
+        foreach ($supplementalData['supplementalData']['metadata']['alias']['languageAlias'] as $alias) {
+            $languageAlias[$alias['@attributes']['type']] = [
                 'replacement' => $alias['@attributes']['replacement'],
                 'reason' => $alias['@attributes']['reason']
-            );
+            ];
         }
 
         saveJsonFile($languageAlias, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'language.alias.json');
@@ -909,20 +911,20 @@ function handleLanguageAlias($supplementalData = array())
  * @param array $supplementalData
  * @throws Exception
  */
-function handleTerritoryAlias($supplementalData = array())
+function handleTerritoryAlias($supplementalData = [])
 {
     echo "Extract territory alias mapping... ";
 
     if (!isset($supplementalData['supplementalData']['metadata']['alias']['territoryAlias'])) {
         throw new Exception('Bad territory alias data!');
     } else {
-        $territoryAlias = array();
+        $territoryAlias = [];
 
-        foreach($supplementalData['supplementalData']['metadata']['alias']['territoryAlias'] as $alias) {
-            $territoryAlias[$alias['@attributes']['type']] = array(
+        foreach ($supplementalData['supplementalData']['metadata']['alias']['territoryAlias'] as $alias) {
+            $territoryAlias[$alias['@attributes']['type']] = [
                 'replacement' => $alias['@attributes']['replacement'],
                 'reason' => $alias['@attributes']['reason']
-            );
+            ];
         }
 
         saveJsonFile($territoryAlias, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'territory.alias.json');
@@ -937,23 +939,23 @@ function handleTerritoryAlias($supplementalData = array())
  * @param array $supplementalData
  * @throws Exception
  */
-function handleLikelySubtagsData($supplementalData = array())
+function handleLikelySubtagsData($supplementalData = [])
 {
     echo "Extract likely subtags data mapping... ";
 
     if (!isset($supplementalData['supplementalData']['likelySubtags']['likelySubtag'])) {
         throw new Exception('Bad likely subtags data!');
     } else {
-        $likelySubtags = array();
+        $likelySubtags = [];
 
-        foreach($supplementalData['supplementalData']['likelySubtags']['likelySubtag'] as $data) {
+        foreach ($supplementalData['supplementalData']['likelySubtags']['likelySubtag'] as $data) {
             list($locale, $script, $territory) = explode('_', $data['@attributes']['to']);
 
-            $likelySubtags[$data['@attributes']['from']] = array(
-                'locale'    => $locale,
-                'script'    => $script,
+            $likelySubtags[$data['@attributes']['from']] = [
+                'locale' => $locale,
+                'script' => $script,
                 'territory' => $territory
-            );
+            ];
         }
 
         saveJsonFile($likelySubtags, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'likely.subtags.json');
@@ -968,14 +970,14 @@ function handleLikelySubtagsData($supplementalData = array())
  * @param array $numbersData
  * @throws Exception
  */
-function handleNumberingSystemsData($numbersData = array())
+function handleNumberingSystemsData($numbersData = [])
 {
     echo "Extract numbering systems data... ";
 
     if (!isset($numbersData['supplementalData']['numberingSystems']['numberingSystem'])) {
         throw new Exception('Numbering systems data is not available!');
     } else {
-        $numberingSystems = array();
+        $numberingSystems = [];
 
         foreach ($numbersData['supplementalData']['numberingSystems']['numberingSystem'] as $key => $system) {
             if (!empty($system['@attributes'])) {
@@ -1006,7 +1008,7 @@ function handleNumberingSystemsData($numbersData = array())
  * @param string $destinationDir
  * @throws Exception
  */
-function handleSingleLocaleDataIdentity($identityData = array(), $destinationDir = "")
+function handleSingleLocaleDataIdentity($identityData = [], $destinationDir = "")
 {
     if (!isset($identityData['version']) || !isset($identityData['language'])) {
         throw new Exception('Bad identity data detected!');
@@ -1014,10 +1016,10 @@ function handleSingleLocaleDataIdentity($identityData = array(), $destinationDir
         $version = filter_var($identityData['version']['@attributes']['number'], FILTER_SANITIZE_NUMBER_INT);
         $language = $identityData['language']['@attributes']['type'];
 
-        $identity = array(
-            'version'   => $version,
-            'language'  => $language
-        );
+        $identity = [
+            'version' => $version,
+            'language' => $language
+        ];
 
         if (isset($identityData['territory'])) {
             $identity['territory'] = $identityData['territory']['@attributes']['type'];
@@ -1034,22 +1036,22 @@ function handleSingleLocaleDataIdentity($identityData = array(), $destinationDir
  * @param string $destinationDir
  * @throws Exception
  */
-function handleSingleLocaleDataCurrencies($currenciesData = array(), $destinationDir = "")
+function handleSingleLocaleDataCurrencies($currenciesData = [], $destinationDir = "")
 {
-    $currencies = array();
+    $currencies = [];
 
-    $handleSingleCurrency = function($rawCurrencyData, &$currencies) {
+    $handleSingleCurrency = function ($rawCurrencyData, &$currencies) {
         if (!isset($rawCurrencyData['@attributes']['type'])) {
             throw new Exception('Bad data for currency!');
         }
 
-        $currencyData = array();
-        $currencyData['names'] = array();
+        $currencyData = [];
+        $currencyData['names'] = [];
 
         if (isset($rawCurrencyData['displayName'])) {
             if (is_array($rawCurrencyData['displayName'])) {
                 if (!isset($rawCurrencyData['displayName']['@value'])) {
-                    foreach($rawCurrencyData['displayName'] as $nameData) {
+                    foreach ($rawCurrencyData['displayName'] as $nameData) {
                         if (is_array($nameData)) {
                             if (isset($nameData['@attributes']['count'])) {
                                 $currencyData['names'][$nameData['@attributes']['count']] = $nameData['@value'];
@@ -1070,12 +1072,12 @@ function handleSingleLocaleDataCurrencies($currenciesData = array(), $destinatio
             $currencyData['names']['default'] = '';
         }
 
-        $currencyData['symbols'] = array();
+        $currencyData['symbols'] = [];
 
         if (isset($rawCurrencyData['symbol'])) {
             if (is_array($rawCurrencyData['symbol'])) {
                 if (!isset($rawCurrencyData['symbol']['@value'])) {
-                    foreach($rawCurrencyData['symbol'] as $symbolData) {
+                    foreach ($rawCurrencyData['symbol'] as $symbolData) {
                         if (is_array($symbolData)) {
                             if (isset($symbolData['@attributes']['alt'])) {
                                 $currencyData['symbols'][$symbolData['@attributes']['alt']] = $symbolData['@value'];
@@ -1100,7 +1102,7 @@ function handleSingleLocaleDataCurrencies($currenciesData = array(), $destinatio
     };
 
     if (!isset($currenciesData['@attributes']['type'])) {
-        foreach($currenciesData as $rawCurrencyData) {
+        foreach ($currenciesData as $rawCurrencyData) {
             $handleSingleCurrency($rawCurrencyData, $currencies);
         }
     } else {
@@ -1117,16 +1119,16 @@ function handleSingleLocaleDataCurrencies($currenciesData = array(), $destinatio
  * @param string $destinationDir
  * @throws Exception
  */
-function handleSingleLocaleDataSymbols($symbolsData = array(), $destinationDir = "")
+function handleSingleLocaleDataSymbols($symbolsData = [], $destinationDir = "")
 {
-    $handleSingleNumberingSystem  = function($symbolsData, &$symbols) {
+    $handleSingleNumberingSystem = function ($symbolsData, &$symbols) {
         if (isset($symbolsData['@attributes']['numberSystem'])) {
             $numberingSystem = $symbolsData['@attributes']['numberSystem'];
-            $data = array();
+            $data = [];
 
             unset($symbolsData['@attributes']);
 
-            foreach($symbolsData as $name => $value) {
+            foreach ($symbolsData as $name => $value) {
                 if (!is_array($value)) {
                     $data[$name] = $value;
                 } else {
@@ -1134,16 +1136,16 @@ function handleSingleLocaleDataSymbols($symbolsData = array(), $destinationDir =
                         if (isset($value['@value'])) {
                             $data[$name] = $value['@value'];
                         } else {
-                            foreach($value as $subValue) {
+                            foreach ($value as $subValue) {
                                 if (is_string($subValue)) {
                                     $data[$name]['default'] = $subValue;
-                                } elseif(isset($subValue['@value']) && isset($subValue['@attributes']['alt'])) {
+                                } elseif (isset($subValue['@value']) && isset($subValue['@attributes']['alt'])) {
                                     $data[$name][$subValue['@attributes']['alt']] = $subValue['@value'];
                                 }
                             }
                         }
                     } else {
-                        $matches= array();
+                        $matches = [];
 
                         preg_match("/'(.+)'/", $value['@attributes']['path'], $matches);
 
@@ -1158,7 +1160,7 @@ function handleSingleLocaleDataSymbols($symbolsData = array(), $destinationDir =
         }
     };
 
-    $symbols = array();
+    $symbols = [];
 
     if (isset($symbolsData['@attributes'])) {
         $handleSingleNumberingSystem($symbolsData, $symbols);
@@ -1178,24 +1180,24 @@ function handleSingleLocaleDataSymbols($symbolsData = array(), $destinationDir =
  * @param string $destinationDir
  * @throws Exception
  */
-function handleSingleLocaleDataCurrencyFormats($formatsData = array(), $destinationDir = "")
+function handleSingleLocaleDataCurrencyFormats($formatsData = [], $destinationDir = "")
 {
-    $handleSingleNumberingSystemCurrencyFormat  = function($formatData, &$currencyFormats) {
-        $handleSingleCurrencyFormatLength = function($currencyFormatLength, &$numberingSystemCurrencyFormats) {
-            $handleSinglePatternType = function($patternType, &$currencyFormatType) {
+    $handleSingleNumberingSystemCurrencyFormat = function ($formatData, &$currencyFormats) {
+        $handleSingleCurrencyFormatLength = function ($currencyFormatLength, &$numberingSystemCurrencyFormats) {
+            $handleSinglePatternType = function ($patternType, &$currencyFormatType) {
                 if (isset($patternType['alias'])) {
-                    $matches= array();
+                    $matches = [];
 
                     preg_match("/'(.+)'/", $patternType['alias']['@attributes']['path'], $matches);
 
                     if ($matches[1]) {
-                        $currencyFormatType[$patternType['@attributes']['type']] = array('alias' => $matches[1]);
+                        $currencyFormatType[$patternType['@attributes']['type']] = ['alias' => $matches[1]];
                     }
                 } else {
                     if (is_array($patternType['pattern']) && !isset($patternType['pattern']['@attributes'])) {
-                        $patterns = array();
+                        $patterns = [];
 
-                        foreach($patternType['pattern'] as $patternData) {
+                        foreach ($patternType['pattern'] as $patternData) {
                             $patterns[$patternData['@attributes']['type']][$patternData['@attributes']['count']] = $patternData['@value'];
                         }
 
@@ -1223,15 +1225,15 @@ function handleSingleLocaleDataCurrencyFormats($formatsData = array(), $destinat
         };
 
         if (isset($formatData['alias']) && isset($formatData['@attributes']['numberSystem'])) {
-            $matches= array();
+            $matches = [];
 
             preg_match("/'(.+)'/", $formatData['alias']['@attributes']['path'], $matches);
 
             if ($matches[1]) {
-                $currencyFormats[$formatData['@attributes']['numberSystem']] = array('alias' => $matches[1]);
+                $currencyFormats[$formatData['@attributes']['numberSystem']] = ['alias' => $matches[1]];
             }
         } elseif (isset($formatData['currencyFormatLength']) && isset($formatData['@attributes']['numberSystem'])) {
-            $currencyFormats[$formatData['@attributes']['numberSystem']] = array();
+            $currencyFormats[$formatData['@attributes']['numberSystem']] = [];
 
             if (isset($formatData['currencyFormatLength']['currencyFormat'])) {
                 $handleSingleCurrencyFormatLength($formatData['currencyFormatLength'], $currencyFormats[$formatData['@attributes']['numberSystem']]);
@@ -1243,7 +1245,7 @@ function handleSingleLocaleDataCurrencyFormats($formatsData = array(), $destinat
         }
     };
 
-    $currencyFormats = array();
+    $currencyFormats = [];
 
     if (isset($formatsData['@attributes'])) {
         $handleSingleNumberingSystemCurrencyFormat($formatsData, $currencyFormats);
@@ -1267,9 +1269,9 @@ function handleSingleLocaleDataCurrencyFormats($formatsData = array(), $destinat
  */
 function handleSingleLocaleDataSimpleNames($type, $rawData, $destinationDir, $fileName)
 {
-    $data = array();
+    $data = [];
 
-    $handleSingleRowData = function($rawRowData, $type, &$data) {
+    $handleSingleRowData = function ($rawRowData, $type, &$data) {
         if (!isset($rawRowData['@value']) || !isset($rawRowData['@attributes']['type'])) {
             throw new Exception("Bad $type data detected!");
         } else {
@@ -1281,7 +1283,7 @@ function handleSingleLocaleDataSimpleNames($type, $rawData, $destinationDir, $fi
     };
 
     if (!isset($rawData['@value'])) {
-        foreach($rawData as $rawRowData) {
+        foreach ($rawData as $rawRowData) {
             $handleSingleRowData($rawRowData, $type, $data);
         }
     } else {
@@ -1293,7 +1295,7 @@ function handleSingleLocaleDataSimpleNames($type, $rawData, $destinationDir, $fi
 
 /**
  * Build different kinds of data for a single locale
- * 
+ *
  * @param $locale
  * @param $localeFile
  * @throws Exception
@@ -1373,11 +1375,11 @@ function getXmlDataFileContentsAsArray($fileName)
  * @param array $handlers
  * @throws Exception
  */
-function processDataFileWithHandlers($fileName, $handlers = array())
+function processDataFileWithHandlers($fileName, $handlers = [])
 {
     if ($fileName) {
         if ($data = getXmlDataFileContentsAsArray($fileName)) {
-            foreach($handlers as $handler) {
+            foreach ($handlers as $handler) {
                 if (is_callable($handler)) {
                     call_user_func($handler, $data);
                 } else {
@@ -1402,15 +1404,15 @@ function checkoutCLDR()
     }
 
     try {
-        $dirs = array(
+        $dirs = [
             'common/main' => 'main',
             'common/supplemental' => 'supplemental',
-        );
+        ];
 
         foreach ($dirs as $source => $target) {
             echo "Checking out the CLDR $target repository (this may take a while)... \n";
 
-            $output = array();
+            $output = [];
             $rc = null;
 
             $directory = LOCAL_VCS_DIR . DIRECTORY_SEPARATOR . $target;
@@ -1444,7 +1446,7 @@ function buildLocaleSpecificData()
 {
     echo "Determining the list of the available locales... ";
 
-    $availableLocales = array();
+    $availableLocales = [];
     $localesDirectory = LOCAL_VCS_DIR . DIRECTORY_SEPARATOR . 'main';
 
     $contents = @scandir($localesDirectory);
@@ -1470,13 +1472,11 @@ function buildLocaleSpecificData()
     } else {
         echo "Checking default locales based on statistics of most popular languages... \n";
 
-        global $defaultLocales;
-
-        $locales = array_merge($defaultLocales, array('root'));
+        $locales = array_merge(DEFAULT_LOCALES, ['root']);
         $available = array_intersect($locales, $availableLocales);
 
         if (!count($available) !== count($locales)) {
-             echo "Notice: the following locales were not found:\n- " . implode("\n- ", array_diff($locales, $availableLocales)) . "\n";
+            echo "Notice: the following locales were not found:\n- " . implode("\n- ", array_diff($locales, $availableLocales)) . "\n";
         }
 
         $locales = array_unique($available);
@@ -1511,34 +1511,34 @@ function buildSupplementalData()
     $numberingSystemsDataFile = LOCAL_VCS_DIR . str_replace("/", DIRECTORY_SEPARATOR, "/supplemental/numberingSystems.xml");
     $likelySubtagsDataFile = LOCAL_VCS_DIR . str_replace("/", DIRECTORY_SEPARATOR, "/supplemental/likelySubtags.xml");
 
-    $dataHandlers = array(
-        'supplemental'  => array(
-            $supplementalDataFile => array(
+    $dataHandlers = [
+        'supplemental' => [
+            $supplementalDataFile => [
                 'handleGeneralCurrencyData',
                 'handleGeneralTerritoryInfoData',
                 'handleGeneralTerritoryContainmentData',
                 'handleGeneralTerritoryMapping',
                 'handleGeneralCurrencyMapping',
                 'handleGeneralParentLocales'
-            ),
-            $supplementalMetaDataFile => array(
+            ],
+            $supplementalMetaDataFile => [
                 'handleLanguageAlias',
                 'handleTerritoryAlias',
-            )
-        ),
-        'likelySubtags'       => array(
-            $likelySubtagsDataFile => array(
+            ]
+        ],
+        'likelySubtags' => [
+            $likelySubtagsDataFile => [
                 'handleLikelySubtagsData'
-            )
-        ),
-        'numeric'       => array(
-            $numberingSystemsDataFile => array(
+            ]
+        ],
+        'numeric' => [
+            $numberingSystemsDataFile => [
                 'handleNumberingSystemsData'
-            )
-        )
-    );
+            ]
+        ]
+    ];
 
-    foreach($dataHandlers as $dataCategory => $handlersPerFile) {
+    foreach ($dataHandlers as $dataCategory => $handlersPerFile) {
         if ($handlersPerFile) {
             echo "Building $dataCategory data... \n";
 
@@ -1616,7 +1616,7 @@ function deleteFromFilesystem($path)
         if ($contents === false) {
             throw new Exception("Failed to retrieve the file list of $path");
         }
-        foreach (array_diff($contents, array('.', '..')) as $item) {
+        foreach (array_diff($contents, ['.', '..']) as $item) {
             deleteFromFilesystem($path . DIRECTORY_SEPARATOR . $item);
         }
         if (rmdir($path) === false) {
