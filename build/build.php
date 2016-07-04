@@ -42,11 +42,11 @@ if (isset($argv)) {
             }
         }
     }
-} else {
-    define('DEBUG', false);
-    define('FULL_JSON', false);
-    define('POST_CLEAN', false);
 }
+
+defined('DEBUG') or define('DEBUG', false);
+defined('FULL_JSON') or define('FULL_JSON', false);
+defined('POST_CLEAN') or define('POST_CLEAN', false);
 
 /**
  * Enable/Disable supporting output of some functions
