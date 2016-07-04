@@ -2,7 +2,7 @@
 
 namespace OpenWorld\Data\Provider;
 
-class GeneralDataFile extends DataProviderAbstract implements DataProviderInterface {
+class GeneralDataFileProvider extends DataProviderAbstract {
 
     public function load($fileName = '')
     {

@@ -2,7 +2,7 @@
 
 namespace OpenWorld\Data\Provider;
 
-class LocaleDataFile extends DataProviderAbstract implements DataProviderInterface {
+class LocaleDataFileProvider extends DataProviderAbstract {
 
     public function load($fileName = '')
     {
