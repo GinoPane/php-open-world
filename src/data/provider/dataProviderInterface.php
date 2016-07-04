@@ -6,4 +6,6 @@ interface DataProviderInterface {
 
     public function load($fileName = '');
 
+    public function accept();
+
 }

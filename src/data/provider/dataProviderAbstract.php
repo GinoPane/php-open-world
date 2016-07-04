@@ -2,7 +2,7 @@
 
 namespace OpenWorld\Data\Provider;
 
-abstract class DataProviderAbstract {
+abstract class DataProviderAbstract implements DataProviderInterface {
 
     protected function loadFile($path = '')
     {

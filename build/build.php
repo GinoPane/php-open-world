@@ -20,7 +20,7 @@ iconv_set_encoding('input_encoding', 'UTF-8');
 iconv_set_encoding('internal_encoding', 'UTF-8');
 iconv_set_encoding('output_encoding', 'UTF-8');
 
-define('CLDR_VERSION', '29-beta-1');
+define('CLDR_VERSION', '29');
 define('ROOT_DIR', dirname(__DIR__));
 define('SOURCE_DIR', ROOT_DIR . DIRECTORY_SEPARATOR . 'build' . DIRECTORY_SEPARATOR . 'temp');
 define('DESTINATION_DIR', ROOT_DIR . DIRECTORY_SEPARATOR . 'data');
