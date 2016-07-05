@@ -1,0 +1,27 @@
+{
+    "arabext": {
+        "decimal": "٫",
+        "group": "٬",
+        "percentSign": "٪",
+        "plusSign": "+",
+        "minusSign": "-",
+        "exponential": "×۱۰^",
+        "superscriptingExponent": "×",
+        "perMille": "؉",
+        "infinity": "∞",
+        "nan": "haqiqiy son emas"
+    },
+    "latn": {
+        "decimal": ",",
+        "group": " ",
+        "percentSign": "%",
+        "plusSign": "+",
+        "minusSign": "-",
+        "exponential": "E",
+        "superscriptingExponent": "×",
+        "perMille": "‰",
+        "infinity": "∞",
+        "nan": "haqiqiy son emas",
+        "timeSeparator": ":"
+    }
+}

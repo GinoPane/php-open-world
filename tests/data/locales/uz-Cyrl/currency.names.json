@@ -1,0 +1,546 @@
+{
+    "ANG": {
+        "names": {
+            "default": "Голланд Антил гульдени",
+            "one": "Голланд Антил гульдени",
+            "other": "Голланд Антил гульдени"
+        },
+        "symbols": {
+            "default": ""
+        }
+    },
+    "ARS": {
+        "names": {
+            "default": "Аргентина песоси",
+            "one": "Аргентина песоси",
+            "other": "Аргентина песоси"
+        },
+        "symbols": {
+            "default": ""
+        }
+    },
+    "AUD": {
+        "names": {
+            "default": ""
+        },
+        "symbols": {
+            "default": "A$"
+        }
+    },
+    "AWG": {
+        "names": {
+            "default": "Аруба флорини",
+            "one": "Аруба флорини",
+            "other": "Аруба флорини"
+        },
+        "symbols": {
+            "default": ""
+        }
+    },
+    "BBD": {
+        "names": {
+            "default": "Барбадос доллари",
+            "one": "Барбадос доллари",
+            "other": "Барбадос доллари"
+        },
+        "symbols": {
+            "default": ""
+        }
+    },
+    "BMD": {
+        "names": {
+            "default": "Бермуда доллари",
+            "one": "Бермуда доллари",
+            "other": "Бермуда доллари"
+        },
+        "symbols": {
+            "default": ""
+        }
+    },
+    "BOB": {
+        "names": {
+            "default": "Боливия болвиани",
+            "one": "Боливия болвиани",
+            "other": "Боливия болвиани"
+        },
+        "symbols": {
+            "default": ""
+        }
+    },
+    "BRL": {
+        "names": {
+            "default": "Бразил реали",
+            "one": "Бразил реали",
+            "other": "Бразил реали"
+        },
+        "symbols": {
+            "default": "R$"
+        }
+    },
+    "BSD": {
+        "names": {
+            "default": "Багама доллари",
+            "one": "Багама доллари",
+            "other": "Багама доллари"
+        },
+        "symbols": {
+            "default": ""
+        }
+    },
+    "BZD": {
+        "names": {
+            "default": "Белиз доллари",
+            "one": "Белиз доллари",
+            "other": "Белиз доллари"
+        },
+        "symbols": {
+            "default": ""
+        }
+    },
+    "CAD": {
+        "names": {
+            "default": "Канада доллари",
+            "one": "Канада доллари",
+            "other": "Канада доллари"
+        },
+        "symbols": {
+            "default": "CA$"
+        }
+    },
+    "CLP": {
+        "names": {
+            "default": "Чили песоси",
+            "one": "Чили песоси",
+            "other": "Чили песоси"
+        },
+        "symbols": {
+            "default": ""
+        }
+    },
+    "CNY": {
+        "names": {
+            "default": "Хитой юани",
+            "one": "Хитой юани",
+            "other": "Хитой юани"
+        },
+        "symbols": {
+            "default": "CN¥"
+        }
+    },
+    "COP": {
+        "names": {
+            "default": "Колумбия песоси",
+            "one": "Колумбия песоси",
+            "other": "Колумбия песоси"
+        },
+        "symbols": {
+            "default": ""
+        }
+    },
+    "CRC": {
+        "names": {
+            "default": "Коста-Рика колони",
+            "one": "Коста-Рика колони",
+            "other": "Коста-Рика колони"
+        },
+        "symbols": {
+            "default": ""
+        }
+    },
+    "CUC": {
+        "names": {
+            "default": "Куба Айирбошлаш песоси",
+            "one": "Куба айирбошлаш песоси",
+            "other": "Куба айирбошлаш песоси"
+        },
+        "symbols": {
+            "default": ""
+        }
+    },
+    "CUP": {
+        "names": {
+            "default": "Куба песоси",
+            "one": "Куба песоси",
+            "other": "Куба песоси"
+        },
+        "symbols": {
+            "default": ""
+        }
+    },
+    "DOP": {
+        "names": {
+            "default": "Доминикан песоси",
+            "one": "Доминикан песоси",
+            "other": "Доминикан песоси"
+        },
+        "symbols": {
+            "default": ""
+        }
+    },
+    "DZD": {
+        "names": {
+            "default": "Жазоир динори",
+            "one": "Жазоир динори",
+            "other": "Жазоир динори"
+        },
+        "symbols": {
+            "default": ""
+        }
+    },
+    "EGP": {
+        "names": {
+            "default": "Миср фунти",
+            "one": "Миср фунти",
+            "other": "Миср фунти"
+        },
+        "symbols": {
+            "default": ""
+        }
+    },
+    "EUR": {
+        "names": {
+            "default": "Евро",
+            "one": "Евро",
+            "other": "Евро"
+        },
+        "symbols": {
+            "default": "€"
+        }
+    },
+    "FKP": {
+        "names": {
+            "default": "Фолькленд ороли фунти",
+            "one": "Фолькленд ороли фунти",
+            "other": "Фолькленд ороли фунти"
+        },
+        "symbols": {
+            "default": ""
+        }
+    },
+    "GBP": {
+        "names": {
+            "default": "Инглиз фунт",
+            "one": "Инглиз фунт",
+            "other": "Инглиз фунт"
+        },
+        "symbols": {
+            "default": "£"
+        }
+    },
+    "GTQ": {
+        "names": {
+            "default": "Гватемала кветзали",
+            "one": "Гватемала кветзали",
+            "other": "Гватемала кветзали"
+        },
+        "symbols": {
+            "default": ""
+        }
+    },
+    "GYD": {
+        "names": {
+            "default": "Гаяна доллари",
+            "one": "Гаяна доллари",
+            "other": "Гаяна доллари"
+        },
+        "symbols": {
+            "default": ""
+        }
+    },
+    "HKD": {
+        "names": {
+            "default": ""
+        },
+        "symbols": {
+            "default": "HK$"
+        }
+    },
+    "HNL": {
+        "names": {
+            "default": "Гондурас лемпираси",
+            "one": "Гондурас лемпираси",
+            "other": "Гондурас лемпираси"
+        },
+        "symbols": {
+            "default": ""
+        }
+    },
+    "HTG": {
+        "names": {
+            "default": "Гаити гурдаси",
+            "one": "Гаити гурдаси",
+            "other": "Гаити гурдаси"
+        },
+        "symbols": {
+            "default": ""
+        }
+    },
+    "ILS": {
+        "names": {
+            "default": ""
+        },
+        "symbols": {
+            "default": "₪"
+        }
+    },
+    "INR": {
+        "names": {
+            "default": "Ҳинд рупияси"
+        },
+        "symbols": {
+            "default": "₹"
+        }
+    },
+    "JMD": {
+        "names": {
+            "default": "Ямайка доллари",
+            "one": "Ямайка доллари",
+            "other": "Ямайка доллари"
+        },
+        "symbols": {
+            "default": ""
+        }
+    },
+    "JPY": {
+        "names": {
+            "default": "Япон йенаси",
+            "one": "Япон йенаси",
+            "other": "Япон йенаси"
+        },
+        "symbols": {
+            "default": "JP¥"
+        }
+    },
+    "KRW": {
+        "names": {
+            "default": ""
+        },
+        "symbols": {
+            "default": "₩"
+        }
+    },
+    "KYD": {
+        "names": {
+            "default": "Кайман ороли Доллари",
+            "one": "Кайман ороли доллари",
+            "other": "Кайман ороли доллари"
+        },
+        "symbols": {
+            "default": ""
+        }
+    },
+    "LYD": {
+        "names": {
+            "default": "Ливия динори",
+            "one": "Ливия динори",
+            "other": "Ливия динори"
+        },
+        "symbols": {
+            "default": ""
+        }
+    },
+    "MAD": {
+        "names": {
+            "default": "Марокаш дирҳами",
+            "one": "Марокаш дирҳами",
+            "other": "Марокаш дирҳами"
+        },
+        "symbols": {
+            "default": ""
+        }
+    },
+    "MXN": {
+        "names": {
+            "default": "Мексика песоси",
+            "one": "Мексика песоси",
+            "other": "Мексика песоси"
+        },
+        "symbols": {
+            "default": "MX$"
+        }
+    },
+    "NIO": {
+        "names": {
+            "default": "Никарагуа кордобаси",
+            "one": "Никарагуа кордобаси",
+            "other": "Никарагуа кордобаси"
+        },
+        "symbols": {
+            "default": ""
+        }
+    },
+    "NZD": {
+        "names": {
+            "default": ""
+        },
+        "symbols": {
+            "default": "NZ$"
+        }
+    },
+    "PAB": {
+        "names": {
+            "default": "Панама бальбоаси",
+            "one": "Панама бальбоаси",
+            "other": "Панама бальбоаси"
+        },
+        "symbols": {
+            "default": ""
+        }
+    },
+    "PEN": {
+        "names": {
+            "default": "Перу нуево сол",
+            "one": "Перу нуево сол",
+            "other": "Перу нуево сол"
+        },
+        "symbols": {
+            "default": ""
+        }
+    },
+    "PYG": {
+        "names": {
+            "default": "Парагвай гуарани",
+            "one": "Парагвай гуарани",
+            "other": "Парагвай гуарани"
+        },
+        "symbols": {
+            "default": ""
+        }
+    },
+    "RON": {
+        "names": {
+            "default": ""
+        },
+        "symbols": {
+            "default": "RON"
+        }
+    },
+    "RUB": {
+        "names": {
+            "default": "Рус рубли",
+            "one": "Рус рубли",
+            "other": "Рус рубли"
+        },
+        "symbols": {
+            "default": ""
+        }
+    },
+    "SRD": {
+        "names": {
+            "default": "Суринам доллари",
+            "one": "Суринам доллари",
+            "other": "Суринам доллари"
+        },
+        "symbols": {
+            "default": ""
+        }
+    },
+    "THB": {
+        "names": {
+            "default": ""
+        },
+        "symbols": {
+            "default": "฿"
+        }
+    },
+    "TTD": {
+        "names": {
+            "default": "Тринидад ва Тобаго доллари",
+            "one": "Тринидад ва Тобаго доллари",
+            "other": "Тринидад ва Тобаго доллари"
+        },
+        "symbols": {
+            "default": ""
+        }
+    },
+    "TWD": {
+        "names": {
+            "default": ""
+        },
+        "symbols": {
+            "default": "NT$"
+        }
+    },
+    "USD": {
+        "names": {
+            "default": "АҚШ доллари",
+            "one": "АҚШ доллари",
+            "other": "АҚШ доллари"
+        },
+        "symbols": {
+            "default": "US$"
+        }
+    },
+    "UYU": {
+        "names": {
+            "default": "Уругвай песоси",
+            "one": "Уругвай песоси",
+            "other": "Уругвай песоси"
+        },
+        "symbols": {
+            "default": ""
+        }
+    },
+    "UZS": {
+        "names": {
+            "default": "Ўзбекистон сўм",
+            "one": "Ўзбекистон сўм",
+            "other": "Ўзбекистон сўм"
+        },
+        "symbols": {
+            "default": "сўм"
+        }
+    },
+    "VEF": {
+        "names": {
+            "default": "Венесуэла боливари",
+            "one": "Венесуэла боливари",
+            "other": "Венесуэла боливари"
+        },
+        "symbols": {
+            "default": ""
+        }
+    },
+    "VND": {
+        "names": {
+            "default": ""
+        },
+        "symbols": {
+            "default": "₫"
+        }
+    },
+    "XAF": {
+        "names": {
+            "default": ""
+        },
+        "symbols": {
+            "default": "FCFA"
+        }
+    },
+    "XCD": {
+        "names": {
+            "default": "Шарқий Кариб доллари",
+            "one": "Шарқ Кариб доллари",
+            "other": "Шарқ Кариб доллари"
+        },
+        "symbols": {
+            "default": "EC$"
+        }
+    },
+    "XOF": {
+        "names": {
+            "default": ""
+        },
+        "symbols": {
+            "default": "CFA"
+        }
+    },
+    "XPF": {
+        "names": {
+            "default": ""
+        },
+        "symbols": {
+            "default": "CFPF"
+        }
+    }
+}

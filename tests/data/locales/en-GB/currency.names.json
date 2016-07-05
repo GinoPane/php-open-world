@@ -1,0 +1,22 @@
+{
+    "ILR": {
+        "names": {
+            "default": "Israeli Shekel (1980–1985)",
+            "one": "Israeli shekel (1980–1985)",
+            "other": "Israeli shekels (1980–1985)"
+        },
+        "symbols": {
+            "default": ""
+        }
+    },
+    "ILS": {
+        "names": {
+            "default": "Israeli New Shekel",
+            "one": "Israeli new shekel",
+            "other": "Israeli new shekels"
+        },
+        "symbols": {
+            "default": ""
+        }
+    }
+}

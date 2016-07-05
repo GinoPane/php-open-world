@@ -1,0 +1,1326 @@
+{
+    "art_lojban": {
+        "replacement": "jbo",
+        "reason": "deprecated"
+    },
+    "i_ami": {
+        "replacement": "ami",
+        "reason": "deprecated"
+    },
+    "i_bnn": {
+        "replacement": "bnn",
+        "reason": "deprecated"
+    },
+    "i_hak": {
+        "replacement": "hak",
+        "reason": "deprecated"
+    },
+    "i_klingon": {
+        "replacement": "tlh",
+        "reason": "deprecated"
+    },
+    "i_lux": {
+        "replacement": "lb",
+        "reason": "deprecated"
+    },
+    "i_navajo": {
+        "replacement": "nv",
+        "reason": "deprecated"
+    },
+    "i_pwn": {
+        "replacement": "pwn",
+        "reason": "deprecated"
+    },
+    "i_tao": {
+        "replacement": "tao",
+        "reason": "deprecated"
+    },
+    "i_tay": {
+        "replacement": "tay",
+        "reason": "deprecated"
+    },
+    "i_tsu": {
+        "replacement": "tsu",
+        "reason": "deprecated"
+    },
+    "no_bok": {
+        "replacement": "nb",
+        "reason": "deprecated"
+    },
+    "no_nyn": {
+        "replacement": "nn",
+        "reason": "deprecated"
+    },
+    "sgn_BE_FR": {
+        "replacement": "sfb",
+        "reason": "deprecated"
+    },
+    "sgn_BE_NL": {
+        "replacement": "vgt",
+        "reason": "deprecated"
+    },
+    "sgn_CH_DE": {
+        "replacement": "sgg",
+        "reason": "deprecated"
+    },
+    "zh_guoyu": {
+        "replacement": "zh",
+        "reason": "deprecated"
+    },
+    "zh_hakka": {
+        "replacement": "hak",
+        "reason": "deprecated"
+    },
+    "zh_min_nan": {
+        "replacement": "nan",
+        "reason": "deprecated"
+    },
+    "zh_xiang": {
+        "replacement": "hsn",
+        "reason": "deprecated"
+    },
+    "in": {
+        "replacement": "id",
+        "reason": "deprecated"
+    },
+    "iw": {
+        "replacement": "he",
+        "reason": "deprecated"
+    },
+    "ji": {
+        "replacement": "yi",
+        "reason": "deprecated"
+    },
+    "jw": {
+        "replacement": "jv",
+        "reason": "deprecated"
+    },
+    "mo": {
+        "replacement": "ro_MD",
+        "reason": "deprecated"
+    },
+    "scc": {
+        "replacement": "sr",
+        "reason": "deprecated"
+    },
+    "scr": {
+        "replacement": "hr",
+        "reason": "deprecated"
+    },
+    "no_BOKMAL": {
+        "replacement": "nb",
+        "reason": "deprecated"
+    },
+    "no_NYNORSK": {
+        "replacement": "nn",
+        "reason": "deprecated"
+    },
+    "aa_SAAHO": {
+        "replacement": "ssy",
+        "reason": "deprecated"
+    },
+    "sh": {
+        "replacement": "sr_Latn",
+        "reason": "legacy"
+    },
+    "no": {
+        "replacement": "nb",
+        "reason": "legacy"
+    },
+    "tl": {
+        "replacement": "fil",
+        "reason": "legacy"
+    },
+    "az_AZ": {
+        "replacement": "az_Latn_AZ",
+        "reason": "legacy"
+    },
+    "bs_BA": {
+        "replacement": "bs_Latn_BA",
+        "reason": "legacy"
+    },
+    "ha_Latn_GH": {
+        "replacement": "ha_GH",
+        "reason": "legacy"
+    },
+    "ha_Latn_NE": {
+        "replacement": "ha_NE",
+        "reason": "legacy"
+    },
+    "ha_Latn_NG": {
+        "replacement": "ha_NG",
+        "reason": "legacy"
+    },
+    "kk_Cyrl_KZ": {
+        "replacement": "kk_KZ",
+        "reason": "legacy"
+    },
+    "ky_Cyrl_KG": {
+        "replacement": "ky_KG",
+        "reason": "legacy"
+    },
+    "ks_Arab_IN": {
+        "replacement": "ks_IN",
+        "reason": "legacy"
+    },
+    "mn_Cyrl_MN": {
+        "replacement": "mn_MN",
+        "reason": "legacy"
+    },
+    "ms_Latn_BN": {
+        "replacement": "ms_BN",
+        "reason": "legacy"
+    },
+    "ms_Latn_MY": {
+        "replacement": "ms_MY",
+        "reason": "legacy"
+    },
+    "ms_Latn_SG": {
+        "replacement": "ms_SG",
+        "reason": "legacy"
+    },
+    "pa_IN": {
+        "replacement": "pa_Guru_IN",
+        "reason": "legacy"
+    },
+    "pa_PK": {
+        "replacement": "pa_Arab_PK",
+        "reason": "legacy"
+    },
+    "shi_MA": {
+        "replacement": "shi_Tfng_MA",
+        "reason": "legacy"
+    },
+    "sr_BA": {
+        "replacement": "sr_Cyrl_BA",
+        "reason": "legacy"
+    },
+    "sr_ME": {
+        "replacement": "sr_Latn_ME",
+        "reason": "legacy"
+    },
+    "sr_RS": {
+        "replacement": "sr_Cyrl_RS",
+        "reason": "legacy"
+    },
+    "sr_XK": {
+        "replacement": "sr_Cyrl_XK",
+        "reason": "legacy"
+    },
+    "tzm_Latn_MA": {
+        "replacement": "tzm_MA",
+        "reason": "legacy"
+    },
+    "ug_Arab_CN": {
+        "replacement": "ug_CN",
+        "reason": "legacy"
+    },
+    "uz_AF": {
+        "replacement": "uz_Arab_AF",
+        "reason": "legacy"
+    },
+    "uz_UZ": {
+        "replacement": "uz_Latn_UZ",
+        "reason": "legacy"
+    },
+    "vai_LR": {
+        "replacement": "vai_Vaii_LR",
+        "reason": "legacy"
+    },
+    "zh_CN": {
+        "replacement": "zh_Hans_CN",
+        "reason": "legacy"
+    },
+    "zh_HK": {
+        "replacement": "zh_Hant_HK",
+        "reason": "legacy"
+    },
+    "zh_MO": {
+        "replacement": "zh_Hant_MO",
+        "reason": "legacy"
+    },
+    "zh_SG": {
+        "replacement": "zh_Hans_SG",
+        "reason": "legacy"
+    },
+    "zh_TW": {
+        "replacement": "zh_Hant_TW",
+        "reason": "legacy"
+    },
+    "aju": {
+        "replacement": "jrb",
+        "reason": "macrolanguage"
+    },
+    "als": {
+        "replacement": "sq",
+        "reason": "macrolanguage"
+    },
+    "arb": {
+        "replacement": "ar",
+        "reason": "macrolanguage"
+    },
+    "ayr": {
+        "replacement": "ay",
+        "reason": "macrolanguage"
+    },
+    "azj": {
+        "replacement": "az",
+        "reason": "macrolanguage"
+    },
+    "bcc": {
+        "replacement": "bal",
+        "reason": "macrolanguage"
+    },
+    "bcl": {
+        "replacement": "bik",
+        "reason": "macrolanguage"
+    },
+    "bxk": {
+        "replacement": "luy",
+        "reason": "macrolanguage"
+    },
+    "bxr": {
+        "replacement": "bua",
+        "reason": "macrolanguage"
+    },
+    "cld": {
+        "replacement": "syr",
+        "reason": "macrolanguage"
+    },
+    "cmn": {
+        "replacement": "zh",
+        "reason": "macrolanguage"
+    },
+    "cwd": {
+        "replacement": "cr",
+        "reason": "macrolanguage"
+    },
+    "dgo": {
+        "replacement": "doi",
+        "reason": "macrolanguage"
+    },
+    "dhd": {
+        "replacement": "mwr",
+        "reason": "macrolanguage"
+    },
+    "dik": {
+        "replacement": "din",
+        "reason": "macrolanguage"
+    },
+    "diq": {
+        "replacement": "zza",
+        "reason": "macrolanguage"
+    },
+    "lbk": {
+        "replacement": "bnc",
+        "reason": "macrolanguage"
+    },
+    "ekk": {
+        "replacement": "et",
+        "reason": "macrolanguage"
+    },
+    "emk": {
+        "replacement": "man",
+        "reason": "macrolanguage"
+    },
+    "esk": {
+        "replacement": "ik",
+        "reason": "macrolanguage"
+    },
+    "fat": {
+        "replacement": "ak",
+        "reason": "macrolanguage"
+    },
+    "fuc": {
+        "replacement": "ff",
+        "reason": "macrolanguage"
+    },
+    "gaz": {
+        "replacement": "om",
+        "reason": "macrolanguage"
+    },
+    "gbo": {
+        "replacement": "grb",
+        "reason": "macrolanguage"
+    },
+    "gno": {
+        "replacement": "gon",
+        "reason": "macrolanguage"
+    },
+    "gug": {
+        "replacement": "gn",
+        "reason": "macrolanguage"
+    },
+    "gya": {
+        "replacement": "gba",
+        "reason": "macrolanguage"
+    },
+    "hdn": {
+        "replacement": "hai",
+        "reason": "macrolanguage"
+    },
+    "hea": {
+        "replacement": "hmn",
+        "reason": "macrolanguage"
+    },
+    "ike": {
+        "replacement": "iu",
+        "reason": "macrolanguage"
+    },
+    "kmr": {
+        "replacement": "ku",
+        "reason": "macrolanguage"
+    },
+    "knc": {
+        "replacement": "kr",
+        "reason": "macrolanguage"
+    },
+    "kng": {
+        "replacement": "kg",
+        "reason": "macrolanguage"
+    },
+    "knn": {
+        "replacement": "kok",
+        "reason": "macrolanguage"
+    },
+    "kpv": {
+        "replacement": "kv",
+        "reason": "macrolanguage"
+    },
+    "lvs": {
+        "replacement": "lv",
+        "reason": "macrolanguage"
+    },
+    "mhr": {
+        "replacement": "chm",
+        "reason": "macrolanguage"
+    },
+    "mup": {
+        "replacement": "raj",
+        "reason": "macrolanguage"
+    },
+    "khk": {
+        "replacement": "mn",
+        "reason": "macrolanguage"
+    },
+    "npi": {
+        "replacement": "ne",
+        "reason": "macrolanguage"
+    },
+    "ojg": {
+        "replacement": "oj",
+        "reason": "macrolanguage"
+    },
+    "ory": {
+        "replacement": "or",
+        "reason": "macrolanguage"
+    },
+    "pbu": {
+        "replacement": "ps",
+        "reason": "macrolanguage"
+    },
+    "pes": {
+        "replacement": "fa",
+        "reason": "macrolanguage"
+    },
+    "plt": {
+        "replacement": "mg",
+        "reason": "macrolanguage"
+    },
+    "pnb": {
+        "replacement": "lah",
+        "reason": "macrolanguage"
+    },
+    "quz": {
+        "replacement": "qu",
+        "reason": "macrolanguage"
+    },
+    "rmy": {
+        "replacement": "rom",
+        "reason": "macrolanguage"
+    },
+    "spy": {
+        "replacement": "kln",
+        "reason": "macrolanguage"
+    },
+    "src": {
+        "replacement": "sc",
+        "reason": "macrolanguage"
+    },
+    "swh": {
+        "replacement": "sw",
+        "reason": "macrolanguage"
+    },
+    "ttq": {
+        "replacement": "tmh",
+        "reason": "macrolanguage"
+    },
+    "tw": {
+        "replacement": "ak",
+        "reason": "macrolanguage"
+    },
+    "umu": {
+        "replacement": "del",
+        "reason": "macrolanguage"
+    },
+    "uzn": {
+        "replacement": "uz",
+        "reason": "macrolanguage"
+    },
+    "xpe": {
+        "replacement": "kpe",
+        "reason": "macrolanguage"
+    },
+    "xsl": {
+        "replacement": "den",
+        "reason": "macrolanguage"
+    },
+    "ydd": {
+        "replacement": "yi",
+        "reason": "macrolanguage"
+    },
+    "zai": {
+        "replacement": "zap",
+        "reason": "macrolanguage"
+    },
+    "zsm": {
+        "replacement": "ms",
+        "reason": "macrolanguage"
+    },
+    "zyb": {
+        "replacement": "za",
+        "reason": "macrolanguage"
+    },
+    "him": {
+        "replacement": "srx",
+        "reason": "macrolanguage"
+    },
+    "mnk": {
+        "replacement": "man",
+        "reason": "macrolanguage"
+    },
+    "aar": {
+        "replacement": "aa",
+        "reason": "overlong"
+    },
+    "abk": {
+        "replacement": "ab",
+        "reason": "overlong"
+    },
+    "ave": {
+        "replacement": "ae",
+        "reason": "overlong"
+    },
+    "afr": {
+        "replacement": "af",
+        "reason": "overlong"
+    },
+    "aka": {
+        "replacement": "ak",
+        "reason": "overlong"
+    },
+    "amh": {
+        "replacement": "am",
+        "reason": "overlong"
+    },
+    "arg": {
+        "replacement": "an",
+        "reason": "overlong"
+    },
+    "ara": {
+        "replacement": "ar",
+        "reason": "overlong"
+    },
+    "asm": {
+        "replacement": "as",
+        "reason": "overlong"
+    },
+    "ava": {
+        "replacement": "av",
+        "reason": "overlong"
+    },
+    "aym": {
+        "replacement": "ay",
+        "reason": "overlong"
+    },
+    "aze": {
+        "replacement": "az",
+        "reason": "overlong"
+    },
+    "bak": {
+        "replacement": "ba",
+        "reason": "overlong"
+    },
+    "bel": {
+        "replacement": "be",
+        "reason": "overlong"
+    },
+    "bul": {
+        "replacement": "bg",
+        "reason": "overlong"
+    },
+    "bih": {
+        "replacement": "bh",
+        "reason": "overlong"
+    },
+    "bis": {
+        "replacement": "bi",
+        "reason": "overlong"
+    },
+    "bam": {
+        "replacement": "bm",
+        "reason": "overlong"
+    },
+    "ben": {
+        "replacement": "bn",
+        "reason": "overlong"
+    },
+    "bod": {
+        "replacement": "bo",
+        "reason": "overlong"
+    },
+    "bre": {
+        "replacement": "br",
+        "reason": "overlong"
+    },
+    "bos": {
+        "replacement": "bs",
+        "reason": "overlong"
+    },
+    "cat": {
+        "replacement": "ca",
+        "reason": "overlong"
+    },
+    "che": {
+        "replacement": "ce",
+        "reason": "overlong"
+    },
+    "cha": {
+        "replacement": "ch",
+        "reason": "overlong"
+    },
+    "cos": {
+        "replacement": "co",
+        "reason": "overlong"
+    },
+    "cre": {
+        "replacement": "cr",
+        "reason": "overlong"
+    },
+    "ces": {
+        "replacement": "cs",
+        "reason": "overlong"
+    },
+    "chu": {
+        "replacement": "cu",
+        "reason": "overlong"
+    },
+    "chv": {
+        "replacement": "cv",
+        "reason": "overlong"
+    },
+    "cym": {
+        "replacement": "cy",
+        "reason": "overlong"
+    },
+    "dan": {
+        "replacement": "da",
+        "reason": "overlong"
+    },
+    "deu": {
+        "replacement": "de",
+        "reason": "overlong"
+    },
+    "div": {
+        "replacement": "dv",
+        "reason": "overlong"
+    },
+    "dzo": {
+        "replacement": "dz",
+        "reason": "overlong"
+    },
+    "ewe": {
+        "replacement": "ee",
+        "reason": "overlong"
+    },
+    "ell": {
+        "replacement": "el",
+        "reason": "overlong"
+    },
+    "eng": {
+        "replacement": "en",
+        "reason": "overlong"
+    },
+    "epo": {
+        "replacement": "eo",
+        "reason": "overlong"
+    },
+    "spa": {
+        "replacement": "es",
+        "reason": "overlong"
+    },
+    "est": {
+        "replacement": "et",
+        "reason": "overlong"
+    },
+    "eus": {
+        "replacement": "eu",
+        "reason": "overlong"
+    },
+    "fas": {
+        "replacement": "fa",
+        "reason": "overlong"
+    },
+    "ful": {
+        "replacement": "ff",
+        "reason": "overlong"
+    },
+    "fin": {
+        "replacement": "fi",
+        "reason": "overlong"
+    },
+    "fij": {
+        "replacement": "fj",
+        "reason": "overlong"
+    },
+    "fao": {
+        "replacement": "fo",
+        "reason": "overlong"
+    },
+    "fra": {
+        "replacement": "fr",
+        "reason": "overlong"
+    },
+    "fry": {
+        "replacement": "fy",
+        "reason": "overlong"
+    },
+    "gle": {
+        "replacement": "ga",
+        "reason": "overlong"
+    },
+    "gla": {
+        "replacement": "gd",
+        "reason": "overlong"
+    },
+    "glg": {
+        "replacement": "gl",
+        "reason": "overlong"
+    },
+    "grn": {
+        "replacement": "gn",
+        "reason": "overlong"
+    },
+    "guj": {
+        "replacement": "gu",
+        "reason": "overlong"
+    },
+    "glv": {
+        "replacement": "gv",
+        "reason": "overlong"
+    },
+    "hau": {
+        "replacement": "ha",
+        "reason": "overlong"
+    },
+    "heb": {
+        "replacement": "he",
+        "reason": "overlong"
+    },
+    "hin": {
+        "replacement": "hi",
+        "reason": "overlong"
+    },
+    "hmo": {
+        "replacement": "ho",
+        "reason": "overlong"
+    },
+    "hrv": {
+        "replacement": "hr",
+        "reason": "overlong"
+    },
+    "hat": {
+        "replacement": "ht",
+        "reason": "overlong"
+    },
+    "hun": {
+        "replacement": "hu",
+        "reason": "overlong"
+    },
+    "hye": {
+        "replacement": "hy",
+        "reason": "overlong"
+    },
+    "her": {
+        "replacement": "hz",
+        "reason": "overlong"
+    },
+    "ina": {
+        "replacement": "ia",
+        "reason": "overlong"
+    },
+    "ind": {
+        "replacement": "id",
+        "reason": "overlong"
+    },
+    "ile": {
+        "replacement": "ie",
+        "reason": "overlong"
+    },
+    "ibo": {
+        "replacement": "ig",
+        "reason": "overlong"
+    },
+    "iii": {
+        "replacement": "ii",
+        "reason": "overlong"
+    },
+    "ipk": {
+        "replacement": "ik",
+        "reason": "overlong"
+    },
+    "ido": {
+        "replacement": "io",
+        "reason": "overlong"
+    },
+    "isl": {
+        "replacement": "is",
+        "reason": "overlong"
+    },
+    "ita": {
+        "replacement": "it",
+        "reason": "overlong"
+    },
+    "iku": {
+        "replacement": "iu",
+        "reason": "overlong"
+    },
+    "jpn": {
+        "replacement": "ja",
+        "reason": "overlong"
+    },
+    "jav": {
+        "replacement": "jv",
+        "reason": "overlong"
+    },
+    "kat": {
+        "replacement": "ka",
+        "reason": "overlong"
+    },
+    "kon": {
+        "replacement": "kg",
+        "reason": "overlong"
+    },
+    "kik": {
+        "replacement": "ki",
+        "reason": "overlong"
+    },
+    "kua": {
+        "replacement": "kj",
+        "reason": "overlong"
+    },
+    "kaz": {
+        "replacement": "kk",
+        "reason": "overlong"
+    },
+    "kal": {
+        "replacement": "kl",
+        "reason": "overlong"
+    },
+    "khm": {
+        "replacement": "km",
+        "reason": "overlong"
+    },
+    "kan": {
+        "replacement": "kn",
+        "reason": "overlong"
+    },
+    "kor": {
+        "replacement": "ko",
+        "reason": "overlong"
+    },
+    "kau": {
+        "replacement": "kr",
+        "reason": "overlong"
+    },
+    "kas": {
+        "replacement": "ks",
+        "reason": "overlong"
+    },
+    "kur": {
+        "replacement": "ku",
+        "reason": "overlong"
+    },
+    "kom": {
+        "replacement": "kv",
+        "reason": "overlong"
+    },
+    "cor": {
+        "replacement": "kw",
+        "reason": "overlong"
+    },
+    "kir": {
+        "replacement": "ky",
+        "reason": "overlong"
+    },
+    "lat": {
+        "replacement": "la",
+        "reason": "overlong"
+    },
+    "ltz": {
+        "replacement": "lb",
+        "reason": "overlong"
+    },
+    "lug": {
+        "replacement": "lg",
+        "reason": "overlong"
+    },
+    "lim": {
+        "replacement": "li",
+        "reason": "overlong"
+    },
+    "lin": {
+        "replacement": "ln",
+        "reason": "overlong"
+    },
+    "lao": {
+        "replacement": "lo",
+        "reason": "overlong"
+    },
+    "lit": {
+        "replacement": "lt",
+        "reason": "overlong"
+    },
+    "lub": {
+        "replacement": "lu",
+        "reason": "overlong"
+    },
+    "lav": {
+        "replacement": "lv",
+        "reason": "overlong"
+    },
+    "mlg": {
+        "replacement": "mg",
+        "reason": "overlong"
+    },
+    "mah": {
+        "replacement": "mh",
+        "reason": "overlong"
+    },
+    "mri": {
+        "replacement": "mi",
+        "reason": "overlong"
+    },
+    "mkd": {
+        "replacement": "mk",
+        "reason": "overlong"
+    },
+    "mal": {
+        "replacement": "ml",
+        "reason": "overlong"
+    },
+    "mon": {
+        "replacement": "mn",
+        "reason": "overlong"
+    },
+    "mol": {
+        "replacement": "ro_MD",
+        "reason": "overlong"
+    },
+    "mar": {
+        "replacement": "mr",
+        "reason": "overlong"
+    },
+    "msa": {
+        "replacement": "ms",
+        "reason": "overlong"
+    },
+    "mlt": {
+        "replacement": "mt",
+        "reason": "overlong"
+    },
+    "mya": {
+        "replacement": "my",
+        "reason": "overlong"
+    },
+    "nau": {
+        "replacement": "na",
+        "reason": "overlong"
+    },
+    "nob": {
+        "replacement": "nb",
+        "reason": "overlong"
+    },
+    "nde": {
+        "replacement": "nd",
+        "reason": "overlong"
+    },
+    "nep": {
+        "replacement": "ne",
+        "reason": "overlong"
+    },
+    "ndo": {
+        "replacement": "ng",
+        "reason": "overlong"
+    },
+    "nld": {
+        "replacement": "nl",
+        "reason": "overlong"
+    },
+    "nno": {
+        "replacement": "nn",
+        "reason": "overlong"
+    },
+    "nor": {
+        "replacement": "nb",
+        "reason": "overlong"
+    },
+    "nbl": {
+        "replacement": "nr",
+        "reason": "overlong"
+    },
+    "nav": {
+        "replacement": "nv",
+        "reason": "overlong"
+    },
+    "nya": {
+        "replacement": "ny",
+        "reason": "overlong"
+    },
+    "oci": {
+        "replacement": "oc",
+        "reason": "overlong"
+    },
+    "oji": {
+        "replacement": "oj",
+        "reason": "overlong"
+    },
+    "orm": {
+        "replacement": "om",
+        "reason": "overlong"
+    },
+    "ori": {
+        "replacement": "or",
+        "reason": "overlong"
+    },
+    "oss": {
+        "replacement": "os",
+        "reason": "overlong"
+    },
+    "pan": {
+        "replacement": "pa",
+        "reason": "overlong"
+    },
+    "pli": {
+        "replacement": "pi",
+        "reason": "overlong"
+    },
+    "pol": {
+        "replacement": "pl",
+        "reason": "overlong"
+    },
+    "pus": {
+        "replacement": "ps",
+        "reason": "overlong"
+    },
+    "por": {
+        "replacement": "pt",
+        "reason": "overlong"
+    },
+    "que": {
+        "replacement": "qu",
+        "reason": "overlong"
+    },
+    "roh": {
+        "replacement": "rm",
+        "reason": "overlong"
+    },
+    "run": {
+        "replacement": "rn",
+        "reason": "overlong"
+    },
+    "ron": {
+        "replacement": "ro",
+        "reason": "overlong"
+    },
+    "rus": {
+        "replacement": "ru",
+        "reason": "overlong"
+    },
+    "kin": {
+        "replacement": "rw",
+        "reason": "overlong"
+    },
+    "san": {
+        "replacement": "sa",
+        "reason": "overlong"
+    },
+    "srd": {
+        "replacement": "sc",
+        "reason": "overlong"
+    },
+    "snd": {
+        "replacement": "sd",
+        "reason": "overlong"
+    },
+    "sme": {
+        "replacement": "se",
+        "reason": "overlong"
+    },
+    "sag": {
+        "replacement": "sg",
+        "reason": "overlong"
+    },
+    "hbs": {
+        "replacement": "sr_Latn",
+        "reason": "overlong"
+    },
+    "sin": {
+        "replacement": "si",
+        "reason": "overlong"
+    },
+    "slk": {
+        "replacement": "sk",
+        "reason": "overlong"
+    },
+    "slv": {
+        "replacement": "sl",
+        "reason": "overlong"
+    },
+    "smo": {
+        "replacement": "sm",
+        "reason": "overlong"
+    },
+    "sna": {
+        "replacement": "sn",
+        "reason": "overlong"
+    },
+    "som": {
+        "replacement": "so",
+        "reason": "overlong"
+    },
+    "sqi": {
+        "replacement": "sq",
+        "reason": "overlong"
+    },
+    "srp": {
+        "replacement": "sr",
+        "reason": "overlong"
+    },
+    "ssw": {
+        "replacement": "ss",
+        "reason": "overlong"
+    },
+    "sot": {
+        "replacement": "st",
+        "reason": "overlong"
+    },
+    "sun": {
+        "replacement": "su",
+        "reason": "overlong"
+    },
+    "swe": {
+        "replacement": "sv",
+        "reason": "overlong"
+    },
+    "swa": {
+        "replacement": "sw",
+        "reason": "overlong"
+    },
+    "tam": {
+        "replacement": "ta",
+        "reason": "overlong"
+    },
+    "tel": {
+        "replacement": "te",
+        "reason": "overlong"
+    },
+    "tgk": {
+        "replacement": "tg",
+        "reason": "overlong"
+    },
+    "tha": {
+        "replacement": "th",
+        "reason": "overlong"
+    },
+    "tir": {
+        "replacement": "ti",
+        "reason": "overlong"
+    },
+    "tuk": {
+        "replacement": "tk",
+        "reason": "overlong"
+    },
+    "tgl": {
+        "replacement": "fil",
+        "reason": "overlong"
+    },
+    "tsn": {
+        "replacement": "tn",
+        "reason": "overlong"
+    },
+    "ton": {
+        "replacement": "to",
+        "reason": "overlong"
+    },
+    "tur": {
+        "replacement": "tr",
+        "reason": "overlong"
+    },
+    "tso": {
+        "replacement": "ts",
+        "reason": "overlong"
+    },
+    "tat": {
+        "replacement": "tt",
+        "reason": "overlong"
+    },
+    "twi": {
+        "replacement": "ak",
+        "reason": "overlong"
+    },
+    "tah": {
+        "replacement": "ty",
+        "reason": "overlong"
+    },
+    "uig": {
+        "replacement": "ug",
+        "reason": "overlong"
+    },
+    "ukr": {
+        "replacement": "uk",
+        "reason": "overlong"
+    },
+    "urd": {
+        "replacement": "ur",
+        "reason": "overlong"
+    },
+    "uzb": {
+        "replacement": "uz",
+        "reason": "overlong"
+    },
+    "ven": {
+        "replacement": "ve",
+        "reason": "overlong"
+    },
+    "vie": {
+        "replacement": "vi",
+        "reason": "overlong"
+    },
+    "vol": {
+        "replacement": "vo",
+        "reason": "overlong"
+    },
+    "wln": {
+        "replacement": "wa",
+        "reason": "overlong"
+    },
+    "wol": {
+        "replacement": "wo",
+        "reason": "overlong"
+    },
+    "xho": {
+        "replacement": "xh",
+        "reason": "overlong"
+    },
+    "yid": {
+        "replacement": "yi",
+        "reason": "overlong"
+    },
+    "yor": {
+        "replacement": "yo",
+        "reason": "overlong"
+    },
+    "zha": {
+        "replacement": "za",
+        "reason": "overlong"
+    },
+    "zho": {
+        "replacement": "zh",
+        "reason": "overlong"
+    },
+    "zul": {
+        "replacement": "zu",
+        "reason": "overlong"
+    },
+    "alb": {
+        "replacement": "sq",
+        "reason": "bibliographic"
+    },
+    "arm": {
+        "replacement": "hy",
+        "reason": "bibliographic"
+    },
+    "baq": {
+        "replacement": "eu",
+        "reason": "bibliographic"
+    },
+    "bur": {
+        "replacement": "my",
+        "reason": "bibliographic"
+    },
+    "chi": {
+        "replacement": "zh",
+        "reason": "bibliographic"
+    },
+    "cze": {
+        "replacement": "cs",
+        "reason": "bibliographic"
+    },
+    "dut": {
+        "replacement": "nl",
+        "reason": "bibliographic"
+    },
+    "fre": {
+        "replacement": "fr",
+        "reason": "bibliographic"
+    },
+    "geo": {
+        "replacement": "ka",
+        "reason": "bibliographic"
+    },
+    "ger": {
+        "replacement": "de",
+        "reason": "bibliographic"
+    },
+    "gre": {
+        "replacement": "el",
+        "reason": "bibliographic"
+    },
+    "ice": {
+        "replacement": "is",
+        "reason": "bibliographic"
+    },
+    "mac": {
+        "replacement": "mk",
+        "reason": "bibliographic"
+    },
+    "mao": {
+        "replacement": "mi",
+        "reason": "bibliographic"
+    },
+    "may": {
+        "replacement": "ms",
+        "reason": "bibliographic"
+    },
+    "per": {
+        "replacement": "fa",
+        "reason": "bibliographic"
+    },
+    "rum": {
+        "replacement": "ro",
+        "reason": "bibliographic"
+    },
+    "slo": {
+        "replacement": "sk",
+        "reason": "bibliographic"
+    },
+    "tib": {
+        "replacement": "bo",
+        "reason": "bibliographic"
+    },
+    "wel": {
+        "replacement": "cy",
+        "reason": "bibliographic"
+    }
+}

@@ -1,0 +1,2562 @@
+{
+    "AN": {
+        "replacement": "CW SX BQ",
+        "reason": "deprecated"
+    },
+    "BU": {
+        "replacement": "MM",
+        "reason": "deprecated"
+    },
+    "CS": {
+        "replacement": "RS ME",
+        "reason": "deprecated"
+    },
+    "CT": {
+        "replacement": "KI",
+        "reason": "deprecated"
+    },
+    "DD": {
+        "replacement": "DE",
+        "reason": "deprecated"
+    },
+    "DY": {
+        "replacement": "BJ",
+        "reason": "deprecated"
+    },
+    "FQ": {
+        "replacement": "AQ TF",
+        "reason": "deprecated"
+    },
+    "FX": {
+        "replacement": "FR",
+        "reason": "deprecated"
+    },
+    "HV": {
+        "replacement": "BF",
+        "reason": "deprecated"
+    },
+    "JT": {
+        "replacement": "UM",
+        "reason": "deprecated"
+    },
+    "MI": {
+        "replacement": "UM",
+        "reason": "deprecated"
+    },
+    "NH": {
+        "replacement": "VU",
+        "reason": "deprecated"
+    },
+    "NQ": {
+        "replacement": "AQ",
+        "reason": "deprecated"
+    },
+    "NT": {
+        "replacement": "SA IQ",
+        "reason": "deprecated"
+    },
+    "PC": {
+        "replacement": "FM MH MP PW",
+        "reason": "deprecated"
+    },
+    "PU": {
+        "replacement": "UM",
+        "reason": "deprecated"
+    },
+    "PZ": {
+        "replacement": "PA",
+        "reason": "deprecated"
+    },
+    "QU": {
+        "replacement": "EU",
+        "reason": "deprecated"
+    },
+    "RH": {
+        "replacement": "ZW",
+        "reason": "deprecated"
+    },
+    "SU": {
+        "replacement": "RU AM AZ BY EE GE KZ KG LV LT MD TJ TM UA UZ",
+        "reason": "deprecated"
+    },
+    "TP": {
+        "replacement": "TL",
+        "reason": "deprecated"
+    },
+    "UK": {
+        "replacement": "GB",
+        "reason": "deprecated"
+    },
+    "VD": {
+        "replacement": "VN",
+        "reason": "deprecated"
+    },
+    "WK": {
+        "replacement": "UM",
+        "reason": "deprecated"
+    },
+    "YD": {
+        "replacement": "YE",
+        "reason": "deprecated"
+    },
+    "YU": {
+        "replacement": "RS ME",
+        "reason": "deprecated"
+    },
+    "ZR": {
+        "replacement": "CD",
+        "reason": "deprecated"
+    },
+    "062": {
+        "replacement": "034 143",
+        "reason": "deprecated"
+    },
+    "172": {
+        "replacement": "RU AM AZ BY GE KG KZ MD TJ TM UA UZ",
+        "reason": "deprecated"
+    },
+    "200": {
+        "replacement": "CZ SK",
+        "reason": "deprecated"
+    },
+    "230": {
+        "replacement": "ET",
+        "reason": "deprecated"
+    },
+    "280": {
+        "replacement": "DE",
+        "reason": "deprecated"
+    },
+    "532": {
+        "replacement": "CW SX BQ",
+        "reason": "deprecated"
+    },
+    "582": {
+        "replacement": "FM MH MP PW",
+        "reason": "deprecated"
+    },
+    "736": {
+        "replacement": "SD",
+        "reason": "deprecated"
+    },
+    "830": {
+        "replacement": "JE GG",
+        "reason": "deprecated"
+    },
+    "886": {
+        "replacement": "YE",
+        "reason": "deprecated"
+    },
+    "890": {
+        "replacement": "RS ME SI HR MK BA",
+        "reason": "deprecated"
+    },
+    "AAA": {
+        "replacement": "AA",
+        "reason": "overlong"
+    },
+    "ASC": {
+        "replacement": "AC",
+        "reason": "overlong"
+    },
+    "AND": {
+        "replacement": "AD",
+        "reason": "overlong"
+    },
+    "ARE": {
+        "replacement": "AE",
+        "reason": "overlong"
+    },
+    "AFG": {
+        "replacement": "AF",
+        "reason": "overlong"
+    },
+    "ATG": {
+        "replacement": "AG",
+        "reason": "overlong"
+    },
+    "AIA": {
+        "replacement": "AI",
+        "reason": "overlong"
+    },
+    "ALB": {
+        "replacement": "AL",
+        "reason": "overlong"
+    },
+    "ARM": {
+        "replacement": "AM",
+        "reason": "overlong"
+    },
+    "ANT": {
+        "replacement": "CW SX BQ",
+        "reason": "overlong"
+    },
+    "AGO": {
+        "replacement": "AO",
+        "reason": "overlong"
+    },
+    "ATA": {
+        "replacement": "AQ",
+        "reason": "overlong"
+    },
+    "ARG": {
+        "replacement": "AR",
+        "reason": "overlong"
+    },
+    "ASM": {
+        "replacement": "AS",
+        "reason": "overlong"
+    },
+    "AUT": {
+        "replacement": "AT",
+        "reason": "overlong"
+    },
+    "AUS": {
+        "replacement": "AU",
+        "reason": "overlong"
+    },
+    "ABW": {
+        "replacement": "AW",
+        "reason": "overlong"
+    },
+    "ALA": {
+        "replacement": "AX",
+        "reason": "overlong"
+    },
+    "AZE": {
+        "replacement": "AZ",
+        "reason": "overlong"
+    },
+    "BIH": {
+        "replacement": "BA",
+        "reason": "overlong"
+    },
+    "BRB": {
+        "replacement": "BB",
+        "reason": "overlong"
+    },
+    "BGD": {
+        "replacement": "BD",
+        "reason": "overlong"
+    },
+    "BEL": {
+        "replacement": "BE",
+        "reason": "overlong"
+    },
+    "BFA": {
+        "replacement": "BF",
+        "reason": "overlong"
+    },
+    "BGR": {
+        "replacement": "BG",
+        "reason": "overlong"
+    },
+    "BHR": {
+        "replacement": "BH",
+        "reason": "overlong"
+    },
+    "BDI": {
+        "replacement": "BI",
+        "reason": "overlong"
+    },
+    "BEN": {
+        "replacement": "BJ",
+        "reason": "overlong"
+    },
+    "BLM": {
+        "replacement": "BL",
+        "reason": "overlong"
+    },
+    "BMU": {
+        "replacement": "BM",
+        "reason": "overlong"
+    },
+    "BRN": {
+        "replacement": "BN",
+        "reason": "overlong"
+    },
+    "BOL": {
+        "replacement": "BO",
+        "reason": "overlong"
+    },
+    "BES": {
+        "replacement": "BQ",
+        "reason": "overlong"
+    },
+    "BRA": {
+        "replacement": "BR",
+        "reason": "overlong"
+    },
+    "BHS": {
+        "replacement": "BS",
+        "reason": "overlong"
+    },
+    "BTN": {
+        "replacement": "BT",
+        "reason": "overlong"
+    },
+    "BUR": {
+        "replacement": "MM",
+        "reason": "overlong"
+    },
+    "BVT": {
+        "replacement": "BV",
+        "reason": "overlong"
+    },
+    "BWA": {
+        "replacement": "BW",
+        "reason": "overlong"
+    },
+    "BLR": {
+        "replacement": "BY",
+        "reason": "overlong"
+    },
+    "BLZ": {
+        "replacement": "BZ",
+        "reason": "overlong"
+    },
+    "CAN": {
+        "replacement": "CA",
+        "reason": "overlong"
+    },
+    "CCK": {
+        "replacement": "CC",
+        "reason": "overlong"
+    },
+    "COD": {
+        "replacement": "CD",
+        "reason": "overlong"
+    },
+    "CAF": {
+        "replacement": "CF",
+        "reason": "overlong"
+    },
+    "COG": {
+        "replacement": "CG",
+        "reason": "overlong"
+    },
+    "CHE": {
+        "replacement": "CH",
+        "reason": "overlong"
+    },
+    "CIV": {
+        "replacement": "CI",
+        "reason": "overlong"
+    },
+    "COK": {
+        "replacement": "CK",
+        "reason": "overlong"
+    },
+    "CHL": {
+        "replacement": "CL",
+        "reason": "overlong"
+    },
+    "CMR": {
+        "replacement": "CM",
+        "reason": "overlong"
+    },
+    "CHN": {
+        "replacement": "CN",
+        "reason": "overlong"
+    },
+    "COL": {
+        "replacement": "CO",
+        "reason": "overlong"
+    },
+    "CPT": {
+        "replacement": "CP",
+        "reason": "overlong"
+    },
+    "CRI": {
+        "replacement": "CR",
+        "reason": "overlong"
+    },
+    "SCG": {
+        "replacement": "RS ME",
+        "reason": "overlong"
+    },
+    "CUB": {
+        "replacement": "CU",
+        "reason": "overlong"
+    },
+    "CPV": {
+        "replacement": "CV",
+        "reason": "overlong"
+    },
+    "CUW": {
+        "replacement": "CW",
+        "reason": "overlong"
+    },
+    "CXR": {
+        "replacement": "CX",
+        "reason": "overlong"
+    },
+    "CYP": {
+        "replacement": "CY",
+        "reason": "overlong"
+    },
+    "CZE": {
+        "replacement": "CZ",
+        "reason": "overlong"
+    },
+    "DDR": {
+        "replacement": "DE",
+        "reason": "overlong"
+    },
+    "DEU": {
+        "replacement": "DE",
+        "reason": "overlong"
+    },
+    "DGA": {
+        "replacement": "DG",
+        "reason": "overlong"
+    },
+    "DJI": {
+        "replacement": "DJ",
+        "reason": "overlong"
+    },
+    "DNK": {
+        "replacement": "DK",
+        "reason": "overlong"
+    },
+    "DMA": {
+        "replacement": "DM",
+        "reason": "overlong"
+    },
+    "DOM": {
+        "replacement": "DO",
+        "reason": "overlong"
+    },
+    "DZA": {
+        "replacement": "DZ",
+        "reason": "overlong"
+    },
+    "ECU": {
+        "replacement": "EC",
+        "reason": "overlong"
+    },
+    "EST": {
+        "replacement": "EE",
+        "reason": "overlong"
+    },
+    "EGY": {
+        "replacement": "EG",
+        "reason": "overlong"
+    },
+    "ESH": {
+        "replacement": "EH",
+        "reason": "overlong"
+    },
+    "ERI": {
+        "replacement": "ER",
+        "reason": "overlong"
+    },
+    "ESP": {
+        "replacement": "ES",
+        "reason": "overlong"
+    },
+    "ETH": {
+        "replacement": "ET",
+        "reason": "overlong"
+    },
+    "FIN": {
+        "replacement": "FI",
+        "reason": "overlong"
+    },
+    "FJI": {
+        "replacement": "FJ",
+        "reason": "overlong"
+    },
+    "FLK": {
+        "replacement": "FK",
+        "reason": "overlong"
+    },
+    "FSM": {
+        "replacement": "FM",
+        "reason": "overlong"
+    },
+    "FRO": {
+        "replacement": "FO",
+        "reason": "overlong"
+    },
+    "FRA": {
+        "replacement": "FR",
+        "reason": "overlong"
+    },
+    "FXX": {
+        "replacement": "FR",
+        "reason": "overlong"
+    },
+    "GAB": {
+        "replacement": "GA",
+        "reason": "overlong"
+    },
+    "GBR": {
+        "replacement": "GB",
+        "reason": "overlong"
+    },
+    "GRD": {
+        "replacement": "GD",
+        "reason": "overlong"
+    },
+    "GEO": {
+        "replacement": "GE",
+        "reason": "overlong"
+    },
+    "GUF": {
+        "replacement": "GF",
+        "reason": "overlong"
+    },
+    "GGY": {
+        "replacement": "GG",
+        "reason": "overlong"
+    },
+    "GHA": {
+        "replacement": "GH",
+        "reason": "overlong"
+    },
+    "GIB": {
+        "replacement": "GI",
+        "reason": "overlong"
+    },
+    "GRL": {
+        "replacement": "GL",
+        "reason": "overlong"
+    },
+    "GMB": {
+        "replacement": "GM",
+        "reason": "overlong"
+    },
+    "GIN": {
+        "replacement": "GN",
+        "reason": "overlong"
+    },
+    "GLP": {
+        "replacement": "GP",
+        "reason": "overlong"
+    },
+    "GNQ": {
+        "replacement": "GQ",
+        "reason": "overlong"
+    },
+    "GRC": {
+        "replacement": "GR",
+        "reason": "overlong"
+    },
+    "SGS": {
+        "replacement": "GS",
+        "reason": "overlong"
+    },
+    "GTM": {
+        "replacement": "GT",
+        "reason": "overlong"
+    },
+    "GUM": {
+        "replacement": "GU",
+        "reason": "overlong"
+    },
+    "GNB": {
+        "replacement": "GW",
+        "reason": "overlong"
+    },
+    "GUY": {
+        "replacement": "GY",
+        "reason": "overlong"
+    },
+    "HKG": {
+        "replacement": "HK",
+        "reason": "overlong"
+    },
+    "HMD": {
+        "replacement": "HM",
+        "reason": "overlong"
+    },
+    "HND": {
+        "replacement": "HN",
+        "reason": "overlong"
+    },
+    "HRV": {
+        "replacement": "HR",
+        "reason": "overlong"
+    },
+    "HTI": {
+        "replacement": "HT",
+        "reason": "overlong"
+    },
+    "HUN": {
+        "replacement": "HU",
+        "reason": "overlong"
+    },
+    "IDN": {
+        "replacement": "ID",
+        "reason": "overlong"
+    },
+    "IRL": {
+        "replacement": "IE",
+        "reason": "overlong"
+    },
+    "ISR": {
+        "replacement": "IL",
+        "reason": "overlong"
+    },
+    "IMN": {
+        "replacement": "IM",
+        "reason": "overlong"
+    },
+    "IND": {
+        "replacement": "IN",
+        "reason": "overlong"
+    },
+    "IOT": {
+        "replacement": "IO",
+        "reason": "overlong"
+    },
+    "IRQ": {
+        "replacement": "IQ",
+        "reason": "overlong"
+    },
+    "IRN": {
+        "replacement": "IR",
+        "reason": "overlong"
+    },
+    "ISL": {
+        "replacement": "IS",
+        "reason": "overlong"
+    },
+    "ITA": {
+        "replacement": "IT",
+        "reason": "overlong"
+    },
+    "JEY": {
+        "replacement": "JE",
+        "reason": "overlong"
+    },
+    "JAM": {
+        "replacement": "JM",
+        "reason": "overlong"
+    },
+    "JOR": {
+        "replacement": "JO",
+        "reason": "overlong"
+    },
+    "JPN": {
+        "replacement": "JP",
+        "reason": "overlong"
+    },
+    "KEN": {
+        "replacement": "KE",
+        "reason": "overlong"
+    },
+    "KGZ": {
+        "replacement": "KG",
+        "reason": "overlong"
+    },
+    "KHM": {
+        "replacement": "KH",
+        "reason": "overlong"
+    },
+    "KIR": {
+        "replacement": "KI",
+        "reason": "overlong"
+    },
+    "COM": {
+        "replacement": "KM",
+        "reason": "overlong"
+    },
+    "KNA": {
+        "replacement": "KN",
+        "reason": "overlong"
+    },
+    "PRK": {
+        "replacement": "KP",
+        "reason": "overlong"
+    },
+    "KOR": {
+        "replacement": "KR",
+        "reason": "overlong"
+    },
+    "KWT": {
+        "replacement": "KW",
+        "reason": "overlong"
+    },
+    "CYM": {
+        "replacement": "KY",
+        "reason": "overlong"
+    },
+    "KAZ": {
+        "replacement": "KZ",
+        "reason": "overlong"
+    },
+    "LAO": {
+        "replacement": "LA",
+        "reason": "overlong"
+    },
+    "LBN": {
+        "replacement": "LB",
+        "reason": "overlong"
+    },
+    "LCA": {
+        "replacement": "LC",
+        "reason": "overlong"
+    },
+    "LIE": {
+        "replacement": "LI",
+        "reason": "overlong"
+    },
+    "LKA": {
+        "replacement": "LK",
+        "reason": "overlong"
+    },
+    "LBR": {
+        "replacement": "LR",
+        "reason": "overlong"
+    },
+    "LSO": {
+        "replacement": "LS",
+        "reason": "overlong"
+    },
+    "LTU": {
+        "replacement": "LT",
+        "reason": "overlong"
+    },
+    "LUX": {
+        "replacement": "LU",
+        "reason": "overlong"
+    },
+    "LVA": {
+        "replacement": "LV",
+        "reason": "overlong"
+    },
+    "LBY": {
+        "replacement": "LY",
+        "reason": "overlong"
+    },
+    "MAR": {
+        "replacement": "MA",
+        "reason": "overlong"
+    },
+    "MCO": {
+        "replacement": "MC",
+        "reason": "overlong"
+    },
+    "MDA": {
+        "replacement": "MD",
+        "reason": "overlong"
+    },
+    "MNE": {
+        "replacement": "ME",
+        "reason": "overlong"
+    },
+    "MAF": {
+        "replacement": "MF",
+        "reason": "overlong"
+    },
+    "MDG": {
+        "replacement": "MG",
+        "reason": "overlong"
+    },
+    "MHL": {
+        "replacement": "MH",
+        "reason": "overlong"
+    },
+    "MKD": {
+        "replacement": "MK",
+        "reason": "overlong"
+    },
+    "MLI": {
+        "replacement": "ML",
+        "reason": "overlong"
+    },
+    "MMR": {
+        "replacement": "MM",
+        "reason": "overlong"
+    },
+    "MNG": {
+        "replacement": "MN",
+        "reason": "overlong"
+    },
+    "MAC": {
+        "replacement": "MO",
+        "reason": "overlong"
+    },
+    "MNP": {
+        "replacement": "MP",
+        "reason": "overlong"
+    },
+    "MTQ": {
+        "replacement": "MQ",
+        "reason": "overlong"
+    },
+    "MRT": {
+        "replacement": "MR",
+        "reason": "overlong"
+    },
+    "MSR": {
+        "replacement": "MS",
+        "reason": "overlong"
+    },
+    "MLT": {
+        "replacement": "MT",
+        "reason": "overlong"
+    },
+    "MUS": {
+        "replacement": "MU",
+        "reason": "overlong"
+    },
+    "MDV": {
+        "replacement": "MV",
+        "reason": "overlong"
+    },
+    "MWI": {
+        "replacement": "MW",
+        "reason": "overlong"
+    },
+    "MEX": {
+        "replacement": "MX",
+        "reason": "overlong"
+    },
+    "MYS": {
+        "replacement": "MY",
+        "reason": "overlong"
+    },
+    "MOZ": {
+        "replacement": "MZ",
+        "reason": "overlong"
+    },
+    "NAM": {
+        "replacement": "NA",
+        "reason": "overlong"
+    },
+    "NCL": {
+        "replacement": "NC",
+        "reason": "overlong"
+    },
+    "NER": {
+        "replacement": "NE",
+        "reason": "overlong"
+    },
+    "NFK": {
+        "replacement": "NF",
+        "reason": "overlong"
+    },
+    "NGA": {
+        "replacement": "NG",
+        "reason": "overlong"
+    },
+    "NIC": {
+        "replacement": "NI",
+        "reason": "overlong"
+    },
+    "NLD": {
+        "replacement": "NL",
+        "reason": "overlong"
+    },
+    "NOR": {
+        "replacement": "NO",
+        "reason": "overlong"
+    },
+    "NPL": {
+        "replacement": "NP",
+        "reason": "overlong"
+    },
+    "NRU": {
+        "replacement": "NR",
+        "reason": "overlong"
+    },
+    "NTZ": {
+        "replacement": "SA IQ",
+        "reason": "overlong"
+    },
+    "NIU": {
+        "replacement": "NU",
+        "reason": "overlong"
+    },
+    "NZL": {
+        "replacement": "NZ",
+        "reason": "overlong"
+    },
+    "OMN": {
+        "replacement": "OM",
+        "reason": "overlong"
+    },
+    "PAN": {
+        "replacement": "PA",
+        "reason": "overlong"
+    },
+    "PER": {
+        "replacement": "PE",
+        "reason": "overlong"
+    },
+    "PYF": {
+        "replacement": "PF",
+        "reason": "overlong"
+    },
+    "PNG": {
+        "replacement": "PG",
+        "reason": "overlong"
+    },
+    "PHL": {
+        "replacement": "PH",
+        "reason": "overlong"
+    },
+    "PAK": {
+        "replacement": "PK",
+        "reason": "overlong"
+    },
+    "POL": {
+        "replacement": "PL",
+        "reason": "overlong"
+    },
+    "SPM": {
+        "replacement": "PM",
+        "reason": "overlong"
+    },
+    "PCN": {
+        "replacement": "PN",
+        "reason": "overlong"
+    },
+    "PRI": {
+        "replacement": "PR",
+        "reason": "overlong"
+    },
+    "PSE": {
+        "replacement": "PS",
+        "reason": "overlong"
+    },
+    "PRT": {
+        "replacement": "PT",
+        "reason": "overlong"
+    },
+    "PLW": {
+        "replacement": "PW",
+        "reason": "overlong"
+    },
+    "PRY": {
+        "replacement": "PY",
+        "reason": "overlong"
+    },
+    "QAT": {
+        "replacement": "QA",
+        "reason": "overlong"
+    },
+    "QMM": {
+        "replacement": "QM",
+        "reason": "overlong"
+    },
+    "QNN": {
+        "replacement": "QN",
+        "reason": "overlong"
+    },
+    "QPP": {
+        "replacement": "QP",
+        "reason": "overlong"
+    },
+    "QQQ": {
+        "replacement": "QQ",
+        "reason": "overlong"
+    },
+    "QRR": {
+        "replacement": "QR",
+        "reason": "overlong"
+    },
+    "QSS": {
+        "replacement": "QS",
+        "reason": "overlong"
+    },
+    "QTT": {
+        "replacement": "QT",
+        "reason": "overlong"
+    },
+    "QUU": {
+        "replacement": "EU",
+        "reason": "overlong"
+    },
+    "QVV": {
+        "replacement": "QV",
+        "reason": "overlong"
+    },
+    "QWW": {
+        "replacement": "QW",
+        "reason": "overlong"
+    },
+    "QXX": {
+        "replacement": "QX",
+        "reason": "overlong"
+    },
+    "QYY": {
+        "replacement": "QY",
+        "reason": "overlong"
+    },
+    "QZZ": {
+        "replacement": "QZ",
+        "reason": "overlong"
+    },
+    "REU": {
+        "replacement": "RE",
+        "reason": "overlong"
+    },
+    "ROU": {
+        "replacement": "RO",
+        "reason": "overlong"
+    },
+    "SRB": {
+        "replacement": "RS",
+        "reason": "overlong"
+    },
+    "RUS": {
+        "replacement": "RU",
+        "reason": "overlong"
+    },
+    "RWA": {
+        "replacement": "RW",
+        "reason": "overlong"
+    },
+    "SAU": {
+        "replacement": "SA",
+        "reason": "overlong"
+    },
+    "SLB": {
+        "replacement": "SB",
+        "reason": "overlong"
+    },
+    "SYC": {
+        "replacement": "SC",
+        "reason": "overlong"
+    },
+    "SDN": {
+        "replacement": "SD",
+        "reason": "overlong"
+    },
+    "SWE": {
+        "replacement": "SE",
+        "reason": "overlong"
+    },
+    "SGP": {
+        "replacement": "SG",
+        "reason": "overlong"
+    },
+    "SHN": {
+        "replacement": "SH",
+        "reason": "overlong"
+    },
+    "SVN": {
+        "replacement": "SI",
+        "reason": "overlong"
+    },
+    "SJM": {
+        "replacement": "SJ",
+        "reason": "overlong"
+    },
+    "SVK": {
+        "replacement": "SK",
+        "reason": "overlong"
+    },
+    "SLE": {
+        "replacement": "SL",
+        "reason": "overlong"
+    },
+    "SMR": {
+        "replacement": "SM",
+        "reason": "overlong"
+    },
+    "SEN": {
+        "replacement": "SN",
+        "reason": "overlong"
+    },
+    "SOM": {
+        "replacement": "SO",
+        "reason": "overlong"
+    },
+    "SUR": {
+        "replacement": "SR",
+        "reason": "overlong"
+    },
+    "SSD": {
+        "replacement": "SS",
+        "reason": "overlong"
+    },
+    "STP": {
+        "replacement": "ST",
+        "reason": "overlong"
+    },
+    "SUN": {
+        "replacement": "RU AM AZ BY EE GE KZ KG LV LT MD TJ TM UA UZ",
+        "reason": "overlong"
+    },
+    "SLV": {
+        "replacement": "SV",
+        "reason": "overlong"
+    },
+    "SXM": {
+        "replacement": "SX",
+        "reason": "overlong"
+    },
+    "SYR": {
+        "replacement": "SY",
+        "reason": "overlong"
+    },
+    "SWZ": {
+        "replacement": "SZ",
+        "reason": "overlong"
+    },
+    "TAA": {
+        "replacement": "TA",
+        "reason": "overlong"
+    },
+    "TCA": {
+        "replacement": "TC",
+        "reason": "overlong"
+    },
+    "TCD": {
+        "replacement": "TD",
+        "reason": "overlong"
+    },
+    "ATF": {
+        "replacement": "TF",
+        "reason": "overlong"
+    },
+    "TGO": {
+        "replacement": "TG",
+        "reason": "overlong"
+    },
+    "THA": {
+        "replacement": "TH",
+        "reason": "overlong"
+    },
+    "TJK": {
+        "replacement": "TJ",
+        "reason": "overlong"
+    },
+    "TKL": {
+        "replacement": "TK",
+        "reason": "overlong"
+    },
+    "TLS": {
+        "replacement": "TL",
+        "reason": "overlong"
+    },
+    "TKM": {
+        "replacement": "TM",
+        "reason": "overlong"
+    },
+    "TUN": {
+        "replacement": "TN",
+        "reason": "overlong"
+    },
+    "TON": {
+        "replacement": "TO",
+        "reason": "overlong"
+    },
+    "TMP": {
+        "replacement": "TL",
+        "reason": "overlong"
+    },
+    "TUR": {
+        "replacement": "TR",
+        "reason": "overlong"
+    },
+    "TTO": {
+        "replacement": "TT",
+        "reason": "overlong"
+    },
+    "TUV": {
+        "replacement": "TV",
+        "reason": "overlong"
+    },
+    "TWN": {
+        "replacement": "TW",
+        "reason": "overlong"
+    },
+    "TZA": {
+        "replacement": "TZ",
+        "reason": "overlong"
+    },
+    "UKR": {
+        "replacement": "UA",
+        "reason": "overlong"
+    },
+    "UGA": {
+        "replacement": "UG",
+        "reason": "overlong"
+    },
+    "UMI": {
+        "replacement": "UM",
+        "reason": "overlong"
+    },
+    "USA": {
+        "replacement": "US",
+        "reason": "overlong"
+    },
+    "URY": {
+        "replacement": "UY",
+        "reason": "overlong"
+    },
+    "UZB": {
+        "replacement": "UZ",
+        "reason": "overlong"
+    },
+    "VAT": {
+        "replacement": "VA",
+        "reason": "overlong"
+    },
+    "VCT": {
+        "replacement": "VC",
+        "reason": "overlong"
+    },
+    "VEN": {
+        "replacement": "VE",
+        "reason": "overlong"
+    },
+    "VGB": {
+        "replacement": "VG",
+        "reason": "overlong"
+    },
+    "VIR": {
+        "replacement": "VI",
+        "reason": "overlong"
+    },
+    "VNM": {
+        "replacement": "VN",
+        "reason": "overlong"
+    },
+    "VUT": {
+        "replacement": "VU",
+        "reason": "overlong"
+    },
+    "WLF": {
+        "replacement": "WF",
+        "reason": "overlong"
+    },
+    "WSM": {
+        "replacement": "WS",
+        "reason": "overlong"
+    },
+    "XAA": {
+        "replacement": "XA",
+        "reason": "overlong"
+    },
+    "XBB": {
+        "replacement": "XB",
+        "reason": "overlong"
+    },
+    "XCC": {
+        "replacement": "XC",
+        "reason": "overlong"
+    },
+    "XDD": {
+        "replacement": "XD",
+        "reason": "overlong"
+    },
+    "XEE": {
+        "replacement": "XE",
+        "reason": "overlong"
+    },
+    "XFF": {
+        "replacement": "XF",
+        "reason": "overlong"
+    },
+    "XGG": {
+        "replacement": "XG",
+        "reason": "overlong"
+    },
+    "XHH": {
+        "replacement": "XH",
+        "reason": "overlong"
+    },
+    "XII": {
+        "replacement": "XI",
+        "reason": "overlong"
+    },
+    "XJJ": {
+        "replacement": "XJ",
+        "reason": "overlong"
+    },
+    "XKK": {
+        "replacement": "XK",
+        "reason": "overlong"
+    },
+    "XLL": {
+        "replacement": "XL",
+        "reason": "overlong"
+    },
+    "XMM": {
+        "replacement": "XM",
+        "reason": "overlong"
+    },
+    "XNN": {
+        "replacement": "XN",
+        "reason": "overlong"
+    },
+    "XOO": {
+        "replacement": "XO",
+        "reason": "overlong"
+    },
+    "XPP": {
+        "replacement": "XP",
+        "reason": "overlong"
+    },
+    "XQQ": {
+        "replacement": "XQ",
+        "reason": "overlong"
+    },
+    "XRR": {
+        "replacement": "XR",
+        "reason": "overlong"
+    },
+    "XSS": {
+        "replacement": "XS",
+        "reason": "overlong"
+    },
+    "XTT": {
+        "replacement": "XT",
+        "reason": "overlong"
+    },
+    "XUU": {
+        "replacement": "XU",
+        "reason": "overlong"
+    },
+    "XVV": {
+        "replacement": "XV",
+        "reason": "overlong"
+    },
+    "XWW": {
+        "replacement": "XW",
+        "reason": "overlong"
+    },
+    "XXX": {
+        "replacement": "XX",
+        "reason": "overlong"
+    },
+    "XYY": {
+        "replacement": "XY",
+        "reason": "overlong"
+    },
+    "XZZ": {
+        "replacement": "XZ",
+        "reason": "overlong"
+    },
+    "YMD": {
+        "replacement": "YE",
+        "reason": "overlong"
+    },
+    "YEM": {
+        "replacement": "YE",
+        "reason": "overlong"
+    },
+    "MYT": {
+        "replacement": "YT",
+        "reason": "overlong"
+    },
+    "YUG": {
+        "replacement": "RS ME",
+        "reason": "overlong"
+    },
+    "ZAF": {
+        "replacement": "ZA",
+        "reason": "overlong"
+    },
+    "ZMB": {
+        "replacement": "ZM",
+        "reason": "overlong"
+    },
+    "ZAR": {
+        "replacement": "CD",
+        "reason": "overlong"
+    },
+    "ZWE": {
+        "replacement": "ZW",
+        "reason": "overlong"
+    },
+    "ZZZ": {
+        "replacement": "ZZ",
+        "reason": "overlong"
+    },
+    "958": {
+        "replacement": "AA",
+        "reason": "overlong"
+    },
+    "020": {
+        "replacement": "AD",
+        "reason": "overlong"
+    },
+    "784": {
+        "replacement": "AE",
+        "reason": "overlong"
+    },
+    "004": {
+        "replacement": "AF",
+        "reason": "overlong"
+    },
+    "028": {
+        "replacement": "AG",
+        "reason": "overlong"
+    },
+    "660": {
+        "replacement": "AI",
+        "reason": "overlong"
+    },
+    "008": {
+        "replacement": "AL",
+        "reason": "overlong"
+    },
+    "051": {
+        "replacement": "AM",
+        "reason": "overlong"
+    },
+    "530": {
+        "replacement": "CW SX BQ",
+        "reason": "overlong"
+    },
+    "024": {
+        "replacement": "AO",
+        "reason": "overlong"
+    },
+    "010": {
+        "replacement": "AQ",
+        "reason": "overlong"
+    },
+    "032": {
+        "replacement": "AR",
+        "reason": "overlong"
+    },
+    "016": {
+        "replacement": "AS",
+        "reason": "overlong"
+    },
+    "040": {
+        "replacement": "AT",
+        "reason": "overlong"
+    },
+    "036": {
+        "replacement": "AU",
+        "reason": "overlong"
+    },
+    "533": {
+        "replacement": "AW",
+        "reason": "overlong"
+    },
+    "248": {
+        "replacement": "AX",
+        "reason": "overlong"
+    },
+    "031": {
+        "replacement": "AZ",
+        "reason": "overlong"
+    },
+    "070": {
+        "replacement": "BA",
+        "reason": "overlong"
+    },
+    "052": {
+        "replacement": "BB",
+        "reason": "overlong"
+    },
+    "050": {
+        "replacement": "BD",
+        "reason": "overlong"
+    },
+    "056": {
+        "replacement": "BE",
+        "reason": "overlong"
+    },
+    "854": {
+        "replacement": "BF",
+        "reason": "overlong"
+    },
+    "100": {
+        "replacement": "BG",
+        "reason": "overlong"
+    },
+    "048": {
+        "replacement": "BH",
+        "reason": "overlong"
+    },
+    "108": {
+        "replacement": "BI",
+        "reason": "overlong"
+    },
+    "204": {
+        "replacement": "BJ",
+        "reason": "overlong"
+    },
+    "652": {
+        "replacement": "BL",
+        "reason": "overlong"
+    },
+    "060": {
+        "replacement": "BM",
+        "reason": "overlong"
+    },
+    "096": {
+        "replacement": "BN",
+        "reason": "overlong"
+    },
+    "068": {
+        "replacement": "BO",
+        "reason": "overlong"
+    },
+    "535": {
+        "replacement": "BQ",
+        "reason": "overlong"
+    },
+    "076": {
+        "replacement": "BR",
+        "reason": "overlong"
+    },
+    "044": {
+        "replacement": "BS",
+        "reason": "overlong"
+    },
+    "064": {
+        "replacement": "BT",
+        "reason": "overlong"
+    },
+    "074": {
+        "replacement": "BV",
+        "reason": "overlong"
+    },
+    "072": {
+        "replacement": "BW",
+        "reason": "overlong"
+    },
+    "112": {
+        "replacement": "BY",
+        "reason": "overlong"
+    },
+    "084": {
+        "replacement": "BZ",
+        "reason": "overlong"
+    },
+    "124": {
+        "replacement": "CA",
+        "reason": "overlong"
+    },
+    "166": {
+        "replacement": "CC",
+        "reason": "overlong"
+    },
+    "180": {
+        "replacement": "CD",
+        "reason": "overlong"
+    },
+    "140": {
+        "replacement": "CF",
+        "reason": "overlong"
+    },
+    "178": {
+        "replacement": "CG",
+        "reason": "overlong"
+    },
+    "756": {
+        "replacement": "CH",
+        "reason": "overlong"
+    },
+    "384": {
+        "replacement": "CI",
+        "reason": "overlong"
+    },
+    "184": {
+        "replacement": "CK",
+        "reason": "overlong"
+    },
+    "152": {
+        "replacement": "CL",
+        "reason": "overlong"
+    },
+    "120": {
+        "replacement": "CM",
+        "reason": "overlong"
+    },
+    "156": {
+        "replacement": "CN",
+        "reason": "overlong"
+    },
+    "170": {
+        "replacement": "CO",
+        "reason": "overlong"
+    },
+    "188": {
+        "replacement": "CR",
+        "reason": "overlong"
+    },
+    "192": {
+        "replacement": "CU",
+        "reason": "overlong"
+    },
+    "132": {
+        "replacement": "CV",
+        "reason": "overlong"
+    },
+    "531": {
+        "replacement": "CW",
+        "reason": "overlong"
+    },
+    "162": {
+        "replacement": "CX",
+        "reason": "overlong"
+    },
+    "196": {
+        "replacement": "CY",
+        "reason": "overlong"
+    },
+    "203": {
+        "replacement": "CZ",
+        "reason": "overlong"
+    },
+    "278": {
+        "replacement": "DE",
+        "reason": "overlong"
+    },
+    "276": {
+        "replacement": "DE",
+        "reason": "overlong"
+    },
+    "262": {
+        "replacement": "DJ",
+        "reason": "overlong"
+    },
+    "208": {
+        "replacement": "DK",
+        "reason": "overlong"
+    },
+    "212": {
+        "replacement": "DM",
+        "reason": "overlong"
+    },
+    "214": {
+        "replacement": "DO",
+        "reason": "overlong"
+    },
+    "012": {
+        "replacement": "DZ",
+        "reason": "overlong"
+    },
+    "218": {
+        "replacement": "EC",
+        "reason": "overlong"
+    },
+    "233": {
+        "replacement": "EE",
+        "reason": "overlong"
+    },
+    "818": {
+        "replacement": "EG",
+        "reason": "overlong"
+    },
+    "732": {
+        "replacement": "EH",
+        "reason": "overlong"
+    },
+    "232": {
+        "replacement": "ER",
+        "reason": "overlong"
+    },
+    "724": {
+        "replacement": "ES",
+        "reason": "overlong"
+    },
+    "231": {
+        "replacement": "ET",
+        "reason": "overlong"
+    },
+    "246": {
+        "replacement": "FI",
+        "reason": "overlong"
+    },
+    "242": {
+        "replacement": "FJ",
+        "reason": "overlong"
+    },
+    "238": {
+        "replacement": "FK",
+        "reason": "overlong"
+    },
+    "583": {
+        "replacement": "FM",
+        "reason": "overlong"
+    },
+    "234": {
+        "replacement": "FO",
+        "reason": "overlong"
+    },
+    "250": {
+        "replacement": "FR",
+        "reason": "overlong"
+    },
+    "249": {
+        "replacement": "FR",
+        "reason": "overlong"
+    },
+    "266": {
+        "replacement": "GA",
+        "reason": "overlong"
+    },
+    "826": {
+        "replacement": "GB",
+        "reason": "overlong"
+    },
+    "308": {
+        "replacement": "GD",
+        "reason": "overlong"
+    },
+    "268": {
+        "replacement": "GE",
+        "reason": "overlong"
+    },
+    "254": {
+        "replacement": "GF",
+        "reason": "overlong"
+    },
+    "831": {
+        "replacement": "GG",
+        "reason": "overlong"
+    },
+    "288": {
+        "replacement": "GH",
+        "reason": "overlong"
+    },
+    "292": {
+        "replacement": "GI",
+        "reason": "overlong"
+    },
+    "304": {
+        "replacement": "GL",
+        "reason": "overlong"
+    },
+    "270": {
+        "replacement": "GM",
+        "reason": "overlong"
+    },
+    "324": {
+        "replacement": "GN",
+        "reason": "overlong"
+    },
+    "312": {
+        "replacement": "GP",
+        "reason": "overlong"
+    },
+    "226": {
+        "replacement": "GQ",
+        "reason": "overlong"
+    },
+    "300": {
+        "replacement": "GR",
+        "reason": "overlong"
+    },
+    "239": {
+        "replacement": "GS",
+        "reason": "overlong"
+    },
+    "320": {
+        "replacement": "GT",
+        "reason": "overlong"
+    },
+    "316": {
+        "replacement": "GU",
+        "reason": "overlong"
+    },
+    "624": {
+        "replacement": "GW",
+        "reason": "overlong"
+    },
+    "328": {
+        "replacement": "GY",
+        "reason": "overlong"
+    },
+    "344": {
+        "replacement": "HK",
+        "reason": "overlong"
+    },
+    "334": {
+        "replacement": "HM",
+        "reason": "overlong"
+    },
+    "340": {
+        "replacement": "HN",
+        "reason": "overlong"
+    },
+    "191": {
+        "replacement": "HR",
+        "reason": "overlong"
+    },
+    "332": {
+        "replacement": "HT",
+        "reason": "overlong"
+    },
+    "348": {
+        "replacement": "HU",
+        "reason": "overlong"
+    },
+    "360": {
+        "replacement": "ID",
+        "reason": "overlong"
+    },
+    "372": {
+        "replacement": "IE",
+        "reason": "overlong"
+    },
+    "376": {
+        "replacement": "IL",
+        "reason": "overlong"
+    },
+    "833": {
+        "replacement": "IM",
+        "reason": "overlong"
+    },
+    "356": {
+        "replacement": "IN",
+        "reason": "overlong"
+    },
+    "086": {
+        "replacement": "IO",
+        "reason": "overlong"
+    },
+    "368": {
+        "replacement": "IQ",
+        "reason": "overlong"
+    },
+    "364": {
+        "replacement": "IR",
+        "reason": "overlong"
+    },
+    "352": {
+        "replacement": "IS",
+        "reason": "overlong"
+    },
+    "380": {
+        "replacement": "IT",
+        "reason": "overlong"
+    },
+    "832": {
+        "replacement": "JE",
+        "reason": "overlong"
+    },
+    "388": {
+        "replacement": "JM",
+        "reason": "overlong"
+    },
+    "400": {
+        "replacement": "JO",
+        "reason": "overlong"
+    },
+    "392": {
+        "replacement": "JP",
+        "reason": "overlong"
+    },
+    "404": {
+        "replacement": "KE",
+        "reason": "overlong"
+    },
+    "417": {
+        "replacement": "KG",
+        "reason": "overlong"
+    },
+    "116": {
+        "replacement": "KH",
+        "reason": "overlong"
+    },
+    "296": {
+        "replacement": "KI",
+        "reason": "overlong"
+    },
+    "174": {
+        "replacement": "KM",
+        "reason": "overlong"
+    },
+    "659": {
+        "replacement": "KN",
+        "reason": "overlong"
+    },
+    "408": {
+        "replacement": "KP",
+        "reason": "overlong"
+    },
+    "410": {
+        "replacement": "KR",
+        "reason": "overlong"
+    },
+    "414": {
+        "replacement": "KW",
+        "reason": "overlong"
+    },
+    "136": {
+        "replacement": "KY",
+        "reason": "overlong"
+    },
+    "398": {
+        "replacement": "KZ",
+        "reason": "overlong"
+    },
+    "418": {
+        "replacement": "LA",
+        "reason": "overlong"
+    },
+    "422": {
+        "replacement": "LB",
+        "reason": "overlong"
+    },
+    "662": {
+        "replacement": "LC",
+        "reason": "overlong"
+    },
+    "438": {
+        "replacement": "LI",
+        "reason": "overlong"
+    },
+    "144": {
+        "replacement": "LK",
+        "reason": "overlong"
+    },
+    "430": {
+        "replacement": "LR",
+        "reason": "overlong"
+    },
+    "426": {
+        "replacement": "LS",
+        "reason": "overlong"
+    },
+    "440": {
+        "replacement": "LT",
+        "reason": "overlong"
+    },
+    "442": {
+        "replacement": "LU",
+        "reason": "overlong"
+    },
+    "428": {
+        "replacement": "LV",
+        "reason": "overlong"
+    },
+    "434": {
+        "replacement": "LY",
+        "reason": "overlong"
+    },
+    "504": {
+        "replacement": "MA",
+        "reason": "overlong"
+    },
+    "492": {
+        "replacement": "MC",
+        "reason": "overlong"
+    },
+    "498": {
+        "replacement": "MD",
+        "reason": "overlong"
+    },
+    "499": {
+        "replacement": "ME",
+        "reason": "overlong"
+    },
+    "663": {
+        "replacement": "MF",
+        "reason": "overlong"
+    },
+    "450": {
+        "replacement": "MG",
+        "reason": "overlong"
+    },
+    "584": {
+        "replacement": "MH",
+        "reason": "overlong"
+    },
+    "807": {
+        "replacement": "MK",
+        "reason": "overlong"
+    },
+    "466": {
+        "replacement": "ML",
+        "reason": "overlong"
+    },
+    "104": {
+        "replacement": "MM",
+        "reason": "overlong"
+    },
+    "496": {
+        "replacement": "MN",
+        "reason": "overlong"
+    },
+    "446": {
+        "replacement": "MO",
+        "reason": "overlong"
+    },
+    "580": {
+        "replacement": "MP",
+        "reason": "overlong"
+    },
+    "474": {
+        "replacement": "MQ",
+        "reason": "overlong"
+    },
+    "478": {
+        "replacement": "MR",
+        "reason": "overlong"
+    },
+    "500": {
+        "replacement": "MS",
+        "reason": "overlong"
+    },
+    "470": {
+        "replacement": "MT",
+        "reason": "overlong"
+    },
+    "480": {
+        "replacement": "MU",
+        "reason": "overlong"
+    },
+    "462": {
+        "replacement": "MV",
+        "reason": "overlong"
+    },
+    "454": {
+        "replacement": "MW",
+        "reason": "overlong"
+    },
+    "484": {
+        "replacement": "MX",
+        "reason": "overlong"
+    },
+    "458": {
+        "replacement": "MY",
+        "reason": "overlong"
+    },
+    "508": {
+        "replacement": "MZ",
+        "reason": "overlong"
+    },
+    "516": {
+        "replacement": "NA",
+        "reason": "overlong"
+    },
+    "540": {
+        "replacement": "NC",
+        "reason": "overlong"
+    },
+    "562": {
+        "replacement": "NE",
+        "reason": "overlong"
+    },
+    "574": {
+        "replacement": "NF",
+        "reason": "overlong"
+    },
+    "566": {
+        "replacement": "NG",
+        "reason": "overlong"
+    },
+    "558": {
+        "replacement": "NI",
+        "reason": "overlong"
+    },
+    "528": {
+        "replacement": "NL",
+        "reason": "overlong"
+    },
+    "578": {
+        "replacement": "NO",
+        "reason": "overlong"
+    },
+    "524": {
+        "replacement": "NP",
+        "reason": "overlong"
+    },
+    "520": {
+        "replacement": "NR",
+        "reason": "overlong"
+    },
+    "536": {
+        "replacement": "SA IQ",
+        "reason": "overlong"
+    },
+    "570": {
+        "replacement": "NU",
+        "reason": "overlong"
+    },
+    "554": {
+        "replacement": "NZ",
+        "reason": "overlong"
+    },
+    "512": {
+        "replacement": "OM",
+        "reason": "overlong"
+    },
+    "591": {
+        "replacement": "PA",
+        "reason": "overlong"
+    },
+    "604": {
+        "replacement": "PE",
+        "reason": "overlong"
+    },
+    "258": {
+        "replacement": "PF",
+        "reason": "overlong"
+    },
+    "598": {
+        "replacement": "PG",
+        "reason": "overlong"
+    },
+    "608": {
+        "replacement": "PH",
+        "reason": "overlong"
+    },
+    "586": {
+        "replacement": "PK",
+        "reason": "overlong"
+    },
+    "616": {
+        "replacement": "PL",
+        "reason": "overlong"
+    },
+    "666": {
+        "replacement": "PM",
+        "reason": "overlong"
+    },
+    "612": {
+        "replacement": "PN",
+        "reason": "overlong"
+    },
+    "630": {
+        "replacement": "PR",
+        "reason": "overlong"
+    },
+    "275": {
+        "replacement": "PS",
+        "reason": "overlong"
+    },
+    "620": {
+        "replacement": "PT",
+        "reason": "overlong"
+    },
+    "585": {
+        "replacement": "PW",
+        "reason": "overlong"
+    },
+    "600": {
+        "replacement": "PY",
+        "reason": "overlong"
+    },
+    "634": {
+        "replacement": "QA",
+        "reason": "overlong"
+    },
+    "959": {
+        "replacement": "QM",
+        "reason": "overlong"
+    },
+    "960": {
+        "replacement": "QN",
+        "reason": "overlong"
+    },
+    "962": {
+        "replacement": "QP",
+        "reason": "overlong"
+    },
+    "963": {
+        "replacement": "QQ",
+        "reason": "overlong"
+    },
+    "964": {
+        "replacement": "QR",
+        "reason": "overlong"
+    },
+    "965": {
+        "replacement": "QS",
+        "reason": "overlong"
+    },
+    "966": {
+        "replacement": "QT",
+        "reason": "overlong"
+    },
+    "967": {
+        "replacement": "EU",
+        "reason": "overlong"
+    },
+    "968": {
+        "replacement": "QV",
+        "reason": "overlong"
+    },
+    "969": {
+        "replacement": "QW",
+        "reason": "overlong"
+    },
+    "970": {
+        "replacement": "QX",
+        "reason": "overlong"
+    },
+    "971": {
+        "replacement": "QY",
+        "reason": "overlong"
+    },
+    "972": {
+        "replacement": "QZ",
+        "reason": "overlong"
+    },
+    "638": {
+        "replacement": "RE",
+        "reason": "overlong"
+    },
+    "642": {
+        "replacement": "RO",
+        "reason": "overlong"
+    },
+    "688": {
+        "replacement": "RS",
+        "reason": "overlong"
+    },
+    "891": {
+        "replacement": "RS ME",
+        "reason": "overlong"
+    },
+    "643": {
+        "replacement": "RU",
+        "reason": "overlong"
+    },
+    "646": {
+        "replacement": "RW",
+        "reason": "overlong"
+    },
+    "682": {
+        "replacement": "SA",
+        "reason": "overlong"
+    },
+    "090": {
+        "replacement": "SB",
+        "reason": "overlong"
+    },
+    "690": {
+        "replacement": "SC",
+        "reason": "overlong"
+    },
+    "729": {
+        "replacement": "SD",
+        "reason": "overlong"
+    },
+    "752": {
+        "replacement": "SE",
+        "reason": "overlong"
+    },
+    "702": {
+        "replacement": "SG",
+        "reason": "overlong"
+    },
+    "654": {
+        "replacement": "SH",
+        "reason": "overlong"
+    },
+    "705": {
+        "replacement": "SI",
+        "reason": "overlong"
+    },
+    "744": {
+        "replacement": "SJ",
+        "reason": "overlong"
+    },
+    "703": {
+        "replacement": "SK",
+        "reason": "overlong"
+    },
+    "694": {
+        "replacement": "SL",
+        "reason": "overlong"
+    },
+    "674": {
+        "replacement": "SM",
+        "reason": "overlong"
+    },
+    "686": {
+        "replacement": "SN",
+        "reason": "overlong"
+    },
+    "706": {
+        "replacement": "SO",
+        "reason": "overlong"
+    },
+    "740": {
+        "replacement": "SR",
+        "reason": "overlong"
+    },
+    "728": {
+        "replacement": "SS",
+        "reason": "overlong"
+    },
+    "678": {
+        "replacement": "ST",
+        "reason": "overlong"
+    },
+    "810": {
+        "replacement": "RU AM AZ BY EE GE KZ KG LV LT MD TJ TM UA UZ",
+        "reason": "overlong"
+    },
+    "222": {
+        "replacement": "SV",
+        "reason": "overlong"
+    },
+    "534": {
+        "replacement": "SX",
+        "reason": "overlong"
+    },
+    "760": {
+        "replacement": "SY",
+        "reason": "overlong"
+    },
+    "748": {
+        "replacement": "SZ",
+        "reason": "overlong"
+    },
+    "796": {
+        "replacement": "TC",
+        "reason": "overlong"
+    },
+    "148": {
+        "replacement": "TD",
+        "reason": "overlong"
+    },
+    "260": {
+        "replacement": "TF",
+        "reason": "overlong"
+    },
+    "768": {
+        "replacement": "TG",
+        "reason": "overlong"
+    },
+    "764": {
+        "replacement": "TH",
+        "reason": "overlong"
+    },
+    "762": {
+        "replacement": "TJ",
+        "reason": "overlong"
+    },
+    "772": {
+        "replacement": "TK",
+        "reason": "overlong"
+    },
+    "626": {
+        "replacement": "TL",
+        "reason": "overlong"
+    },
+    "795": {
+        "replacement": "TM",
+        "reason": "overlong"
+    },
+    "788": {
+        "replacement": "TN",
+        "reason": "overlong"
+    },
+    "776": {
+        "replacement": "TO",
+        "reason": "overlong"
+    },
+    "792": {
+        "replacement": "TR",
+        "reason": "overlong"
+    },
+    "780": {
+        "replacement": "TT",
+        "reason": "overlong"
+    },
+    "798": {
+        "replacement": "TV",
+        "reason": "overlong"
+    },
+    "158": {
+        "replacement": "TW",
+        "reason": "overlong"
+    },
+    "834": {
+        "replacement": "TZ",
+        "reason": "overlong"
+    },
+    "804": {
+        "replacement": "UA",
+        "reason": "overlong"
+    },
+    "800": {
+        "replacement": "UG",
+        "reason": "overlong"
+    },
+    "581": {
+        "replacement": "UM",
+        "reason": "overlong"
+    },
+    "840": {
+        "replacement": "US",
+        "reason": "overlong"
+    },
+    "858": {
+        "replacement": "UY",
+        "reason": "overlong"
+    },
+    "860": {
+        "replacement": "UZ",
+        "reason": "overlong"
+    },
+    "336": {
+        "replacement": "VA",
+        "reason": "overlong"
+    },
+    "670": {
+        "replacement": "VC",
+        "reason": "overlong"
+    },
+    "862": {
+        "replacement": "VE",
+        "reason": "overlong"
+    },
+    "092": {
+        "replacement": "VG",
+        "reason": "overlong"
+    },
+    "850": {
+        "replacement": "VI",
+        "reason": "overlong"
+    },
+    "704": {
+        "replacement": "VN",
+        "reason": "overlong"
+    },
+    "548": {
+        "replacement": "VU",
+        "reason": "overlong"
+    },
+    "876": {
+        "replacement": "WF",
+        "reason": "overlong"
+    },
+    "882": {
+        "replacement": "WS",
+        "reason": "overlong"
+    },
+    "973": {
+        "replacement": "XA",
+        "reason": "overlong"
+    },
+    "974": {
+        "replacement": "XB",
+        "reason": "overlong"
+    },
+    "975": {
+        "replacement": "XC",
+        "reason": "overlong"
+    },
+    "976": {
+        "replacement": "XD",
+        "reason": "overlong"
+    },
+    "977": {
+        "replacement": "XE",
+        "reason": "overlong"
+    },
+    "978": {
+        "replacement": "XF",
+        "reason": "overlong"
+    },
+    "979": {
+        "replacement": "XG",
+        "reason": "overlong"
+    },
+    "980": {
+        "replacement": "XH",
+        "reason": "overlong"
+    },
+    "981": {
+        "replacement": "XI",
+        "reason": "overlong"
+    },
+    "982": {
+        "replacement": "XJ",
+        "reason": "overlong"
+    },
+    "983": {
+        "replacement": "XK",
+        "reason": "overlong"
+    },
+    "984": {
+        "replacement": "XL",
+        "reason": "overlong"
+    },
+    "985": {
+        "replacement": "XM",
+        "reason": "overlong"
+    },
+    "986": {
+        "replacement": "XN",
+        "reason": "overlong"
+    },
+    "987": {
+        "replacement": "XO",
+        "reason": "overlong"
+    },
+    "988": {
+        "replacement": "XP",
+        "reason": "overlong"
+    },
+    "989": {
+        "replacement": "XQ",
+        "reason": "overlong"
+    },
+    "990": {
+        "replacement": "XR",
+        "reason": "overlong"
+    },
+    "991": {
+        "replacement": "XS",
+        "reason": "overlong"
+    },
+    "992": {
+        "replacement": "XT",
+        "reason": "overlong"
+    },
+    "993": {
+        "replacement": "XU",
+        "reason": "overlong"
+    },
+    "994": {
+        "replacement": "XV",
+        "reason": "overlong"
+    },
+    "995": {
+        "replacement": "XW",
+        "reason": "overlong"
+    },
+    "996": {
+        "replacement": "XX",
+        "reason": "overlong"
+    },
+    "997": {
+        "replacement": "XY",
+        "reason": "overlong"
+    },
+    "998": {
+        "replacement": "XZ",
+        "reason": "overlong"
+    },
+    "720": {
+        "replacement": "YE",
+        "reason": "overlong"
+    },
+    "887": {
+        "replacement": "YE",
+        "reason": "overlong"
+    },
+    "175": {
+        "replacement": "YT",
+        "reason": "overlong"
+    },
+    "710": {
+        "replacement": "ZA",
+        "reason": "overlong"
+    },
+    "894": {
+        "replacement": "ZM",
+        "reason": "overlong"
+    },
+    "716": {
+        "replacement": "ZW",
+        "reason": "overlong"
+    },
+    "999": {
+        "replacement": "ZZ",
+        "reason": "overlong"
+    }
+}
