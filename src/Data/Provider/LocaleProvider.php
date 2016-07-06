@@ -2,7 +2,7 @@
 
 namespace OpenWorld\Data\Provider;
 
-use OpenWorld\Data\Provider\Abstracts\JsonDataProviderAbstract;
+use OpenWorld\Data\Provider\AbstractClasses\JsonDataProviderAbstract;
 
 class LocaleProvider extends JsonDataProviderAbstract {
 

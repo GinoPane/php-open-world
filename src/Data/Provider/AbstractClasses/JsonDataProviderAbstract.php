@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenWorld\Data\Provider\Abstracts;
+namespace OpenWorld\Data\Provider\AbstractClasses;
 
 use OpenWorld\Data\Provider\Interfaces\{
     DataProviderInterface,
