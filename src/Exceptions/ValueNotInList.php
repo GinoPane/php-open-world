@@ -16,6 +16,7 @@ class ValueNotInList extends ExceptionAbstract
     protected $value;
 
     protected $allowedValues;
+    
     /**
      * Initializes the instance.
      *

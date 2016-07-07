@@ -1,10 +1,10 @@
 <?php
 
-namespace OpenWorld\Data\Provider;
+namespace OpenWorld\Data\Providers;
 
-use OpenWorld\Data\Provider\AbstractClasses\JsonDataProviderAbstract;
+use OpenWorld\Data\AbstractClasses\ProviderAbstract;
 
-class LocaleProvider extends JsonDataProviderAbstract {
+class LocaleProvider extends ProviderAbstract {
 
     public function load(string $fileName = '')
     {

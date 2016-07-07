@@ -14,7 +14,9 @@ use OpenWorld\Exceptions\AbstractClasses\ExceptionAbstract;
 class DataFileNotFound extends ExceptionAbstract
 {
     protected $identifier;
+
     protected $locale;
+    
     protected $fallbackLocale;
 
     /**

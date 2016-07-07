@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenWorld\Data\Provider\Interfaces;
+namespace OpenWorld\Data\Interfaces;
 
 interface LoadFileInterface {
 
