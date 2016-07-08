@@ -4,21 +4,30 @@ namespace OpenWorld\Data\AbstractClasses;
 
 use OpenWorld\Data\Interfaces\FileLoaderInterface;
 use OpenWorld\Data\Interfaces\FileLoaderResultInterface;
+use OpenWorld\Data\Interfaces\FileLoaderResultFactoryInterface;
 
 abstract class FileLoaderAbstract implements FileLoaderInterface {
 
+    /**
+     * Represents result of file loading.
+     *
+     * @var FileLoaderResultInterface
+     */
     protected $resultClass = '';
 
-    abstract public function __construct(FileLoaderResultInterface $resultClass = null);
-
-    public function setResultClass(string $className)
+    public function __construct(FileLoaderResultFactoryInterface $resultClass)
     {
-
+        $this->setResultFactory($resultClass);
     }
 
-    public function getResultClass() : string
+    public function setResultFactory(FileLoaderResultFactoryInterface $resultClass)
     {
+        $this->resultClass = $resultClass;
+    }
 
+    public function getResultFactory() : FileLoaderResultFactoryInterface
+    {
+        return $this->resultClass;
     }
 
 }

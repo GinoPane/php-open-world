@@ -11,7 +11,7 @@ class GeneralProvider extends DataProviderAbstract {
         // TODO: Implement load() method.
     }
 
-    public function accept(string $condition = '')
+    public function accept(string $condition = '') : bool
     {
         // TODO: Implement accept() method.
     }

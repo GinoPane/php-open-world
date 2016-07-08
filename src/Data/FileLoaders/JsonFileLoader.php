@@ -2,17 +2,18 @@
 
 namespace OpenWorld\Data\Loaders;
 
+use OpenWorld\Data\AbstractClasses\FileLoaderAbstract;
 use OpenWorld\Data\Interfaces\FileLoaderInterface;
 use OpenWorld\Data\Interfaces\FileLoaderResultInterface;
 
 /**
- * Class JsonLoader
+ * Class JsonFileLoader
  * 
  * Provides a method for loading json data files.
  * 
  * @package OpenWorld\Data\Loaders
  */
-class JsonFileLoader implements FileLoaderInterface {
+class JsonFileLoader extends FileLoaderAbstract {
 
     public function load(string $path = '') : FileLoaderResultInterface
     {
