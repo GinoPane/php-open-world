@@ -2,7 +2,8 @@
 
 namespace OpenWorld\Data\Loaders;
 
-use OpenWorld\Data\Interfaces\LoadFileInterface;
+use OpenWorld\Data\Interfaces\FileLoaderInterface;
+use OpenWorld\Data\Interfaces\FileLoaderResultInterface;
 
 /**
  * Class JsonLoader
@@ -11,9 +12,9 @@ use OpenWorld\Data\Interfaces\LoadFileInterface;
  * 
  * @package OpenWorld\Data\Loaders
  */
-class JsonLoader implements LoadFileInterface {
+class JsonFileLoader implements FileLoaderInterface {
 
-    public function loadFile(string $path = '')
+    public function load(string $path = '') : FileLoaderResultInterface
     {
         if (!(is_string($identifier) && isset($identifier[0]))) {
             throw new Exception\InvalidDataFile($identifier);

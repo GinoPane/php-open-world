@@ -145,7 +145,7 @@ class XmlWrapper
     private $_encoding = 'UTF-8';
     private $_options = [];
 
-    private function __construct($options = [])
+    private function __construct(array $options = [])
     {
         $version = "1.0";
         $formatOutput = true;
@@ -173,7 +173,7 @@ class XmlWrapper
      *
      * @return XmlWrapper
      */
-    public static function getParser($options = [])
+    public static function getParser(array $options = [])
     {
         return new XmlWrapper($options);
     }
@@ -187,7 +187,7 @@ class XmlWrapper
      * @see XmlWrapper::getParser() for more
      * @return DomDocument
      */
-    public function arrayToXml(array $data, $options = [])
+    public function arrayToXml(array $data, array $options = [])
     {
         $xml = $this->_getXMLRoot();
 
@@ -209,7 +209,7 @@ class XmlWrapper
      * @param mixed $inputXml DOMDocument instance or a valid xml string
      * @return array converted array
      */
-    public function xmlToArray($inputXml)
+    public function xmlToArray($inputXml) : array
     {
         $xml = $this->_getXMLRoot();
 
@@ -226,7 +226,7 @@ class XmlWrapper
                 $error = true;
             }
         } else {
-            if (is_a($inputXml, 'DOMDocument')) {
+            if (!is_a($inputXml, 'DOMDocument')) {
                 trigger_error('The input XML object should be descendant of DOMDocument', E_USER_WARNING);
                 $error = true;
             }
@@ -254,7 +254,7 @@ class XmlWrapper
      * @param array $arr
      * @return DOMElement
      */
-    private function _convertArrayToXml($nodeName, $arr = [])
+    private function _convertArrayToXml(string $nodeName, array $arr = [])
     {
         $node = $this->_xml->createElement($nodeName);
 
@@ -383,7 +383,7 @@ class XmlWrapper
         return $output;
     }
 
-    private function _getXMLRoot()
+    private function _getXMLRoot() : DOMDocument
     {
         if (!$this->_xml) {
             $this->_xml = new DOMDocument();
@@ -392,10 +392,13 @@ class XmlWrapper
         return $this->_xml;
     }
 
-    /*
+    /**
      * Get string representation of the value
+     *
+     * @param $value
+     * @return string
      */
-    private function _valueToString($value)
+    private function _valueToString($value) : string
     {
         if (!is_bool($value)) {
             return (string)$value;
@@ -412,10 +415,11 @@ class XmlWrapper
      * @return bool
      */
 
-    private function _isValidTagName($tag)
+    private function _isValidTagName($tag) : bool
     {
         $matches = [];
         $pattern = '/^[a-z_]+[a-z0-9\:\-\.\_]*[^:]*$/i';
+
         return preg_match($pattern, $tag, $matches) && $matches[0] == $tag;
     }
 }
@@ -490,16 +494,16 @@ function showStatus($done, $total, $text = '', $size = 30)
 /**
  * Custom error handler
  *
- * @param $errno
- * @param $errstr
- * @param $errfile
- * @param $errline
+ * @param $errorNumber
+ * @param $errorString
+ * @param $errorFile
+ * @param $errorLine
  * @throws Exception
  */
-function handleError($errno, $errstr, $errfile, $errline)
+function handleError($errorNumber, $errorString, $errorFile, $errorLine)
 {
-    if ($errno == E_NOTICE || $errno == E_WARNING) {
-        throw new Exception("$errstr in $errfile @ line $errline \n", $errno);
+    if ($errorNumber == E_NOTICE || $errorNumber == E_WARNING) {
+        throw new Exception("$errorString in $errorFile @ line $errorLine \n", $errorNumber);
     }
 }
 
@@ -1351,7 +1355,7 @@ function handleSingleLocaleData($locale, $localeFile)
  * @return array
  * @throws Exception
  */
-function getXmlDataFileContentsAsArray($fileName)
+function getXmlDataFileContentsAsArray($fileName) : array
 {
     if (outputEnabled()) {
         echo "Checking \"$fileName\"...\n";

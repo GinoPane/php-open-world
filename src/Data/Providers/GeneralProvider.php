@@ -2,9 +2,9 @@
 
 namespace OpenWorld\Data\Providers;
 
-use OpenWorld\Data\AbstractClasses\ProviderAbstract;
+use OpenWorld\Data\AbstractClasses\DataProviderAbstract;
 
-class GeneralProvider extends ProviderAbstract {
+class GeneralProvider extends DataProviderAbstract {
 
     public function load(string $fileName = '')
     {

@@ -6,6 +6,6 @@ interface DataProviderInterface {
 
     public function load(string $fileName = '');
 
-    public function accept(string $condition = '');
+    public function accept(string $condition = '') : bool;
 
 }
