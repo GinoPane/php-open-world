@@ -25,4 +25,27 @@ interface FileLoaderResultInterface {
      */
     public function asObject() : Object;
 
+    /**
+     * Set result content.
+     *
+     * @param $content
+     * @return mixed
+     */
+    public function setContent($content);
+
+    /**
+     * Get result's content.
+     *
+     * @return mixed
+     */
+    public function getContent();
+
+    /**
+     * Checks whether content is valid for the result.
+     *
+     * @param $content
+     * @return bool
+     */
+    public function isValid($content) : bool;
+
 }

@@ -2,6 +2,7 @@
 
 namespace OpenWorld\Data\FileLoaderResults\Factories;
 
+use OpenWorld\Data\FileLoaderResults\JsonFileLoaderResult;
 use OpenWorld\Data\Interfaces\FileLoaderResultFactoryInterface;
 use OpenWorld\Data\Interfaces\FileLoaderResultInterface;
 
@@ -14,9 +15,14 @@ use OpenWorld\Data\Interfaces\FileLoaderResultInterface;
  */
 class JsonFileLoaderResultFactory implements FileLoaderResultFactoryInterface {
 
+    /**
+     * Creates new JsonFileLoaderResult instances.
+     *
+     * @return FileLoaderResultInterface
+     */
     public static function get(): FileLoaderResultInterface
     {
-        // TODO: Implement get() method.
+        return new JsonFileLoaderResult();
     }
     
 }

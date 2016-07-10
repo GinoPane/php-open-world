@@ -32,4 +32,20 @@ abstract class FileLoaderResultAbstract implements FileLoaderResultInterface {
     {
         throw new NotImplemented(__FUNCTION__);
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
 }
