@@ -11,7 +11,7 @@ class LocaleProvider extends DataProviderAbstract {
         // TODO: Implement load() method.
     }
 
-    public function accept(string $condition = '') : boll
+    public function accept(string $condition = '') : bool
     {
         // TODO: Implement accept() method.
     }
