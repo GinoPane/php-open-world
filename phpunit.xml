@@ -1,6 +1,9 @@
 <phpunit colors="true" bootstrap="./tests/bootstrap.php">
 	<testsuites>
-		<testsuite name="Data tests">
+        <testsuite name="Collection tests">
+            <directory>./tests/suites/collection/</directory>
+        </testsuite>
+<!--		<testsuite name="Data tests">
 			<directory>./tests/suites/data/</directory>
 		</testsuite>
         <testsuite name="Territory tests">
@@ -11,6 +14,6 @@
         </testsuite>
         <testsuite name="Currency tests">
             <directory>./tests/suites/currency/</directory>
-        </testsuite>
+        </testsuite>-->
 	</testsuites>
 </phpunit>
