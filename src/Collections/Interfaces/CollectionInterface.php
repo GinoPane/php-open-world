@@ -11,9 +11,9 @@ interface CollectionInterface extends Countable, IteratorAggregate, ArrayAccess
      *
      * @param mixed $element The element to add.
      *
-     * @return boolean Always TRUE.
+     * @return CollectionInterface
      */
-    public function add($element);
+    public function add($element) : CollectionInterface;
 
     /**
      * Clears the collection, removing all elements.
@@ -46,7 +46,7 @@ interface CollectionInterface extends Countable, IteratorAggregate, ArrayAccess
      *
      * @return mixed The removed element or NULL, if the collection did not contain the element.
      */
-    public function remove($key);
+    public function removeKey($key);
 
     /**
      * Removes the specified element from the collection, if it is found.
@@ -55,7 +55,7 @@ interface CollectionInterface extends Countable, IteratorAggregate, ArrayAccess
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeElement($element);
+    public function removeValue($element);
 
     /**
      * Checks whether the collection contains an element with the specified key/index.
@@ -147,52 +147,52 @@ interface CollectionInterface extends Countable, IteratorAggregate, ArrayAccess
     /**
      * Tests for the existence of an element that satisfies the given predicate.
      *
-     * @param Closure $p The predicate.
+     * @param Closure $predicate The predicate.
      *
      * @return boolean TRUE if the predicate is TRUE for at least one element, FALSE otherwise.
      */
-    public function exists(Closure $p) : bool;
+    public function exists(Closure $predicate) : bool;
 
     /**
      * Returns all the elements of this collection that satisfy the predicate p.
      * The order of the elements is preserved.
      *
-     * @param Closure $p The predicate used for filtering.
+     * @param Closure $predicate The predicate used for filtering.
      *
      * @return CollectionInterface A collection with the results of the filter operation.
      */
-    public function filter(Closure $p) : CollectionInterface;
+    public function filter(Closure $predicate) : CollectionInterface;
 
     /**
      * Tests whether the given predicate p holds for all elements of this collection.
      *
-     * @param Closure $p The predicate.
+     * @param Closure $predicate The predicate.
      *
      * @return boolean TRUE, if the predicate yields TRUE for all elements, FALSE otherwise.
      */
-    public function forAll(Closure $p) : bool;
+    public function forAll(Closure $predicate) : bool;
 
     /**
      * Applies the given function to each element in the collection and returns
      * a new collection with the elements returned by the function.
      *
-     * @param Closure $func
+     * @param Closure $function
      *
      * @return CollectionInterface
      */
-    public function map(Closure $func) : CollectionInterface;
+    public function map(Closure $function) : CollectionInterface;
 
     /**
      * Partitions this collection in two collections according to a predicate.
      * Keys are preserved in the resulting collections.
      *
-     * @param Closure $p The predicate on which to partition.
+     * @param Closure $predicate The predicate on which to partition.
      *
      * @return array An array with two elements. The first element contains the collection
      *               of elements where the predicate returned TRUE, the second element
      *               contains the collection of elements where the predicate returned FALSE.
      */
-    public function partition(Closure $p) : array;
+    public function partition(Closure $predicate) : array;
 
     /**
      * Gets the index/key of a given element. The comparison of two elements is strict,
@@ -204,18 +204,4 @@ interface CollectionInterface extends Countable, IteratorAggregate, ArrayAccess
      * @return int|string|bool The key/index of the element or FALSE if the element was not found.
      */
     public function indexOf($element);
-
-    /**
-     * Extracts a slice of $length elements starting at position $offset from the CollectionInterface.
-     *
-     * If $length is null it returns all elements from $offset to the end of the CollectionInterface.
-     * Keys have to be preserved by this method. Calling this method will only return the
-     * selected slice and NOT change the elements contained in the collection slice is called on.
-     *
-     * @param int      $offset The offset to start from.
-     * @param int|null $length The maximum number of elements to return, or null for no limit.
-     *
-     * @return array
-     */
-    public function slice($offset, $length = null) : array;
 }

@@ -28,7 +28,7 @@ class ArrayCollection implements CollectionInterface
      *
      * @param array $elements
      */
-    public function __construct(array $elements = array())
+    public function __construct(array $elements = [])
     {
         $this->elements = $elements;
     }
@@ -36,7 +36,7 @@ class ArrayCollection implements CollectionInterface
     /**
      * {@inheritDoc}
      */
-    public function toArray()
+    public function toArray() : array
     {
         return $this->elements;
     }
@@ -84,9 +84,9 @@ class ArrayCollection implements CollectionInterface
     /**
      * {@inheritDoc}
      */
-    public function remove($key)
+    public function removeKey($key)
     {
-        if ( ! isset($this->elements[$key]) && ! array_key_exists($key, $this->elements)) {
+        if (!isset($this->elements[$key]) && !array_key_exists($key, $this->elements)) {
             return null;
         }
 
@@ -99,7 +99,7 @@ class ArrayCollection implements CollectionInterface
     /**
      * {@inheritDoc}
      */
-    public function removeElement($element)
+    public function removeValue($element)
     {
         $key = array_search($element, $this->elements, true);
 
@@ -139,8 +139,8 @@ class ArrayCollection implements CollectionInterface
      */
     public function offsetSet($offset, $value)
     {
-        if ( ! isset($offset)) {
-            return $this->add($value);
+        if (!isset($offset)) {
+            $this->add($value);
         }
 
         $this->set($offset, $value);
@@ -153,13 +153,13 @@ class ArrayCollection implements CollectionInterface
      */
     public function offsetUnset($offset)
     {
-        return $this->remove($offset);
+        $this->removeKey($offset);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function containsKey($key)
+    public function containsKey($key) : bool
     {
         return isset($this->elements[$key]) || array_key_exists($key, $this->elements);
     }
@@ -167,7 +167,7 @@ class ArrayCollection implements CollectionInterface
     /**
      * {@inheritDoc}
      */
-    public function contains($element)
+    public function contains($element) : bool
     {
         return in_array($element, $this->elements, true);
     }
@@ -175,10 +175,10 @@ class ArrayCollection implements CollectionInterface
     /**
      * {@inheritDoc}
      */
-    public function exists(Closure $p)
+    public function exists(Closure $predicate) : bool
     {
         foreach ($this->elements as $key => $element) {
-            if ($p($key, $element)) {
+            if ($predicate($key, $element)) {
                 return true;
             }
         }
@@ -205,7 +205,7 @@ class ArrayCollection implements CollectionInterface
     /**
      * {@inheritDoc}
      */
-    public function getKeys()
+    public function getKeys() : array
     {
         return array_keys($this->elements);
     }
@@ -213,7 +213,7 @@ class ArrayCollection implements CollectionInterface
     /**
      * {@inheritDoc}
      */
-    public function getValues()
+    public function getValues() : array
     {
         return array_values($this->elements);
     }
@@ -221,7 +221,7 @@ class ArrayCollection implements CollectionInterface
     /**
      * {@inheritDoc}
      */
-    public function count()
+    public function count() : int
     {
         return count($this->elements);
     }
@@ -237,17 +237,17 @@ class ArrayCollection implements CollectionInterface
     /**
      * {@inheritDoc}
      */
-    public function add($value)
+    public function add($value) : CollectionInterface
     {
         $this->elements[] = $value;
 
-        return true;
+        return $this;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function isEmpty()
+    public function isEmpty() : bool
     {
         return empty($this->elements);
     }
@@ -257,7 +257,7 @@ class ArrayCollection implements CollectionInterface
      *
      * {@inheritDoc}
      */
-    public function getIterator()
+    public function getIterator() : ArrayIterator
     {
         return new ArrayIterator($this->elements);
     }
@@ -265,26 +265,26 @@ class ArrayCollection implements CollectionInterface
     /**
      * {@inheritDoc}
      */
-    public function map(Closure $func)
+    public function map(Closure $function) : CollectionInterface
     {
-        return new static(array_map($func, $this->elements));
+        return new static(array_map($function, $this->elements));
     }
 
     /**
      * {@inheritDoc}
      */
-    public function filter(Closure $p)
+    public function filter(Closure $predicate) : CollectionInterface
     {
-        return new static(array_filter($this->elements, $p));
+        return new static(array_filter($this->elements, $predicate));
     }
 
     /**
      * {@inheritDoc}
      */
-    public function forAll(Closure $p)
+    public function forAll(Closure$predicate) : bool
     {
         foreach ($this->elements as $key => $element) {
-            if ( ! $p($key, $element)) {
+            if (!$predicate($key, $element)) {
                 return false;
             }
         }
@@ -295,12 +295,12 @@ class ArrayCollection implements CollectionInterface
     /**
      * {@inheritDoc}
      */
-    public function partition(Closure $p)
+    public function partition(Closure $predicate) : array
     {
         $matches = $noMatches = array();
 
         foreach ($this->elements as $key => $element) {
-            if ($p($key, $element)) {
+            if ($predicate($key, $element)) {
                 $matches[$key] = $element;
             } else {
                 $noMatches[$key] = $element;
@@ -315,7 +315,7 @@ class ArrayCollection implements CollectionInterface
      *
      * @return string
      */
-    public function __toString()
+    public function __toString() : string
     {
         return __CLASS__ . '@' . spl_object_hash($this);
     }
@@ -325,14 +325,6 @@ class ArrayCollection implements CollectionInterface
      */
     public function clear()
     {
-        $this->elements = array();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function slice($offset, $length = null)
-    {
-        return array_slice($this->elements, $offset, $length, true);
+        $this->elements = [];
     }
 }
