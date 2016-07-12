@@ -57,11 +57,13 @@ class JsonFileLoader extends FileLoaderAbstract {
 //
 //        return static::$cache[$locale][$identifier];
 
+        $data = $this->load($path);
 
-        load file
-        create result object
-        set result content
-        return result
+        $result = $this->getResultFactory()->get();
+
+        $result->setContent($data);
+
+        return $result;
     }
 
 }
