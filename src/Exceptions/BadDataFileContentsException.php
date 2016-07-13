@@ -5,13 +5,13 @@ namespace OpenWorld\Exceptions;
 use OpenWorld\Exceptions\AbstractClasses\ExceptionAbstract;
 
 /**
- * Class BadDataFileContents
+ * Class BadDataFileContentsException
  *
  * An exception raised when a data file contains malformed data.
  *
  * @package OpenWorld\Exceptions
  */
-class BadDataFileContents extends ExceptionAbstract
+class BadDataFileContentsException extends ExceptionAbstract
 {
     protected $dataFilePath;
 

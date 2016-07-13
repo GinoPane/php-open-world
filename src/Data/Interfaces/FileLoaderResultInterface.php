@@ -30,6 +30,8 @@ interface FileLoaderResultInterface {
      *
      * @param $content
      * @return mixed
+     *
+     * @throws InvalidContentException
      */
     public function setContent($content);
 

@@ -5,13 +5,13 @@ namespace OpenWorld\Exceptions;
 use OpenWorld\Exceptions\AbstractClasses\ExceptionAbstract;
 
 /**
- * Class InvalidLocale
+ * Class InvalidLocaleException
  *
  * An exception raised when an invalid locale specification has been hit.
  *
  * @package OpenWorld\Exceptions
  */
-class InvalidLocale extends ExceptionAbstract
+class InvalidLocaleException extends ExceptionAbstract
 {
     protected $locale;
 

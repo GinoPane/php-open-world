@@ -5,13 +5,13 @@ namespace OpenWorld\Exceptions;
 use OpenWorld\Exceptions\AbstractClasses\ExceptionAbstract;
 
 /**
- * Class DataFolderNotFound
+ * Class DataFolderNotFoundException
  *
  * An exception raised when a data folder has not been found.
  *
  * @package OpenWorld\Exceptions
  */
-class DataFolderNotFound extends ExceptionAbstract
+class DataFolderNotFoundException extends ExceptionAbstract
 {
     protected $locale;
     

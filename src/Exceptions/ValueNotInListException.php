@@ -5,13 +5,13 @@ namespace OpenWorld\Exceptions;
 use OpenWorld\Exceptions\AbstractClasses\ExceptionAbstract;
 
 /**
- * Class ValueNotInList
+ * Class ValueNotInListException
  *
  * An exception raised when a non-listed value is used.
  *
  * @package OpenWorld\Exceptions
  */
-class ValueNotInList extends ExceptionAbstract
+class ValueNotInListException extends ExceptionAbstract
 {
     protected $value;
 

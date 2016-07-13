@@ -3,7 +3,8 @@
 namespace OpenWorld\Data\AbstractClasses;
 
 use OpenWorld\Data\Interfaces\FileLoaderResultInterface;
-use OpenWorld\Exceptions\NotImplemented;
+use OpenWorld\Exceptions\InvalidContentException;
+use OpenWorld\Exceptions\NotImplementedException;
 
 abstract class FileLoaderResultAbstract implements FileLoaderResultInterface {
 
@@ -14,7 +15,7 @@ abstract class FileLoaderResultAbstract implements FileLoaderResultInterface {
      */
     public function asString(): string
     {
-        throw new NotImplemented(__FUNCTION__);
+        throw new NotImplementedException(__FUNCTION__);
     }
 
     /**
@@ -22,7 +23,7 @@ abstract class FileLoaderResultAbstract implements FileLoaderResultInterface {
      */
     public function asArray() : array
     {
-        throw new NotImplemented(__FUNCTION__);
+        throw new NotImplementedException(__FUNCTION__);
     }
 
     /**
@@ -30,7 +31,7 @@ abstract class FileLoaderResultAbstract implements FileLoaderResultInterface {
      */
     public function asObject() : Object
     {
-        throw new NotImplemented(__FUNCTION__);
+        throw new NotImplementedException(__FUNCTION__);
     }
 
     /**
@@ -38,6 +39,8 @@ abstract class FileLoaderResultAbstract implements FileLoaderResultInterface {
      */
     public function setContent($content)
     {
+        $this->assert($content);
+
         $this->content = $content;
     }
 
@@ -47,5 +50,27 @@ abstract class FileLoaderResultAbstract implements FileLoaderResultInterface {
     public function getContent()
     {
         return $this->content;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function isValid($content) : bool
+    {
+        return true;
+    }
+
+    /**
+     * Makes sure that $content is valid for this FileLoaderResultAbstract instance
+     *
+     * @param $content
+     *
+     * @throws InvalidContentException
+     */
+    protected function assert($content)
+    {
+        if (!$this->isValid($content)) {
+            throw new InvalidContentException();
+        }
     }
 }

@@ -5,13 +5,13 @@ namespace OpenWorld\Exceptions;
 use OpenWorld\Exceptions\AbstractClasses\ExceptionAbstract;
 
 /**
- * Class DataFileNotReadable
+ * Class DataFileNotReadableException
  *
  * An exception raised when a data file was not read.
  *
  * @package OpenWorld\Exceptions
  */
-class DataFileNotReadable extends ExceptionAbstract
+class DataFileNotReadableException extends ExceptionAbstract
 {
     protected $dataFilePath;
 

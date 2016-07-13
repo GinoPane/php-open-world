@@ -5,13 +5,13 @@ namespace OpenWorld\Exceptions;
 use OpenWorld\Exceptions\AbstractClasses\ExceptionAbstract;
 
 /**
- * Class InvalidDataFile
+ * Class InvalidDataFileException
  *
  * An exception raised when an invalid data file has been hit.
  *
  * @package OpenWorld\Exceptions
  */
-class InvalidDataFile extends ExceptionAbstract
+class InvalidDataFileException extends ExceptionAbstract
 {
     protected $identifier;
 

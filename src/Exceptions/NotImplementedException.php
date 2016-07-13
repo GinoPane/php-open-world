@@ -5,13 +5,13 @@ namespace OpenWorld\Exceptions;
 use OpenWorld\Exceptions\AbstractClasses\ExceptionAbstract;
 
 /**
- * Class NotImplemented
+ * Class NotImplementedException
  *
  * An exception raised when a not implemented function is called.
  *
  * @package OpenWorld\Exceptions
  */
-class NotImplemented extends ExceptionAbstract
+class NotImplementedException extends ExceptionAbstract
 {
     protected $function;
 
