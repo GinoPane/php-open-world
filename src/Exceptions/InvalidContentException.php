@@ -15,10 +15,11 @@ class InvalidContentException extends ExceptionAbstract
 {
     /**
      * Initializes the instance.
+     * @param string $message
      */
-    public function __construct()
+    public function __construct(string $message = '')
     {
-        $message = "Invalid content is being set";
+        $message = "Invalid content is being set" . ($message ? ": $message" : $message);
 
         parent::__construct($message);
     }
