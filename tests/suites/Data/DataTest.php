@@ -1,8 +1,8 @@
 <?php
 
-use OpenWorld\Data\DataFile;
+use OpenWorld\Data\DataSource;
 
-use OpenWorld\Data\Provider\{
+use OpenWorld\Data\Providers\{
     LocaleProvider,
     GeneralProvider
 };

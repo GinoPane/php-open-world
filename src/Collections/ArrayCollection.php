@@ -13,6 +13,7 @@ use OpenWorld\Collections\Interfaces\CollectionInterface;
  * serialize a collection use {@link toArray()} and reconstruct the collection
  * manually.
  *
+ * @package OpenWorld\Collections
  */
 class ArrayCollection implements CollectionInterface
 {
@@ -21,7 +22,7 @@ class ArrayCollection implements CollectionInterface
      *
      * @var array
      */
-    private $elements;
+    protected $elements;
 
     /**
      * Initializes a new ArrayCollection.
@@ -281,7 +282,7 @@ class ArrayCollection implements CollectionInterface
     /**
      * {@inheritDoc}
      */
-    public function forAll(Closure$predicate) : bool
+    public function forAll(Closure $predicate) : bool
     {
         foreach ($this->elements as $key => $element) {
             if (!$predicate($key, $element)) {

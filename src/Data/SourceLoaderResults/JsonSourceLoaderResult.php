@@ -1,18 +1,18 @@
 <?php
 
-namespace OpenWorld\Data\FileLoaderResults;
+namespace OpenWorld\Data\SourceLoaderResults;
 
-use OpenWorld\Data\AbstractClasses\FileLoaderResultAbstract;
+use OpenWorld\Data\AbstractClasses\SourceLoaderResultAbstract;
 use OpenWorld\Exceptions\InvalidContentException;
 
 /**
- * Class JsonFileLoaderResult
+ * Class JsonSourceLoaderResult
  * 
  * Provides access to loaded json data.
  * 
- * @package OpenWorld\Data\FileLoaderResults
+ * @package OpenWorld\Data\SourceLoaderResults
  */
-class JsonFileLoaderResult extends FileLoaderResultAbstract {
+class JsonSourceLoaderResult extends SourceLoaderResultAbstract {
 
     /**
      * @inheritdoc

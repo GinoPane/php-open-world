@@ -4,7 +4,7 @@ namespace OpenWorld\Data\AbstractClasses;
 
 use OpenWorld\Data\Interfaces\{
     DataProviderInterface,
-    FileLoaderInterface
+    SourceLoaderInterface
 };
 
 /**
@@ -17,42 +17,42 @@ use OpenWorld\Data\Interfaces\{
 abstract class DataProviderAbstract implements DataProviderInterface {
 
     /**
-     * File loader instance.
+     * Source loader instance.
      *
-     * @var FileLoaderInterface
+     * @var SourceLoaderInterface
      */
     protected $loader = null;
 
     /**
      * ProviderAbstract constructor.
      *
-     * @param FileLoaderInterface $loader
+     * @param SourceLoaderInterface $loader
      *
      * return void
      */
-    public function __construct(FileLoaderInterface $loader)
+    public function __construct(SourceLoaderInterface $loader)
     {
         $this->loader = $loader;
     }
 
     /**
-     * Set provider's file loader.
+     * Set provider's source loader.
      *
-     * @param FileLoaderInterface $loader
+     * @param SourceLoaderInterface $loader
      *
      * return void
      */
-    public function setLoader(FileLoaderInterface $loader)
+    public function setLoader(SourceLoaderInterface $loader)
     {
         $this->loader = $loader;
     }
 
     /**
-     * Get provider's file loader.
+     * Get provider's source loader.
      *
-     * @return FileLoaderInterface
+     * @return SourceLoaderInterface
      */
-    public function getLoader() : FileLoaderInterface
+    public function getLoader() : SourceLoaderInterface
     {
         return $this->loader;
     }

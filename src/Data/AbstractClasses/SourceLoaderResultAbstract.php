@@ -2,11 +2,11 @@
 
 namespace OpenWorld\Data\AbstractClasses;
 
-use OpenWorld\Data\Interfaces\FileLoaderResultInterface;
+use OpenWorld\Data\Interfaces\SourceLoaderResultInterface;
 use OpenWorld\Exceptions\InvalidContentException;
 use OpenWorld\Exceptions\NotImplementedException;
 
-abstract class FileLoaderResultAbstract implements FileLoaderResultInterface {
+abstract class SourceLoaderResultAbstract implements SourceLoaderResultInterface {
 
     protected $content;
 
@@ -61,7 +61,7 @@ abstract class FileLoaderResultAbstract implements FileLoaderResultInterface {
     }
 
     /**
-     * Makes sure that $content is valid for this FileLoaderResultAbstract instance
+     * Makes sure that $content is valid for this SourceLoaderResultAbstract instance
      *
      * @param $content
      *

@@ -2,7 +2,7 @@
 
 namespace OpenWorld\Data\Interfaces;
 
-interface FileLoaderResultInterface {
+interface SourceLoaderResultInterface {
 
     /**
      * Get result data as string

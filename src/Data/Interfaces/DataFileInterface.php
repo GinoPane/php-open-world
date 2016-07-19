@@ -2,8 +2,8 @@
 
 namespace OpenWorld\Data\Interfaces;
 
-interface DataFileInterface {
+interface DataSourceInterface {
 
-    public function load($fileName = '', $condition = '');
+    public function load($uri = '', $condition = '');
 
 }
