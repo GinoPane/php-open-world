@@ -4,9 +4,9 @@ use OpenWorld\Collections\ArrayCollection;
 use OpenWorld\Collections\Criteria;
 
 /**
+ *
  * Tests for {@see OpenWorld\Collections\ArrayCollection}
  *
- * @covers OpenWorld\Collections\ArrayCollection
  */
 class ArrayCollectionTest extends PHPUnit_Framework_TestCase
 {
@@ -419,6 +419,30 @@ class ArrayCollectionTest extends PHPUnit_Framework_TestCase
         $this->assertSame(
             null,
             $collection->get('non-existent'),
+            'Get non existent element'
+        );
+    }
+
+    public function testOffsetGet()
+    {
+        $elements = array(1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0);
+        $collection = new ArrayCollection($elements);
+
+        $this->assertSame(
+            2,
+            $collection[1],
+            'Get element by index'
+        );
+
+        $this->assertSame(
+            'a',
+            $collection['A'],
+            'Get element by name'
+        );
+
+        $this->assertSame(
+            null,
+            $collection['non-existent'],
             'Get non existent element'
         );
     }

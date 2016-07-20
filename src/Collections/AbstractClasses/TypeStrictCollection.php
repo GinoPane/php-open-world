@@ -2,8 +2,10 @@
 
 namespace OpenWorld\Collections\AbstractClasses;
 
-use OpenWorld\Collections\ArrayCollection;
+use Closure;
+use OpenWorld\Assertions\Interfaces\AssertionInterface;
 use OpenWorld\Collections\Interfaces\CollectionInterface;
+use OpenWorld\Collections\Traits\ImplementsArray;
 
 /**
  *
@@ -14,22 +16,29 @@ use OpenWorld\Collections\Interfaces\CollectionInterface;
  *
  * @package OpenWorld\Collections
  */
-abstract class TypeStrictCollection extends ArrayCollection
+abstract class TypeStrictCollection implements CollectionInterface
 {
-    /**
-     * Type constraint for collection.
-     *
-     * @var string
-     */
-    protected $typeConstraint = '';
+    use ImplementsArray;
 
     /**
-     * Initializes a new ArrayCollection.
+     * Type constraint assertion for collection.
      *
+     * @var AssertionInterface
+     */
+    protected $assertion = null;
+
+    /**
+     * Initializes a new TypeStrictCollection.
+     *
+     * @param AssertionInterface $assertion
      * @param array $elements
      */
-    public function __construct(array $elements = [])
+    public function __construct(AssertionInterface $assertion, array $elements = [])
     {
+        $this->assertion = $assertion;
+
+        $this->assertion->assertMultiple($elements);
+
         $this->elements = $elements;
     }
 
@@ -38,6 +47,8 @@ abstract class TypeStrictCollection extends ArrayCollection
      */
     public function set($key, $value)
     {
+        $this->assertion->assertSingle($value);
+
         $this->elements[$key] = $value;
     }
 
@@ -46,18 +57,36 @@ abstract class TypeStrictCollection extends ArrayCollection
      */
     public function add($value) : CollectionInterface
     {
+        $this->assertion->assertSingle($value);
+
         $this->elements[] = $value;
 
         return $this;
     }
 
-    protected function assertTypeMultiple(array $items)
+    /**
+     * {@inheritDoc}
+     */
+    public function map(Closure $function) : CollectionInterface
     {
-
+        return new static($this->assertion, array_map($function, $this->elements));
     }
 
-    protected function assertTypeSingle()
+    /**
+     * {@inheritDoc}
+     */
+    public function filter(Closure $predicate) : CollectionInterface
     {
+        return new static($this->assertion, array_filter($this->elements, $predicate));
+    }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function partition(Closure $predicate) : array
+    {
+        list($matches, $noMatches) = $this->splitIntoParts($predicate);
+
+        return array(new static($this->assertion, $matches), new static($this->assertion, $noMatches));
     }
 }

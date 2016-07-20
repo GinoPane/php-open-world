@@ -1,12 +1,23 @@
-<phpunit colors="true" bootstrap="./tests/bootstrap.php">
+<phpunit
+        colors="true"
+        bootstrap="./tests/bootstrap.php"
+        convertErrorsToExceptions="true"
+        convertNoticesToExceptions="true"
+        convertWarningsToExceptions="true"
+        stopOnError="false"
+        stopOnFailure="false"
+        stopOnIncomplete="false"
+        stopOnSkipped="false"
+        stopOnRisky="false"
+>
 	<testsuites>
         <testsuite name="Collection tests">
             <directory>./tests/suites/collection/</directory>
         </testsuite>
-		<testsuite name="Data tests">
+		<!-- <testsuite name="Data tests">
 			<directory>./tests/suites/data/</directory>
 		</testsuite>
-        <!--       <testsuite name="Territory tests">
+              <testsuite name="Territory tests">
                    <directory>./tests/suites/territory/</directory>
                </testsuite>
                <testsuite name="Number tests">
@@ -16,4 +27,18 @@
                    <directory>./tests/suites/currency/</directory>
                </testsuite>-->
 	</testsuites>
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./src/collections/</directory>
+        </whitelist>
+    </filter>
+    <logging>
+        <log type="coverage-html"
+             target="./tests/output/coverage/html"
+             lowUpperBound="35"
+             highLowerBound="70"/>
+        <log type="coverage-text"
+             target="./tests/output/coverage/coverage.txt"
+             showUncoveredFiles="true"/>
+    </logging>
 </phpunit>

@@ -279,15 +279,7 @@ trait ImplementsArray
      */
     public function partition(Closure $predicate) : array
     {
-        $matches = $noMatches = array();
-
-        foreach ($this->elements as $key => $element) {
-            if ($predicate($key, $element)) {
-                $matches[$key] = $element;
-            } else {
-                $noMatches[$key] = $element;
-            }
-        }
+        list($matches, $noMatches) = $this->splitIntoParts($predicate);
 
         return array(new static($matches), new static($noMatches));
     }
@@ -308,5 +300,26 @@ trait ImplementsArray
     public function clear()
     {
         $this->elements = [];
+    }
+
+    /**
+     * Service function for partition
+     *
+     * @param Closure $predicate
+     * @return array
+     */
+    protected function splitIntoParts(Closure $predicate) : array
+    {
+        $matches = $noMatches = array();
+
+        foreach ($this->elements as $key => $element) {
+            if ($predicate($key, $element)) {
+                $matches[$key] = $element;
+            } else {
+                $noMatches[$key] = $element;
+            }
+        }
+
+        return [$matches, $noMatches];
     }
 }

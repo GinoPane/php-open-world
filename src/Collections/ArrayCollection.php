@@ -2,7 +2,6 @@
 
 namespace OpenWorld\Collections;
 
-use ArrayIterator, Closure;
 use OpenWorld\Collections\Interfaces\CollectionInterface;
 use OpenWorld\Collections\Traits\ImplementsArray;
 
