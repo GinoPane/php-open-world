@@ -5,16 +5,22 @@ namespace OpenWorld\Exceptions;
 use OpenWorld\Exceptions\AbstractClasses\ExceptionAbstract;
 
 /**
- * Class InvalidParameterTypeException
+ * Class InvalidTypeException
  *
  * An exception raised when wrong-type parameter was passed.
  *
  * @package OpenWorld\Exceptions
  */
-class InvalidParameterTypeException extends ExceptionAbstract
+class InvalidTypeException extends ExceptionAbstract
 {
+    /**
+     * @var string
+     */
     protected $actualType;
 
+    /**
+     * @var string
+     */
     protected $allowedType;
     
     /**
