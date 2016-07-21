@@ -4,6 +4,7 @@ namespace OpenWorld\Data\SourceLoaderResults;
 
 use OpenWorld\Data\AbstractClasses\SourceLoaderResultAbstract;
 use OpenWorld\Exceptions\InvalidContentException;
+use stdClass;
 
 /**
  * Class JsonSourceLoaderResult
@@ -43,7 +44,7 @@ class JsonSourceLoaderResult extends SourceLoaderResultAbstract {
      *
      * @throws InvalidContentException
      */
-    public function asObject() : Object
+    public function asObject() : stdClass
     {
         $data = @json_decode($this->content, false);
 

@@ -29,7 +29,7 @@
 	</testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./src/collections/</directory>
+            <directory suffix=".php">./src/</directory>
         </whitelist>
     </filter>
     <logging>
@@ -38,7 +38,7 @@
              lowUpperBound="35"
              highLowerBound="70"/>
         <log type="coverage-text"
-             target="./tests/output/coverage/coverage.txt"
+             target="php://stdout"
              showUncoveredFiles="true"/>
     </logging>
 </phpunit>

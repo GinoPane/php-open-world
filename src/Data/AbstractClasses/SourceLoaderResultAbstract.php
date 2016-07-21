@@ -5,6 +5,7 @@ namespace OpenWorld\Data\AbstractClasses;
 use OpenWorld\Data\Interfaces\SourceLoaderResultInterface;
 use OpenWorld\Exceptions\InvalidContentException;
 use OpenWorld\Exceptions\NotImplementedException;
+use stdClass;
 
 abstract class SourceLoaderResultAbstract implements SourceLoaderResultInterface {
 
@@ -29,7 +30,7 @@ abstract class SourceLoaderResultAbstract implements SourceLoaderResultInterface
     /**
      * @inheritDoc
      */
-    public function asObject() : Object
+    public function asObject() : stdClass
     {
         throw new NotImplementedException(__FUNCTION__);
     }

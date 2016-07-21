@@ -423,28 +423,149 @@ class ArrayCollectionTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    public function testOffsetGet()
+    public function testOffsetSetGet()
     {
-        $elements = array(1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0);
+        $elements = array(1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0, null => 4);
+        $collection = new ArrayCollection();
+
+        foreach($elements as $key => $value) {
+            $collection[$key] = $value;
+
+            $this->assertSame(
+                $value,
+                $collection[$key],
+                'Get element by key'
+            );
+        }
+
+        $collection->clear();
+
+        foreach($elements as $key => $value) {
+            $collection[] = $value;
+
+            $this->assertTrue(
+                false !== array_search($value, $collection->toArray())
+            );
+        }
+    }
+
+    public function testOffsetUnsetExists()
+    {
+        $elements = array(1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0, null => 4);
+        $collection = new ArrayCollection();
+
+        foreach($elements as $key => $value) {
+            $collection[$key] = $value;
+
+            $this->assertTrue(
+                isset($collection[$key]),
+                'Get element by key'
+            );
+
+            unset($collection[$key]);
+
+            $this->assertFalse(
+                isset($collection[$key]),
+                'Get element by key'
+            );
+        }
+    }
+
+    public function testToString()
+    {
+        $collection = new ArrayCollection();
+
+        $string = strval($collection);
+
+        $this->assertTrue(gettype($string) == 'string');
+    }
+
+    public function testFilter()
+    {
+        $elements = array(false, 0, null, '');
         $collection = new ArrayCollection($elements);
 
-        $this->assertSame(
-            2,
-            $collection[1],
-            'Get element by index'
+        $this->assertTrue(0 == $collection->filter()->count());
+
+        $elements = array(1, 2, 3, 4);
+        $collection = new ArrayCollection($elements);
+
+        $this->assertTrue($collection->filter(function($value) {
+            return boolval($value % 2);
+        })->count() == 2);
+
+        $elements = array('0' => 1, false => 2, 3, 4);
+        $collection = new ArrayCollection($elements);
+
+        $this->assertTrue($collection->filter(function($key) {
+                return boolval($key);
+        }, ARRAY_FILTER_USE_KEY)->count() == 2);
+
+        $elements = array(1 => -1, 2 => 2, 3 => 0, 4 => -1);
+        $collection = new ArrayCollection($elements);
+
+        $this->assertTrue($collection->filter(function($value, $key) {
+                return ($key > 2 && $value < 0);
+        }, ARRAY_FILTER_USE_BOTH)->count() == 1);
+    }
+
+    public function testForAll()
+    {
+        $elements = array(false, 0, null, '');
+        $collection = new ArrayCollection($elements);
+
+        $this->assertTrue($collection->forAll(function($key, $value) {
+            return $value == false;
+        }));
+
+        $elements = array(1 => 1, 2 => 4, 3 => 9, 4 => 16, 5 => 24);
+        $collection = new ArrayCollection($elements);
+
+        $this->assertFalse($collection->forAll(function($key, $value) {
+            return $key ** 2 == $value;
+        }));
+    }
+
+    public function testPartition()
+    {
+        $elements = array(1 => 1, 2 => 4, 3 => 9, 4 => 16, 5 => 24);
+        $collection = new ArrayCollection($elements);
+
+        list($part1, $part2) = $collection->partition(function($key, $value){
+            return $key ** 2 == $value;
+        });
+
+        $this->assertTrue($part1->count() && $part1->count() && ($part1->count() + $part2->count() == $collection->count()),
+            'Both returned'
         );
 
-        $this->assertSame(
-            'a',
-            $collection['A'],
-            'Get element by name'
+        list($part1, $part2) = $collection->partition(function($key, $value){
+            return $key == 0;
+        });
+
+        $this->assertTrue(!$part1->count() && $part2->count() && ($part1->count() + $part2->count() == $collection->count()),
+            'First empty'
         );
 
-        $this->assertSame(
-            null,
-            $collection['non-existent'],
-            'Get non existent element'
+        list($part1, $part2) = $collection->partition(function($key, $value){
+            return $key > 0;
+        });
+
+        $this->assertTrue($part1->count() && !$part2->count() && ($part1->count() + $part2->count() == $collection->count()),
+            'Second empty'
         );
+    }
+
+    public function testMap()
+    {
+        $elements = array(1, 2, 3, 4, 5);
+        $squares = array(1, 4, 9, 16, 25);
+
+        $collection = new ArrayCollection($elements);
+
+        $this->assertEquals($squares, $collection->map(function($value){
+            return $value ** 2;
+        })->toArray());
     }
 }
 

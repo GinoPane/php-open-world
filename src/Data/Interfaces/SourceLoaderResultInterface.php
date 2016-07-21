@@ -2,6 +2,8 @@
 
 namespace OpenWorld\Data\Interfaces;
 
+use stdClass;
+
 interface SourceLoaderResultInterface {
 
     /**
@@ -21,9 +23,9 @@ interface SourceLoaderResultInterface {
     /**
      * Get result data as object
      *
-     * @return Object
+     * @return stdClass
      */
-    public function asObject() : Object;
+    public function asObject() : stdClass;
 
     /**
      * Set result content.

@@ -255,9 +255,13 @@ trait ImplementsArray
     /**
      * {@inheritDoc}
      */
-    public function filter(Closure $predicate) : CollectionInterface
+    public function filter(Closure $predicate = null, int $flag = 0) : CollectionInterface
     {
-        return new static(array_filter($this->elements, $predicate));
+        if ($predicate) {
+            return new static(array_filter($this->elements, $predicate, $flag));
+        } else {
+            return new static(array_filter($this->elements));
+        }
     }
 
     /**

@@ -158,10 +158,11 @@ interface CollectionInterface extends Countable, IteratorAggregate, ArrayAccess
      * The order of the elements is preserved.
      *
      * @param Closure $predicate The predicate used for filtering.
+     * @param int $flag ARRAY_FILTER_USE_KEY, ARRAY_FILTER_USE_BOTH
      *
      * @return CollectionInterface A collection with the results of the filter operation.
      */
-    public function filter(Closure $predicate) : CollectionInterface;
+    public function filter(Closure $predicate = null, int $flag = 0) : CollectionInterface;
 
     /**
      * Tests whether the given predicate p holds for all elements of this collection.

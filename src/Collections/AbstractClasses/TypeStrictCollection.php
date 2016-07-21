@@ -75,9 +75,9 @@ abstract class TypeStrictCollection implements CollectionInterface
     /**
      * {@inheritDoc}
      */
-    public function filter(Closure $predicate) : CollectionInterface
+    public function filter(Closure $predicate = null, int $flag = 0) : CollectionInterface
     {
-        return new static($this->assertion, array_filter($this->elements, $predicate));
+        return new static($this->assertion, array_filter($this->elements, $predicate, $flag));
     }
 
     /**
