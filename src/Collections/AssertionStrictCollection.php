@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenWorld\Collections\AbstractClasses;
+namespace OpenWorld\Collections;
 
 use Closure;
 use OpenWorld\Assertions\Interfaces\AssertionInterface;
@@ -16,7 +16,7 @@ use OpenWorld\Collections\Traits\ImplementsArray;
  *
  * @package OpenWorld\Collections
  */
-abstract class AssertionStrictCollection implements CollectionInterface
+class AssertionStrictCollection implements CollectionInterface
 {
     use ImplementsArray;
 
@@ -28,7 +28,7 @@ abstract class AssertionStrictCollection implements CollectionInterface
     protected $assertion = null;
 
     /**
-     * Initializes a new TypeStrictCollection.
+     * Initializes a new AssertionStrictCollection.
      *
      * @param AssertionInterface $assertion
      * @param array $elements
@@ -42,9 +42,6 @@ abstract class AssertionStrictCollection implements CollectionInterface
         $this->elements = $elements;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function set($key, $value)
     {
         $this->assertion->assertSingle($value);
@@ -52,9 +49,6 @@ abstract class AssertionStrictCollection implements CollectionInterface
         $this->elements[$key] = $value;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function add($value) : CollectionInterface
     {
         $this->assertion->assertSingle($value);
@@ -64,25 +58,20 @@ abstract class AssertionStrictCollection implements CollectionInterface
         return $this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function map(Closure $function) : CollectionInterface
     {
         return new static($this->assertion, array_map($function, $this->elements));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function filter(Closure $predicate = null, int $flag = 0) : CollectionInterface
     {
-        return new static($this->assertion, array_filter($this->elements, $predicate, $flag));
+        if ($predicate) {
+            return new static($this->assertion, array_filter($this->elements, $predicate, $flag));
+        } else {
+            return new static($this->assertion, array_filter($this->elements));
+        }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function partition(Closure $predicate) : array
     {
         list($matches, $noMatches) = $this->splitIntoParts($predicate);

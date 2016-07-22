@@ -79,9 +79,9 @@ class TypeAssertionTest extends TestCase
 
     public function testAssertInherits()
     {
-        $assertion = new TypeAssertion('OpenWorld\Collections\AbstractClasses\AssertionStrictCollection', TypeAssertion::CLASS_INHERITS_TYPE);
+        $assertion = new TypeAssertion('OpenWorld\Collections\AssertionStrictCollection', TypeAssertion::CLASS_INHERITS_TYPE);
 
-        $assertion->assertSingle(new \OpenWorld\Collections\DataProviderCollection(new TypeAssertion('integer')));
+        $assertion->assertSingle(new \OpenWorld\Collections\AssertionStrictCollection(new TypeAssertion('integer')));
     }
 
     public function testAssertInheritsItself()
@@ -97,7 +97,7 @@ class TypeAssertionTest extends TestCase
 
         $assertion = new TypeAssertion('ImplementsArray', TypeAssertion::CLASS_INHERITS_TYPE);
 
-        $assertion->assertSingle(new \OpenWorld\Collections\DataProviderCollection(new TypeAssertion('integer')));
+        $assertion->assertSingle(new \OpenWorld\Collections\AssertionStrictCollection(new TypeAssertion('integer')));
     }
 
     public function testClassDoesNotExistThrowsException()

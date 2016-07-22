@@ -1,5 +1,6 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use OpenWorld\Data\DataSource;
 
 use OpenWorld\Data\Providers\{
@@ -7,7 +8,7 @@ use OpenWorld\Data\Providers\{
     GeneralProvider
 };
 
-class DataTest extends PHPUnit_Framework_TestCase
+class DataTest extends TestCase
 {
     protected $localDataProvider = null;
     protected $globalDataProvider = null;
