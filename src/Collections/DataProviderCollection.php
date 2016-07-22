@@ -2,7 +2,7 @@
 
 namespace OpenWorld\Collections;
 
-use OpenWorld\Collections\AbstractClasses\TypeStrictCollection;
+use OpenWorld\Collections\AbstractClasses\AssertionStrictCollection;
 
 /**
  *
@@ -14,7 +14,7 @@ use OpenWorld\Collections\AbstractClasses\TypeStrictCollection;
  *
  * @package OpenWorld\Collections
  */
-class DataProviderCollection extends TypeStrictCollection
+class DataProviderCollection extends AssertionStrictCollection
 {
 
 }

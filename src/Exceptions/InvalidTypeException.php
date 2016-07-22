@@ -28,13 +28,21 @@ class InvalidTypeException extends ExceptionAbstract
      *
      * @param string $actualType The actual type
      * @param string $allowedType The allowed type
+     * @param string $template Template for the message. %1 placeholder for actual type, %2 - for allowed
      */
-    public function __construct(string $actualType, string $allowedType)
+    public function __construct(string $actualType, string $allowedType, string $template = '')
     {
-        $this->actualType = $actualType;
-        $this->allowedType = $allowedType;
+        $this->actual = $actualType;
+        $this->allowed = $allowedType;
 
-        $message = "'$actualType' is not allowed. Allowed type is: '$allowedType'";
+        $message = "'%1' is not allowed. Allowed type is: '%2'";
+
+        if ($template) {
+            $message = $template;
+        }
+
+        $message = $this->fillTemplate($message, $actualType, $allowedType);
+
 
         parent::__construct($message);
     }
@@ -57,5 +65,25 @@ class InvalidTypeException extends ExceptionAbstract
     public function getAllowedType() : string
     {
         return $this->allowedType;
+    }
+
+    /**
+     * Possible placeholders:
+     *  %1 - for actual type
+     *  %2 - for allowed type
+     *
+     * @param string $template
+     * @param string $actualType
+     * @param string $allowedType
+     * @return string
+     */
+    private function fillTemplate(string $template, string $actualType, string $allowedType) : string
+    {
+        $message = '';
+
+        $message = str_replace('%1', $actualType, $template);
+        $message = str_replace('%2', $allowedType, $message);
+
+        return $message;
     }
 }

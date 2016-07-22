@@ -9,14 +9,14 @@ use OpenWorld\Collections\Traits\ImplementsArray;
 
 /**
  *
- * Class TypeStrictCollection
+ * Class AssertionStrictCollection
  *
  * TypeStrictCollection use exception-based type checking to ensure, that
  * its elements has necessary type.
  *
  * @package OpenWorld\Collections
  */
-abstract class TypeStrictCollection implements CollectionInterface
+abstract class AssertionStrictCollection implements CollectionInterface
 {
     use ImplementsArray;
 
