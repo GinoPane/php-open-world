@@ -11,8 +11,11 @@
         stopOnRisky="false"
 >
 	<testsuites>
-        <testsuite name="Collection tests">
-            <directory>./tests/suites/collection/</directory>
+        <testsuite name="Assertions tests">
+            <directory>./tests/suites/assertions/</directory>
+        </testsuite>
+        <testsuite name="Collections tests">
+            <directory>./tests/suites/collections/</directory>
         </testsuite>
 		<!-- <testsuite name="Data tests">
 			<directory>./tests/suites/data/</directory>
@@ -28,8 +31,9 @@
                </testsuite>-->
 	</testsuites>
     <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./src/</directory>
+        <whitelist processUncoveredFilesFromWhitelist="false">
+            <directory suffix=".php">./src/collections/</directory>
+            <directory suffix=".php">./src/assertions/</directory>
         </whitelist>
     </filter>
     <logging>

@@ -3,6 +3,7 @@
 namespace OpenWorld\Assertions;
 
 use OpenWorld\Assertions\Interfaces\AssertionInterface;
+use OpenWorld\Exceptions\InvalidTypeException;
 
 /**
  * Class TypeAssertion.
@@ -32,13 +33,29 @@ class TypeAssertion implements AssertionInterface
         $this->type = $type;
     }
 
+    /**
+     * @inheritdoc
+     *
+     * @throws InvalidTypeException
+     */
     public function assertSingle($item)
     {
-        if ($item) {
+        $itemType = gettype($item);
 
+        if (($this->type !== 'object') && ($itemType === 'object')) {
+            $itemType = get_class($item);
+        }
+
+        if (strcasecmp($itemType, $this->type)) {
+            throw new InvalidTypeException($itemType, $this->type);
         }
     }
 
+    /**
+     * @inheritdoc
+     *
+     * @throws InvalidTypeException
+     */
     public function assertMultiple(array $items = [])
     {
         foreach($items as $item) {

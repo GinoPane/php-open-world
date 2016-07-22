@@ -1,14 +1,14 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use OpenWorld\Collections\ArrayCollection;
-use OpenWorld\Collections\Criteria;
 
 /**
  *
  * Tests for {@see OpenWorld\Collections\ArrayCollection}
  *
  */
-class ArrayCollectionTest extends PHPUnit_Framework_TestCase
+class ArrayCollectionTest extends TestCase
 {
     /**
      * @param $item
