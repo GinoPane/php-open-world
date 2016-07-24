@@ -16,7 +16,7 @@ abstract class SourceLoaderResultAbstract implements SourceLoaderResultInterface
      */
     public function asString(): string
     {
-        throw new NotImplementedException(__FUNCTION__);
+        throw new NotImplementedException(__FUNCTION__); // @codeCoverageIgnore
     }
 
     /**
@@ -24,7 +24,7 @@ abstract class SourceLoaderResultAbstract implements SourceLoaderResultInterface
      */
     public function asArray() : array
     {
-        throw new NotImplementedException(__FUNCTION__);
+        throw new NotImplementedException(__FUNCTION__); // @codeCoverageIgnore
     }
 
     /**
@@ -32,7 +32,7 @@ abstract class SourceLoaderResultAbstract implements SourceLoaderResultInterface
      */
     public function asObject() : stdClass
     {
-        throw new NotImplementedException(__FUNCTION__);
+        throw new NotImplementedException(__FUNCTION__); // @codeCoverageIgnore
     }
 
     /**
@@ -58,7 +58,7 @@ abstract class SourceLoaderResultAbstract implements SourceLoaderResultInterface
      */
     public function isValid($content) : bool
     {
-        return true;
+        return true; // @codeCoverageIgnore
     }
 
     /**

@@ -24,7 +24,7 @@ class InvalidDataFileException extends ExceptionAbstract
     {
         $this->identifier = $identifier;
 
-        $message = "'$identifier' is not a valid data file identifier";
+        $message = "'$identifier' is not a valid data file";
 
         parent::__construct($message);
     }

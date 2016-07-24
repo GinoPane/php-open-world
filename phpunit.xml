@@ -17,10 +17,10 @@
         <testsuite name="Collections tests">
             <directory>./tests/suites/collections/</directory>
         </testsuite>
-		<!-- <testsuite name="Data tests">
+		 <testsuite name="Data tests">
 			<directory>./tests/suites/data/</directory>
 		</testsuite>
-              <testsuite name="Territory tests">
+        <!--      <testsuite name="Territory tests">
                    <directory>./tests/suites/territory/</directory>
                </testsuite>
                <testsuite name="Number tests">
@@ -34,6 +34,7 @@
         <whitelist processUncoveredFilesFromWhitelist="false">
             <directory suffix=".php">./src/collections/</directory>
             <directory suffix=".php">./src/assertions/</directory>
+            <directory suffix=".php">./src/data/</directory>
         </whitelist>
     </filter>
     <logging>

@@ -2,7 +2,8 @@
 
 namespace OpenWorld\Data;
 
-use OpenWorld\Collections\ArrayCollection;
+use OpenWorld\Assertions\TypeAssertion;
+use OpenWorld\Collections\AssertionStrictCollection;
 use OpenWorld\Data\Interfaces\DataSourceInterface;
 use OpenWorld\Data\Interfaces\DataProviderInterface;
 use OpenWorld\Collections\Interfaces\CollectionInterface;
@@ -24,15 +25,16 @@ class DataSource implements DataSourceInterface {
      */
     public function __construct(DataProviderInterface ...$providers)
     {
-        $this->providers = new ArrayCollection();
-
-        foreach($providers as $provider) {
-            $this->providers->add($provider);
-        }
+        $this->providers = new AssertionStrictCollection(
+            new TypeAssertion(DataProviderInterface::class, TypeAssertion::CLASS_IMPLEMENTS_TYPE),
+            $providers
+        );
     }
 
     public function load($uri = '', $condition = '')
     {
+        $data = [];
+
         /* @var $provider DataProviderInterface */
         foreach ($this->providers() as $provider) {
             if ($provider->accept($condition)) {

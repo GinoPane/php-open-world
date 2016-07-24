@@ -4,6 +4,6 @@ namespace OpenWorld\Data\Interfaces;
 
 interface SourceLoaderInterface {
 
-    public function load(string $path = '') : SourceLoaderResultInterface;
+    public function load(string $path) : SourceLoaderResultInterface;
 
 }

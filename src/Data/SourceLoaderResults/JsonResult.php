@@ -7,13 +7,13 @@ use OpenWorld\Exceptions\InvalidContentException;
 use stdClass;
 
 /**
- * Class JsonSourceLoaderResult
+ * Class JsonResult
  * 
  * Provides access to loaded json data.
  * 
  * @package OpenWorld\Data\SourceLoaderResults
  */
-class JsonSourceLoaderResult extends SourceLoaderResultAbstract {
+class JsonResult extends SourceLoaderResultAbstract {
 
     /**
      * @inheritdoc
