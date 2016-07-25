@@ -58,32 +58,29 @@ class JsonResult extends SourceLoaderResultAbstract {
     /**
      * @inheritDoc
      *
-     * Checks whether the passed JSON string is valid
-     * @link  http://stackoverflow.com/questions/2583472/regex-to-validate-json
+     * Checks whether the passed JSON string is valid. RegExp testing has almost the same speed as @json_decode
+     * with error check (generally faster for failed test, almost the same for passed).
      *
+     * @link  http://stackoverflow.com/questions/2583472/regex-to-validate-json
      */
     public function isValid($content) : bool
     {
-        $pcreRegex = '
-          /
+        $pcreRegex = '/
           (?(DEFINE)
-             (?<number>   -? (?= [1-9]|0(?!\d) ) \d+ (\.\d+)? ([eE] [+-]? \d+)? )    
+             (?<number>   -? (?= [1-9]|0(?!\d) ) \d+ (\.\d+)? ([eE] [+-]? \d+)? )
              (?<boolean>   true | false | null )
-             (?<string>    " ([^"\\\\]* | \\\\ ["\\\\bfnrt\/] | \\\\ u [0-9a-f]{4} )* " )
+             (?<string>    " ([^"\n\r\t\\\\]* | \\\\ ["\\\\bfnrt\/] | \\\\ u [0-9a-f]{4} )* " )
              (?<array>     \[  (?:  (?&json)  (?: , (?&json)  )*  )?  \s* \] )
              (?<pair>      \s* (?&string) \s* : (?&json)  )
              (?<object>    \{  (?:  (?&pair)  (?: , (?&pair)  )*  )?  \s* \} )
              (?<json>   \s* (?: (?&number) | (?&boolean) | (?&string) | (?&array) | (?&object) ) \s* )
           )
           \A (?&json) \Z
-          /six   
-        ';
-
-        $matches = [];
+          /six';
 
         preg_match($pcreRegex, $content, $matches);
 
-        return boolval($matches);
+        return (bool)($matches);
     }
 
     /**
