@@ -2,20 +2,20 @@
 
 use PHPUnit\Framework\TestCase;
 
-use OpenWorld\Data\SourceLoaders\TextFileSourceLoader;
+use OpenWorld\Data\SourceLoaders\FileSourceLoader;
 use OpenWorld\Data\SourceLoaderResults\Factories\JsonResultFactory;
 use OpenWorld\Exceptions\InvalidContentException;
 
 class JsonResultSourceLoaderTest extends TestCase
 {
     /**
-     * @var TextFileSourceLoader
+     * @var FileSourceLoader
      */
     public $loader = null;
 
     public function setUp()
     {
-        $this->loader = new TextFileSourceLoader(new JsonResultFactory());
+        $this->loader = new FileSourceLoader(new JsonResultFactory());
     }
 
     /**

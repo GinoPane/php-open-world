@@ -8,13 +8,13 @@ use OpenWorld\Exceptions\FileNotFoundException;
 use OpenWorld\Exceptions\FileNotValidException;
 
 /**
- * Class TextFileSourceLoader
+ * Class FileSourceLoader
  * 
  * Provides a method for loading json data files.
  * 
  * @package OpenWorld\Data\Loaders
  */
-class TextFileSourceLoader extends SourceLoaderAbstract {
+class FileSourceLoader extends SourceLoaderAbstract {
 
     public function load(string $path) : SourceLoaderResultInterface
     {

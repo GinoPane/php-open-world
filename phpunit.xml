@@ -20,15 +20,15 @@
 		 <testsuite name="Data tests">
 			<directory>./tests/suites/data/</directory>
 		</testsuite>
-        <!--      <testsuite name="Territory tests">
-                   <directory>./tests/suites/territory/</directory>
-               </testsuite>
-               <testsuite name="Number tests">
-                   <directory>./tests/suites/number/</directory>
-               </testsuite>
-               <testsuite name="Currency tests">
-                   <directory>./tests/suites/currency/</directory>
-               </testsuite>-->
+        <!--<testsuite name="Territory tests">
+              <directory>./tests/suites/territory/</directory>
+          </testsuite>
+          <testsuite name="Number tests">
+              <directory>./tests/suites/number/</directory>
+          </testsuite>
+          <testsuite name="Currency tests">
+              <directory>./tests/suites/currency/</directory>
+          </testsuite>-->
 	</testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="false">
