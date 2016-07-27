@@ -3,8 +3,7 @@
 namespace OpenWorld\Data\AbstractClasses;
 
 use OpenWorld\Data\Interfaces\{
-    DataProviderInterface,
-    SourceLoaderInterface
+    DataProviderInterface, SourceLoaderInterface, SourceLoaderResultFactoryInterface, SourceLoaderResultInterface
 };
 
 /**
@@ -24,15 +23,24 @@ abstract class DataProviderAbstract implements DataProviderInterface {
     protected $loader = null;
 
     /**
+     * Represents result of source loading.
+     *
+     * @var SourceLoaderResultFactoryInterface
+     */
+    protected $resultClass = '';
+
+    /**
      * ProviderAbstract constructor.
      *
      * @param SourceLoaderInterface $loader
+     * @param SourceLoaderResultFactoryInterface $resultClass
      *
      * return void
      */
-    public function __construct(SourceLoaderInterface $loader)
+    public function __construct(SourceLoaderInterface $loader, SourceLoaderResultFactoryInterface $resultClass)
     {
         $this->loader = $loader;
+        $this->resultClass = $resultClass;
     }
 
     /**
@@ -57,4 +65,28 @@ abstract class DataProviderAbstract implements DataProviderInterface {
         return $this->loader;
     }
 
+    /**
+     * @param SourceLoaderResultFactoryInterface $resultClass
+     */
+    public function setResultFactory(SourceLoaderResultFactoryInterface $resultClass)
+    {
+        $this->resultClass = $resultClass;
+    }
+
+    /**
+     * @return SourceLoaderResultFactoryInterface
+     */
+    public function getResultFactory() : SourceLoaderResultFactoryInterface
+    {
+        return $this->resultClass;
+    }
+
+    public function load(string $uri = '') : SourceLoaderResultInterface
+    {
+        $result = $this->getResultFactory()->get();
+
+        $result->setContent($this->getLoader()->loadSource($uri));
+
+        return $result;
+    }
 }

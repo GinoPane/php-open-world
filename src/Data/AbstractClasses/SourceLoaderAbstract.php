@@ -39,5 +39,4 @@ abstract class SourceLoaderAbstract implements SourceLoaderInterface {
     {
         return $this->resultClass;
     }
-
 }

@@ -2,11 +2,13 @@
 
 namespace OpenWorld\Data\SourceLoaders;
 
+
 use PHPUnit\Framework\TestCase;
+
+use DirectoryIterator;
 
 use OpenWorld\Data\Interfaces\SourceLoaderResultFactoryInterface;
 use OpenWorld\Data\SourceLoaderResults\Factories\JsonResultFactory;
-
 use OpenWorld\Exceptions\FileNotFoundException;
 use OpenWorld\Exceptions\FileNotValidException;
 
@@ -31,7 +33,7 @@ class FileSourceLoaderTest extends TestCase
 
     public function setUp()
     {
-        $this->loader = new FileSourceLoader(new JsonResultFactory());
+        $this->loader = new FileSourceLoader();
     }
 
     public function testFileLoaderResultCreate()
@@ -39,34 +41,50 @@ class FileSourceLoaderTest extends TestCase
         $this->assertInstanceOf(FileSourceLoader::class, $this->loader);
     }
 
-    public function testGetFactory()
+    /**
+     * @dataProvider filesProvider
+     */
+    public function testLoad(string $path)
     {
-        $this->assertInstanceOf(SourceLoaderResultFactoryInterface::class, $this->loader->getResultFactory());
+        $this->assertStringEqualsFile($path, $this->loader->loadSource($path));
     }
 
     public function testNotReadableOrNotExistent()
     {
         $this->expectException(FileNotFoundException::class);
 
-        $this->loader->load('non-existent-path');
+        $this->loader->loadSource('non-existent-path');
     }
 
     public function testNotFile()
     {
         $this->expectException(FileNotValidException::class);
 
-        $this->loader->load(__DIR__);
+        $this->loader->loadSource(__DIR__);
     }
 
     public function testInvalidContentsFile()
     {
-        //use monkey-patching here to override is_file
+        //use monkey-patching here to override is_file()
         global $overrideIsFile;
-
         $overrideIsFile = true;
 
         $this->expectException(FileNotValidException::class);
 
-        $this->loader->load(__DIR__);
+        $this->loader->loadSource(__DIR__);
+    }
+
+    /**
+     * Simple files to test FileSourceLoader::load()
+     */
+    public function filesProvider()
+    {
+        $directory = new DirectoryIterator(__DIR__ . '/../../../data/json/valid/');
+
+        foreach ($directory as $file) {
+            if ($file->isFile() && $file->isReadable()) {
+                yield [$file->getPathname()];
+            }
+        }
     }
 }

@@ -2,8 +2,7 @@
 
 namespace OpenWorld\Data\SourceLoaders;
 
-use OpenWorld\Data\AbstractClasses\SourceLoaderAbstract;
-use OpenWorld\Data\Interfaces\SourceLoaderResultInterface;
+use OpenWorld\Data\Interfaces\SourceLoaderInterface;
 use OpenWorld\Exceptions\FileNotFoundException;
 use OpenWorld\Exceptions\FileNotValidException;
 
@@ -14,20 +13,9 @@ use OpenWorld\Exceptions\FileNotValidException;
  * 
  * @package OpenWorld\Data\Loaders
  */
-class FileSourceLoader extends SourceLoaderAbstract {
+class FileSourceLoader implements SourceLoaderInterface {
 
-    public function load(string $path) : SourceLoaderResultInterface
-    {
-        $data = $this->loadFile($path);
-
-        $result = $this->getResultFactory()->get();
-
-        $result->setContent($data);
-
-        return $result;
-    }
-
-    private function loadFile(string $path)
+    public function loadSource(string $path) : string
     {
         if (!is_readable($path)) {
             throw new FileNotFoundException($path);
@@ -45,5 +33,4 @@ class FileSourceLoader extends SourceLoaderAbstract {
 
         return $data;
     }
-
 }
