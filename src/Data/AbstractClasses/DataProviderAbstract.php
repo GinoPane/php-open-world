@@ -81,12 +81,29 @@ abstract class DataProviderAbstract implements DataProviderInterface {
         return $this->resultClass;
     }
 
-    public function load(string $uri = '') : SourceLoaderResultInterface
+    public function load(string $uri = '', $condition = null) : SourceLoaderResultInterface
     {
         $result = $this->getResultFactory()->get();
 
-        $result->setContent($this->getLoader()->loadSource($uri));
+        $result->setContent(
+            $this->getLoader()->loadSource(
+                $this->adjustUri($uri, $condition)
+            )
+        );
 
         return $result;
+    }
+
+    /**
+     * Make uri appropriate for current provider
+     *
+     * @param string $uri
+     * @param null $condition
+     *
+     * @return string
+     */
+    protected function adjustUri(string $uri = '', $condition = null) : string
+    {
+        return $uri;
     }
 }

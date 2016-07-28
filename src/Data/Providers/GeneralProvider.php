@@ -10,6 +10,7 @@ class GeneralProvider extends DataProviderAbstract {
     public function load(string $uri = '') : SourceLoaderResultInterface
     {
         // TODO: Implement load() method.
+        return parent::load($uri);
     }
 
     public function accept(string $condition = '') : bool
