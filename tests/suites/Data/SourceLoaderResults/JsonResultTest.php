@@ -45,7 +45,7 @@ class JsonResultTest extends TestCase
     }
 
     /**
-     * Based on the list of json test suite.
+     * Based on the file list from json test suite.
      *
      * @link http://www.json.org/JSON_checker/
      */
@@ -61,7 +61,7 @@ class JsonResultTest extends TestCase
     }
 
     /**
-     * Based on the list of json test suite.
+     * Based on the file list from json test suite.
      *
      * @link http://www.json.org/JSON_checker/
      */

@@ -7,7 +7,7 @@ use OpenWorld\Data\Interfaces\SourceLoaderResultInterface;
 
 class LocaleProvider extends DataProviderAbstract {
 
-    public function load(string $uri = '') : SourceLoaderResultInterface
+    public function load(string $uri = '', $condition = null) : SourceLoaderResultInterface
     {
         // TODO: Implement load() method.
 

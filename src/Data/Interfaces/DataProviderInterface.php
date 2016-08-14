@@ -6,6 +6,7 @@ interface DataProviderInterface {
 
     /**
      * @param string $uri Path to the resource to load
+     * @param null $condition Conditions that should be while loading data
      *
      * @return SourceLoaderResultInterface
      */

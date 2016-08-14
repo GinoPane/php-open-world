@@ -38,7 +38,7 @@ class DataSource implements DataSourceInterface {
         /* @var $provider DataProviderInterface */
         foreach ($this->providers() as $provider) {
             if ($provider->accept($condition)) {
-                $provider->load($uri)->asArray();
+                $provider->load($uri, $condition)->asArray();
             }
         }
     }
