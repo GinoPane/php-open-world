@@ -14,10 +14,12 @@ use OpenWorld\Collections\AssertionStrictCollection;
 class AssertionStrictCollectionTest extends TestCase
 {
     /**
+     * @test
+     *
      * @param $item
-     * @dataProvider provideDifferentValues
+     * @dataProvider provides_different_values
      */
-    public function testAdd($item)
+    public function it_adds_items_to_a_collection($item)
     {
         $collection = new AssertionStrictCollection(new TypeAssertion('integer'));
         $collection->add($item);
@@ -28,11 +30,13 @@ class AssertionStrictCollectionTest extends TestCase
     }
 
     /**
+     * @test
+     *
      * @param $key
      * @param $value
-     * @dataProvider provideDifferentKeyValues
+     * @dataProvider provides_different_key_values
      */
-    public function testSet($key, $value)
+    public function it_sets_item_value_by_a_key($key, $value)
     {
         $collection = new AssertionStrictCollection(new TypeAssertion('integer'));
         $collection->set($key, $value);
@@ -43,10 +47,12 @@ class AssertionStrictCollectionTest extends TestCase
     }
 
     /**
+     * @test
+     *
      * @param $item
-     * @dataProvider provideWrongDifferentValues
+     * @dataProvider provides_wrong_different_values
      */
-    public function testAddException($item)
+    public function it_throws_exception_for_wrong_values_on_add($item)
     {
         $this->expectException(InvalidTypeException::class);
 
@@ -55,11 +61,13 @@ class AssertionStrictCollectionTest extends TestCase
     }
 
     /**
+     * @test
+     *
      * @param $key
      * @param $value
-     * @dataProvider provideWrongDifferentKeyValues
+     * @dataProvider provides_wrong_different_key_values
      */
-    public function testSetException($key, $value)
+    public function it_throws_exception_for_wrong_values_on_set($key, $value)
     {
         $this->expectException(InvalidTypeException::class);
 
@@ -68,10 +76,12 @@ class AssertionStrictCollectionTest extends TestCase
     }
 
     /**
+     * @test
+     *
      * @param $elements
-     * @dataProvider provideDifferentElements
+     * @dataProvider provides_different_elements
      */
-    public function testToArray($elements)
+    public function it_gets_collection_as_an_array($elements)
     {
         $collection = new AssertionStrictCollection(new TypeAssertion('integer'), $elements);
 
@@ -82,10 +92,12 @@ class AssertionStrictCollectionTest extends TestCase
     }
 
     /**
+     * @test
+     *
      * @param $elements
-     * @dataProvider provideDifferentElements
+     * @dataProvider provides_different_elements
      */
-    public function testFirst($elements)
+    public function it_gets_the_first_collection_element($elements)
     {
         $collection = new AssertionStrictCollection(new TypeAssertion('integer'), $elements);
 
@@ -96,10 +108,12 @@ class AssertionStrictCollectionTest extends TestCase
     }
 
     /**
+     * @test
+     *
      * @param $elements
-     * @dataProvider provideDifferentElements
+     * @dataProvider provides_different_elements
      */
-    public function testLast($elements)
+    public function it_gets_the_last_collection_element($elements)
     {
         $collection = new AssertionStrictCollection(new TypeAssertion('integer'), $elements);
 
@@ -110,10 +124,12 @@ class AssertionStrictCollectionTest extends TestCase
     }
 
     /**
+     * @test
+     *
      * @param $elements
-     * @dataProvider provideDifferentElements
+     * @dataProvider provides_different_elements
      */
-    public function testKey($elements)
+    public function it_gets_items_keys_from_the_collection($elements)
     {
         $collection = new AssertionStrictCollection(new TypeAssertion('integer'), $elements);
         $this->assertSame(
@@ -129,11 +145,14 @@ class AssertionStrictCollectionTest extends TestCase
             $collection->key()
         );
     }
+
     /**
+     * @test
+     *
      * @param $elements
-     * @dataProvider provideDifferentElements
+     * @dataProvider provides_different_elements
      */
-    public function testNext($elements)
+    public function it_checks_the_next_method($elements)
     {
         $collection = new AssertionStrictCollection(new TypeAssertion('integer'), $elements);
 
@@ -166,10 +185,12 @@ class AssertionStrictCollectionTest extends TestCase
     }
 
     /**
+     * @test
+     *
      * @param $elements
-     * @dataProvider provideDifferentElements
+     * @dataProvider provides_different_elements
      */
-    public function testCurrent($elements)
+    public function it_checks_the_current_method($elements)
     {
         $collection = new AssertionStrictCollection(new TypeAssertion('integer'), $elements);
 
@@ -188,10 +209,12 @@ class AssertionStrictCollectionTest extends TestCase
     }
 
     /**
+     * @test
+     *
      * @param $elements
-     * @dataProvider provideDifferentElements
+     * @dataProvider provides_different_elements
      */
-    public function testGetKeys($elements)
+    public function it_gets_all_collection_keys_as_an_array($elements)
     {
         $collection = new AssertionStrictCollection(new TypeAssertion('integer'), $elements);
 
@@ -202,10 +225,12 @@ class AssertionStrictCollectionTest extends TestCase
     }
 
     /**
+     * @test
+     *
      * @param $elements
-     * @dataProvider provideDifferentElements
+     * @dataProvider provides_different_elements
      */
-    public function testGetValues($elements)
+    public function it_gets_all_collection_values_as_an_array($elements)
     {
         $collection = new AssertionStrictCollection(new TypeAssertion('integer'), $elements);
 
@@ -216,10 +241,12 @@ class AssertionStrictCollectionTest extends TestCase
     }
 
     /**
+     * @test
+     *
      * @param $elements
-     * @dataProvider provideDifferentElements
+     * @dataProvider provides_different_elements
      */
-    public function testCount($elements)
+    public function it_counts_collection_elements($elements)
     {
         $collection = new AssertionStrictCollection(new TypeAssertion('integer'), $elements);
         $this->assertSame(
@@ -229,10 +256,12 @@ class AssertionStrictCollectionTest extends TestCase
     }
 
     /**
+     * @test
+     *
      * @param $elements
-     * @dataProvider provideDifferentElements
+     * @dataProvider provides_different_elements
      */
-    public function testIterator($elements)
+    public function it_gets_collection_iterator($elements)
     {
         $collection = new AssertionStrictCollection(new TypeAssertion('integer'), $elements);
         $iterations = 0;
@@ -255,66 +284,9 @@ class AssertionStrictCollectionTest extends TestCase
     }
 
     /**
-     * @return array
+     * @test
      */
-    public function provideDifferentElements()
-    {
-        return array(
-            'indexed'     => array(array(1, 2, 3, 4, 5)),
-            'associative' => array(array('A' => -1, 'B' => 2, 'C' => 3)),
-            'mixed'       => array(array('A' => -5, 1, 'B' => 0, 2, 3)),
-        );
-    }
-
-    /**
-     * @return array
-     */
-    public function provideDifferentValues()
-    {
-        return [
-            [2],
-            [3],
-            [-5]
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    public function provideDifferentKeyValues()
-    {
-        return [
-            [3, -1],
-            ['a', 0],
-            [1, 1]
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    public function provideWrongDifferentValues()
-    {
-        return [
-            ['a'],
-            [null],
-            [true]
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    public function provideWrongDifferentKeyValues()
-    {
-        return [
-            [3, 'a'],
-            ['a', null],
-            [1, true]
-        ];
-    }
-
-    public function testRemove()
+    public function it_checks_elements_remove_by_key()
     {
         $elements = array(1, 'A' => 10, 2, 'null' => 7, 3, 'A2' => 5, 'zero' => 0);
         $collection = new AssertionStrictCollection(new TypeAssertion('integer'), $elements);
@@ -329,7 +301,10 @@ class AssertionStrictCollectionTest extends TestCase
         $this->assertEquals($elements, $collection->toArray());
     }
 
-    public function testRemoveElement()
+    /**
+     * @test
+     */
+    public function it_checks_elements_remove_by_value()
     {
         $elements = array(1, 'A' => 10, 2, 'null' => 7, 3, 'A2' => 5, 'zero' => 0);
         $collection = new AssertionStrictCollection(new TypeAssertion('integer'), $elements);
@@ -344,7 +319,10 @@ class AssertionStrictCollectionTest extends TestCase
         $this->assertEquals($elements, $collection->toArray());
     }
 
-    public function testContainsKey()
+    /**
+     * @test
+     */
+    public function it_checks_that_collection_contains_the_key()
     {
         $elements = array(1, 'A' => 10, 2, 'null' => 7, 3, 'A2' => 5, 'zero' => 0);
         $collection = new AssertionStrictCollection(new TypeAssertion('integer'), $elements);
@@ -370,7 +348,10 @@ class AssertionStrictCollectionTest extends TestCase
         );
     }
 
-    public function testEmpty()
+    /**
+     * @test
+     */
+    public function it_checks_an_empty_collection()
     {
         $collection = new AssertionStrictCollection(new TypeAssertion('integer'));
 
@@ -387,7 +368,10 @@ class AssertionStrictCollectionTest extends TestCase
         );
     }
 
-    public function testContains()
+    /**
+     * @test
+     */
+    public function it_checks_if_collection_contains_a_value()
     {
         $elements = array(1, 'A' => 10, 2, 'null' => 7, 3, 'A2' => 5, 'zero' => 0);
         $collection = new AssertionStrictCollection(new TypeAssertion('integer'), $elements);
@@ -413,7 +397,10 @@ class AssertionStrictCollectionTest extends TestCase
         );
     }
 
-    public function testExists()
+    /**
+     * @test
+     */
+    public function it_checks_if_collection_contains_an_item_by_callback()
     {
         $elements = array(1, 'A' => 10, 2, 'null' => 7, 3, 'A2' =>5, 'zero' => 0);
         $collection = new AssertionStrictCollection(new TypeAssertion('integer'), $elements);
@@ -427,7 +414,10 @@ class AssertionStrictCollectionTest extends TestCase
         }), "Element not exists");
     }
 
-    public function testIndexOf()
+    /**
+     * @test
+     */
+    public function it_check_the_index_of_method()
     {
         $elements = array(1, 'A' => 10, 2, 'null' => 7, 3, 'A2' => 5, 'zero' => 0);
         $collection = new AssertionStrictCollection(new TypeAssertion('integer'), $elements);
@@ -451,7 +441,10 @@ class AssertionStrictCollectionTest extends TestCase
         );
     }
 
-    public function testGet()
+    /**
+     * @test
+     */
+    public function it_gets_elements_by_key()
     {
         $elements = array(1, 'A' => 10, 2, 'null' => 7, 3, 'A2' =>5, 'zero' => 0);
         $collection = new AssertionStrictCollection(new TypeAssertion('integer'), $elements);
@@ -475,7 +468,10 @@ class AssertionStrictCollectionTest extends TestCase
         );
     }
 
-    public function testOffsetSetGet()
+    /**
+     * @test
+     */
+    public function it_checks_offset_get_set_methods()
     {
         $elements = array(1, 'A' => 3, 2, 'null' => 4, 5, 'A2' => 6, 'zero' => 0, null => 7);
         $collection = new AssertionStrictCollection(new TypeAssertion('integer'), $elements);
@@ -501,7 +497,10 @@ class AssertionStrictCollectionTest extends TestCase
         }
     }
 
-    public function testOffsetUnsetExists()
+    /**
+     * @test
+     */
+    public function it_check_offset_exists()
     {
         $elements = array(1, 'A' => 3, 2, 'null' => 4, 5, 'A2' => 6, 'zero' => 0, null => 7);
         $collection = new AssertionStrictCollection(new TypeAssertion('integer'), $elements);
@@ -523,7 +522,10 @@ class AssertionStrictCollectionTest extends TestCase
         }
     }
 
-    public function testToString()
+    /**
+     * @test
+     */
+    public function it_gets_string_representation_of_a_collection()
     {
         $collection = new AssertionStrictCollection(new TypeAssertion('integer'));
 
@@ -532,7 +534,10 @@ class AssertionStrictCollectionTest extends TestCase
         $this->assertTrue(gettype($string) == 'string');
     }
 
-    public function testFilter()
+    /**
+     * @test
+     */
+    public function it_filters_a_collection_against_a_callback()
     {
         $elements = array(0, 0, 0, 0);
         $collection = new AssertionStrictCollection(new TypeAssertion('integer'), $elements);
@@ -561,7 +566,10 @@ class AssertionStrictCollectionTest extends TestCase
         }, ARRAY_FILTER_USE_BOTH)->count() == 1);
     }
 
-    public function testForAll()
+    /**
+     * @test
+     */
+    public function it_check_if_callback_is_valid_for_all_items()
     {
         $elements = array(0, 0, 0, 0);
         $collection = new AssertionStrictCollection(new TypeAssertion('integer'), $elements);
@@ -578,7 +586,10 @@ class AssertionStrictCollectionTest extends TestCase
         }));
     }
 
-    public function testPartition()
+    /**
+     * @test
+     */
+    public function it_splits_a_collection_into_partitions_by_callback()
     {
         $elements = array(1 => 1, 2 => 4, 3 => 9, 4 => 16, 5 => 24);
         $collection = new AssertionStrictCollection(new TypeAssertion('integer'), $elements);
@@ -608,7 +619,10 @@ class AssertionStrictCollectionTest extends TestCase
         );
     }
 
-    public function testMap()
+    /**
+     * @test
+     */
+    public function it_maps_collection_values()
     {
         $elements = array(1, 2, 3, 4, 5);
         $squares = array(1, 4, 9, 16, 25);
@@ -618,6 +632,66 @@ class AssertionStrictCollectionTest extends TestCase
         $this->assertEquals($squares, $collection->map(function($value){
             return $value ** 2;
         })->toArray());
+    }
+
+    /**
+     * @return array
+     */
+    public function provides_different_elements()
+    {
+        return array(
+            'indexed'     => array(array(1, 2, 3, 4, 5)),
+            'associative' => array(array('A' => -1, 'B' => 2, 'C' => 3)),
+            'mixed'       => array(array('A' => -5, 1, 'B' => 0, 2, 3)),
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function provides_different_values()
+    {
+        return [
+            [2],
+            [3],
+            [-5]
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function provides_different_key_values()
+    {
+        return [
+            [3, -1],
+            ['a', 0],
+            [1, 1]
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function provides_wrong_different_values()
+    {
+        return [
+            ['a'],
+            [null],
+            [true]
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function provides_wrong_different_key_values()
+    {
+        return [
+            [3, 'a'],
+            ['a', null],
+            [1, true]
+        ];
     }
 }
 

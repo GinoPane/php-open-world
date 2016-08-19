@@ -12,9 +12,11 @@ class ArrayCollectionTest extends TestCase
 {
     /**
      * @param $item
-     * @dataProvider provideDifferentValues
+     *
+     * @test
+     * @dataProvider provides_different_values
      */
-    public function testAdd($item)
+    public function it_adds_elements_to_the_collection($item)
     {
         $collection = new ArrayCollection();
         $collection->add($item);
@@ -25,11 +27,13 @@ class ArrayCollectionTest extends TestCase
     }
 
     /**
+     * @test
+     *
      * @param $key
      * @param $value
-     * @dataProvider provideDifferentKeyValues
+     * @dataProvider provides_different_key_value_pairs
      */
-    public function testSet($key, $value)
+    public function it_sets_elements_value_by_key($key, $value)
     {
         $collection = new ArrayCollection();
         $collection->set($key, $value);
@@ -40,10 +44,12 @@ class ArrayCollectionTest extends TestCase
     }
 
     /**
+     * @test
+     *
      * @param $elements
-     * @dataProvider provideDifferentElements
+     * @dataProvider provides_different_elements
      */
-    public function testToArray($elements)
+    public function it_converts_collection_to_array($elements)
     {
         $collection = new ArrayCollection($elements);
 
@@ -54,10 +60,12 @@ class ArrayCollectionTest extends TestCase
     }
 
     /**
+     * @test
+     *
      * @param $elements
-     * @dataProvider provideDifferentElements
+     * @dataProvider provides_different_elements
      */
-    public function testFirst($elements)
+    public function it_gets_the_first_collection_element($elements)
     {
         $collection = new ArrayCollection($elements);
 
@@ -68,10 +76,12 @@ class ArrayCollectionTest extends TestCase
     }
 
     /**
+     * @test
+     *
      * @param $elements
-     * @dataProvider provideDifferentElements
+     * @dataProvider provides_different_elements
      */
-    public function testLast($elements)
+    public function it_gets_the_last_collection_element($elements)
     {
         $collection = new ArrayCollection($elements);
 
@@ -82,10 +92,12 @@ class ArrayCollectionTest extends TestCase
     }
 
     /**
+     * @test
+     *
      * @param $elements
-     * @dataProvider provideDifferentElements
+     * @dataProvider provides_different_elements
      */
-    public function testKey($elements)
+    public function it_checks_collection_keys($elements)
     {
         $collection = new ArrayCollection($elements);
         $this->assertSame(
@@ -101,11 +113,14 @@ class ArrayCollectionTest extends TestCase
             $collection->key()
         );
     }
+
     /**
+     * @test
+     *
      * @param $elements
-     * @dataProvider provideDifferentElements
+     * @dataProvider provides_different_elements
      */
-    public function testNext($elements)
+    public function it_checks_the_next_method($elements)
     {
         $collection = new ArrayCollection($elements);
 
@@ -138,10 +153,12 @@ class ArrayCollectionTest extends TestCase
     }
 
     /**
+     * @test
+     *
      * @param $elements
-     * @dataProvider provideDifferentElements
+     * @dataProvider provides_different_elements
      */
-    public function testCurrent($elements)
+    public function it_checks_the_current_method($elements)
     {
         $collection = new ArrayCollection($elements);
 
@@ -160,10 +177,12 @@ class ArrayCollectionTest extends TestCase
     }
 
     /**
+     * @test
+     *
      * @param $elements
-     * @dataProvider provideDifferentElements
+     * @dataProvider provides_different_elements
      */
-    public function testGetKeys($elements)
+    public function it_gets_all_collection_keys_as_array($elements)
     {
         $collection = new ArrayCollection($elements);
 
@@ -174,10 +193,12 @@ class ArrayCollectionTest extends TestCase
     }
 
     /**
+     * @test
+     *
      * @param $elements
-     * @dataProvider provideDifferentElements
+     * @dataProvider provides_different_elements
      */
-    public function testGetValues($elements)
+    public function it_gets_all_collection_values_as_array($elements)
     {
         $collection = new ArrayCollection($elements);
 
@@ -188,10 +209,12 @@ class ArrayCollectionTest extends TestCase
     }
 
     /**
+     * @test
+     *
      * @param $elements
-     * @dataProvider provideDifferentElements
+     * @dataProvider provides_different_elements
      */
-    public function testCount($elements)
+    public function it_counts_collection_items($elements)
     {
         $collection = new ArrayCollection($elements);
         $this->assertSame(
@@ -201,10 +224,12 @@ class ArrayCollectionTest extends TestCase
     }
 
     /**
+     * @test
+     *
      * @param $elements
-     * @dataProvider provideDifferentElements
+     * @dataProvider provides_different_elements
      */
-    public function testIterator($elements)
+    public function it_gets_collection_iterator($elements)
     {
         $collection = new ArrayCollection($elements);
         $iterations = 0;
@@ -227,42 +252,9 @@ class ArrayCollectionTest extends TestCase
     }
 
     /**
-     * @return array
+     * @test
      */
-    public function provideDifferentElements()
-    {
-        return array(
-            'indexed'     => array(array(1, 2, 3, 4, 5)),
-            'associative' => array(array('A' => 'a', 'B' => 'b', 'C' => 'c')),
-            'mixed'       => array(array('A' => 'a', 1, 'B' => 'b', 2, 3)),
-        );
-    }
-
-    /**
-     * @return array
-     */
-    public function provideDifferentValues()
-    {
-        return [
-            ['a'],
-            [null],
-            [1]
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    public function provideDifferentKeyValues()
-    {
-        return [
-            [3, 'a'],
-            ['a', null],
-            [1, true]
-        ];
-    }
-
-    public function testRemove()
+    public function it_removes_element_by_key()
     {
         $elements = array(1, 'A' => 'a', 2, 'B' => 'b', 3);
         $collection = new ArrayCollection($elements);
@@ -277,7 +269,10 @@ class ArrayCollectionTest extends TestCase
         $this->assertEquals($elements, $collection->toArray());
     }
 
-    public function testRemoveElement()
+    /**
+     * @test
+     */
+    public function it_removes_element_by_value()
     {
         $elements = array(1, 'A' => 'a', 2, 'B' => 'b', 3, 'A2' => 'a', 'B2' => 'b');
         $collection = new ArrayCollection($elements);
@@ -292,7 +287,10 @@ class ArrayCollectionTest extends TestCase
         $this->assertEquals($elements, $collection->toArray());
     }
 
-    public function testContainsKey()
+    /**
+     * @test
+     */
+    public function it_checks_that_collection_contains_a_key()
     {
         $elements = array(1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'B2' => 'b');
         $collection = new ArrayCollection($elements);
@@ -318,7 +316,10 @@ class ArrayCollectionTest extends TestCase
         );
     }
 
-    public function testEmpty()
+    /**
+     * @test
+     */
+    public function it_checks_empty_collections()
     {
         $collection = new ArrayCollection();
 
@@ -335,7 +336,10 @@ class ArrayCollectionTest extends TestCase
         );
     }
 
-    public function testContains()
+    /**
+     * @test
+     */
+    public function it_checks_that_collection_contains_value()
     {
         $elements = array(1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0);
         $collection = new ArrayCollection($elements);
@@ -361,7 +365,10 @@ class ArrayCollectionTest extends TestCase
         );
     }
 
-    public function testExists()
+    /**
+     * @test
+     */
+    public function it_checks_that_element_exists_by_a_callback()
     {
         $elements = array(1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0);
         $collection = new ArrayCollection($elements);
@@ -375,7 +382,10 @@ class ArrayCollectionTest extends TestCase
         }), "Element not exists");
     }
 
-    public function testIndexOf()
+    /**
+     * @test
+     */
+    public function it_checks_index_of_method()
     {
         $elements = array(1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0);
         $collection = new ArrayCollection($elements);
@@ -399,7 +409,10 @@ class ArrayCollectionTest extends TestCase
         );
     }
 
-    public function testGet()
+    /**
+     * @test
+     */
+    public function it_gets_elements_by_a_key()
     {
         $elements = array(1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0);
         $collection = new ArrayCollection($elements);
@@ -423,7 +436,10 @@ class ArrayCollectionTest extends TestCase
         );
     }
 
-    public function testOffsetSetGet()
+    /**
+     * @test
+     */
+    public function it_checks_offset_get_and_set()
     {
         $elements = array(1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0, null => 4);
         $collection = new ArrayCollection();
@@ -449,7 +465,10 @@ class ArrayCollectionTest extends TestCase
         }
     }
 
-    public function testOffsetUnsetExists()
+    /**
+     * @test
+     */
+    public function it_checks_offset_exists()
     {
         $elements = array(1, 'A' => 'a', 2, 'null' => null, 3, 'A2' => 'a', 'zero' => 0, null => 4);
         $collection = new ArrayCollection();
@@ -471,7 +490,10 @@ class ArrayCollectionTest extends TestCase
         }
     }
 
-    public function testToString()
+    /**
+     * @test
+     */
+    public function it_gets_collections_as_a_string()
     {
         $collection = new ArrayCollection();
 
@@ -480,7 +502,10 @@ class ArrayCollectionTest extends TestCase
         $this->assertTrue(gettype($string) == 'string');
     }
 
-    public function testFilter()
+    /**
+     * @test
+     */
+    public function it_filters_the_collection_by_a_condition()
     {
         $elements = array(false, 0, null, '');
         $collection = new ArrayCollection($elements);
@@ -509,7 +534,10 @@ class ArrayCollectionTest extends TestCase
         }, ARRAY_FILTER_USE_BOTH)->count() == 1);
     }
 
-    public function testForAll()
+    /**
+     * @test
+     */
+    public function it_checks_condition_validity_for_all_elements()
     {
         $elements = array(false, 0, null, '');
         $collection = new ArrayCollection($elements);
@@ -526,7 +554,10 @@ class ArrayCollectionTest extends TestCase
         }));
     }
 
-    public function testPartition()
+    /**
+     * @test
+     */
+    public function it_splits_collection_into_parts_by_a_condition()
     {
         $elements = array(1 => 1, 2 => 4, 3 => 9, 4 => 16, 5 => 24);
         $collection = new ArrayCollection($elements);
@@ -556,7 +587,10 @@ class ArrayCollectionTest extends TestCase
         );
     }
 
-    public function testMap()
+    /**
+     * @test
+     */
+    public function it_maps_collection_items()
     {
         $elements = array(1, 2, 3, 4, 5);
         $squares = array(1, 4, 9, 16, 25);
@@ -566,6 +600,42 @@ class ArrayCollectionTest extends TestCase
         $this->assertEquals($squares, $collection->map(function($value){
             return $value ** 2;
         })->toArray());
+    }
+
+    /**
+     * @return array
+     */
+    public function provides_different_elements()
+    {
+        return array(
+            'indexed'     => array(array(1, 2, 3, 4, 5)),
+            'associative' => array(array('A' => 'a', 'B' => 'b', 'C' => 'c')),
+            'mixed'       => array(array('A' => 'a', 1, 'B' => 'b', 2, 3)),
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function provides_different_values()
+    {
+        return [
+            ['a'],
+            [null],
+            [1]
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function provides_different_key_value_pairs()
+    {
+        return [
+            [3, 'a'],
+            ['a', null],
+            [1, true]
+        ];
     }
 }
 

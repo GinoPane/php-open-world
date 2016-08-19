@@ -58,14 +58,14 @@ class TypeAssertion implements AssertionInterface
      * @see http://php.net/manual/en/language.oop5.basic.php#language.oop5.basic.class.class
      *
      * @param string $type
-     * @param int $mode
+     * @param int $flag
      */
-    public function __construct(string $type, int $mode = 0)
+    public function __construct(string $type, int $flag = 0)
     {
         $this->type = $type;
-        $this->mode = $mode ? $mode & ~self::CHECK_MODE_PARAMETERS : $mode;
+        $this->mode = $flag ? $flag & ~self::CHECK_MODE_PARAMETERS : $flag;
 
-        $performCheck = $mode & self::CHECK_MODE_PARAMETERS;
+        $performCheck = $flag & self::CHECK_MODE_PARAMETERS;
 
         if ($performCheck) {
             switch ($this->mode) {

@@ -5,6 +5,9 @@ use PHPUnit\Framework\TestCase;
 use OpenWorld\Data\SourceLoaderResults\JsonResult;
 use OpenWorld\Data\SourceLoaderResults\Factories\JsonResultFactory;
 
+/**
+ * Class JsonResultTest
+ */
 class JsonResultTest extends TestCase
 {
     /**
@@ -12,12 +15,18 @@ class JsonResultTest extends TestCase
      */
     private $resultClass = null;
 
+    /**
+     *
+     */
     public function setUp()
     {
         $this->resultClass = JsonResultFactory::get();
     }
 
-    public function testJsonResultCreateFromFactory()
+    /**
+     * @test
+     */
+    public function it_creates_json_result_from_factory()
     {
         $result = JsonResultFactory::get();
 
@@ -27,19 +36,21 @@ class JsonResultTest extends TestCase
     /**
      * @param string $file
      *
-     * @dataProvider validDataProvider
+     * @test
+     * @dataProvider provides_access_to_valid_json_files
      */
-    public function testValidJsonFiles(string $file)
+    public function it_tests_is_valid_method_against_valid_json_files(string $file)
     {
         $this->assertTrue($this->resultClass->isValid(file_get_contents($file)));
     }
 
     /**
-     * @param string $file
+     * @test
+     * @dataProvider provides_access_to_invalid_json_files
      *
-     * @dataProvider invalidDataProvider
+     * @param string $file
      */
-    public function testInvalidJsonFiles(string $file)
+    public function it_tests_is_valid_method_against_invalid_json_files(string $file)
     {
         $this->assertFalse($this->resultClass->isValid(file_get_contents($file)));
     }
@@ -49,7 +60,7 @@ class JsonResultTest extends TestCase
      *
      * @link http://www.json.org/JSON_checker/
      */
-    public function validDataProvider()
+    public function provides_access_to_valid_json_files()
     {
         $directory = new DirectoryIterator(__DIR__ . '/../../../data/json/valid/');
 
@@ -65,7 +76,7 @@ class JsonResultTest extends TestCase
      *
      * @link http://www.json.org/JSON_checker/
      */
-    public function invalidDataProvider()
+    public function provides_access_to_invalid_json_files()
     {
         $directory = new DirectoryIterator(__DIR__ . '/../../../data/json/invalid/');
 

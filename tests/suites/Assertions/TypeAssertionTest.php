@@ -5,12 +5,16 @@ use PHPUnit\Framework\TestCase;
 use OpenWorld\Assertions\TypeAssertion;
 use OpenWorld\Exceptions\InvalidTypeException;
 
+/**
+ * Class TypeAssertionTest
+ */
 class TypeAssertionTest extends TestCase
 {
     /**
-     * @dataProvider provideVariablesWithValidTypes
+     * @test
+     * @dataProvider provides_variables_with_valid_types
      */
-    public function testAssertionValid($variable, $expectedType)
+    public function it_checks_valid_assertions($variable, $expectedType)
     {
         $assertion = new TypeAssertion($expectedType);
 
@@ -18,9 +22,10 @@ class TypeAssertionTest extends TestCase
     }
 
     /**
-     * @dataProvider provideVariablesWithInvalidTypes
+     * @test
+     * @dataProvider provides_variables_with_invalid_types
      */
-    public function testAssertionInvalid($variable, $expectedType)
+    public function it_throws_exceptions_for_invalid_assertions($variable, $expectedType)
     {
         $this->expectException(InvalidTypeException::class);
 
@@ -29,14 +34,20 @@ class TypeAssertionTest extends TestCase
         $assertion->assertSingle($variable);
     }
 
-    public function testAssertMultiple()
+    /**
+     * @test
+     */
+    public function it_check_multiple_valid_assertions()
     {
         $assertion = new TypeAssertion('integer');
 
         $assertion->assertMultiple([1, 0, -1]);
     }
 
-    public function testAssertNotObject()
+    /**
+     * @test
+     */
+    public function it_throws_exception_for_invalid_interface_assertion_with_invalid_object()
     {
         $this->expectException(InvalidTypeException::class);
 
@@ -45,21 +56,20 @@ class TypeAssertionTest extends TestCase
         $assertion->assertSingle(null);
     }
 
-    public function testAssertImplements()
+    /**
+     * @test
+     */
+    public function it_checks_valid_interface_assertion()
     {
         $assertion = new TypeAssertion('OpenWorld\Assertions\Interfaces\AssertionInterface', TypeAssertion::CLASS_IMPLEMENTS_TYPE);
 
         $assertion->assertSingle($assertion);
     }
 
-    public function testAssertUses()
-    {
-        $assertion = new TypeAssertion('OpenWorld\Collections\Traits\ImplementsArray', TypeAssertion::CLASS_USES_TYPE);
-
-        $assertion->assertSingle(new \OpenWorld\Collections\ArrayCollection());
-    }
-
-    public function testAssertNotImplements()
+    /**
+     * @test
+     */
+    public function it_throws_exception_for_invalid_interface_assertion_with_valid_object()
     {
         $this->expectException(InvalidTypeException::class);
 
@@ -68,7 +78,20 @@ class TypeAssertionTest extends TestCase
         $assertion->assertSingle($assertion);
     }
 
-    public function testAssertNotUses()
+    /**
+     * @test
+     */
+    public function it_checks_valid_trait_assertion()
+    {
+        $assertion = new TypeAssertion('OpenWorld\Collections\Traits\ImplementsArray', TypeAssertion::CLASS_USES_TYPE);
+
+        $assertion->assertSingle(new \OpenWorld\Collections\ArrayCollection());
+    }
+
+    /**
+     * @test
+     */
+    public function it_throws_exception_for_invalid_trait_assertion()
     {
         $this->expectException(InvalidTypeException::class);
 
@@ -77,21 +100,30 @@ class TypeAssertionTest extends TestCase
         $assertion->assertSingle(new \OpenWorld\Collections\ArrayCollection());
     }
 
-    public function testAssertInherits()
+    /**
+     * @test
+     */
+    public function it_checks_valid_inheritance_assertion()
     {
         $assertion = new TypeAssertion('OpenWorld\Collections\AssertionStrictCollection', TypeAssertion::CLASS_INHERITS_TYPE);
 
         $assertion->assertSingle(new \OpenWorld\Collections\AssertionStrictCollection(new TypeAssertion('integer')));
     }
 
-    public function testAssertInheritsItself()
+    /**
+     * @test
+     */
+    public function it_checks_valid_self_inheritance()
     {
         $assertion = new TypeAssertion(\OpenWorld\Collections\ArrayCollection::class, TypeAssertion::CLASS_INHERITS_TYPE);
 
         $assertion->assertSingle(new \OpenWorld\Collections\ArrayCollection());
     }
 
-    public function testAssertNotInherits()
+    /**
+     * @test
+     */
+    public function it_throws_exceptions_for_invalid_inheritance()
     {
         $this->expectException(InvalidTypeException::class);
 
@@ -100,38 +132,56 @@ class TypeAssertionTest extends TestCase
         $assertion->assertSingle(new \OpenWorld\Collections\AssertionStrictCollection(new TypeAssertion('integer')));
     }
 
-    public function testClassDoesNotExistThrowsException()
+    /**
+     * @test
+     */
+    public function it_throws_exception_for_non_existent_class_in_strict_mode()
     {
         $this->expectException(InvalidTypeException::class);
 
         $assertion = new TypeAssertion('does not exist', TypeAssertion::CLASS_INHERITS_TYPE | TypeAssertion::CHECK_MODE_PARAMETERS);
     }
 
-    public function testInterfaceDoesNotExistThrowsException()
+    /**
+     * @test
+     */
+    public function it_throws_exception_for_non_existent_interface_in_strict_mode()
     {
         $this->expectException(InvalidTypeException::class);
 
         $assertion = new TypeAssertion('does not exist', TypeAssertion::CLASS_IMPLEMENTS_TYPE | TypeAssertion::CHECK_MODE_PARAMETERS);
     }
 
-    public function testTraitDoesNotExistThrowsException()
+    /**
+     * @test
+     */
+    public function it_throws_exception_for_non_existent_trait_in_strict_mode()
     {
         $this->expectException(InvalidTypeException::class);
 
         $assertion = new TypeAssertion('does not exist', TypeAssertion::CLASS_USES_TYPE | TypeAssertion::CHECK_MODE_PARAMETERS);
     }
 
-    public function testClassDoesNotExistDoesNotThrowException()
+    /**
+     * @test
+     */
+    public function it_does_not_throw_exception_for_non_existent_class_in_soft_mode()
     {
         $assertion = new TypeAssertion('does not exist', TypeAssertion::CLASS_INHERITS_TYPE);
     }
 
-    public function testInterfaceDoesNotExistDoesNotThrowException()
+    /**
+     * @test
+     */
+    public function it_does_not_throw_exception_for_non_existent_interface_in_soft_mode()
     {
         $assertion = new TypeAssertion('does not exist', TypeAssertion::CLASS_IMPLEMENTS_TYPE);
     }
 
-    public function testTraitDoesNotExistDoesNotThrowException()
+    /**
+     * @test
+     */
+    public function it_does_not_throw_exception_for_non_existent_trait_in_soft_mode()
     {
         $assertion = new TypeAssertion('does not exist', TypeAssertion::CLASS_USES_TYPE);
     }
@@ -139,7 +189,7 @@ class TypeAssertionTest extends TestCase
     /**
      * @return array
      */
-    public function provideVariablesWithValidTypes()
+    public function provides_variables_with_valid_types()
     {
         return [
             [3, 'integer'],
@@ -155,7 +205,7 @@ class TypeAssertionTest extends TestCase
     /**
      * @return array
      */
-    public function provideVariablesWithInvalidTypes()
+    public function provides_variables_with_invalid_types()
     {
         return [
             [3, 'not integer'],

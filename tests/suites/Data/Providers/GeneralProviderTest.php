@@ -22,7 +22,10 @@ class GeneralProviderTest extends TestCase
         );
     }
 
-    public function testGetFactory()
+    /**
+     * @test
+     */
+    public function it_checks_get_result_factory_class()
     {
         $this->assertInstanceOf(SourceLoaderResultFactoryInterface::class, $this->provider->getResultFactory());
     }
