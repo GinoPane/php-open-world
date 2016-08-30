@@ -81,6 +81,9 @@ abstract class DataProviderAbstract implements DataProviderInterface {
         return $this->resultClass;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function load(string $uri = '', $condition = null) : SourceLoaderResultInterface
     {
         $result = $this->getResultFactory()->get();
