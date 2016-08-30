@@ -39,8 +39,8 @@ abstract class DataProviderAbstract implements DataProviderInterface {
      */
     public function __construct(SourceLoaderInterface $loader, SourceLoaderResultFactoryInterface $resultClass)
     {
-        $this->loader = $loader;
-        $this->resultClass = $resultClass;
+        $this->setLoader($loader);
+        $this->setResultFactory($resultClass);
     }
 
     /**

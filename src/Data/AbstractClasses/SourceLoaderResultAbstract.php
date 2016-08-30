@@ -9,6 +9,9 @@ use stdClass;
 
 abstract class SourceLoaderResultAbstract implements SourceLoaderResultInterface {
 
+    /**
+     * @var
+     */
     protected $content;
 
     /**
@@ -56,10 +59,7 @@ abstract class SourceLoaderResultAbstract implements SourceLoaderResultInterface
     /**
      * @inheritDoc
      */
-    public function isValid($content) : bool
-    {
-        return true; // @codeCoverageIgnore
-    }
+    abstract public function isValid($content) : bool;
 
     /**
      * Makes sure that $content is valid for this SourceLoaderResultAbstract instance
@@ -71,7 +71,7 @@ abstract class SourceLoaderResultAbstract implements SourceLoaderResultInterface
     protected function assert($content)
     {
         if (!$this->isValid($content)) {
-            throw new InvalidContentException();
+            throw new InvalidContentException(); // @codeCoverageIgnore
         }
     }
 }
