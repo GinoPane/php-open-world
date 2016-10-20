@@ -8,14 +8,26 @@ use DirectoryIterator;
 
 use OpenWorld\Exceptions\FileNotFoundException;
 use OpenWorld\Exceptions\FileNotValidException;
+use OpenWorld\Exceptions\BadDataFileContentsException;
 
 /**
- * Override system function or not
+ * Override system function is_file or not
  */
 $overrideIsFile = false;
 
 /**
- * Mock system function for testing purpose
+ * Override system function is_dir or not
+ */
+$overrideIsDir = false;
+
+/**
+ * Override system function is_readable or not
+ */
+$overrideIsReadable = false;
+
+
+/**
+ * Mock the system function for testing purpose
  *
  * @param $path
  * @return bool
@@ -27,6 +39,38 @@ function is_file($path) {
         return true;
     } else {
         return \is_file($path);
+    }
+}
+
+/**
+ * Mock the system function for testing purpose
+ *
+ * @param $path
+ * @return bool
+ */
+function is_dir($path) {
+    global $overrideIsDir;
+
+    if ($overrideIsDir) {
+        return false;
+    } else {
+        return \is_dir($path);
+    }
+}
+
+/**
+ * Mock the system function for testing purpose
+ *
+ * @param $path
+ * @return bool
+ */
+function is_readable($path) {
+    global $overrideIsReadable;
+
+    if ($overrideIsReadable) {
+        return true;
+    } else {
+        return \is_readable($path);
     }
 }
 
@@ -95,12 +139,14 @@ class FileSourceLoaderTest extends TestCase
     public function it_throws_exception_for_invalid_content()
     {
         //use monkey-patching here to override is_file()
-        global $overrideIsFile;
+        global $overrideIsFile, $overrideIsDir, $overrideIsReadable;
         $overrideIsFile = true;
+        $overrideIsDir = true;
+        $overrideIsReadable = true;
 
-        $this->expectException(FileNotValidException::class);
+        $this->expectException(BadDataFileContentsException::class);
 
-        $this->loader->loadSource(__DIR__);
+        $this->loader->loadSource('non-existent-path');
     }
 
     /**

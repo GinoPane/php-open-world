@@ -3,6 +3,7 @@
 namespace OpenWorld\Data\SourceLoaders;
 
 use OpenWorld\Data\Interfaces\SourceLoaderInterface;
+use OpenWorld\Exceptions\BadDataFileContentsException;
 use OpenWorld\Exceptions\FileNotFoundException;
 use OpenWorld\Exceptions\FileNotValidException;
 
@@ -21,14 +22,14 @@ class FileSourceLoader implements SourceLoaderInterface {
             throw new FileNotFoundException($path);
         }
 
-        if (!is_file($path)) {
+        if (!is_file($path) || is_dir($path)) {
             throw new FileNotValidException($path);
         }
 
         $data = @file_get_contents($path);
 
         if ($data === false) {
-            throw new FileNotValidException($path);
+            throw new BadDataFileContentsException($path, $data);
         }
 
         return $data;

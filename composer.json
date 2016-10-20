@@ -1,5 +1,5 @@
 {
-    "name": "GinoPane/php-open-world",
+    "name": "OpenWorld",
     "type": "library",
     "description": "World's internationalization library. Format currencies, numbers, dates and more in nice and easy way. All data is provided by Unicode Common Locale Data Repository.",
     "keywords": [

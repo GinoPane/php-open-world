@@ -16,7 +16,7 @@
  *
  */
 
-if (version_compare(PHP_VERSION, '5.6.0')) {
+if (version_compare(PHP_VERSION, '5.6.0') > 0) {
     ini_set('default_charset', 'UTF-8');
 } else {
     iconv_set_encoding('input_encoding', 'UTF-8');
