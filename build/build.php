@@ -32,25 +32,59 @@ define('DESTINATION_GENERAL_DIR', DESTINATION_DIR . DIRECTORY_SEPARATOR . 'gener
 define('DESTINATION_LOCALES_DIR', DESTINATION_DIR . DIRECTORY_SEPARATOR . 'locales');
 define('LOCAL_VCS_DIR', SOURCE_DIR . DIRECTORY_SEPARATOR . 'cldr-' . CLDR_VERSION . '-source');
 
-if (isset($argv)) {
-    foreach ($argv as $i => $arg) {
-        if ($i > 0) {
-            if ((strcasecmp($arg, 'debug') === 0) || (strcasecmp($arg, '--debug') === 0)) {
-                define('DEBUG', true);
-            }
-            if ((strcasecmp($arg, 'full') === 0) || (strcasecmp($arg, '--full') === 0)) {
-                define('FULL_JSON', true);
-            }
-            if ((strcasecmp($arg, 'post-clean') === 0) || (strcasecmp($arg, '--post-clean') === 0)) {
-                define('POST_CLEAN', true);
-            }
-        }
+$optionsDefinition = [
+    'debug::',
+    'all-locales::',
+    'post-clean::',
+    'help::'
+];
+
+$options = getopt('', $optionsDefinition);
+
+if ($options) {
+    if (isset($options['help'])) {
+        displayHelp();
+    }
+
+    if (isset($options['debug'])) {
+        define('DEBUG', true);
+    }
+
+    if (isset($options['post-clean'])) {
+        define('POST_CLEAN', true);
+    }
+
+    if (isset($options['all-locales'])) {
+        define('ALL_LOCALES', true);
     }
 }
 
 defined('DEBUG') or define('DEBUG', false);
-defined('FULL_JSON') or define('FULL_JSON', false);
+defined('ALL_LOCALES') or define('ALL_LOCALES', false);
 defined('POST_CLEAN') or define('POST_CLEAN', false);
+
+/**
+ * Display help message and exit
+ */
+function displayHelp()
+{
+    echo <<<HELP
+    
+Basic usage: 
+>> php build.php [options]
+
+It will try to download the latest CLDR sources defined by version used. Do not manually change the version, 
+except you really need it for anything.
+
+Options:
+    --post-clean - try to clean temporary directory after build;
+    --debug - generate readable json files;
+    --all-locales - generate the full list of available locales; by default the most popular languages are processed;
+    --help - display this help.\n\n
+HELP;
+
+    exit(0);
+}
 
 /**
  * Enable/Disable supporting output of some functions
@@ -779,7 +813,7 @@ function handleGeneralTerritoryContainmentData($supplementalData = [])
  */
 function handleGeneralTerritoryMapping($supplementalData = [])
 {
-    echo "Extract territory codes mapping... ";
+    echo "Extract territory codes mapping... \n";
 
     if (!isset($supplementalData['supplementalData']['codeMappings']['territoryCodes'])) {
         throw new Exception('Bad territory codes mapping data!');
@@ -828,7 +862,7 @@ function handleGeneralTerritoryMapping($supplementalData = [])
  */
 function handleGeneralCurrencyMapping($supplementalData = [])
 {
-    echo "Extract currency codes mapping... ";
+    echo "Extract currency codes mapping... \n";
 
     if (!isset($supplementalData['supplementalData']['codeMappings']['currencyCodes'])) {
         throw new Exception('Bad currency codes mapping data!');
@@ -865,7 +899,7 @@ function handleGeneralCurrencyMapping($supplementalData = [])
  */
 function handleGeneralParentLocales($supplementalData = [])
 {
-    echo "Extract parent locales mapping... ";
+    echo "Extract parent locales mapping... \n";
 
     if (!isset($supplementalData['supplementalData']['parentLocales']['parentLocale'])) {
         throw new Exception('Bad parent locales mapping data!');
@@ -893,7 +927,7 @@ function handleGeneralParentLocales($supplementalData = [])
  */
 function handleLanguageAlias($supplementalData = [])
 {
-    echo "Extract language alias mapping... ";
+    echo "Extract language alias mapping... \n";
 
     if (!isset($supplementalData['supplementalData']['metadata']['alias']['languageAlias'])) {
         throw new Exception('Bad language alias data!');
@@ -921,7 +955,7 @@ function handleLanguageAlias($supplementalData = [])
  */
 function handleTerritoryAlias($supplementalData = [])
 {
-    echo "Extract territory alias mapping... ";
+    echo "Extract territory alias mapping... \n";
 
     if (!isset($supplementalData['supplementalData']['metadata']['alias']['territoryAlias'])) {
         throw new Exception('Bad territory alias data!');
@@ -949,7 +983,7 @@ function handleTerritoryAlias($supplementalData = [])
  */
 function handleLikelySubtagsData($supplementalData = [])
 {
-    echo "Extract likely subtags data mapping... ";
+    echo "Extract likely subtags data mapping... \n";
 
     if (!isset($supplementalData['supplementalData']['likelySubtags']['likelySubtag'])) {
         throw new Exception('Bad likely subtags data!');
@@ -1475,7 +1509,7 @@ function buildLocaleSpecificData()
         throw new Exception("No locales found!");
     }
 
-    if (FULL_JSON) {
+    if (ALL_LOCALES) {
         $locales = $availableLocales;
     } else {
         echo "Checking default locales based on statistics of most popular languages... \n";
@@ -1554,7 +1588,7 @@ function buildSupplementalData()
                 processDataFileWithHandlers($fileName, $handlers);
             }
 
-            echo "$dataCategory data was built. \n";
+            echo ucfirst($dataCategory) . " data was built. \n \n";
         }
     }
 }
@@ -1633,9 +1667,31 @@ function deleteFromFilesystem($path)
     }
 }
 
+function cleanUpSourceDirectory()
+{
+    if (POST_CLEAN) {
+        echo "Cleanup temporary data folder... \n";
+        deleteFromFilesystem(SOURCE_DIR);
+        echo "Done.\n";
+    }
+}
+
 set_error_handler('handleError');
 
+$result = [
+    'build'         => 0,
+    'build-status'  => '',
+    'build-date'    => date('Y-m-d H:i:s'),
+    'cldr-version'  => CLDR_VERSION,
+    'locales'       => [
+        'full-list'     => ALL_LOCALES == true,
+        'count'         => 0,
+        'available'     => 0
+    ]
+];
+
 try {
+
     echo "Initializing...\n";
 
     handleCreateDirectory(SOURCE_DIR);
@@ -1656,24 +1712,12 @@ try {
 
     buildCLDRJson();
 
-    if (POST_CLEAN) {
-        echo "Cleanup temporary data folder... \n";
-        deleteFromFilesystem(SOURCE_DIR);
-        echo "Done.\n";
-    }
-    die(0);
 } catch (Exception $x) {
+
     deleteFromFilesystem(DESTINATION_DIR);
 
     echo $x->getMessage(), "\n";
 
-    if (POST_CLEAN) {
-        echo "Cleanup generated data folder... ";
-        deleteFromFilesystem(SOURCE_DIR);
-        echo "Done.\n";
-    } else {
-        echo "Some data files probably were not generated. Check \"" . DESTINATION_DIR . "\" folder.\n";
-    }
-
-    die(1);
+} finally {
+    cleanUpSourceDirectory();
 }
