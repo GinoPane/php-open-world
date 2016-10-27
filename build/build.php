@@ -24,19 +24,19 @@ if (version_compare(PHP_VERSION, '5.6.0') > 0) {
     iconv_set_encoding('internal_encoding', 'UTF-8');
 }
 
-define('CLDR_VERSION', '30');
 define('ROOT_DIR', dirname(__DIR__));
 define('SOURCE_DIR', ROOT_DIR . DIRECTORY_SEPARATOR . 'build' . DIRECTORY_SEPARATOR . 'temp');
 define('DESTINATION_DIR', ROOT_DIR . DIRECTORY_SEPARATOR . 'data');
+define('DESTINATION_DATA_STATUS_FILE', DESTINATION_DIR . DIRECTORY_SEPARATOR . 'status.json');
 define('DESTINATION_GENERAL_DIR', DESTINATION_DIR . DIRECTORY_SEPARATOR . 'general');
 define('DESTINATION_LOCALES_DIR', DESTINATION_DIR . DIRECTORY_SEPARATOR . 'locales');
-define('LOCAL_VCS_DIR', SOURCE_DIR . DIRECTORY_SEPARATOR . 'cldr-' . CLDR_VERSION . '-source');
 
 $optionsDefinition = [
     'debug::',
     'all-locales::',
     'post-clean::',
-    'help::'
+    'help::',
+    'cldr-version::'
 ];
 
 $options = getopt('', $optionsDefinition);
@@ -57,10 +57,17 @@ if ($options) {
     if (isset($options['all-locales'])) {
         define('ALL_LOCALES', true);
     }
+
+    if (!empty($options['cldr-version'])) {
+        define('CLDR_VERSION', $options['cldr-version']);
+    }
 }
 
+defined('CLDR_VERSION') or define('CLDR_VERSION', '30');
+define('LOCAL_VCS_DIR', SOURCE_DIR . DIRECTORY_SEPARATOR . 'cldr-' . CLDR_VERSION . '-source');
+
 defined('DEBUG') or define('DEBUG', false);
-defined('ALL_LOCALES') or define('ALL_LOCALES', false);
+defined('ALL_LOCALES')  or define('ALL_LOCALES', false);
 defined('POST_CLEAN') or define('POST_CLEAN', false);
 
 /**
@@ -77,6 +84,7 @@ It will try to download the latest CLDR sources defined by version used. Do not 
 except you really need it for anything.
 
 Options:
+    --cldr-version - override CLDR version
     --post-clean - try to clean temporary directory after build;
     --debug - generate readable json files;
     --all-locales - generate the full list of available locales; by default the most popular languages are processed;
@@ -579,7 +587,7 @@ function handleCldrCheckoutError($directory, $code, $output)
  * @return bool
  * @throws Exception
  */
-function handleCreateDirectory($directory = "")
+function createDirectory($directory = "")
 {
     if (outputEnabled()) {
         echo "Creating \"$directory\" folder... ";
@@ -628,6 +636,8 @@ function handleGeneralCurrencyData($supplementalData = [])
         echo "Done.\n";
 
         saveJsonFile($fractions, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'currency.fractions.json');
+
+        putSupplementalFileToFileList('currency.fractions.json');
     }
 
     echo "Extract currency regions data... ";
@@ -672,6 +682,8 @@ function handleGeneralCurrencyData($supplementalData = [])
         echo "Done.\n";
 
         saveJsonFile($regions, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'territory.currencies.json');
+
+        putSupplementalFileToFileList('territory.currencies.json');
     }
 }
 
@@ -750,6 +762,9 @@ function handleGeneralTerritoryInfoData($supplementalData = [])
 
         saveJsonFile($territories, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'territory.info.json');
         saveJsonFile($languageInfo, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'language.territories.json');
+
+        putSupplementalFileToFileList('territory.info.json');
+        putSupplementalFileToFileList('language.territories.json');
     }
 }
 
@@ -800,6 +815,7 @@ function handleGeneralTerritoryContainmentData($supplementalData = [])
         ];
 
         saveJsonFile($territories, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'territory.containment.json', JSON_FORCE_OBJECT);
+        putSupplementalFileToFileList('territory.containment.json');
 
         echo "Done.\n";
     }
@@ -849,6 +865,7 @@ function handleGeneralTerritoryMapping($supplementalData = [])
         ];
 
         saveJsonFile($territoryCodes, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'territory.codes.json');
+        putSupplementalFileToFileList('territory.codes.json');
 
         echo "Done.\n";
     }
@@ -886,6 +903,7 @@ function handleGeneralCurrencyMapping($supplementalData = [])
         ];
 
         saveJsonFile($currencyCodes, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'currency.codes.json');
+        putSupplementalFileToFileList('currency.codes.json');
 
         echo "Done.\n";
     }
@@ -914,6 +932,7 @@ function handleGeneralParentLocales($supplementalData = [])
         }
 
         saveJsonFile($localeParents, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'locale.parents.json');
+        putSupplementalFileToFileList('locale.parents.json');
 
         echo "Done.\n";
     }
@@ -942,6 +961,7 @@ function handleLanguageAlias($supplementalData = [])
         }
 
         saveJsonFile($languageAlias, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'language.alias.json');
+        putSupplementalFileToFileList('language.alias.json');
 
         echo "Done.\n";
     }
@@ -970,6 +990,7 @@ function handleTerritoryAlias($supplementalData = [])
         }
 
         saveJsonFile($territoryAlias, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'territory.alias.json');
+        putSupplementalFileToFileList('territory.alias.json');
 
         echo "Done.\n";
     }
@@ -1001,6 +1022,7 @@ function handleLikelySubtagsData($supplementalData = [])
         }
 
         saveJsonFile($likelySubtags, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'likely.subtags.json');
+        putSupplementalFileToFileList('likely.subtags.json');
 
         echo "Done.\n";
     }
@@ -1025,6 +1047,7 @@ function handleNumberingSystemsData($numbersData = [])
             if (!empty($system['@attributes'])) {
                 $systemCode = $system['@attributes']['id'];
 
+
                 unset($system['@attributes']['id']);
 
                 if (isset($system['@attributes']['digits'])) {
@@ -1038,6 +1061,7 @@ function handleNumberingSystemsData($numbersData = [])
         }
 
         saveJsonFile($numberingSystems, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'number.systems.json', JSON_FORCE_OBJECT);
+        putSupplementalFileToFileList('number.systems.json');
 
         echo "Done.\n";
     }
@@ -1076,9 +1100,9 @@ function handleSingleLocaleDataIdentity($identityData = [], $destinationDir = ""
  *
  * @param array $currenciesData
  * @param string $destinationDir
- * @throws Exception
+ * @param string $fileName
  */
-function handleSingleLocaleDataCurrencies($currenciesData = [], $destinationDir = "")
+function handleSingleLocaleDataCurrencies($currenciesData = [], $destinationDir = "", $fileName = "")
 {
     $currencies = [];
 
@@ -1151,7 +1175,7 @@ function handleSingleLocaleDataCurrencies($currenciesData = [], $destinationDir 
         $handleSingleCurrency($currenciesData, $currencies);
     }
 
-    saveJsonFile($currencies, $destinationDir . DIRECTORY_SEPARATOR . 'currency.names.json', JSON_FORCE_OBJECT);
+    saveJsonFile($currencies, $destinationDir . DIRECTORY_SEPARATOR . $fileName, JSON_FORCE_OBJECT);
 }
 
 /**
@@ -1159,9 +1183,9 @@ function handleSingleLocaleDataCurrencies($currenciesData = [], $destinationDir 
  *
  * @param array $symbolsData
  * @param string $destinationDir
- * @throws Exception
+ * @param string $fileName
  */
-function handleSingleLocaleDataSymbols($symbolsData = [], $destinationDir = "")
+function handleSingleLocaleDataSymbols($symbolsData = [], $destinationDir = "", $fileName = "")
 {
     $handleSingleNumberingSystem = function ($symbolsData, &$symbols) {
         if (isset($symbolsData['@attributes']['numberSystem'])) {
@@ -1212,7 +1236,7 @@ function handleSingleLocaleDataSymbols($symbolsData = [], $destinationDir = "")
         }
     }
 
-    saveJsonFile($symbols, $destinationDir . DIRECTORY_SEPARATOR . 'number.symbols.json', JSON_FORCE_OBJECT);
+    saveJsonFile($symbols, $destinationDir . DIRECTORY_SEPARATOR . $fileName, JSON_FORCE_OBJECT);
 }
 
 /**
@@ -1220,9 +1244,9 @@ function handleSingleLocaleDataSymbols($symbolsData = [], $destinationDir = "")
  *
  * @param array $formatsData
  * @param string $destinationDir
- * @throws Exception
+ * @param string $fileName
  */
-function handleSingleLocaleDataCurrencyFormats($formatsData = [], $destinationDir = "")
+function handleSingleLocaleDataCurrencyFormats($formatsData = [], $destinationDir = "", $fileName = "")
 {
     $handleSingleNumberingSystemCurrencyFormat = function ($formatData, &$currencyFormats) {
         $handleSingleCurrencyFormatLength = function ($currencyFormatLength, &$numberingSystemCurrencyFormats) {
@@ -1297,7 +1321,7 @@ function handleSingleLocaleDataCurrencyFormats($formatsData = [], $destinationDi
         }
     }
 
-    saveJsonFile($currencyFormats, $destinationDir . DIRECTORY_SEPARATOR . 'number.currencies.json', JSON_FORCE_OBJECT);
+    saveJsonFile($currencyFormats, $destinationDir . DIRECTORY_SEPARATOR . $fileName, JSON_FORCE_OBJECT);
 }
 
 /**
@@ -1353,31 +1377,37 @@ function handleSingleLocaleData($locale, $localeFile)
 
         $localeDirectory = DESTINATION_LOCALES_DIR . DIRECTORY_SEPARATOR . $locale;
 
-        if (handleCreateDirectory($localeDirectory)) {
+        if (createDirectory($localeDirectory)) {
             handleSingleLocaleDataIdentity($localeData['ldml']['identity'], $localeDirectory);
 
             if (isset($localeData['ldml']['localeDisplayNames']['territories']['territory'])) {
                 handleSingleLocaleDataSimpleNames('territory', $localeData['ldml']['localeDisplayNames']['territories']['territory'], $localeDirectory, 'territory.names.json');
+                putLocaleFileToFileList($locale, 'territory.names.json');
             }
 
             if (isset($localeData['ldml']['localeDisplayNames']['languages']['language'])) {
                 handleSingleLocaleDataSimpleNames('language', $localeData['ldml']['localeDisplayNames']['languages']['language'], $localeDirectory, 'language.names.json');
+                putLocaleFileToFileList($locale, 'language.names.json');
             }
 
             if (isset($localeData['ldml']['localeDisplayNames']['scripts']['script'])) {
                 handleSingleLocaleDataSimpleNames('script', $localeData['ldml']['localeDisplayNames']['scripts']['script'], $localeDirectory, 'script.names.json');
+                putLocaleFileToFileList($locale, 'script.names.json');
             }
 
             if (isset($localeData['ldml']['numbers']['currencies']['currency'])) {
-                handleSingleLocaleDataCurrencies($localeData['ldml']['numbers']['currencies']['currency'], $localeDirectory);
+                handleSingleLocaleDataCurrencies($localeData['ldml']['numbers']['currencies']['currency'], $localeDirectory, 'currency.names.json');
+                putLocaleFileToFileList($locale, 'currency.names.json');
             }
 
             if (isset($localeData['ldml']['numbers']['symbols'])) {
-                handleSingleLocaleDataSymbols($localeData['ldml']['numbers']['symbols'], $localeDirectory);
+                handleSingleLocaleDataSymbols($localeData['ldml']['numbers']['symbols'], $localeDirectory, 'number.symbols.json');
+                putLocaleFileToFileList($locale, 'number.symbols.json');
             }
 
             if (isset($localeData['ldml']['numbers']['currencyFormats'])) {
-                handleSingleLocaleDataCurrencyFormats($localeData['ldml']['numbers']['currencyFormats'], $localeDirectory);
+                handleSingleLocaleDataCurrencyFormats($localeData['ldml']['numbers']['currencyFormats'], $localeDirectory, 'number.currencies.json');
+                putLocaleFileToFileList($locale, 'number.currencies.json');
             }
         }
 
@@ -1387,13 +1417,12 @@ function handleSingleLocaleData($locale, $localeFile)
 }
 
 /**
- * Read an xml file and get its contents as array
+ * Check file name existance and readability
  *
  * @param $fileName
- * @return array
  * @throws Exception
  */
-function getXmlDataFileContentsAsArray($fileName) : array
+function validateFilePath($fileName)
 {
     if (outputEnabled()) {
         echo "Checking \"$fileName\"...\n";
@@ -1406,6 +1435,18 @@ function getXmlDataFileContentsAsArray($fileName) : array
     if (outputEnabled()) {
         echo "File is available. Processing...\n";
     }
+}
+
+/**
+ * Read an xml file and get its contents as array
+ *
+ * @param $fileName
+ * @return array
+ * @throws Exception
+ */
+function getXmlDataFileContentsAsArray($fileName) : array
+{
+    validateFilePath($fileName);
 
     return XmlWrapper::getParser()->xmlToArray($fileName);
 }
@@ -1529,6 +1570,7 @@ function buildLocaleSpecificData()
     $overallCount = count($locales);
 
     echo $overallCount . " locales available (including root).\n";
+    setLocaleCountForResult($overallCount, count($availableLocales));
 
     disableOutput();
 
@@ -1606,6 +1648,20 @@ function buildCLDRJson()
 }
 
 /**
+ * Read a json file and get its contents as array
+ *
+ * @param $fileName
+ * @return array
+ * @throws Exception
+ */
+function getJsonDataFileContentsAsArray($fileName) : array
+{
+    validateFilePath($fileName);
+
+    return json_decode(file_get_contents($fileName), true);
+}
+
+/**
  * Put data into a json file
  *
  * @param $data
@@ -1667,6 +1723,9 @@ function deleteFromFilesystem($path)
     }
 }
 
+/**
+ * Clean-up sources directory after build
+ */
 function cleanUpSourceDirectory()
 {
     if (POST_CLEAN) {
@@ -1676,35 +1735,138 @@ function cleanUpSourceDirectory()
     }
 }
 
+/**
+ * Clean-up destination directory before build
+ */
+function cleanUpDestinationDirectory()
+{
+    if (is_dir(DESTINATION_GENERAL_DIR)) {
+        echo "Cleanup old general data folder... ";
+        deleteFromFilesystem(DESTINATION_DIR);
+        echo "Done.\n";
+    }
+}
+
 set_error_handler('handleError');
 
+/**
+ * @var array Build result report
+ */
 $result = [
-    'build'         => 0,
-    'build-status'  => '',
-    'build-date'    => date('Y-m-d H:i:s'),
-    'cldr-version'  => CLDR_VERSION,
-    'locales'       => [
-        'full-list'     => ALL_LOCALES == true,
-        'count'         => 0,
-        'available'     => 0
+    'build'             => 0,
+    'status'            => 'initial',
+    'error'             => 'none',
+    'date'              => date('Y-m-d H:i:s'),
+    'build-time'        => 0,
+    'cldr-version'      => CLDR_VERSION,
+    'data'              => [
+        'locales'           => [
+            'count'     => [
+                'build'     => 0,
+                'overall'   => 0
+            ],
+            'file-list' => [
+
+            ]
+        ],
+        'supplemental'      => [
+            'file-list' => [
+
+            ]
+        ]
+    ],
+
+    'previous-build'    => [
+        'status'    => '',
+        'date'      => '',
     ]
 ];
+
+/**
+ *
+ */
+function readBuildStatus()
+{
+    global $result;
+
+    try {
+        $previousResult = getJsonDataFileContentsAsArray(DESTINATION_DATA_STATUS_FILE);
+    } catch(Exception $e) {
+         //shouldn't do anything here
+    } finally {
+        if (!empty($previousResult)) {
+            //increase build number
+            $result['build'] = (int)($previousResult['build'] ?? 0) + 1;
+
+            //start timer
+            $result['build-time'] = microtime(true);
+
+            //save previous build info
+            $result['previous-build']['status'] = $previousResult['status'] ?? '';
+            $result['previous-build']['date'] = $previousResult['date'] ?? '';
+        }
+    }
+
+}
+
+/**
+ *
+ */
+function saveBuildStatus()
+{
+    global $result;
+
+    //stop timer, get time
+    $result['build-time'] = microtime(true) - $result['build-time'];
+
+    saveJsonFile($result, DESTINATION_DATA_STATUS_FILE, JSON_PRETTY_PRINT);
+}
+
+/**
+ * @param int $buildCount
+ * @param int $overallCount
+ */
+function setLocaleCountForResult(int $buildCount, int $overallCount)
+{
+    global $result;
+
+    $result['data']['locales']['count']['build'] = $buildCount;
+    $result['data']['locales']['count']['overall'] = $overallCount;
+}
+
+/**
+ * @param string $fileName
+ */
+function putSupplementalFileToFileList(string $fileName)
+{
+    global $result;
+
+    $result['data']['supplemental']['file-list'][] = $fileName;
+}
+
+/**
+ * @param string $locale
+ * @param string $fileName
+ */
+function putLocaleFileToFileList(string $locale, string $fileName)
+{
+    global $result;
+
+    $result['data']['locales']['file-list'][$locale][] = $fileName;
+}
 
 try {
 
     echo "Initializing...\n";
 
-    handleCreateDirectory(SOURCE_DIR);
+    readBuildStatus();
 
-    if (is_dir(DESTINATION_DIR)) {
-        echo "Cleanup old data folder... ";
-        deleteFromFilesystem(DESTINATION_DIR);
-        echo "Done.\n";
-    }
+    cleanUpDestinationDirectory();
 
-    handleCreateDirectory(DESTINATION_DIR);
-    handleCreateDirectory(DESTINATION_GENERAL_DIR);
-    handleCreateDirectory(DESTINATION_LOCALES_DIR);
+    createDirectory(SOURCE_DIR);
+    createDirectory(DESTINATION_DIR);
+    createDirectory(DESTINATION_GENERAL_DIR);
+    createDirectory(DESTINATION_LOCALES_DIR);
 
     if (!is_dir(LOCAL_VCS_DIR)) {
         checkoutCLDR();
@@ -1712,12 +1874,28 @@ try {
 
     buildCLDRJson();
 
-} catch (Exception $x) {
+    $result['status'] = 'success';
 
-    deleteFromFilesystem(DESTINATION_DIR);
+} catch (Exception $exception) {
 
-    echo $x->getMessage(), "\n";
+    deleteFromFilesystem(DESTINATION_GENERAL_DIR);
+    deleteFromFilesystem(DESTINATION_LOCALES_DIR);
+
+    echo $exception->getMessage(), "\n";
+
+    $result['status'] = 'failure';
+    $result['error'] = $exception->getMessage();
 
 } finally {
+
     cleanUpSourceDirectory();
+
+    saveBuildStatus();
+
+    if ($result['status'] !== 'success') {
+        exit(1);
+    }
+
+    exit(0);
+
 }
