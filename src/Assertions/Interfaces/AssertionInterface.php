@@ -31,5 +31,4 @@ interface AssertionInterface
      * @throws \Exception
      */
     public function assertMultiple(array $items = []);
-
 }

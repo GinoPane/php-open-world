@@ -2,7 +2,8 @@
 
 namespace OpenWorld\Data\Interfaces;
 
-interface DataProviderInterface {
+interface DataProviderInterface
+{
 
     /**
      * @param string $uri Path to the resource to load
@@ -18,5 +19,4 @@ interface DataProviderInterface {
      * @return bool
      */
     public function accept(string $condition = '') : bool;
-
 }

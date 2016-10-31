@@ -5,7 +5,8 @@ namespace OpenWorld\Data\Providers;
 use OpenWorld\Data\AbstractClasses\DataProviderAbstract;
 use OpenWorld\Data\Interfaces\SourceLoaderResultInterface;
 
-class LocaleProvider extends DataProviderAbstract {
+class LocaleProvider extends DataProviderAbstract
+{
 
     public function load(string $uri = '', $condition = null) : SourceLoaderResultInterface
     {
@@ -18,5 +19,4 @@ class LocaleProvider extends DataProviderAbstract {
     {
         // TODO: Implement accept() method.
     }
-
 }

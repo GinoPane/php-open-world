@@ -9,13 +9,13 @@ use OpenWorld\Exceptions\FileNotValidException;
 
 /**
  * Class FileSourceLoader
- * 
+ *
  * Provides a method for loading json data files.
- * 
+ *
  * @package OpenWorld\Data\Loaders
  */
-class FileSourceLoader implements SourceLoaderInterface {
-
+class FileSourceLoader implements SourceLoaderInterface
+{
     public function loadSource(string $path) : string
     {
         if (!is_readable($path)) {

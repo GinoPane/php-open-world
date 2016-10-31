@@ -8,8 +8,8 @@ use OpenWorld\Data\Interfaces\DataSourceInterface;
 use OpenWorld\Data\Interfaces\DataProviderInterface;
 use OpenWorld\Collections\Interfaces\CollectionInterface;
 
-
-class DataSource implements DataSourceInterface {
+class DataSource implements DataSourceInterface
+{
 
     /**
      * Providers registered for current DataSource

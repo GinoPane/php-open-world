@@ -7,7 +7,8 @@ use OpenWorld\Exceptions\InvalidContentException;
 use OpenWorld\Exceptions\NotImplementedException;
 use stdClass;
 
-abstract class SourceLoaderResultAbstract implements SourceLoaderResultInterface {
+abstract class SourceLoaderResultAbstract implements SourceLoaderResultInterface
+{
 
     /**
      * @var

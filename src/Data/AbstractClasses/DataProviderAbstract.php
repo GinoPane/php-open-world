@@ -2,9 +2,10 @@
 
 namespace OpenWorld\Data\AbstractClasses;
 
-use OpenWorld\Data\Interfaces\{
-    DataProviderInterface, SourceLoaderInterface, SourceLoaderResultFactoryInterface, SourceLoaderResultInterface
-};
+use OpenWorld\Data\Interfaces\DataProviderInterface;
+use OpenWorld\Data\Interfaces\SourceLoaderInterface;
+use OpenWorld\Data\Interfaces\SourceLoaderResultFactoryInterface;
+use OpenWorld\Data\Interfaces\SourceLoaderResultInterface;
 
 /**
  * Class ProviderAbstract
@@ -13,7 +14,8 @@ use OpenWorld\Data\Interfaces\{
  *
  * @package OpenWorld\Data\AbstractClasses
  */
-abstract class DataProviderAbstract implements DataProviderInterface {
+abstract class DataProviderAbstract implements DataProviderInterface
+{
 
     /**
      * Source loader instance.

@@ -16,19 +16,19 @@ class ValueNotInListException extends ExceptionAbstract
     protected $value;
 
     protected $allowedValues;
-    
+
     /**
      * Initializes the instance.
      *
      * @param string $value The invalid value
-     * @param array<string|numeric> $allowedValues The list of valid values
+     * @param array <string|numeric> $allowedValues The list of valid values
      */
     public function __construct(string $value, array $allowedValues)
     {
         $this->value = $value;
         $this->allowedValues = $allowedValues;
 
-        $message = "'$value' is not valid. Acceptable values are: '".implode("', '", $allowedValues)."'";
+        $message = "'$value' is not valid. Acceptable values are: '" . implode("', '", $allowedValues) . "'";
 
         parent::__construct($message);
     }

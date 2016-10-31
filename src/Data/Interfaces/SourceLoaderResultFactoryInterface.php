@@ -9,7 +9,8 @@ namespace OpenWorld\Data\Interfaces;
  *
  * @package OpenWorld\Data\Interfaces
  */
-interface SourceLoaderResultFactoryInterface {
+interface SourceLoaderResultFactoryInterface
+{
 
     /**
      * Get new SourceLoaderResultInterface instance.
@@ -17,5 +18,4 @@ interface SourceLoaderResultFactoryInterface {
      * @return SourceLoaderResultInterface
      */
     public static function get(): SourceLoaderResultInterface;
-
 }

@@ -1,5 +1,6 @@
 <?php
 
+//for monkey-patching
 namespace OpenWorld\Data\SourceLoaders;
 
 use PHPUnit\Framework\TestCase;

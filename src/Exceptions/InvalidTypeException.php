@@ -22,7 +22,7 @@ class InvalidTypeException extends ExceptionAbstract
      * @var string
      */
     protected $allowedType;
-    
+
     /**
      * Initializes the instance.
      *

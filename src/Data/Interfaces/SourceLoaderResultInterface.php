@@ -4,7 +4,8 @@ namespace OpenWorld\Data\Interfaces;
 
 use stdClass;
 
-interface SourceLoaderResultInterface {
+interface SourceLoaderResultInterface
+{
 
     /**
      * Get result data as string
@@ -51,5 +52,4 @@ interface SourceLoaderResultInterface {
      * @return bool
      */
     public function isValid($content) : bool;
-
 }

@@ -2,7 +2,10 @@
 
 namespace OpenWorld\Collections\Interfaces;
 
-use ArrayAccess, Closure, Countable, IteratorAggregate;
+use ArrayAccess;
+use Closure;
+use Countable;
+use IteratorAggregate;
 
 interface CollectionInterface extends Countable, IteratorAggregate, ArrayAccess
 {
@@ -95,8 +98,8 @@ interface CollectionInterface extends Countable, IteratorAggregate, ArrayAccess
     /**
      * Sets an element in the collection at the specified key/index.
      *
-     * @param string|integer $key   The key/index of the element to set.
-     * @param mixed          $value The element to set.
+     * @param string|integer $key The key/index of the element to set.
+     * @param mixed $value The element to set.
      *
      * @return void
      */

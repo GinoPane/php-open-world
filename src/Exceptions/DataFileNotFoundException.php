@@ -16,7 +16,7 @@ class DataFileNotFoundException extends ExceptionAbstract
     protected $identifier;
 
     protected $locale;
-    
+
     protected $fallbackLocale;
 
     /**
@@ -41,7 +41,8 @@ class DataFileNotFoundException extends ExceptionAbstract
             if (!strcasecmp($locale, $fallbackLocale)) {
                 $message = "Unable to find the data file '$identifier' for '$locale'";
             } else {
-                $message = "Unable to find the data file '$identifier', neither for '$locale' nor for '$fallbackLocale'";
+                $message = "Unable to find the data file '$identifier', 
+                neither for '$locale' nor for '$fallbackLocale'";
             }
         }
         parent::__construct($message);

@@ -2,8 +2,8 @@
 
 namespace OpenWorld\Data\Interfaces;
 
-interface SourceLoaderInterface {
+interface SourceLoaderInterface
+{
 
     public function loadSource(string $path) : string;
-
 }

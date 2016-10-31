@@ -12,13 +12,13 @@
 >
 	<testsuites>
         <testsuite name="Assertions tests">
-            <directory>./tests/suites/assertions/</directory>
+            <directory>./tests/suites/Assertions/</directory>
         </testsuite>
         <testsuite name="Collections tests">
-            <directory>./tests/suites/collections/</directory>
+            <directory>./tests/suites/Collections/</directory>
         </testsuite>
-		 <testsuite name="Data tests">
-			<directory>./tests/suites/data/</directory>
+        <testsuite name="Data tests">
+			<directory>./tests/suites/Data/</directory>
 		</testsuite>
         <!--<testsuite name="Territory tests">
               <directory>./tests/suites/territory/</directory>

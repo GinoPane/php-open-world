@@ -8,12 +8,13 @@ use stdClass;
 
 /**
  * Class JsonResult
- * 
+ *
  * Provides access to loaded json data.
- * 
+ *
  * @package OpenWorld\Data\SourceLoaderResults
  */
-class JsonResult extends SourceLoaderResultAbstract {
+class JsonResult extends SourceLoaderResultAbstract
+{
 
     /**
      * @inheritdoc

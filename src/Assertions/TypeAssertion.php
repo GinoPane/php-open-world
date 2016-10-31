@@ -18,7 +18,7 @@ class TypeAssertion implements AssertionInterface
     /**
      * Specified type is a class, that must be extended or instantiated
      */
-    const CLASS_INHERITS_TYPE   = 1;
+    const CLASS_INHERITS_TYPE = 1;
 
     /**
      * Specified type is an interface, that must be implemented
@@ -28,7 +28,7 @@ class TypeAssertion implements AssertionInterface
     /**
      * Specified type is a trait, that must be used
      */
-    const CLASS_USES_TYPE       = 4;
+    const CLASS_USES_TYPE = 4;
 
     /**
      * Whether to allow non-existing/invalid classes/interfaces/traits to be used
@@ -121,7 +121,7 @@ class TypeAssertion implements AssertionInterface
      */
     public function assertMultiple(array $items = [])
     {
-        foreach($items as $item) {
+        foreach ($items as $item) {
             $this->assertSingle($item);
         }
     }
@@ -141,8 +141,8 @@ class TypeAssertion implements AssertionInterface
         }
 
         return [
-            'result'        => $result,
-            'actualType'    => $itemType
+            'result' => $result,
+            'actualType' => $itemType
         ];
     }
 
@@ -160,9 +160,9 @@ class TypeAssertion implements AssertionInterface
         }
 
         return [
-            'result'        => $result,
-            'actualType'    => $actualClasses ? implode(", ", $actualClasses) : 'nothing',
-            'message'       => $message
+            'result' => $result,
+            'actualType' => $actualClasses ? implode(", ", $actualClasses) : 'nothing',
+            'message' => $message
         ];
     }
 
@@ -180,9 +180,9 @@ class TypeAssertion implements AssertionInterface
         }
 
         return [
-            'result'        => $result,
-            'actualType'    => $actualTraits ? implode(", ", $actualTraits) : 'nothing',
-            'message'       => $message
+            'result' => $result,
+            'actualType' => $actualTraits ? implode(", ", $actualTraits) : 'nothing',
+            'message' => $message
         ];
     }
 
@@ -200,9 +200,9 @@ class TypeAssertion implements AssertionInterface
         }
 
         return [
-            'result'        => $result,
-            'actualType'    => $actualInterfaces ? implode(", ", $actualInterfaces) : 'nothing',
-            'message'       => $message
+            'result' => $result,
+            'actualType' => $actualInterfaces ? implode(", ", $actualInterfaces) : 'nothing',
+            'message' => $message
         ];
     }
 

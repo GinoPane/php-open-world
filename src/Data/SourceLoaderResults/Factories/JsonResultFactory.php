@@ -8,12 +8,13 @@ use OpenWorld\Data\Interfaces\SourceLoaderResultInterface;
 
 /**
  * Class JsonResultFactory
- * 
+ *
  * Returns new JsonSourceLoaderResults instances.
- * 
+ *
  * @package OpenWorld\Data\SourceLoaderResults\Factories
  */
-class JsonResultFactory implements SourceLoaderResultFactoryInterface {
+class JsonResultFactory implements SourceLoaderResultFactoryInterface
+{
 
     /**
      * Creates new JsonResult instances.
@@ -24,5 +25,4 @@ class JsonResultFactory implements SourceLoaderResultFactoryInterface {
     {
         return new JsonResult();
     }
-    
 }
