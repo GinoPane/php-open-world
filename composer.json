@@ -1,5 +1,5 @@
 {
-    "name": "GinoPane/php-open-world",
+    "name": "OpenWorld",
     "type": "library",
     "description": "World's internationalization library. Format currencies, numbers, dates and more in nice and easy way. All data is provided by Unicode Common Locale Data Repository.",
     "keywords": [
@@ -18,17 +18,21 @@
     "authors": [
         {
             "name": "Sergey <Gino Pane> Karavay",
-            "homepage": "",
+            "homepage": "http://sergey.karavay.name",
             "email": "sergey.karavay@gmail.com",
             "role": "Developer"
         }
     ],
     "require": {
-        "php": ">=5.3.0"
+        "php": "^7.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "5.*",
+        "squizlabs/php_codesniffer": "2.*"
     },
     "autoload": {
         "psr-4": {
-            "GinoPane\\OpenWorld\\": "src/"
+            "OpenWorld\\": "src/"
         }
     },
     "bin": [

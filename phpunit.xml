@@ -1,0 +1,49 @@
+<phpunit
+        colors="true"
+        bootstrap="./tests/bootstrap.php"
+        convertErrorsToExceptions="true"
+        convertNoticesToExceptions="true"
+        convertWarningsToExceptions="true"
+        stopOnError="false"
+        stopOnFailure="false"
+        stopOnIncomplete="false"
+        stopOnSkipped="false"
+        stopOnRisky="false"
+>
+	<testsuites>
+        <testsuite name="Assertions tests">
+            <directory>./tests/suites/Assertions/</directory>
+        </testsuite>
+        <testsuite name="Collections tests">
+            <directory>./tests/suites/Collections/</directory>
+        </testsuite>
+        <testsuite name="Data tests">
+			<directory>./tests/suites/Data/</directory>
+		</testsuite>
+        <!--<testsuite name="Territory tests">
+              <directory>./tests/suites/territory/</directory>
+          </testsuite>
+          <testsuite name="Number tests">
+              <directory>./tests/suites/number/</directory>
+          </testsuite>
+          <testsuite name="Currency tests">
+              <directory>./tests/suites/currency/</directory>
+          </testsuite>-->
+	</testsuites>
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="false">
+            <directory suffix=".php">./src/collections/</directory>
+            <directory suffix=".php">./src/assertions/</directory>
+            <directory suffix=".php">./src/data/</directory>
+        </whitelist>
+    </filter>
+    <logging>
+        <log type="coverage-html"
+             target="./tests/output/coverage/html"
+             lowUpperBound="35"
+             highLowerBound="70"/>
+        <log type="coverage-text"
+             target="php://stdout"
+             showUncoveredFiles="true"/>
+    </logging>
+</phpunit>

@@ -1,2 +1,10 @@
-/build/temp
-composer.lock
+# IDE specific
+.idea/
+
+# Project specific
+vendor/
+build/temp/
+data/
+
+# OS specific
+.DS_Store
