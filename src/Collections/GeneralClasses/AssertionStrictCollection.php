@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenWorld\Collections;
+namespace OpenWorld\Collections\GeneralClasses;
 
 use Closure;
 use OpenWorld\Assertions\Interfaces\AssertionInterface;

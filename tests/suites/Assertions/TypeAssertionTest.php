@@ -2,8 +2,10 @@
 
 use PHPUnit\Framework\TestCase;
 
-use OpenWorld\Assertions\TypeAssertion;
+use OpenWorld\Assertions\GeneralClasses\TypeAssertion;
 use OpenWorld\Exceptions\InvalidTypeException;
+use OpenWorld\Collections\GeneralClasses\ArrayCollection;
+use OpenWorld\Collections\GeneralClasses\AssertionStrictCollection;
 
 /**
  * Class TypeAssertionTest
@@ -85,7 +87,7 @@ class TypeAssertionTest extends TestCase
     {
         $assertion = new TypeAssertion('OpenWorld\Collections\Traits\ImplementsArray', TypeAssertion::CLASS_USES_TYPE);
 
-        $assertion->assertSingle(new \OpenWorld\Collections\ArrayCollection());
+        $assertion->assertSingle(new ArrayCollection());
     }
 
     /**
@@ -97,17 +99,17 @@ class TypeAssertionTest extends TestCase
 
         $assertion = new TypeAssertion('ImplementsArray', TypeAssertion::CLASS_USES_TYPE);
 
-        $assertion->assertSingle(new \OpenWorld\Collections\ArrayCollection());
+        $assertion->assertSingle(new ArrayCollection());
     }
 
     /**
      * @test
      */
-    public function it_checks_valid_inheritance_assertion()
+    public function it_checks_valid_self_inheritance_with_string_as_parameter()
     {
-        $assertion = new TypeAssertion('OpenWorld\Collections\AssertionStrictCollection', TypeAssertion::CLASS_INHERITS_TYPE);
+        $assertion = new TypeAssertion('OpenWorld\Collections\GeneralClasses\AssertionStrictCollection', TypeAssertion::CLASS_INHERITS_TYPE);
 
-        $assertion->assertSingle(new \OpenWorld\Collections\AssertionStrictCollection(new TypeAssertion('integer')));
+        $assertion->assertSingle(new AssertionStrictCollection(new TypeAssertion('integer')));
     }
 
     /**
@@ -115,9 +117,9 @@ class TypeAssertionTest extends TestCase
      */
     public function it_checks_valid_self_inheritance()
     {
-        $assertion = new TypeAssertion(\OpenWorld\Collections\ArrayCollection::class, TypeAssertion::CLASS_INHERITS_TYPE);
+        $assertion = new TypeAssertion(ArrayCollection::class, TypeAssertion::CLASS_INHERITS_TYPE);
 
-        $assertion->assertSingle(new \OpenWorld\Collections\ArrayCollection());
+        $assertion->assertSingle(new ArrayCollection());
     }
 
     /**
@@ -129,7 +131,7 @@ class TypeAssertionTest extends TestCase
 
         $assertion = new TypeAssertion('ImplementsArray', TypeAssertion::CLASS_INHERITS_TYPE);
 
-        $assertion->assertSingle(new \OpenWorld\Collections\AssertionStrictCollection(new TypeAssertion('integer')));
+        $assertion->assertSingle(new AssertionStrictCollection(new TypeAssertion('integer')));
     }
 
     /**
@@ -198,7 +200,7 @@ class TypeAssertionTest extends TestCase
             [null, 'null'],
             [true, 'boolean'],
             [new stdClass(), 'object'],
-            [new TypeAssertion('integer'), 'OpenWorld\Assertions\TypeAssertion'],
+            [new TypeAssertion('integer'), 'OpenWorld\Assertions\GeneralClasses\TypeAssertion'],
         ];
     }
 

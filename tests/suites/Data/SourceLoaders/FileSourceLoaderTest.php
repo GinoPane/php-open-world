@@ -1,7 +1,7 @@
 <?php
 
 //for monkey-patching
-namespace OpenWorld\Data\SourceLoaders;
+namespace OpenWorld\Data\GeneralClasses\SourceLoaders;
 
 use PHPUnit\Framework\TestCase;
 
@@ -155,7 +155,7 @@ class FileSourceLoaderTest extends TestCase
      */
     public function provides_access_to_valid_json_files()
     {
-        $directory = new DirectoryIterator(__DIR__ . '/../../../data/json/valid/');
+        $directory = new DirectoryIterator(PROJECT_ROOT . '/tests/data/json/valid/');
 
         foreach ($directory as $file) {
             if ($file->isFile() && $file->isReadable()) {

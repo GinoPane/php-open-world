@@ -1765,11 +1765,13 @@ $result = [
                 'build'     => 0,
                 'overall'   => 0
             ],
+            'directory' => str_replace(ROOT_DIR, '', DESTINATION_LOCALES_DIR),
             'file-list' => [
 
             ]
         ],
         'supplemental'      => [
+            'directory' => str_replace(ROOT_DIR, '', DESTINATION_GENERAL_DIR),
             'file-list' => [
 
             ]

@@ -2,6 +2,7 @@
 
 namespace OpenWorld\Data\AbstractClasses;
 
+use OpenWorld\Data\GeneralClasses\Providers\Conditions\DataProviderCondition;
 use OpenWorld\Data\Interfaces\DataProviderInterface;
 use OpenWorld\Data\Interfaces\SourceLoaderInterface;
 use OpenWorld\Data\Interfaces\SourceLoaderResultFactoryInterface;
@@ -29,20 +30,27 @@ abstract class DataProviderAbstract implements DataProviderInterface
      *
      * @var SourceLoaderResultFactoryInterface
      */
-    protected $resultClass = '';
+    protected $resultFactory = '';
+
+    /**
+     * Condition key for accept matching
+     *
+     * @var string
+     */
+    protected static $conditionKey = '';
 
     /**
      * ProviderAbstract constructor.
      *
      * @param SourceLoaderInterface $loader
-     * @param SourceLoaderResultFactoryInterface $resultClass
+     * @param SourceLoaderResultFactoryInterface $resultFactory
      *
      * return void
      */
-    public function __construct(SourceLoaderInterface $loader, SourceLoaderResultFactoryInterface $resultClass)
+    public function __construct(SourceLoaderInterface $loader, SourceLoaderResultFactoryInterface $resultFactory)
     {
         $this->setLoader($loader);
-        $this->setResultFactory($resultClass);
+        $this->setResultFactory($resultFactory);
     }
 
     /**
@@ -68,11 +76,11 @@ abstract class DataProviderAbstract implements DataProviderInterface
     }
 
     /**
-     * @param SourceLoaderResultFactoryInterface $resultClass
+     * @param SourceLoaderResultFactoryInterface $resultFactory
      */
-    public function setResultFactory(SourceLoaderResultFactoryInterface $resultClass)
+    public function setResultFactory(SourceLoaderResultFactoryInterface $resultFactory)
     {
-        $this->resultClass = $resultClass;
+        $this->resultFactory = $resultFactory;
     }
 
     /**
@@ -80,13 +88,13 @@ abstract class DataProviderAbstract implements DataProviderInterface
      */
     public function getResultFactory() : SourceLoaderResultFactoryInterface
     {
-        return $this->resultClass;
+        return $this->resultFactory;
     }
 
     /**
      * @inheritdoc
      */
-    public function load(string $uri = '', $condition = null) : SourceLoaderResultInterface
+    public function load(string $uri = '', DataProviderCondition $condition = null) : SourceLoaderResultInterface
     {
         $result = $this->getResultFactory()->get();
 
@@ -100,14 +108,38 @@ abstract class DataProviderAbstract implements DataProviderInterface
     }
 
     /**
+     * Checks if provider accepts the condition
+     *
+     * @param DataProviderCondition $condition
+     *
+     * @return bool
+     */
+    public function accept(DataProviderCondition $condition) : bool
+    {
+        if ($this->getConditionKey() == $condition->getKey()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getConditionKey() : string
+    {
+        return static::$conditionKey;
+    }
+
+    /**
      * Make uri appropriate for current provider
      *
      * @param string $uri
-     * @param null $condition
+     * @param mixed $condition
      *
      * @return string
      */
-    protected function adjustUri(string $uri = '', $condition = null) : string
+    protected function adjustUri(string $uri = '', $condition) : string
     {
         return $uri;
     }

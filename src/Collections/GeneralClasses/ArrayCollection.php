@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenWorld\Collections;
+namespace OpenWorld\Collections\GeneralClasses;
 
 use OpenWorld\Collections\Interfaces\CollectionInterface;
 use OpenWorld\Collections\Traits\ImplementsArray;

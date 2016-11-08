@@ -1,7 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use OpenWorld\Collections\ArrayCollection;
+use OpenWorld\Collections\GeneralClasses\ArrayCollection;
 
 /**
  *

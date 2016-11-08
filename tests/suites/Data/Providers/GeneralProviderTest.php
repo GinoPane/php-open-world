@@ -2,10 +2,12 @@
 
 use PHPUnit\Framework\TestCase;
 
-use OpenWorld\Data\Providers\GeneralProvider;
-use OpenWorld\Data\SourceLoaders\FileSourceLoader;
-use OpenWorld\Data\SourceLoaderResults\Factories\JsonResultFactory;
+use OpenWorld\Data\GeneralClasses\Providers\GeneralProvider;
+use OpenWorld\Data\GeneralClasses\SourceLoaders\FileSourceLoader;
+use OpenWorld\Data\GeneralClasses\SourceLoaderResults\Factories\JsonResultFactory;
+use OpenWorld\Data\Interfaces\SourceLoaderInterface;
 use OpenWorld\Data\Interfaces\SourceLoaderResultFactoryInterface;
+
 
 class GeneralProviderTest extends TestCase
 {
@@ -28,5 +30,13 @@ class GeneralProviderTest extends TestCase
     public function it_checks_get_result_factory_class()
     {
         $this->assertInstanceOf(SourceLoaderResultFactoryInterface::class, $this->provider->getResultFactory());
+    }
+
+    /**
+     * @test
+     */
+    public function it_checks_get_loader_return_type()
+    {
+        $this->assertInstanceOf(SourceLoaderInterface::class, $this->provider->getLoader());
     }
 }

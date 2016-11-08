@@ -1,8 +1,10 @@
 # IDE specific
 .idea/
-.DS_Store
 
 # Project specific
 vendor/
 build/temp/
 data/
+
+# OS specific
+.DS_Store

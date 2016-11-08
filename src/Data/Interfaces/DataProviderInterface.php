@@ -2,21 +2,16 @@
 
 namespace OpenWorld\Data\Interfaces;
 
-interface DataProviderInterface
+use OpenWorld\Data\GeneralClasses\Providers\Conditions\DataProviderCondition;
+
+interface DataProviderInterface extends DataSourceInterface
 {
-
     /**
-     * @param string $uri Path to the resource to load
-     * @param null $condition Conditions that should be while loading data
+     * Checks if provider accepts the condition
      *
-     * @return SourceLoaderResultInterface
-     */
-    public function load(string $uri = '', $condition = null) : SourceLoaderResultInterface;
-
-    /**
-     * @param string $condition Checks if provider accepts the condition
+     * @param mixed $condition
      *
      * @return bool
      */
-    public function accept(string $condition = '') : bool;
+    public function accept(DataProviderCondition $condition) : bool;
 }

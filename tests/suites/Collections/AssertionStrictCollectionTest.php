@@ -2,9 +2,9 @@
 
 use PHPUnit\Framework\TestCase;
 
-use OpenWorld\Assertions\TypeAssertion;
+use OpenWorld\Assertions\GeneralClasses\TypeAssertion;
 use OpenWorld\Exceptions\InvalidTypeException;
-use OpenWorld\Collections\AssertionStrictCollection;
+use OpenWorld\Collections\GeneralClasses\AssertionStrictCollection;
 
 /**
  *

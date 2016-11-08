@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenWorld\Assertions;
+namespace OpenWorld\Assertions\GeneralClasses;
 
 use OpenWorld\Assertions\Interfaces\AssertionInterface;
 use OpenWorld\Exceptions\InvalidTypeException;

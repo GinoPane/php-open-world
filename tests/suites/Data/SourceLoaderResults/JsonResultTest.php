@@ -1,10 +1,9 @@
 <?php
 
-
 use PHPUnit\Framework\TestCase;
 
-use OpenWorld\Data\SourceLoaderResults\JsonResult;
-use OpenWorld\Data\SourceLoaderResults\Factories\JsonResultFactory;
+use OpenWorld\Data\GeneralClasses\SourceLoaderResults\JsonResult;
+use OpenWorld\Data\GeneralClasses\SourceLoaderResults\Factories\JsonResultFactory;
 
 use OpenWorld\Exceptions\InvalidContentException;
 
