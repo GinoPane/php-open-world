@@ -1,4 +1,9 @@
 <?php
+/**
+ * PHP OpenWorld
+ *
+ * @author: Sergey <Gino Pane> Karavay
+ */
 
 namespace OpenWorld\Data\Interfaces;
 

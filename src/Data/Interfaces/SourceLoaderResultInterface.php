@@ -1,40 +1,48 @@
 <?php
+/**
+ * PHP OpenWorld
+ *
+ * @author: Sergey <Gino Pane> Karavay
+ */
 
 namespace OpenWorld\Data\Interfaces;
 
 use stdClass;
 
+/**
+ * Interface SourceLoaderResultInterface
+ *
+ * @package OpenWorld\Data\Interfaces
+ */
 interface SourceLoaderResultInterface
 {
 
     /**
-     * Get result data as string
+     * Get result data as string.
      *
      * @return string
      */
     public function asString(): string;
 
     /**
-     * Get result data as array
+     * Get result data as array.
      *
      * @return array
      */
     public function asArray() : array;
 
     /**
-     * Get result data as object
+     * Get result data as object.
      *
-     * @return stdClass
+     * @return mixed
      */
-    public function asObject() : stdClass;
+    public function asObject();
 
     /**
      * Set result content.
      *
      * @param $content
      * @return mixed
-     *
-     * @throws InvalidContentException
      */
     public function setContent($content);
 

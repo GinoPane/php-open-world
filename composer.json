@@ -28,14 +28,12 @@
     },
     "require-dev": {
         "phpunit/phpunit": "5.*",
-        "squizlabs/php_codesniffer": "2.*"
+        "squizlabs/php_codesniffer": "2.*",
+        "phpdocumentor/phpdocumentor" : "2.*"
     },
     "autoload": {
         "psr-4": {
             "OpenWorld\\": "src/"
         }
-    },
-    "bin": [
-
-    ]
+    }
 }

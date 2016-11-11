@@ -1,4 +1,9 @@
 <?php
+/**
+ * PHP OpenWorld
+ *
+ * @author: Sergey <Gino Pane> Karavay
+ */
 
 namespace OpenWorld\Collections\Traits;
 
@@ -6,6 +11,11 @@ use ArrayIterator;
 use Closure;
 use OpenWorld\Collections\Interfaces\CollectionInterface;
 
+/**
+ * Class ImplementsArray
+ *
+ * @package OpenWorld\Collections\Traits
+ */
 trait ImplementsArray
 {
     /**
@@ -16,7 +26,9 @@ trait ImplementsArray
     protected $elements;
 
     /**
-     * {@inheritDoc}
+     * Gets a native PHP array representation of the collection.
+     *
+     * @return array
      */
     public function toArray() : array
     {
@@ -24,7 +36,9 @@ trait ImplementsArray
     }
 
     /**
-     * {@inheritDoc}
+     * Sets the internal iterator to the first element in the collection and returns this element.
+     *
+     * @return mixed
      */
     public function first()
     {
@@ -32,7 +46,9 @@ trait ImplementsArray
     }
 
     /**
-     * {@inheritDoc}
+     * Sets the internal iterator to the last element in the collection and returns this element.
+     *
+     * @return mixed
      */
     public function last()
     {
@@ -40,7 +56,9 @@ trait ImplementsArray
     }
 
     /**
-     * {@inheritDoc}
+     * Gets the key/index of the element at the current iterator position.
+     *
+     * @return int|string
      */
     public function key()
     {
@@ -48,7 +66,9 @@ trait ImplementsArray
     }
 
     /**
-     * {@inheritDoc}
+     * Moves the internal iterator position to the next element and returns this element.
+     *
+     * @return mixed
      */
     public function next()
     {
@@ -56,7 +76,9 @@ trait ImplementsArray
     }
 
     /**
-     * {@inheritDoc}
+     * Gets the element of the collection at the current iterator position.
+     *
+     * @return mixed
      */
     public function current()
     {
@@ -64,7 +86,11 @@ trait ImplementsArray
     }
 
     /**
-     * {@inheritDoc}
+     * Removes the element at the specified index from the collection.
+     *
+     * @param string|integer $key The kex/index of the element to remove
+     *
+     * @return mixed The removed element or NULL, if the collection did not contain the element
      */
     public function removeKey($key)
     {
@@ -79,7 +105,11 @@ trait ImplementsArray
     }
 
     /**
-     * {@inheritDoc}
+     * Removes the specified element from the collection, if it is found.
+     *
+     * @param mixed $element The element to remove
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise
      */
     public function removeValue($element)
     {
@@ -97,7 +127,8 @@ trait ImplementsArray
     /**
      * Required by interface ArrayAccess.
      *
-     * {@inheritDoc}
+     * @param $offset
+     * @return bool
      */
     public function offsetExists($offset)
     {
@@ -107,7 +138,8 @@ trait ImplementsArray
     /**
      * Required by interface ArrayAccess.
      *
-     * {@inheritDoc}
+     * @param $offset
+     * @return mixed
      */
     public function offsetGet($offset)
     {
@@ -117,7 +149,8 @@ trait ImplementsArray
     /**
      * Required by interface ArrayAccess.
      *
-     * {@inheritDoc}
+     * @param $offset
+     * @param $value
      */
     public function offsetSet($offset, $value)
     {
@@ -131,7 +164,7 @@ trait ImplementsArray
     /**
      * Required by interface ArrayAccess.
      *
-     * {@inheritDoc}
+     * @param $offset
      */
     public function offsetUnset($offset)
     {
@@ -139,7 +172,12 @@ trait ImplementsArray
     }
 
     /**
-     * {@inheritDoc}
+     * Checks whether the collection contains an element with the specified key/index.
+     *
+     * @param string|integer $key The key/index to check for
+     *
+     * @return boolean TRUE if the collection contains an element with the specified key/index,
+     *                 FALSE otherwise
      */
     public function containsKey($key) : bool
     {
@@ -147,7 +185,12 @@ trait ImplementsArray
     }
 
     /**
-     * {@inheritDoc}
+     * Checks whether an element is contained in the collection.
+     * This is an O(n) operation, where n is the size of the collection.
+     *
+     * @param mixed $element The element to search for
+     *
+     * @return boolean TRUE if the collection contains the element, FALSE otherwise
      */
     public function contains($element) : bool
     {
@@ -155,7 +198,11 @@ trait ImplementsArray
     }
 
     /**
-     * {@inheritDoc}
+     * Tests for the existence of an element that satisfies the given predicate.
+     *
+     * @param Closure $predicate The predicate
+     *
+     * @return boolean TRUE if the predicate is TRUE for at least one element, FALSE otherwise
      */
     public function exists(Closure $predicate) : bool
     {
@@ -169,7 +216,13 @@ trait ImplementsArray
     }
 
     /**
-     * {@inheritDoc}
+     * Gets the index/key of a given element. The comparison of two elements is strict,
+     * that means not only the value but also the type must match.
+     * For objects this means reference equality.
+     *
+     * @param mixed $element The element to search for
+     *
+     * @return int|string|bool The key/index of the element or FALSE if the element was not found
      */
     public function indexOf($element)
     {
@@ -177,7 +230,11 @@ trait ImplementsArray
     }
 
     /**
-     * {@inheritDoc}
+     * Gets the element at the specified key/index.
+     *
+     * @param string|integer $key The key/index of the element to retrieve
+     *
+     * @return mixed
      */
     public function get($key)
     {
@@ -185,7 +242,10 @@ trait ImplementsArray
     }
 
     /**
-     * {@inheritDoc}
+     * Gets all keys/indices of the collection.
+     *
+     * @return array The keys/indices of the collection, in the order of the corresponding
+     *               elements in the collection
      */
     public function getKeys() : array
     {
@@ -193,7 +253,10 @@ trait ImplementsArray
     }
 
     /**
-     * {@inheritDoc}
+     * Gets all values of the collection.
+     *
+     * @return array The values of all elements in the collection, in the order they
+     *               appear in the collection
      */
     public function getValues() : array
     {
@@ -201,7 +264,9 @@ trait ImplementsArray
     }
 
     /**
-     * {@inheritDoc}
+     * Returns the count of elements.
+     *
+     * @return int Count of elements
      */
     public function count() : int
     {
@@ -209,7 +274,12 @@ trait ImplementsArray
     }
 
     /**
-     * {@inheritDoc}
+     * Sets an element in the collection at the specified key/index.
+     *
+     * @param string|integer $key The key/index of the element to set
+     * @param mixed $value The element to set
+     *
+     * @return void
      */
     public function set($key, $value)
     {
@@ -217,7 +287,11 @@ trait ImplementsArray
     }
 
     /**
-     * {@inheritDoc}
+     * Adds an element at the end of the collection.
+     *
+     * @param mixed $value The element to add
+     *
+     * @return CollectionInterface
      */
     public function add($value) : CollectionInterface
     {
@@ -227,7 +301,9 @@ trait ImplementsArray
     }
 
     /**
-     * {@inheritDoc}
+     * Checks whether the collection is empty (contains no elements).
+     *
+     * @return boolean TRUE if the collection is empty, FALSE otherwise
      */
     public function isEmpty() : bool
     {
@@ -237,7 +313,7 @@ trait ImplementsArray
     /**
      * Required by interface IteratorAggregate.
      *
-     * {@inheritDoc}
+     * @return ArrayIterator
      */
     public function getIterator() : ArrayIterator
     {
@@ -245,7 +321,12 @@ trait ImplementsArray
     }
 
     /**
-     * {@inheritDoc}
+     * Applies the given function to each element in the collection and returns
+     * a new collection with the elements returned by the function.
+     *
+     * @param Closure $function
+     *
+     * @return CollectionInterface
      */
     public function map(Closure $function) : CollectionInterface
     {
@@ -253,7 +334,13 @@ trait ImplementsArray
     }
 
     /**
-     * {@inheritDoc}
+     * Returns all the elements of this collection that satisfy the predicate p.
+     * The order of the elements is preserved.
+     *
+     * @param Closure $predicate The predicate used for filtering
+     * @param int $flag ARRAY_FILTER_USE_KEY, ARRAY_FILTER_USE_BOTH
+     *
+     * @return CollectionInterface A collection with the results of the filter operation
      */
     public function filter(Closure $predicate = null, int $flag = 0) : CollectionInterface
     {
@@ -265,7 +352,11 @@ trait ImplementsArray
     }
 
     /**
-     * {@inheritDoc}
+     * Tests whether the given predicate p holds for all elements of this collection.
+     *
+     * @param Closure $predicate The predicate
+     *
+     * @return boolean TRUE, if the predicate yields TRUE for all elements, FALSE otherwise
      */
     public function forAll(Closure $predicate) : bool
     {
@@ -279,7 +370,14 @@ trait ImplementsArray
     }
 
     /**
-     * {@inheritDoc}
+     * Partitions this collection in two collections according to a predicate.
+     * Keys are preserved in the resulting collections.
+     *
+     * @param Closure $predicate The predicate on which to partition
+     *
+     * @return array An array with two elements. The first element contains the collection
+     *               of elements where the predicate returned TRUE, the second element
+     *               contains the collection of elements where the predicate returned FALSE
      */
     public function partition(Closure $predicate) : array
     {
@@ -299,7 +397,9 @@ trait ImplementsArray
     }
 
     /**
-     * {@inheritDoc}
+     * Clears the collection, removing all elements.
+     *
+     * @return void
      */
     public function clear()
     {

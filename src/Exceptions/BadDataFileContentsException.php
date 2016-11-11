@@ -1,4 +1,9 @@
 <?php
+/**
+ * PHP OpenWorld
+ *
+ * @author: Sergey <Gino Pane> Karavay
+ */
 
 namespace OpenWorld\Exceptions;
 
@@ -13,8 +18,18 @@ use OpenWorld\Exceptions\AbstractClasses\ExceptionAbstract;
  */
 class BadDataFileContentsException extends ExceptionAbstract
 {
+    /**
+     * The path to the file with bad contents
+     *
+     * @var string
+     */
     protected $dataFilePath;
 
+    /**
+     * The malformed of the file
+     *
+     * @var string
+     */
     protected $dataFileContents;
 
     /**

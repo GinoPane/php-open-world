@@ -1,4 +1,9 @@
 <?php
+/**
+ * PHP OpenWorld
+ *
+ * @author: Sergey <Gino Pane> Karavay
+ */
 
 namespace OpenWorld\Data\AbstractClasses;
 
@@ -33,11 +38,11 @@ abstract class DataProviderAbstract implements DataProviderInterface
     protected $resultFactory = '';
 
     /**
-     * Condition key for accept matching
+     * Condition key for accept matching.
      *
      * @var string
      */
-    protected static $conditionKey = '';
+    protected static $conditionKey = __CLASS__;
 
     /**
      * ProviderAbstract constructor.
@@ -76,6 +81,8 @@ abstract class DataProviderAbstract implements DataProviderInterface
     }
 
     /**
+     * Set the factory for source loader results.
+     *
      * @param SourceLoaderResultFactoryInterface $resultFactory
      */
     public function setResultFactory(SourceLoaderResultFactoryInterface $resultFactory)
@@ -84,6 +91,8 @@ abstract class DataProviderAbstract implements DataProviderInterface
     }
 
     /**
+     * Returns the source loader results factory.
+     *
      * @return SourceLoaderResultFactoryInterface
      */
     public function getResultFactory() : SourceLoaderResultFactoryInterface
@@ -92,7 +101,12 @@ abstract class DataProviderAbstract implements DataProviderInterface
     }
 
     /**
-     * @inheritdoc
+     * Loads data specified by URI using providers selected by conditions.
+     *
+     * @param string $uri Path to the resource to load
+     * @param DataProviderCondition $condition Conditions that should be accepted while loading data
+     *
+     * @return SourceLoaderResultInterface
      */
     public function load(string $uri = '', DataProviderCondition $condition = null) : SourceLoaderResultInterface
     {
@@ -108,7 +122,7 @@ abstract class DataProviderAbstract implements DataProviderInterface
     }
 
     /**
-     * Checks if provider accepts the condition
+     * Checks if provider accepts the condition.
      *
      * @param DataProviderCondition $condition
      *
@@ -124,6 +138,8 @@ abstract class DataProviderAbstract implements DataProviderInterface
     }
 
     /**
+     * Returns the condition key for current provider.
+     *
      * @return string
      */
     public static function getConditionKey() : string

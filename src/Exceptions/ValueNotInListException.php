@@ -1,4 +1,9 @@
 <?php
+/**
+ * PHP OpenWorld
+ *
+ * @author: Sergey <Gino Pane> Karavay
+ */
 
 namespace OpenWorld\Exceptions;
 
@@ -13,8 +18,18 @@ use OpenWorld\Exceptions\AbstractClasses\ExceptionAbstract;
  */
 class ValueNotInListException extends ExceptionAbstract
 {
+    /**
+     * An invalid value
+     *
+     * @var string
+     */
     protected $value;
 
+    /**
+     * Array of allowed values
+     *
+     * @var array
+     */
     protected $allowedValues;
 
     /**
