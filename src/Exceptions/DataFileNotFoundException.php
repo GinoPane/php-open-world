@@ -1,4 +1,9 @@
 <?php
+/**
+ * PHP OpenWorld
+ *
+ * @author: Sergey <Gino Pane> Karavay
+ */
 
 namespace OpenWorld\Exceptions;
 
@@ -13,10 +18,25 @@ use OpenWorld\Exceptions\AbstractClasses\ExceptionAbstract;
  */
 class DataFileNotFoundException extends ExceptionAbstract
 {
+    /**
+     * The data file identifier
+     *
+     * @var string
+     */
     protected $identifier;
 
+    /**
+     * The preferred locale (if the data file is locale-specific)
+     *
+     * @var string
+     */
     protected $locale;
 
+    /**
+     * The fallback locale (if the data file is locale-specific)
+     *
+     * @var string
+     */
     protected $fallbackLocale;
 
     /**

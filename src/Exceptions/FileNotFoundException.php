@@ -1,4 +1,9 @@
 <?php
+/**
+ * PHP OpenWorld
+ *
+ * @author: Sergey <Gino Pane> Karavay
+ */
 
 namespace OpenWorld\Exceptions;
 
@@ -13,12 +18,17 @@ use OpenWorld\Exceptions\AbstractClasses\ExceptionAbstract;
  */
 class FileNotFoundException extends ExceptionAbstract
 {
+    /**
+     * The path to the unreadable/nonexistent file
+     *
+     * @var string
+     */
     protected $filePath;
 
     /**
      * Initializes the instance.
      *
-     * @param string $filePath The path to the unreadable file
+     * @param string $filePath The path to the unreadable/nonexistent file
      */
     public function __construct(string $filePath)
     {

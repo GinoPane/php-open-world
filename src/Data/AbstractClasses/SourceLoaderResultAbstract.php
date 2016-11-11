@@ -1,4 +1,9 @@
 <?php
+/**
+ * PHP OpenWorld
+ *
+ * @author: Sergey <Gino Pane> Karavay
+ */
 
 namespace OpenWorld\Data\AbstractClasses;
 
@@ -7,16 +12,27 @@ use OpenWorld\Exceptions\InvalidContentException;
 use OpenWorld\Exceptions\NotImplementedException;
 use stdClass;
 
+/**
+ * Class SourceLoaderResultAbstract
+ *
+ * @package OpenWorld\Data\AbstractClasses
+ */
 abstract class SourceLoaderResultAbstract implements SourceLoaderResultInterface
 {
 
     /**
+     * Stored raw content.
+     *
      * @var
      */
     protected $content;
 
     /**
-     * @inheritDoc
+     * Get result data as string.
+     *
+     * @inheritdoc
+     *
+     * @throws NotImplementedException
      */
     public function asString(): string
     {
@@ -24,7 +40,11 @@ abstract class SourceLoaderResultAbstract implements SourceLoaderResultInterface
     }
 
     /**
-     * @inheritDoc
+     * Get result data as array.
+     *
+     * @inheritdoc
+     *
+     * @throws NotImplementedException
      */
     public function asArray() : array
     {
@@ -32,15 +52,22 @@ abstract class SourceLoaderResultAbstract implements SourceLoaderResultInterface
     }
 
     /**
-     * @inheritDoc
+     * Get result data as object.
+     *
+     * @return mixed
+     *
+     * @throws NotImplementedException
      */
-    public function asObject() : stdClass
+    public function asObject()
     {
         throw new NotImplementedException(__FUNCTION__); // @codeCoverageIgnore
     }
 
     /**
-     * @inheritDoc
+     * Set result content.
+     *
+     * @param $content
+     * @return mixed
      */
     public function setContent($content)
     {
@@ -50,7 +77,9 @@ abstract class SourceLoaderResultAbstract implements SourceLoaderResultInterface
     }
 
     /**
-     * @inheritDoc
+     * Get result's content.
+     *
+     * @inheritdoc
      */
     public function getContent()
     {
@@ -58,12 +87,15 @@ abstract class SourceLoaderResultAbstract implements SourceLoaderResultInterface
     }
 
     /**
-     * @inheritDoc
+     * Checks whether content is valid for the result.
+     *
+     * @param $content
+     * @return bool
      */
     abstract public function isValid($content) : bool;
 
     /**
-     * Makes sure that $content is valid for this SourceLoaderResultAbstract instance
+     * Makes sure that $content is valid for this SourceLoaderResultAbstract instance.
      *
      * @param $content
      *

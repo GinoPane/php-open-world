@@ -13,8 +13,9 @@
  * Information about data files markup can be found at LDML documentation (Locale Data Markup Language) - http://unicode.org/reports/tr35/
  *
  * @author Sergey <Gino Pane> Karavay
- *
  */
+
+require 'shared/functions.php';
 
 if (version_compare(PHP_VERSION, '5.6.0') > 0) {
     ini_set('default_charset', 'UTF-8');
@@ -92,43 +93,6 @@ Options:
 HELP;
 
     exit(0);
-}
-
-/**
- * Enable/Disable supporting output of some functions
- */
-$disableOutput = false;
-
-/**
- * Set flag of disabled output
- */
-function disableOutput()
-{
-    global $disableOutput;
-
-    $disableOutput = true;
-}
-
-/**
- * Set flag of enabled output
- */
-function enableOutput()
-{
-    global $disableOutput;
-
-    $disableOutput = false;
-}
-
-/**
- * Check output flag
- *
- * @return bool
- */
-function outputEnabled()
-{
-    global $disableOutput;
-
-    return $disableOutput == false;
 }
 
 /**
@@ -538,22 +502,6 @@ function showStatus($done, $total, $text = '', $size = 30)
 }
 
 /**
- * Custom error handler
- *
- * @param $errorNumber
- * @param $errorString
- * @param $errorFile
- * @param $errorLine
- * @throws Exception
- */
-function handleError($errorNumber, $errorString, $errorFile, $errorLine)
-{
-    if ($errorNumber == E_NOTICE || $errorNumber == E_WARNING) {
-        throw new Exception("$errorString in $errorFile @ line $errorLine \n", $errorNumber);
-    }
-}
-
-/**
  * Handle errors from CLDR checkout
  *
  * @param $directory
@@ -578,32 +526,6 @@ function handleCldrCheckoutError($directory, $code, $output)
         $msg .= "\nError details:\n" . implode("\n", $output);
         throw new Exception($msg);
     }
-}
-
-/**
- * Check existence, create directory and handle any possible error
- *
- * @param string $directory
- * @return bool
- * @throws Exception
- */
-function createDirectory($directory = "")
-{
-    if (outputEnabled()) {
-        echo "Creating \"$directory\" folder... ";
-    }
-
-    if (!is_dir($directory)) {
-        if (mkdir($directory, 0777, false) === false) {
-            throw new Exception("Failed to create \"$directory\"\n");
-        }
-    }
-
-    if (outputEnabled()) {
-        echo "Done.\n";
-    }
-
-    return true;
 }
 
 /**
@@ -1417,7 +1339,7 @@ function handleSingleLocaleData($locale, $localeFile)
 }
 
 /**
- * Check file name existance and readability
+ * Check file name existence and readability
  *
  * @param $fileName
  * @throws Exception
@@ -1698,32 +1620,6 @@ function saveJsonFile($data, $file, $jsonFlags = 0)
 }
 
 /**
- * Delete object specified by its path from the filesystem
- *
- * @param $path
- * @throws Exception
- */
-function deleteFromFilesystem($path)
-{
-    if (is_file($path)) {
-        if (unlink($path) === false) {
-            throw new Exception("Failed to delete file $path");
-        }
-    } else {
-        $contents = scandir($path);
-        if ($contents === false) {
-            throw new Exception("Failed to retrieve the file list of $path");
-        }
-        foreach (array_diff($contents, ['.', '..']) as $item) {
-            deleteFromFilesystem($path . DIRECTORY_SEPARATOR . $item);
-        }
-        if (rmdir($path) === false) {
-            throw new Exception("Failed to delete directory $path");
-        }
-    }
-}
-
-/**
  * Clean-up sources directory after build
  */
 function cleanUpSourceDirectory()
@@ -1734,20 +1630,6 @@ function cleanUpSourceDirectory()
         echo "Done.\n";
     }
 }
-
-/**
- * Clean-up destination directory before build
- */
-function cleanUpDestinationDirectory()
-{
-    if (is_dir(DESTINATION_GENERAL_DIR)) {
-        echo "Cleanup old general data folder... ";
-        deleteFromFilesystem(DESTINATION_DIR);
-        echo "Done.\n";
-    }
-}
-
-set_error_handler('handleError');
 
 /**
  * @var array Build result report

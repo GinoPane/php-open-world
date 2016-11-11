@@ -1,4 +1,9 @@
 <?php
+/**
+ * PHP OpenWorld
+ *
+ * @author: Sergey <Gino Pane> Karavay
+ */
 
 namespace OpenWorld\Exceptions;
 
@@ -14,11 +19,15 @@ use OpenWorld\Exceptions\AbstractClasses\ExceptionAbstract;
 class InvalidTypeException extends ExceptionAbstract
 {
     /**
+     * The actual type
+     *
      * @var string
      */
     protected $actualType;
 
     /**
+     * The actual type
+     *
      * @var string
      */
     protected $allowedType;
@@ -27,7 +36,7 @@ class InvalidTypeException extends ExceptionAbstract
      * Initializes the instance.
      *
      * @param string $actualType The actual type
-     * @param string $allowedType The allowed type
+     * @param string $allowedType The actual type
      * @param string $template Template for the message. %1 placeholder for actual type, %2 - for allowed
      */
     public function __construct(string $actualType, string $allowedType, string $template = '')
@@ -42,7 +51,6 @@ class InvalidTypeException extends ExceptionAbstract
         }
 
         $message = $this->fillTemplate($message, $actualType, $allowedType);
-
 
         parent::__construct($message);
     }
@@ -79,8 +87,6 @@ class InvalidTypeException extends ExceptionAbstract
      */
     private function fillTemplate(string $template, string $actualType, string $allowedType) : string
     {
-        $message = '';
-
         $message = str_replace('%1', $actualType, $template);
         $message = str_replace('%2', $allowedType, $message);
 

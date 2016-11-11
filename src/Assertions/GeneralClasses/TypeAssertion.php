@@ -1,4 +1,9 @@
 <?php
+/**
+ * PHP OpenWorld
+ *
+ * @author: Sergey <Gino Pane> Karavay
+ */
 
 namespace OpenWorld\Assertions\GeneralClasses;
 
@@ -6,7 +11,7 @@ use OpenWorld\Assertions\Interfaces\AssertionInterface;
 use OpenWorld\Exceptions\InvalidTypeException;
 
 /**
- * Class TypeAssertion.
+ * Class TypeAssertion
  *
  * Makes sure that necessary type is being used.
  * Throws exception instead.
@@ -70,21 +75,22 @@ class TypeAssertion implements AssertionInterface
         if ($performCheck) {
             switch ($this->mode) {
                 case self::CLASS_INHERITS_TYPE:
-                    $this->ensureClassExists($type);
+                    $this->assertClassExists($type);
                     break; // @codeCoverageIgnore
                 case self::CLASS_IMPLEMENTS_TYPE:
-                    $this->ensureInterfaceExists($type);
+                    $this->assertInterfaceExists($type);
                     break; // @codeCoverageIgnore
                 case self::CLASS_USES_TYPE:
-                    $this->ensureTraitExists($type);
+                    $this->assertTraitExists($type);
                     break; // @codeCoverageIgnore
             }
         }
     }
 
     /**
-     * @inheritdoc
+     * Assertion for a single item.
      *
+     * @param $item
      * @throws InvalidTypeException
      */
     public function assertSingle($item)
@@ -115,9 +121,10 @@ class TypeAssertion implements AssertionInterface
     }
 
     /**
-     * @inheritdoc
+     * Assertion for multiple items.
      *
-     * @throws InvalidTypeException
+     * @param array $items
+     * @return void
      */
     public function assertMultiple(array $items = [])
     {
@@ -126,6 +133,12 @@ class TypeAssertion implements AssertionInterface
         }
     }
 
+    /**
+     * Perform a straightforward type check.
+     *
+     * @param $item
+     * @return array
+     */
     private function handleSimpleCheck($item) : array
     {
         $result = true;
@@ -146,9 +159,15 @@ class TypeAssertion implements AssertionInterface
         ];
     }
 
+    /**
+     * Check that an item inherits a class.
+     *
+     * @param $item
+     * @return array
+     */
     private function handleClassInheritanceCheck($item)
     {
-        $this->ensureItemIsObject($item);
+        $this->assertItemIsObject($item);
 
         $result = true;
         $message = '';
@@ -166,9 +185,15 @@ class TypeAssertion implements AssertionInterface
         ];
     }
 
+    /**
+     * Check that an item uses a trait.
+     *
+     * @param $item
+     * @return array
+     */
     private function handleTraitUseCheck($item)
     {
-        $this->ensureItemIsObject($item);
+        $this->assertItemIsObject($item);
 
         $result = true;
         $message = '';
@@ -186,9 +211,15 @@ class TypeAssertion implements AssertionInterface
         ];
     }
 
+    /**
+     * Check that an item implements an interface.
+     *
+     * @param $item
+     * @return array
+     */
     private function handleInterfaceImplementationCheck($item)
     {
-        $this->ensureItemIsObject($item);
+        $this->assertItemIsObject($item);
 
         $result = true;
         $message = '';
@@ -206,30 +237,54 @@ class TypeAssertion implements AssertionInterface
         ];
     }
 
-    private function ensureItemIsObject($item)
+    /**
+     * Assert that an item is an object.
+     *
+     * @param $item
+     * @throws InvalidTypeException
+     */
+    private function assertItemIsObject($item)
     {
         $itemType = gettype($item);
 
         if (strcasecmp($itemType, 'object')) {
             throw new InvalidTypeException($itemType, 'object');
         }
-    }
+    } // @codeCoverageIgnore
 
-    private function ensureTraitExists(string $trait)
+    /**
+     * Assert that a trait exists.
+     *
+     * @param string $trait
+     * @throws InvalidTypeException
+     */
+    private function assertTraitExists(string $trait)
     {
         if (!trait_exists($trait)) {
             throw new InvalidTypeException($trait, '', 'Specified trait does not exist: %1');
         }
     } // @codeCoverageIgnore
 
-    private function ensureInterfaceExists(string $interface)
+    /**
+     * Assert that an interface exists.
+     *
+     * @param string $interface
+     * @throws InvalidTypeException
+     */
+    private function assertInterfaceExists(string $interface)
     {
         if (!interface_exists($interface)) {
             throw new InvalidTypeException($interface, '', 'Specified interface does not exist: %1');
         }
     } // @codeCoverageIgnore
 
-    private function ensureClassExists(string $class)
+    /**
+     * Assert that a class exists.
+     *
+     * @param string $class
+     * @throws InvalidTypeException
+     */
+    private function assertClassExists(string $class)
     {
         if (!class_exists($class)) {
             throw new InvalidTypeException($class, '', 'Specified class does not exist: %1');

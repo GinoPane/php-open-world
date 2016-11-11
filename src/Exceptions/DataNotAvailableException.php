@@ -1,4 +1,9 @@
 <?php
+/**
+ * PHP OpenWorld
+ *
+ * @author: Sergey <Gino Pane> Karavay
+ */
 
 namespace OpenWorld\Exceptions;
 
@@ -15,11 +20,15 @@ use OpenWorld\Exceptions\AbstractClasses\ExceptionAbstract;
 class DataNotAvailableException extends ExceptionAbstract
 {
     /**
+     * URI of the necessary data
+     *
      * @var string
      */
     protected $uri;
 
     /**
+     * Conditions for a data provider
+     *
      * @var
      */
     protected $condition;
@@ -27,8 +36,8 @@ class DataNotAvailableException extends ExceptionAbstract
     /**
      * Initializes the instance.
      *
-     * @param string $uri
-     * @param DataProviderCondition $condition
+     * @param string $uri URI of the necessary data
+     * @param DataProviderCondition $condition Conditions for a data provider
      */
     public function __construct(string $uri, DataProviderCondition $condition)
     {
@@ -38,6 +47,8 @@ class DataNotAvailableException extends ExceptionAbstract
     }
 
     /**
+     * Returns saved URI
+     *
      * @return string
      */
     public function getUri(): string
@@ -46,6 +57,8 @@ class DataNotAvailableException extends ExceptionAbstract
     }
 
     /**
+     * Returns saved conditions
+     *
      * @return mixed
      */
     public function getCondition()

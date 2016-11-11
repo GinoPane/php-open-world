@@ -1,4 +1,9 @@
 <?php
+/**
+ * PHP OpenWorld
+ *
+ * @author: Sergey <Gino Pane> Karavay
+ */
 
 namespace OpenWorld\Exceptions;
 
@@ -13,6 +18,11 @@ use OpenWorld\Exceptions\AbstractClasses\ExceptionAbstract;
  */
 class NotImplementedException extends ExceptionAbstract
 {
+    /**
+     * Not implemented function
+     *
+     * @var string
+     */
     protected $function;
 
     /**
