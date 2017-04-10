@@ -708,10 +708,22 @@ function handleGeneralTerritoryContainmentData($supplementalData = [])
         foreach ($supplementalData['supplementalData']['territoryContainment']['group'] as $key => $territory) {
             if (!empty($territory['@attributes'])) {
                 $territoryCode = $territory['@attributes']['type'];
+                $status = !empty($territory['@attributes']['status']) ? $territory['@attributes']['status'] : '';
 
-                unset($territory['@attributes']['type']);
+                if ($status === 'deprecated')
+                    continue;
 
-                $containment[$territoryCode] = $territory['@attributes'];
+                $groupingKeyName = 'contains';
+
+                if ($status === 'grouping') {
+                    $groupingKeyName = 'includes';
+                }
+
+                if (!isset($containment[$territoryCode][$groupingKeyName])) {
+                    $containment[$territoryCode][$groupingKeyName] = [];
+                }
+
+                $containment[$territoryCode][$groupingKeyName] += explode(' ', $territory['@attributes']['contains']);
             } else {
                 throw new Exception("Wrong territory containment data provided (data key: $key)!");
             }
@@ -721,10 +733,14 @@ function handleGeneralTerritoryContainmentData($supplementalData = [])
 
         foreach ($containment as $parentTerritoryId => $data) {
             if (!empty($data['contains'])) {
-                $children = explode(' ', $data['contains']);
+                foreach ($data['contains'] as $childCode) {
+                    $flatTerritoryParentData[$childCode][] = (string)$parentTerritoryId;
+                }
+            }
 
-                foreach ($children as $childCode) {
-                    $flatTerritoryParentData[$childCode] = (string)$parentTerritoryId;
+            if (!empty($data['includes'])) {
+                foreach ($data['includes'] as $childCode) {
+                    $flatTerritoryParentData[$childCode][] = (string)$parentTerritoryId;
                 }
             }
         }
@@ -736,7 +752,7 @@ function handleGeneralTerritoryContainmentData($supplementalData = [])
             'flat' => $flatTerritoryParentData
         ];
 
-        saveJsonFile($territories, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'territory.containment.json', JSON_FORCE_OBJECT);
+        saveJsonFile($territories, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'territory.containment.json');
         putSupplementalFileToFileList('territory.containment.json');
 
         echo "Done.\n";
@@ -994,9 +1010,11 @@ function handleNumberingSystemsData($numbersData = [])
  *
  * @param array $identityData
  * @param string $destinationDir
+ * @param string $fileName
+ *
  * @throws Exception
  */
-function handleSingleLocaleDataIdentity($identityData = [], $destinationDir = "")
+function handleSingleLocaleDataIdentity(array $identityData = [], string $destinationDir = "", string $fileName = "")
 {
     if (!isset($identityData['version']) || !isset($identityData['language'])) {
         throw new Exception('Bad identity data detected!');
@@ -1013,7 +1031,7 @@ function handleSingleLocaleDataIdentity($identityData = [], $destinationDir = ""
             $identity['territory'] = $identityData['territory']['@attributes']['type'];
         }
 
-        saveJsonFile($identity, $destinationDir . DIRECTORY_SEPARATOR . 'identity.json', JSON_FORCE_OBJECT);
+        saveJsonFile($identity, $destinationDir . DIRECTORY_SEPARATOR . $fileName, JSON_FORCE_OBJECT);
     }
 }
 
@@ -1300,7 +1318,8 @@ function handleSingleLocaleData($locale, $localeFile)
         $localeDirectory = DESTINATION_LOCALES_DIR . DIRECTORY_SEPARATOR . $locale;
 
         if (createDirectory($localeDirectory)) {
-            handleSingleLocaleDataIdentity($localeData['ldml']['identity'], $localeDirectory);
+            handleSingleLocaleDataIdentity($localeData['ldml']['identity'], $localeDirectory, 'identity.json');
+            putLocaleFileToFileList($locale, 'identity.json');
 
             if (isset($localeData['ldml']['localeDisplayNames']['territories']['territory'])) {
                 handleSingleLocaleDataSimpleNames('territory', $localeData['ldml']['localeDisplayNames']['territories']['territory'], $localeDirectory, 'territory.names.json');

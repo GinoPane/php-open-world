@@ -7,8 +7,6 @@
 
 namespace OpenWorld\Data\Interfaces;
 
-use stdClass;
-
 /**
  * Interface SourceLoaderResultInterface
  *

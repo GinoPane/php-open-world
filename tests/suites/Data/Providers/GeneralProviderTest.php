@@ -8,7 +8,6 @@ use OpenWorld\Data\GeneralClasses\SourceLoaderResults\Factories\JsonResultFactor
 use OpenWorld\Data\Interfaces\SourceLoaderInterface;
 use OpenWorld\Data\Interfaces\SourceLoaderResultFactoryInterface;
 
-
 class GeneralProviderTest extends TestCase
 {
     /**
