@@ -27,7 +27,7 @@ interface SourceLoaderResultInterface
      *
      * @return array
      */
-    public function asArray() : array;
+    public function asArray(): array;
 
     /**
      * Get result data as object.
@@ -57,5 +57,5 @@ interface SourceLoaderResultInterface
      * @param $content
      * @return bool
      */
-    public function isValid($content) : bool;
+    public function isValid($content): bool;
 }

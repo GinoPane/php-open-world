@@ -142,6 +142,8 @@ class TypeAssertionTest extends TestCase
         $this->expectException(InvalidTypeException::class);
 
         $assertion = new TypeAssertion('does not exist', TypeAssertion::CLASS_INHERITS_TYPE | TypeAssertion::CHECK_MODE_PARAMETERS);
+
+        $this->assertEmpty($assertion);
     }
 
     /**
@@ -152,6 +154,8 @@ class TypeAssertionTest extends TestCase
         $this->expectException(InvalidTypeException::class);
 
         $assertion = new TypeAssertion('does not exist', TypeAssertion::CLASS_IMPLEMENTS_TYPE | TypeAssertion::CHECK_MODE_PARAMETERS);
+
+        $this->assertEmpty($assertion);
     }
 
     /**
@@ -162,6 +166,8 @@ class TypeAssertionTest extends TestCase
         $this->expectException(InvalidTypeException::class);
 
         $assertion = new TypeAssertion('does not exist', TypeAssertion::CLASS_USES_TYPE | TypeAssertion::CHECK_MODE_PARAMETERS);
+
+        $this->assertEmpty($assertion);
     }
 
     /**
@@ -170,6 +176,8 @@ class TypeAssertionTest extends TestCase
     public function it_does_not_throw_exception_for_non_existent_class_in_soft_mode()
     {
         $assertion = new TypeAssertion('does not exist', TypeAssertion::CLASS_INHERITS_TYPE);
+
+        $this->assertNotEmpty($assertion);
     }
 
     /**
@@ -178,6 +186,8 @@ class TypeAssertionTest extends TestCase
     public function it_does_not_throw_exception_for_non_existent_interface_in_soft_mode()
     {
         $assertion = new TypeAssertion('does not exist', TypeAssertion::CLASS_IMPLEMENTS_TYPE);
+
+        $this->assertNotEmpty($assertion);
     }
 
     /**
@@ -186,6 +196,8 @@ class TypeAssertionTest extends TestCase
     public function it_does_not_throw_exception_for_non_existent_trait_in_soft_mode()
     {
         $assertion = new TypeAssertion('does not exist', TypeAssertion::CLASS_USES_TYPE);
+
+        $this->assertNotEmpty($assertion);
     }
 
     /**

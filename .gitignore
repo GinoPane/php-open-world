@@ -4,6 +4,8 @@
 # Project specific
 vendor/
 build/temp/
+build/output/
+build/logs
 data/
 
 # OS specific

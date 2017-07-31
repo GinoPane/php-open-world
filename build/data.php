@@ -85,7 +85,7 @@ It will try to download the latest CLDR sources defined by version used. Do not 
 except you really need it for anything.
 
 Options:
-    --cldr-version - override CLDR version
+    --cldr-version=[number] - override CLDR version
     --post-clean - try to clean temporary directory after build;
     --debug - generate readable json files;
     --all-locales - generate the full list of available locales; by default the most popular languages are processed;
@@ -489,7 +489,7 @@ function showStatus($done, $total, $text = '', $size = 30)
 
     $elapsed = $now - $startTime;
 
-    $statusBar .= $text . "; " . number_format($eta) . " / " . number_format($elapsed) . " sec";
+    $statusBar .= $text . "; " . number_format($eta) . " / " . number_format($elapsed) . " sec" . str_pad(' ', 20);
 
     echo "$statusBar  ";
 
@@ -691,6 +691,56 @@ function handleGeneralTerritoryInfoData($supplementalData = [])
 }
 
 /**
+ * Extract language data (available language codes and script codes)
+ *
+ * @param array $supplementalData
+ * @throws Exception
+ */
+function handleGeneralLanguageData($supplementalData = [])
+{
+    echo "Extract language data... ";
+
+    if (!isset($supplementalData['supplementalData']['languageData']['language'])) {
+        throw new Exception('Language data is not available!');
+    } else {
+        $languages = [];
+        $scripts = [];
+
+        foreach ($supplementalData['supplementalData']['languageData']['language'] as $key => $languageData) {
+            if (!empty($languageData['@attributes']) && !empty($languageData['@attributes']['type'])) {
+                //skip language data nodes without script info
+                if (empty($languageData['@attributes']['scripts']))
+                    continue;
+
+                $iso639LanguageCode = $languageData['@attributes']['type'];
+                $languageDataScripts = explode(" ", $languageData['@attributes']['scripts']);
+
+                if (!in_array($iso639LanguageCode, $languages))
+                    $languages[] = $iso639LanguageCode;
+
+                foreach($languageDataScripts as $script) {
+                    if (!in_array($script, $scripts))
+                        $scripts[] = $script;
+                }
+            } else {
+                throw new Exception("Wrong language data provided (data key: $key)!");
+            }
+        }
+
+        echo "Done.\n";
+
+        sort($languages);
+        sort($scripts);
+
+        saveJsonFile($languages, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'language.codes.json');
+        saveJsonFile($scripts, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'script.codes.json');
+
+        putSupplementalFileToFileList('language.codes.json');
+        putSupplementalFileToFileList('script.codes.json');
+    }
+}
+
+/**
  * Extract territory containment info and flat info for quick search
  *
  * @param array $supplementalData
@@ -773,6 +823,7 @@ function handleGeneralTerritoryMapping($supplementalData = [])
         throw new Exception('Bad territory codes mapping data!');
     } else {
         $iso3166Alpha2 = [];
+        $unm49 = [];
         $iso3166Alpha3Map = [];
         $iso3166NumericMap = [];
         $fips10Map = [];
@@ -795,11 +846,32 @@ function handleGeneralTerritoryMapping($supplementalData = [])
             }
         }
 
+        if (!empty($supplementalData['supplementalData']['territoryContainment']['group'])) {
+            foreach ($supplementalData['supplementalData']['territoryContainment']['group'] as $key => $territory) {
+                if (!empty($territory['@attributes']['type'])) {
+                    if (intval($territory['@attributes']['type'])) {
+                        $unm49[] = $territory['@attributes']['type'];
+                    }
+                } else {
+                    throw new Exception("Wrong territory containment data provided (data key: $key)!");
+                }
+            }
+        } else {
+            throw new Exception("No territory containment data provided!");
+        }
+
+        //ISO 3166-1 numeric is a subset of UN M49 codes, so we need to exclude ISO 3166-1 numeric from UN M49 codes
+        $unm49 = array_values(array_unique(array_diff($unm49, array_keys($iso3166NumericMap))));
+        sort($unm49);
+
         $territoryCodes = [
-            'iso3166alpha2' => $iso3166Alpha2,
-            'iso3166alpha3_to_iso3166alpha2' => $iso3166Alpha3Map,
-            'iso3166numeric_to_iso3166alpha2' => $iso3166NumericMap,
-            'fips10_to_iso3166alpha2' => $fips10Map
+            'iso3166alpha2'                     => $iso3166Alpha2,
+            'unm49'                             => $unm49,
+            'iso3166alpha2_to_iso3166alpha3'    => array_flip($iso3166Alpha3Map),
+            'iso3166alpha2_to_iso3166numeric'   => array_map(function($item) {
+                return strval($item);
+            }, array_flip($iso3166NumericMap)),
+            'iso3166alpha2_to_fips10'           => array_flip($fips10Map)
         ];
 
         saveJsonFile($territoryCodes, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'territory.codes.json');
@@ -1544,7 +1616,8 @@ function buildSupplementalData()
                 'handleGeneralTerritoryContainmentData',
                 'handleGeneralTerritoryMapping',
                 'handleGeneralCurrencyMapping',
-                'handleGeneralParentLocales'
+                'handleGeneralParentLocales',
+                'handleGeneralLanguageData',
             ],
             $supplementalMetaDataFile => [
                 'handleLanguageAlias',
@@ -1553,12 +1626,12 @@ function buildSupplementalData()
         ],
         'likelySubtags' => [
             $likelySubtagsDataFile => [
-                'handleLikelySubtagsData'
+                'handleLikelySubtagsData',
             ]
         ],
         'numeric' => [
             $numberingSystemsDataFile => [
-                'handleNumberingSystemsData'
+                'handleNumberingSystemsData',
             ]
         ]
     ];
@@ -1640,10 +1713,11 @@ function saveJsonFile($data, $file, $jsonFlags = 0)
 
 /**
  * Clean-up sources directory after build
+ * @param bool $forceClean
  */
-function cleanUpSourceDirectory()
+function cleanUpSourceDirectory($forceClean = false)
 {
-    if (POST_CLEAN) {
+    if (POST_CLEAN || $forceClean) {
         echo "Cleanup temporary data folder... \n";
         deleteFromFilesystem(SOURCE_DIR);
         echo "Done.\n";
@@ -1780,6 +1854,8 @@ try {
     $result['status'] = 'success';
 
 } catch (Exception $exception) {
+
+    cleanUpSourceDirectory();
 
     deleteFromFilesystem(DESTINATION_GENERAL_DIR);
     deleteFromFilesystem(DESTINATION_LOCALES_DIR);

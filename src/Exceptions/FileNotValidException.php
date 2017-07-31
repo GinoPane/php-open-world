@@ -44,7 +44,7 @@ class FileNotValidException extends ExceptionAbstract
      *
      * @return string
      */
-    public function getFilePath() : string
+    public function getFilePath(): string
     {
         return $this->filePath;
     }

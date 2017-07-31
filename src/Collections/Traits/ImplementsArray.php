@@ -7,8 +7,8 @@
 
 namespace OpenWorld\Collections\Traits;
 
-use ArrayIterator;
 use Closure;
+use ArrayIterator;
 use OpenWorld\Collections\Interfaces\CollectionInterface;
 
 /**
@@ -19,24 +19,24 @@ use OpenWorld\Collections\Interfaces\CollectionInterface;
 trait ImplementsArray
 {
     /**
-     * An array containing the entries of this collection.
+     * An array containing the entries of this collection
      *
      * @var array
      */
     protected $elements;
 
     /**
-     * Gets a native PHP array representation of the collection.
+     * Gets a native PHP array representation of the collection
      *
      * @return array
      */
-    public function toArray() : array
+    public function toArray(): array
     {
         return $this->elements;
     }
 
     /**
-     * Sets the internal iterator to the first element in the collection and returns this element.
+     * Sets the internal iterator to the first element in the collection and returns this element
      *
      * @return mixed
      */
@@ -46,7 +46,7 @@ trait ImplementsArray
     }
 
     /**
-     * Sets the internal iterator to the last element in the collection and returns this element.
+     * Sets the internal iterator to the last element in the collection and returns this element
      *
      * @return mixed
      */
@@ -56,37 +56,7 @@ trait ImplementsArray
     }
 
     /**
-     * Gets the key/index of the element at the current iterator position.
-     *
-     * @return int|string
-     */
-    public function key()
-    {
-        return key($this->elements);
-    }
-
-    /**
-     * Moves the internal iterator position to the next element and returns this element.
-     *
-     * @return mixed
-     */
-    public function next()
-    {
-        return next($this->elements);
-    }
-
-    /**
-     * Gets the element of the collection at the current iterator position.
-     *
-     * @return mixed
-     */
-    public function current()
-    {
-        return current($this->elements);
-    }
-
-    /**
-     * Removes the element at the specified index from the collection.
+     * Removes the element at the specified index from the collection
      *
      * @param string|integer $key The kex/index of the element to remove
      *
@@ -105,13 +75,13 @@ trait ImplementsArray
     }
 
     /**
-     * Removes the specified element from the collection, if it is found.
+     * Removes the specified element from the collection, if it is found
      *
      * @param mixed $element The element to remove
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise
      */
-    public function removeValue($element)
+    public function removeValue($element): bool
     {
         $key = array_search($element, $this->elements, true);
 
@@ -125,18 +95,18 @@ trait ImplementsArray
     }
 
     /**
-     * Required by interface ArrayAccess.
+     * Required by interface ArrayAccess
      *
      * @param $offset
      * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return $this->containsKey($offset);
     }
 
     /**
-     * Required by interface ArrayAccess.
+     * Required by interface ArrayAccess
      *
      * @param $offset
      * @return mixed
@@ -147,64 +117,64 @@ trait ImplementsArray
     }
 
     /**
-     * Required by interface ArrayAccess.
+     * Required by interface ArrayAccess
      *
      * @param $offset
      * @param $value
+     *
+     * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
-        if (!isset($offset)) {
-            $this->add($value);
-        }
-
         $this->set($offset, $value);
     }
 
     /**
-     * Required by interface ArrayAccess.
+     * Required by interface ArrayAccess
      *
      * @param $offset
+     *
+     * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         $this->removeKey($offset);
     }
 
     /**
-     * Checks whether the collection contains an element with the specified key/index.
+     * Checks whether the collection contains an element with the specified key/index
      *
      * @param string|integer $key The key/index to check for
      *
      * @return boolean TRUE if the collection contains an element with the specified key/index,
      *                 FALSE otherwise
      */
-    public function containsKey($key) : bool
+    public function containsKey($key): bool
     {
         return isset($this->elements[$key]) || array_key_exists($key, $this->elements);
     }
 
     /**
      * Checks whether an element is contained in the collection.
-     * This is an O(n) operation, where n is the size of the collection.
+     * This is an O(n) operation, where n is the size of the collection
      *
      * @param mixed $element The element to search for
      *
      * @return boolean TRUE if the collection contains the element, FALSE otherwise
      */
-    public function contains($element) : bool
+    public function contains($element): bool
     {
         return in_array($element, $this->elements, true);
     }
 
     /**
-     * Tests for the existence of an element that satisfies the given predicate.
+     * Tests for the existence of an element that satisfies the given predicate
      *
      * @param Closure $predicate The predicate
      *
      * @return boolean TRUE if the predicate is TRUE for at least one element, FALSE otherwise
      */
-    public function exists(Closure $predicate) : bool
+    public function exists(Closure $predicate): bool
     {
         foreach ($this->elements as $key => $element) {
             if ($predicate($key, $element)) {
@@ -218,7 +188,7 @@ trait ImplementsArray
     /**
      * Gets the index/key of a given element. The comparison of two elements is strict,
      * that means not only the value but also the type must match.
-     * For objects this means reference equality.
+     * For objects this means reference equality
      *
      * @param mixed $element The element to search for
      *
@@ -242,58 +212,58 @@ trait ImplementsArray
     }
 
     /**
-     * Gets all keys/indices of the collection.
+     * Gets all keys/indices of the collection
      *
      * @return array The keys/indices of the collection, in the order of the corresponding
      *               elements in the collection
      */
-    public function getKeys() : array
+    public function getKeys(): array
     {
         return array_keys($this->elements);
     }
 
     /**
-     * Gets all values of the collection.
+     * Gets all values of the collection
      *
      * @return array The values of all elements in the collection, in the order they
      *               appear in the collection
      */
-    public function getValues() : array
+    public function getValues(): array
     {
         return array_values($this->elements);
     }
 
     /**
-     * Returns the count of elements.
+     * Returns the count of elements
      *
      * @return int Count of elements
      */
-    public function count() : int
+    public function count(): int
     {
         return count($this->elements);
     }
 
     /**
-     * Sets an element in the collection at the specified key/index.
+     * Sets an element in the collection at the specified key/index
      *
      * @param string|integer $key The key/index of the element to set
      * @param mixed $value The element to set
      *
      * @return void
      */
-    public function set($key, $value)
+    public function set($key, $value): void
     {
         $this->elements[$key] = $value;
     }
 
     /**
-     * Adds an element at the end of the collection.
+     * Adds an element at the end of the collection
      *
      * @param mixed $value The element to add
      *
      * @return CollectionInterface
      */
-    public function add($value) : CollectionInterface
+    public function add($value): CollectionInterface
     {
         $this->elements[] = $value;
 
@@ -301,48 +271,48 @@ trait ImplementsArray
     }
 
     /**
-     * Checks whether the collection is empty (contains no elements).
+     * Checks whether the collection is empty (contains no elements)
      *
      * @return boolean TRUE if the collection is empty, FALSE otherwise
      */
-    public function isEmpty() : bool
+    public function isEmpty(): bool
     {
         return empty($this->elements);
     }
 
     /**
-     * Required by interface IteratorAggregate.
+     * Required by interface IteratorAggregate
      *
      * @return ArrayIterator
      */
-    public function getIterator() : ArrayIterator
+    public function getIterator(): ArrayIterator
     {
         return new ArrayIterator($this->elements);
     }
 
     /**
      * Applies the given function to each element in the collection and returns
-     * a new collection with the elements returned by the function.
+     * a new collection with the elements returned by the function
      *
      * @param Closure $function
      *
      * @return CollectionInterface
      */
-    public function map(Closure $function) : CollectionInterface
+    public function map(Closure $function): CollectionInterface
     {
         return new static(array_map($function, $this->elements));
     }
 
     /**
-     * Returns all the elements of this collection that satisfy the predicate p.
-     * The order of the elements is preserved.
+     * Returns all the elements of this collection that satisfy the predicate.
+     * The order of the elements is preserved
      *
      * @param Closure $predicate The predicate used for filtering
      * @param int $flag ARRAY_FILTER_USE_KEY, ARRAY_FILTER_USE_BOTH
      *
      * @return CollectionInterface A collection with the results of the filter operation
      */
-    public function filter(Closure $predicate = null, int $flag = 0) : CollectionInterface
+    public function filter(Closure $predicate = null, int $flag = 0): CollectionInterface
     {
         if ($predicate) {
             return new static(array_filter($this->elements, $predicate, $flag));
@@ -352,13 +322,13 @@ trait ImplementsArray
     }
 
     /**
-     * Tests whether the given predicate p holds for all elements of this collection.
+     * Tests whether the given predicate holds for all elements of this collection
      *
      * @param Closure $predicate The predicate
      *
      * @return boolean TRUE, if the predicate yields TRUE for all elements, FALSE otherwise
      */
-    public function forAll(Closure $predicate) : bool
+    public function forAll(Closure $predicate): bool
     {
         foreach ($this->elements as $key => $element) {
             if (!$predicate($key, $element)) {
@@ -371,7 +341,7 @@ trait ImplementsArray
 
     /**
      * Partitions this collection in two collections according to a predicate.
-     * Keys are preserved in the resulting collections.
+     * Keys are preserved in the resulting collections
      *
      * @param Closure $predicate The predicate on which to partition
      *
@@ -379,7 +349,7 @@ trait ImplementsArray
      *               of elements where the predicate returned TRUE, the second element
      *               contains the collection of elements where the predicate returned FALSE
      */
-    public function partition(Closure $predicate) : array
+    public function partition(Closure $predicate): array
     {
         list($matches, $noMatches) = $this->splitIntoParts($predicate);
 
@@ -387,21 +357,21 @@ trait ImplementsArray
     }
 
     /**
-     * Returns a string representation of this object.
+     * Returns a string representation of this object
      *
      * @return string
      */
-    public function __toString() : string
+    public function __toString(): string
     {
         return __CLASS__ . '@' . spl_object_hash($this);
     }
 
     /**
-     * Clears the collection, removing all elements.
+     * Clears the collection, removing all elements
      *
      * @return void
      */
-    public function clear()
+    public function clear(): void
     {
         $this->elements = [];
     }
@@ -412,7 +382,7 @@ trait ImplementsArray
      * @param Closure $predicate
      * @return array
      */
-    protected function splitIntoParts(Closure $predicate) : array
+    protected function splitIntoParts(Closure $predicate): array
     {
         $matches = $noMatches = array();
 

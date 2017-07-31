@@ -20,5 +20,5 @@ interface SourceLoaderInterface
      * @param string $uri
      * @return string
      */
-    public function loadSource(string $uri) : string;
+    public function loadSource(string $uri): string;
 }

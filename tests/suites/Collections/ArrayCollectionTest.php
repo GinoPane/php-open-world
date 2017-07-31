@@ -5,7 +5,9 @@ use OpenWorld\Collections\GeneralClasses\ArrayCollection;
 
 /**
  *
- * Tests for {@see OpenWorld\Collections\ArrayCollection}
+ * Tests for
+ *
+ * @see OpenWorld\Collections\GeneralClasses\ArrayCollection
  *
  */
 class ArrayCollectionTest extends TestCase
@@ -49,7 +51,7 @@ class ArrayCollectionTest extends TestCase
      * @param $elements
      * @dataProvider provides_different_elements
      */
-    public function it_converts_collection_to_array($elements)
+    public function it_converts_collection_to_array(array $elements)
     {
         $collection = new ArrayCollection($elements);
 
@@ -65,7 +67,7 @@ class ArrayCollectionTest extends TestCase
      * @param $elements
      * @dataProvider provides_different_elements
      */
-    public function it_gets_the_first_collection_element($elements)
+    public function it_gets_the_first_collection_element(array $elements)
     {
         $collection = new ArrayCollection($elements);
 
@@ -81,98 +83,13 @@ class ArrayCollectionTest extends TestCase
      * @param $elements
      * @dataProvider provides_different_elements
      */
-    public function it_gets_the_last_collection_element($elements)
+    public function it_gets_the_last_collection_element(array $elements)
     {
         $collection = new ArrayCollection($elements);
 
         $this->assertSame(
             end($elements),
             $collection->last()
-        );
-    }
-
-    /**
-     * @test
-     *
-     * @param $elements
-     * @dataProvider provides_different_elements
-     */
-    public function it_checks_collection_keys($elements)
-    {
-        $collection = new ArrayCollection($elements);
-        $this->assertSame(
-            key($elements),
-            $collection->key()
-        );
-
-        next($elements);
-
-        $collection->next();
-        $this->assertSame(
-            key($elements),
-            $collection->key()
-        );
-    }
-
-    /**
-     * @test
-     *
-     * @param $elements
-     * @dataProvider provides_different_elements
-     */
-    public function it_checks_the_next_method($elements)
-    {
-        $collection = new ArrayCollection($elements);
-
-        while (true) {
-            $collectionNext = $collection->next();
-            $arrayNext = next($elements);
-
-            if(!$collectionNext || !$arrayNext) {
-                break;
-            }
-
-            $this->assertSame(
-                $arrayNext,
-                $collectionNext,
-                "Returned value of ArrayCollection::next() and next() not match"
-            );
-
-            $this->assertSame(
-                key($elements),
-                $collection->key(),
-                "Keys not match"
-            );
-
-            $this->assertSame(
-                current($elements),
-                $collection->current(),
-                "Current values not match"
-            );
-        }
-    }
-
-    /**
-     * @test
-     *
-     * @param $elements
-     * @dataProvider provides_different_elements
-     */
-    public function it_checks_the_current_method($elements)
-    {
-        $collection = new ArrayCollection($elements);
-
-        $this->assertSame(
-            current($elements),
-            $collection->current()
-        );
-
-        next($elements);
-        $collection->next();
-
-        $this->assertSame(
-            current($elements),
-            $collection->current()
         );
     }
 
@@ -231,10 +148,38 @@ class ArrayCollectionTest extends TestCase
      */
     public function it_gets_collection_iterator($elements)
     {
+//        $collection = new ArrayCollection($elements);
+//        $iterations = 0;
+//
+//        foreach($collection->getIterator() as $key => $item) {
+//            $this->assertSame(
+//                $elements[$key],
+//                $item,
+//                "Item {$key} not match"
+//            );
+//
+//            $iterations++;
+//        }
+//
+//        $this->assertEquals(
+//            count($elements),
+//            $iterations,
+//            "Number of iterations not match"
+//        );
+    }
+
+    /**
+     * @test
+     *
+     * @param $elements
+     * @dataProvider provides_different_elements
+     */
+    public function it_runs_foreach_on_collection($elements)
+    {
         $collection = new ArrayCollection($elements);
         $iterations = 0;
 
-        foreach($collection->getIterator() as $key => $item) {
+        foreach($collection as $key => $item) {
             $this->assertSame(
                 $elements[$key],
                 $item,
@@ -600,6 +545,22 @@ class ArrayCollectionTest extends TestCase
         $this->assertEquals($squares, $collection->map(function($value){
             return $value ** 2;
         })->toArray());
+    }
+
+    /**
+     * @test
+     * @dataProvider provides_different_elements
+     * @param array $elements
+     */
+    public function it_checks_serialization_of_a_collection(array $elements)
+    {
+        $collection = new ArrayCollection($elements);
+        
+        $serialized = serialize($collection);
+
+        $unserialized = unserialize($serialized);
+
+        $this->assertEquals($collection, $unserialized);
     }
 
     /**

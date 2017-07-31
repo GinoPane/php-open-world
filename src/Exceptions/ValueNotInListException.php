@@ -12,7 +12,7 @@ use OpenWorld\Exceptions\AbstractClasses\ExceptionAbstract;
 /**
  * Class ValueNotInListException
  *
- * An exception raised when a non-listed value is used.
+ * An exception raised when a non-listed value is used
  *
  * @package OpenWorld\Exceptions
  */
@@ -49,21 +49,21 @@ class ValueNotInListException extends ExceptionAbstract
     }
 
     /**
-     * Retrieves the invalid value.
+     * Retrieves the invalid value
      *
      * @return string
      */
-    public function getValue() : string
+    public function getValue(): string
     {
         return $this->value;
     }
 
     /**
-     * Retrieves the list of valid values.
+     * Retrieves the list of valid values
      *
      * @return array
      */
-    public function getAllowedValues() : array
+    public function getAllowedValues(): array
     {
         return $this->allowedValues;
     }

@@ -7,8 +7,8 @@
 
 namespace OpenWorld\Assertions\GeneralClasses;
 
-use OpenWorld\Assertions\Interfaces\AssertionInterface;
 use OpenWorld\Exceptions\InvalidTypeException;
+use OpenWorld\Assertions\Interfaces\AssertionInterface;
 
 /**
  * Class TypeAssertion
@@ -126,7 +126,7 @@ class TypeAssertion implements AssertionInterface
      * @param array $items
      * @return void
      */
-    public function assertMultiple(array $items = [])
+    public function assertMultiple(array $items = []): void
     {
         foreach ($items as $item) {
             $this->assertSingle($item);
@@ -139,7 +139,7 @@ class TypeAssertion implements AssertionInterface
      * @param $item
      * @return array
      */
-    private function handleSimpleCheck($item) : array
+    private function handleSimpleCheck($item): array
     {
         $result = true;
 
@@ -165,7 +165,7 @@ class TypeAssertion implements AssertionInterface
      * @param $item
      * @return array
      */
-    private function handleClassInheritanceCheck($item)
+    private function handleClassInheritanceCheck($item): array
     {
         $this->assertItemIsObject($item);
 
@@ -180,7 +180,7 @@ class TypeAssertion implements AssertionInterface
 
         return [
             'result' => $result,
-            'actualType' => $actualClasses ? implode(", ", $actualClasses) : 'nothing',
+            'actualType' => $actualClasses ? implode(", ", $actualClasses): 'nothing',
             'message' => $message
         ];
     }
@@ -191,7 +191,7 @@ class TypeAssertion implements AssertionInterface
      * @param $item
      * @return array
      */
-    private function handleTraitUseCheck($item)
+    private function handleTraitUseCheck($item): array
     {
         $this->assertItemIsObject($item);
 
@@ -206,7 +206,7 @@ class TypeAssertion implements AssertionInterface
 
         return [
             'result' => $result,
-            'actualType' => $actualTraits ? implode(", ", $actualTraits) : 'nothing',
+            'actualType' => $actualTraits ? implode(", ", $actualTraits): 'nothing',
             'message' => $message
         ];
     }
@@ -217,7 +217,7 @@ class TypeAssertion implements AssertionInterface
      * @param $item
      * @return array
      */
-    private function handleInterfaceImplementationCheck($item)
+    private function handleInterfaceImplementationCheck($item): array
     {
         $this->assertItemIsObject($item);
 
@@ -232,7 +232,7 @@ class TypeAssertion implements AssertionInterface
 
         return [
             'result' => $result,
-            'actualType' => $actualInterfaces ? implode(", ", $actualInterfaces) : 'nothing',
+            'actualType' => $actualInterfaces ? implode(", ", $actualInterfaces): 'nothing',
             'message' => $message
         ];
     }

@@ -73,7 +73,7 @@ class DataFileNotFoundException extends ExceptionAbstract
      *
      * @return string
      */
-    public function getIdentifier() : string
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }
@@ -83,7 +83,7 @@ class DataFileNotFoundException extends ExceptionAbstract
      *
      * @return string
      */
-    public function getLocale() : string
+    public function getLocale(): string
     {
         return $this->locale;
     }
@@ -93,7 +93,7 @@ class DataFileNotFoundException extends ExceptionAbstract
      *
      * @return string
      */
-    public function getFallbackLocale() : string
+    public function getFallbackLocale(): string
     {
         return $this->fallbackLocale;
     }

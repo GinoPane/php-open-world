@@ -21,6 +21,8 @@ Options:
 
 ```php build/data.php --debug --cldr-version=31-d02```
 
+> Please note, that SVN is required to download new data from CLDR servers
+
 
 ### Build documentation
 
@@ -42,6 +44,6 @@ Options:
  
 ## Useful Links
 
-Standard country or area codes for statistical use (M49) - https://unstats.un.org/unsd/methodology/m49/
+[Standard country or area codes for statistical use (M49)](https://unstats.un.org/unsd/methodology/m49/)
  
  

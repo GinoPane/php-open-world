@@ -26,7 +26,6 @@ $overrideIsDir = false;
  */
 $overrideIsReadable = false;
 
-
 /**
  * Mock the system function for testing purpose
  *
@@ -77,7 +76,6 @@ function is_readable($path) {
 
 /**
  * Class FileSourceLoaderTest
- * @package OpenWorld\Data\SourceLoaders
  */
 class FileSourceLoaderTest extends TestCase
 {

@@ -12,7 +12,7 @@ use OpenWorld\Exceptions\AbstractClasses\ExceptionAbstract;
 /**
  * Class InvalidLocaleException
  *
- * An exception raised when an invalid locale specification has been hit.
+ * An exception raised when an invalid locale specification has been hit
  *
  * @package OpenWorld\Exceptions
  */
@@ -26,9 +26,9 @@ class InvalidLocaleException extends ExceptionAbstract
     protected $locale;
 
     /**
-     * Initializes the instance.
+     * Initializes the instance
      *
-     * @param mixed $locale The bad locale
+     * @param string $locale The bad locale
      */
     public function __construct(string $locale)
     {
@@ -40,11 +40,11 @@ class InvalidLocaleException extends ExceptionAbstract
     }
 
     /**
-     * Retrieves the bad locale.
+     * Retrieves the bad locale
      *
      * @return mixed
      */
-    public function getLocale() : string
+    public function getLocale(): string
     {
         return $this->locale;
     }

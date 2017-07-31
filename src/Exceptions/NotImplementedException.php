@@ -26,24 +26,25 @@ class NotImplementedException extends ExceptionAbstract
     protected $function;
 
     /**
-     * Initializes the instance.
+     * Initializes the instance
      *
      * @param string $function The function that's not implemented
      */
     public function __construct(string $function)
     {
         $this->function = $function;
+
         $message = "$function is not implemented";
 
         parent::__construct($message);
     }
 
     /**
-     * Retrieves the name of the not implemented function.
+     * Retrieves the name of the not implemented function
      *
      * @return string
      */
-    public function getFunction() : string
+    public function getFunction(): string
     {
         return $this->function;
     }

@@ -8,16 +8,14 @@
 namespace OpenWorld\Collections\GeneralClasses;
 
 use Closure;
+use OpenWorld\Collections\Traits\ImplementsArray;
 use OpenWorld\Assertions\Interfaces\AssertionInterface;
 use OpenWorld\Collections\Interfaces\CollectionInterface;
-use OpenWorld\Collections\Traits\ImplementsArray;
 
 /**
- *
  * Class AssertionStrictCollection
  *
- * TypeStrictCollection use exception-based type checking to ensure, that
- * its elements has necessary type.
+ * TypeStrictCollection uses exception-based type checking to ensure, that its elements has necessary type
  *
  * @package OpenWorld\Collections
  */
@@ -66,7 +64,7 @@ class AssertionStrictCollection implements CollectionInterface
      * @param mixed $value
      * @return CollectionInterface
      */
-    public function add($value) : CollectionInterface
+    public function add($value): CollectionInterface
     {
         $this->assertion->assertSingle($value);
 
@@ -82,7 +80,7 @@ class AssertionStrictCollection implements CollectionInterface
      * @param Closure $function
      * @return CollectionInterface
      */
-    public function map(Closure $function) : CollectionInterface
+    public function map(Closure $function): CollectionInterface
     {
         return new static($this->assertion, array_map($function, $this->elements));
     }
@@ -95,7 +93,7 @@ class AssertionStrictCollection implements CollectionInterface
      * @param int $flag
      * @return CollectionInterface
      */
-    public function filter(Closure $predicate = null, int $flag = 0) : CollectionInterface
+    public function filter(Closure $predicate = null, int $flag = 0): CollectionInterface
     {
         if ($predicate) {
             return new static($this->assertion, array_filter($this->elements, $predicate, $flag));
@@ -111,7 +109,7 @@ class AssertionStrictCollection implements CollectionInterface
      * @param Closure $predicate
      * @return array
      */
-    public function partition(Closure $predicate) : array
+    public function partition(Closure $predicate): array
     {
         list($matches, $noMatches) = $this->splitIntoParts($predicate);
 

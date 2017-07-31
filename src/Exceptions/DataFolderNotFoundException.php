@@ -57,7 +57,7 @@ class DataFolderNotFoundException extends ExceptionAbstract
      *
      * @return string
      */
-    public function getLocale() : string
+    public function getLocale(): string
     {
         return $this->locale;
     }
@@ -67,7 +67,7 @@ class DataFolderNotFoundException extends ExceptionAbstract
      *
      * @return string
      */
-    public function getFallbackLocale() : string
+    public function getFallbackLocale(): string
     {
         return $this->fallbackLocale;
     }

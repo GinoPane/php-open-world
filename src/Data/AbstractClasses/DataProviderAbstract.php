@@ -75,7 +75,7 @@ abstract class DataProviderAbstract implements DataProviderInterface
      *
      * @return SourceLoaderInterface
      */
-    public function getLoader() : SourceLoaderInterface
+    public function getLoader(): SourceLoaderInterface
     {
         return $this->loader;
     }
@@ -95,7 +95,7 @@ abstract class DataProviderAbstract implements DataProviderInterface
      *
      * @return SourceLoaderResultFactoryInterface
      */
-    public function getResultFactory() : SourceLoaderResultFactoryInterface
+    public function getResultFactory(): SourceLoaderResultFactoryInterface
     {
         return $this->resultFactory;
     }
@@ -108,7 +108,7 @@ abstract class DataProviderAbstract implements DataProviderInterface
      *
      * @return SourceLoaderResultInterface
      */
-    public function load(string $uri = '', DataProviderCondition $condition = null) : SourceLoaderResultInterface
+    public function load(string $uri, DataProviderCondition $condition): SourceLoaderResultInterface
     {
         $result = $this->getResultFactory()->get();
 
@@ -128,7 +128,7 @@ abstract class DataProviderAbstract implements DataProviderInterface
      *
      * @return bool
      */
-    public function accept(DataProviderCondition $condition) : bool
+    public function accept(DataProviderCondition $condition): bool
     {
         if ($this->getConditionKey() == $condition->getKey()) {
             return true;
@@ -142,21 +142,18 @@ abstract class DataProviderAbstract implements DataProviderInterface
      *
      * @return string
      */
-    public static function getConditionKey() : string
+    public static function getConditionKey(): string
     {
         return static::$conditionKey;
     }
 
     /**
-     * Make uri appropriate for current provider
+     * Make URI appropriate for current provider
      *
      * @param string $uri
-     * @param mixed $condition
+     * @param DataProviderCondition $condition
      *
      * @return string
      */
-    protected function adjustUri(string $uri = '', $condition) : string
-    {
-        return $uri;
-    }
+    protected abstract function adjustUri(string $uri, DataProviderCondition $condition): string;
 }

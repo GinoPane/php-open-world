@@ -44,7 +44,7 @@ class InvalidDataFileException extends ExceptionAbstract
      *
      * @return mixed
      */
-    public function getIdentifier() : string
+    public function getIdentifier(): string
     {
         return $this->identifier;
     }

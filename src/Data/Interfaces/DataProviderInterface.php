@@ -23,5 +23,5 @@ interface DataProviderInterface extends DataSourceInterface
      *
      * @return bool
      */
-    public function accept(DataProviderCondition $condition) : bool;
+    public function accept(DataProviderCondition $condition): bool;
 }

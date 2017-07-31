@@ -12,7 +12,7 @@ use OpenWorld\Exceptions\AbstractClasses\ExceptionAbstract;
 /**
  * Class InvalidTypeException
  *
- * An exception raised when wrong-type parameter was passed.
+ * An exception raised when wrong-type parameter was passed
  *
  * @package OpenWorld\Exceptions
  */
@@ -33,7 +33,7 @@ class InvalidTypeException extends ExceptionAbstract
     protected $allowedType;
 
     /**
-     * Initializes the instance.
+     * Initializes the instance
      *
      * @param string $actualType The actual type
      * @param string $allowedType The actual type
@@ -41,8 +41,8 @@ class InvalidTypeException extends ExceptionAbstract
      */
     public function __construct(string $actualType, string $allowedType, string $template = '')
     {
-        $this->actual = $actualType;
-        $this->allowed = $allowedType;
+        $this->actualType = $actualType;
+        $this->allowedType = $allowedType;
 
         $message = "'%1' is not allowed. Allowed type is: '%2'";
 
@@ -60,7 +60,7 @@ class InvalidTypeException extends ExceptionAbstract
      *
      * @return string
      */
-    public function getActualType() : string
+    public function getActualType(): string
     {
         return $this->actualType;
     }
@@ -70,7 +70,7 @@ class InvalidTypeException extends ExceptionAbstract
      *
      * @return string
      */
-    public function getAllowedType() : string
+    public function getAllowedType(): string
     {
         return $this->allowedType;
     }
@@ -85,7 +85,7 @@ class InvalidTypeException extends ExceptionAbstract
      * @param string $allowedType
      * @return string
      */
-    private function fillTemplate(string $template, string $actualType, string $allowedType) : string
+    private function fillTemplate(string $template, string $actualType, string $allowedType): string
     {
         $message = str_replace('%1', $actualType, $template);
         $message = str_replace('%2', $allowedType, $message);

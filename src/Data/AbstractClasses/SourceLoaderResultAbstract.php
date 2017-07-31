@@ -46,7 +46,7 @@ abstract class SourceLoaderResultAbstract implements SourceLoaderResultInterface
      *
      * @throws NotImplementedException
      */
-    public function asArray() : array
+    public function asArray(): array
     {
         throw new NotImplementedException(__FUNCTION__); // @codeCoverageIgnore
     }
@@ -92,7 +92,7 @@ abstract class SourceLoaderResultAbstract implements SourceLoaderResultInterface
      * @param $content
      * @return bool
      */
-    abstract public function isValid($content) : bool;
+    abstract public function isValid($content): bool;
 
     /**
      * Makes sure that $content is valid for this SourceLoaderResultAbstract instance.

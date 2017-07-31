@@ -4,13 +4,14 @@
         convertErrorsToExceptions="true"
         convertNoticesToExceptions="true"
         convertWarningsToExceptions="true"
+        strict="true"
         stopOnError="false"
         stopOnFailure="false"
         stopOnIncomplete="false"
         stopOnSkipped="false"
         stopOnRisky="false"
 >
-	<testsuites>
+    <testsuites>
         <testsuite name="Assertions tests">
             <directory>./tests/suites/Assertions/</directory>
         </testsuite>
@@ -18,28 +19,25 @@
             <directory>./tests/suites/Collections/</directory>
         </testsuite>
         <testsuite name="Data tests">
-			<directory>./tests/suites/Data/</directory>
-		</testsuite>
-        <!--<testsuite name="Territory tests">
-              <directory>./tests/suites/territory/</directory>
-          </testsuite>
-          <testsuite name="Number tests">
-              <directory>./tests/suites/number/</directory>
-          </testsuite>
-          <testsuite name="Currency tests">
-              <directory>./tests/suites/currency/</directory>
-          </testsuite>-->
-	</testsuites>
+            <directory>./tests/suites/Data/</directory>
+        </testsuite>
+        <testsuite name="Entities tests">
+            <file>./tests/suites/Entities/ScriptTest.php</file>
+            <file>./tests/suites/Entities/LanguageTest.php</file>
+            <file>./tests/suites/Entities/TerritoryTest.php</file>
+        </testsuite>
+    </testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="false">
-            <directory suffix=".php">./src/collections/</directory>
-            <directory suffix=".php">./src/assertions/</directory>
-            <directory suffix=".php">./src/data/</directory>
+            <directory suffix=".php">./src/Entities/</directory>
+            <directory suffix=".php">./src/Collections/</directory>
+            <directory suffix=".php">./src/Assertions/</directory>
+            <directory suffix=".php">./src/Data/</directory>
         </whitelist>
     </filter>
     <logging>
         <log type="coverage-html"
-             target="./tests/output/coverage/html"
+             target="./build/output/coverage/html"
              lowUpperBound="35"
              highLowerBound="70"/>
         <log type="coverage-text"

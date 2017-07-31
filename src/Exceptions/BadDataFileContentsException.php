@@ -53,7 +53,7 @@ class BadDataFileContentsException extends ExceptionAbstract
      *
      * @return string
      */
-    public function getDataFilePath() : string
+    public function getDataFilePath(): string
     {
         return $this->dataFilePath;
     }
@@ -63,7 +63,7 @@ class BadDataFileContentsException extends ExceptionAbstract
      *
      * @return string
      */
-    public function getDataFileContents() : string
+    public function getDataFileContents(): string
     {
         return $this->dataFileContents;
     }

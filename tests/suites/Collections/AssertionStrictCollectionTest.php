@@ -8,7 +8,9 @@ use OpenWorld\Collections\GeneralClasses\AssertionStrictCollection;
 
 /**
  *
- * Tests for {@see OpenWorld\Collections\AssertionStrictCollection}
+ * Tests for
+ *
+ * @see OpenWorld\Collections\GeneralClasses\AssertionStrictCollection
  *
  */
 class AssertionStrictCollectionTest extends TestCase
@@ -120,91 +122,6 @@ class AssertionStrictCollectionTest extends TestCase
         $this->assertSame(
             end($elements),
             $collection->last()
-        );
-    }
-
-    /**
-     * @test
-     *
-     * @param $elements
-     * @dataProvider provides_different_elements
-     */
-    public function it_gets_items_keys_from_the_collection($elements)
-    {
-        $collection = new AssertionStrictCollection(new TypeAssertion('integer'), $elements);
-        $this->assertSame(
-            key($elements),
-            $collection->key()
-        );
-
-        next($elements);
-
-        $collection->next();
-        $this->assertSame(
-            key($elements),
-            $collection->key()
-        );
-    }
-
-    /**
-     * @test
-     *
-     * @param $elements
-     * @dataProvider provides_different_elements
-     */
-    public function it_checks_the_next_method($elements)
-    {
-        $collection = new AssertionStrictCollection(new TypeAssertion('integer'), $elements);
-
-        while (true) {
-            $collectionNext = $collection->next();
-            $arrayNext = next($elements);
-
-            if(!$collectionNext || !$arrayNext) {
-                break;
-            }
-
-            $this->assertSame(
-                $arrayNext,
-                $collectionNext,
-                "Returned value of AssertionStrictCollection::next() and next() not match"
-            );
-
-            $this->assertSame(
-                key($elements),
-                $collection->key(),
-                "Keys not match"
-            );
-
-            $this->assertSame(
-                current($elements),
-                $collection->current(),
-                "Current values not match"
-            );
-        }
-    }
-
-    /**
-     * @test
-     *
-     * @param $elements
-     * @dataProvider provides_different_elements
-     */
-    public function it_checks_the_current_method($elements)
-    {
-        $collection = new AssertionStrictCollection(new TypeAssertion('integer'), $elements);
-
-        $this->assertSame(
-            current($elements),
-            $collection->current()
-        );
-
-        next($elements);
-        $collection->next();
-
-        $this->assertSame(
-            current($elements),
-            $collection->current()
         );
     }
 

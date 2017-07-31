@@ -7,9 +7,9 @@
 
 namespace OpenWorld\Collections\Interfaces;
 
-use ArrayAccess;
 use Closure;
 use Countable;
+use ArrayAccess;
 use IteratorAggregate;
 
 /**
@@ -25,7 +25,7 @@ interface CollectionInterface extends Countable, IteratorAggregate, ArrayAccess
      *
      * @return CollectionInterface
      */
-    public function add($element) : CollectionInterface;
+    public function add($element): CollectionInterface;
 
     /**
      * Clears the collection, removing all elements.
@@ -42,14 +42,14 @@ interface CollectionInterface extends Countable, IteratorAggregate, ArrayAccess
      *
      * @return boolean TRUE if the collection contains the element, FALSE otherwise
      */
-    public function contains($element) : bool;
+    public function contains($element): bool;
 
     /**
      * Checks whether the collection is empty (contains no elements).
      *
      * @return boolean TRUE if the collection is empty, FALSE otherwise
      */
-    public function isEmpty() : bool;
+    public function isEmpty(): bool;
 
     /**
      * Removes the element at the specified index from the collection.
@@ -77,7 +77,7 @@ interface CollectionInterface extends Countable, IteratorAggregate, ArrayAccess
      * @return boolean TRUE if the collection contains an element with the specified key/index,
      *                 FALSE otherwise
      */
-    public function containsKey($key) : bool;
+    public function containsKey($key): bool;
 
     /**
      * Gets the element at the specified key/index.
@@ -94,7 +94,7 @@ interface CollectionInterface extends Countable, IteratorAggregate, ArrayAccess
      * @return array The keys/indices of the collection, in the order of the corresponding
      *               elements in the collection
      */
-    public function getKeys() : array;
+    public function getKeys(): array;
 
     /**
      * Gets all values of the collection.
@@ -102,7 +102,7 @@ interface CollectionInterface extends Countable, IteratorAggregate, ArrayAccess
      * @return array The values of all elements in the collection, in the order they
      *               appear in the collection
      */
-    public function getValues() : array;
+    public function getValues(): array;
 
     /**
      * Sets an element in the collection at the specified key/index.
@@ -119,7 +119,7 @@ interface CollectionInterface extends Countable, IteratorAggregate, ArrayAccess
      *
      * @return array
      */
-    public function toArray() : array;
+    public function toArray(): array;
 
     /**
      * Sets the internal iterator to the first element in the collection and returns this element.
@@ -136,34 +136,13 @@ interface CollectionInterface extends Countable, IteratorAggregate, ArrayAccess
     public function last();
 
     /**
-     * Gets the key/index of the element at the current iterator position.
-     *
-     * @return int|string
-     */
-    public function key();
-
-    /**
-     * Gets the element of the collection at the current iterator position.
-     *
-     * @return mixed
-     */
-    public function current();
-
-    /**
-     * Moves the internal iterator position to the next element and returns this element.
-     *
-     * @return mixed
-     */
-    public function next();
-
-    /**
      * Tests for the existence of an element that satisfies the given predicate.
      *
      * @param Closure $predicate The predicate
      *
      * @return boolean TRUE if the predicate is TRUE for at least one element, FALSE otherwise
      */
-    public function exists(Closure $predicate) : bool;
+    public function exists(Closure $predicate): bool;
 
     /**
      * Returns all the elements of this collection that satisfy the predicate p.
@@ -174,7 +153,7 @@ interface CollectionInterface extends Countable, IteratorAggregate, ArrayAccess
      *
      * @return CollectionInterface A collection with the results of the filter operation
      */
-    public function filter(Closure $predicate = null, int $flag = 0) : CollectionInterface;
+    public function filter(Closure $predicate = null, int $flag = 0): CollectionInterface;
 
     /**
      * Tests whether the given predicate p holds for all elements of this collection.
@@ -183,7 +162,7 @@ interface CollectionInterface extends Countable, IteratorAggregate, ArrayAccess
      *
      * @return boolean TRUE, if the predicate yields TRUE for all elements, FALSE otherwise
      */
-    public function forAll(Closure $predicate) : bool;
+    public function forAll(Closure $predicate): bool;
 
     /**
      * Applies the given function to each element in the collection and returns
@@ -193,7 +172,7 @@ interface CollectionInterface extends Countable, IteratorAggregate, ArrayAccess
      *
      * @return CollectionInterface
      */
-    public function map(Closure $function) : CollectionInterface;
+    public function map(Closure $function): CollectionInterface;
 
     /**
      * Partitions this collection in two collections according to a predicate.
@@ -205,7 +184,7 @@ interface CollectionInterface extends Countable, IteratorAggregate, ArrayAccess
      *               of elements where the predicate returned TRUE, the second element
      *               contains the collection of elements where the predicate returned FALSE
      */
-    public function partition(Closure $predicate) : array;
+    public function partition(Closure $predicate): array;
 
     /**
      * Gets the index/key of a given element. The comparison of two elements is strict,
