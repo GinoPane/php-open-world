@@ -10,6 +10,7 @@ namespace OpenWorld\Entities;
 use Closure;
 use OpenWorld\Data\GeneralClasses\OpenWorldDataSource;
 use OpenWorld\Entities\AbstractClasses\EntityAbstract;
+use OpenWorld\Entities\Traits\ImplementsAliasSubstitution;
 
 /**
  * Class Language
@@ -22,6 +23,8 @@ use OpenWorld\Entities\AbstractClasses\EntityAbstract;
  */
 class Language extends EntityAbstract
 {
+    use ImplementsAliasSubstitution;
+
     /**
      * 2/3-letter language code
      *
@@ -30,18 +33,16 @@ class Language extends EntityAbstract
     protected $code = '';
 
     /**
-     * @var string
-     */
-    protected $keySourceUri = 'language.codes.json';
-
-    /**
      * Script constructor
      *
      * @param string $code Should be a valid ISO 639 2/3-letter language code. This code is being validated
      */
     public function __construct(string $code)
     {
-        $this->assertCode($code, $this->getDataSourceLoader());
+        $this->keySourceUri = 'language.codes.json';
+        $this->aliasSourceUri = 'language.alias.json';
+
+        $this->assertCode($this->getCodeFromAlias($code, $this->getDataSourceLoader()));
     }
 
     /**
@@ -58,13 +59,12 @@ class Language extends EntityAbstract
      * Asserts that the code value is valid (exists within the source)
      *
      * @param string $code
-     * @param OpenWorldDataSource $dataSource
      * @param Closure|null $keyPredicate
      *
      * @return void
      */
-    public function assertCode(string $code, OpenWorldDataSource $dataSource, Closure $keyPredicate = null): void
+    public function assertCode(string $code, Closure $keyPredicate = null): void
     {
-        $this->code = $this->getAssertedCode($code, $dataSource, $keyPredicate);
+        $this->code = $this->getAssertedCode($code, $keyPredicate);
     }
 }

@@ -25,14 +25,19 @@ class TerritoryTest extends PHPUnit_Framework_TestCase
      * @param $code
      * @param $codeType
      * @param array $expectedCodes
+     * @param string $expectedOriginalCode
      *
      * @dataProvider getValidTerritoryCodes
      */
-    public function it_checks_that_codes_filled_correctly($code, $codeType, array $expectedCodes)
+    public function it_checks_that_codes_filled_correctly($code, $codeType, array $expectedCodes, $expectedOriginalCode = null)
     {
         $territory = new Territory($code, $codeType);
 
-        $this->assertEquals($code, $territory->getCode());
+        if (is_null($expectedOriginalCode)) {
+            $expectedOriginalCode = $code;
+        }
+
+        $this->assertEquals($expectedOriginalCode, $territory->getCode());
 
         foreach ($expectedCodes as $codeType => $codeValue) {
             $this->assertEquals($codeValue, $territory->getCodeByType($codeType));
@@ -110,13 +115,20 @@ class TerritoryTest extends PHPUnit_Framework_TestCase
                 Territory::FIPS_10      => null,
                 Territory::UNM_49       => '155',
             ]],
-            ['XPP', '', [
+            ['XPP', Territory::ISO_3166_A3, [
                 Territory::ISO_3166_A2  => 'XP',
                 Territory::ISO_3166_A3  => 'XPP',
                 Territory::ISO_3166_N   => '988',
                 Territory::FIPS_10      => null,
                 Territory::UNM_49       => null,
             ]],
+            ['172', '', [
+                Territory::ISO_3166_A2  => 'RU',
+                Territory::ISO_3166_A3  => 'RUS',
+                Territory::ISO_3166_N   => '643',
+                Territory::FIPS_10      => 'RS',
+                Territory::UNM_49       => null,
+            ], 'RU'],
         ];
     }
 

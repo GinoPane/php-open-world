@@ -26,18 +26,7 @@ class ScriptTest extends OpenWorldTestCase
         $this->setInternalProperty($script, 'keySourceUri', 'foo');
         $assertKey = $this->getInternalMethod($script, 'getAssertedCode');
 
-        $dataLoader = new OpenWorldDataSource(
-            new GeneralProvider(
-                new FileSourceLoader(),
-                new JsonResultFactory()
-            ),
-            new LocaleProvider(
-                new FileSourceLoader(),
-                new JsonResultFactory()
-            )
-        );
-
-        $assertKey->invoke($script, '', $dataLoader);
+        $assertKey->invoke($script, '');
     }
 
     /**
@@ -76,20 +65,11 @@ class ScriptTest extends OpenWorldTestCase
     {
         $script = $this->getMockBuilder(Script::class)->setMethodsExcept(['getAssertedCode'])->disableOriginalConstructor()->getMock();
 
+        $this->setInternalProperty($script, 'keySourceUri', 'script.codes.json');
+
         $assertKey = $this->getInternalMethod($script, 'getAssertedCode');
 
-        $dataLoader = new OpenWorldDataSource(
-            new GeneralProvider(
-                new FileSourceLoader(),
-                new JsonResultFactory()
-            ),
-            new LocaleProvider(
-                new FileSourceLoader(),
-                new JsonResultFactory()
-            )
-        );
-
-        $validKey = $assertKey->invoke($script, $scriptCode, $dataLoader, function($key, $source) {
+        $validKey = $assertKey->invoke($script, $scriptCode, function($key, $source) {
             $keyIndex = array_search(strtolower($key), array_map('strtolower', $source));
 
             return $keyIndex !== false ? $source[$keyIndex] : $keyIndex;
@@ -107,20 +87,11 @@ class ScriptTest extends OpenWorldTestCase
 
         $script = $this->getMockBuilder(Script::class)->setMethodsExcept(['getAssertedCode'])->disableOriginalConstructor()->getMock();
 
+        $this->setInternalProperty($script, 'keySourceUri', 'script.codes.json');
+
         $assertKey = $this->getInternalMethod($script, 'getAssertedCode');
 
-        $dataLoader = new OpenWorldDataSource(
-            new GeneralProvider(
-                new FileSourceLoader(),
-                new JsonResultFactory()
-            ),
-            new LocaleProvider(
-                new FileSourceLoader(),
-                new JsonResultFactory()
-            )
-        );
-
-        $validKey = $assertKey->invoke($script, '', $dataLoader, function() {
+        $validKey = $assertKey->invoke($script, 'Cyrl', function() {
             return false;
         });
 

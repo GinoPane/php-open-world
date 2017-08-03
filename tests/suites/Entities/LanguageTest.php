@@ -13,12 +13,12 @@ class LanguageTest extends OpenWorldTestCase
      *
      * @dataProvider getValidLanguageCodes
      */
-    public function it_creates_language_for_valid_identifier($languageCode)
+    public function it_creates_language_for_valid_identifier($languageCode, $expectedCode)
     {
         $script = new Language($languageCode);
 
         $this->assertInstanceOf(Language::class, $script);
-        $this->assertEquals(strtolower($languageCode), strtolower($script->getCode()));
+        $this->assertEquals(strtolower($expectedCode), strtolower($script->getCode()));
     }
 
     /**
@@ -27,11 +27,15 @@ class LanguageTest extends OpenWorldTestCase
     public function getValidLanguageCodes()
     {
         return [
-            ['RU'],
-            ['be'],
-            ['eN'],
-            ['zu'],
-            ['iT']
+            ['RU', 'ru'],
+            ['be', 'be'],
+            ['eN', 'en'],
+            ['zu', 'zu'],
+            ['iT', 'it'],
+            ['rus', 'ru'],
+            ['bel', 'be'],
+            ['rum', 'ro'],
+            ['wel', 'cy']
         ];
     }
 }

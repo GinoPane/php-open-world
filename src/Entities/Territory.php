@@ -8,9 +8,9 @@
 namespace OpenWorld\Entities;
 
 use Closure;
-use OpenWorld\Data\GeneralClasses\OpenWorldDataSource;
 use OpenWorld\Entities\AbstractClasses\EntityAbstract;
 use OpenWorld\Exceptions\InvalidTerritoryCodeException;
+use OpenWorld\Entities\Traits\ImplementsAliasSubstitution;
 use OpenWorld\Exceptions\InvalidTerritoryCodeTypeException;
 
 /**
@@ -20,12 +20,7 @@ use OpenWorld\Exceptions\InvalidTerritoryCodeTypeException;
  */
 class Territory extends EntityAbstract
 {
-    /**
-     * Source URI which is a storage for assertion data
-     *
-     * @var string
-     */
-    protected $keySourceUri = 'territory.codes.json';
+    use ImplementsAliasSubstitution;
 
     /**
      * Territory code types
@@ -110,7 +105,10 @@ class Territory extends EntityAbstract
      */
     public function __construct(string $code, string $codeType = '')
     {
-        $this->assertCode($code, $this->getDataSourceLoader(), function($code, $source) use ($codeType) {
+        $this->keySourceUri = 'territory.codes.json';
+        $this->aliasSourceUri = 'territory.alias.json';
+
+        $this->assertCode($code, function($code, $source) use ($codeType) {
             return $this->fillTerritoryCodes($code, $codeType, $source);
         });
     }
@@ -119,12 +117,11 @@ class Territory extends EntityAbstract
      * Asserts that the code value is valid (exists within the source)
      *
      * @param string $code
-     * @param OpenWorldDataSource $dataSource
      * @param Closure|null $keyPredicate
      *
      * @return void
      */
-    public function assertCode(string $code, OpenWorldDataSource $dataSource, Closure $keyPredicate = null): void
+    public function assertCode(string $code, Closure $keyPredicate = null): void
     {
         list(
             self::ISO_3166_A2   => $this->iso3166alpha2,
@@ -132,7 +129,7 @@ class Territory extends EntityAbstract
             self::ISO_3166_N    => $this->iso3166numeric,
             self::FIPS_10       => $this->fips10,
             self::UNM_49        => $this->unm49
-        ) = $this->getAssertedCode($code, $dataSource, $keyPredicate);
+        ) = $this->getAssertedCode($code, $keyPredicate);
     }
 
     /**
@@ -203,6 +200,8 @@ class Territory extends EntityAbstract
 
         //detect codeType by looking through the source
         if (!$codeType) {
+            $code = $this->getCodeFromAlias($code, $this->getDataSourceLoader());
+
             foreach($sourceKeysToCheck as $key) {
                 if (!empty($source[$key]) && in_array($code, $source[$key])) {
                     $keyParts = explode('_', $key);

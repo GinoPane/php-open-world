@@ -30,18 +30,15 @@ class Script extends EntityAbstract
     protected $code = '';
 
     /**
-     * @var string
-     */
-    protected $keySourceUri = 'script.codes.json';
-
-    /**
      * Script constructor
      *
      * @param string $code Should be a valid ISO 15924 4-letter script code. This code is being validated
      */
     public function __construct(string $code)
     {
-        $this->assertCode($code, $this->getDataSourceLoader());
+        $this->keySourceUri = 'script.codes.json';
+
+        $this->assertCode($code);
     }
 
     /**
@@ -58,13 +55,12 @@ class Script extends EntityAbstract
      * Asserts that the code value is valid (exists within the source)
      *
      * @param string $code
-     * @param OpenWorldDataSource $dataSource
      * @param Closure|null $keyPredicate
      *
      * @return void
      */
-    public function assertCode(string $code, OpenWorldDataSource $dataSource, Closure $keyPredicate = null): void
+    public function assertCode(string $code, Closure $keyPredicate = null): void
     {
-        $this->code = $this->getAssertedCode($code, $dataSource, $keyPredicate);
+        $this->code = $this->getAssertedCode($code, $keyPredicate);
     }
 }

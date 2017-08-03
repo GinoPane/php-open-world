@@ -2,8 +2,8 @@
         colors="true"
         bootstrap="./tests/bootstrap.php"
         convertErrorsToExceptions="true"
-        convertNoticesToExceptions="true"
-        convertWarningsToExceptions="true"
+        convertNoticesToExceptions="false"
+        convertWarningsToExceptions="false"
         strict="true"
         stopOnError="false"
         stopOnFailure="false"
@@ -25,6 +25,7 @@
             <file>./tests/suites/Entities/ScriptTest.php</file>
             <file>./tests/suites/Entities/LanguageTest.php</file>
             <file>./tests/suites/Entities/TerritoryTest.php</file>
+            <file>./tests/suites/Entities/LocaleTest.php</file>
         </testsuite>
     </testsuites>
     <filter>

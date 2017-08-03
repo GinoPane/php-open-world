@@ -24,7 +24,7 @@ abstract class EntityAbstract
 {
 
     /**
-     * Source URI which is a storage for assertion data
+     * Key source URI which is a storage for assertion data
      *
      * @var string
      */
@@ -34,34 +34,32 @@ abstract class EntityAbstract
      * Asserts that the code value is valid (exists within the source)
      *
      * @param string $code
-     * @param OpenWorldDataSource $dataSource
      * @param Closure $keyPredicate use Closure is your assert logic is more complicated than array check only
      *
      * @throws InvalidKeyPropertyValueException
      * @return void
      */
-    public abstract function assertCode(string $code, OpenWorldDataSource $dataSource, Closure $keyPredicate = null): void;
+    public abstract function assertCode(string $code, Closure $keyPredicate = null): void;
 
     /**
      * Asserts that the code value is valid (exists within the source)
      *
      * @param string $code
-     * @param OpenWorldDataSource $dataSource
      * @param Closure $keyPredicate use Closure is your assert logic is more complicated than array check only
      *
      * @throws InvalidKeyPropertyValueException
      * @return mixed
      */
-    public function getAssertedCode(string $code, OpenWorldDataSource $dataSource, Closure $keyPredicate = null)
+    public function getAssertedCode(string $code, Closure $keyPredicate = null)
     {
-        $keySource = $dataSource->loadGeneral($this->keySourceUri)->asArray();
+        $keySource = $this->getDataSourceLoader()->loadGeneral($this->keySourceUri)->asArray();
 
         if (
             (is_null($keyPredicate) && ($keyIndex = array_search(strtolower($code), array_map('strtolower', $keySource))) === false)
             ||
             (!is_null($keyPredicate) && !($validKeyValue = $keyPredicate($code, $keySource)))
         ) {
-            throw new InvalidKeyPropertyValueException($code, __CLASS__);
+            throw new InvalidKeyPropertyValueException($code, get_called_class());
         } else {
             if (!empty($validKeyValue)) {
                 return $validKeyValue;
