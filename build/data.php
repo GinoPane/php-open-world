@@ -1007,6 +1007,43 @@ function handleTerritoryAlias($supplementalData = [])
 }
 
 /**
+ * Extract script alias data
+ *
+ * @param array $supplementalData
+ * @throws Exception
+ */
+function handleScriptAlias($supplementalData = [])
+{
+    echo "Extract script alias mapping... \n";
+
+    if (!isset($supplementalData['supplementalData']['metadata']['alias']['scriptAlias'])) {
+        throw new Exception('Bad script alias data!');
+    } else {
+        $scriptAlias = [];
+        $aliasData = $supplementalData['supplementalData']['metadata']['alias']['scriptAlias'];
+
+        if (isset($aliasData['@attributes'])) {
+            $scriptAlias[$aliasData['@attributes']['type']] = [
+                'replacement' => $aliasData['@attributes']['replacement'],
+                'reason' => $aliasData['@attributes']['reason']
+            ];
+        } else {
+            foreach ($aliasData as $alias) {
+                $scriptAlias[$alias['@attributes']['type']] = [
+                    'replacement' => $alias['@attributes']['replacement'],
+                    'reason' => $alias['@attributes']['reason']
+                ];
+            }
+        }
+
+        saveJsonFile($scriptAlias, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'script.alias.json');
+        putSupplementalFileToFileList('script.alias.json');
+
+        echo "Done.\n";
+    }
+}
+
+/**
  * Extract likely subtags data
  *
  * @param array $supplementalData
@@ -1622,6 +1659,7 @@ function buildSupplementalData()
             $supplementalMetaDataFile => [
                 'handleLanguageAlias',
                 'handleTerritoryAlias',
+                'handleScriptAlias'
             ]
         ],
         'likelySubtags' => [
