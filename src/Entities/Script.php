@@ -8,8 +8,8 @@
 namespace OpenWorld\Entities;
 
 use Closure;
-use OpenWorld\Data\GeneralClasses\OpenWorldDataSource;
 use OpenWorld\Entities\AbstractClasses\EntityAbstract;
+use OpenWorld\Entities\Traits\ImplementsAliasSubstitution;
 
 /**
  * Class Script
@@ -22,6 +22,8 @@ use OpenWorld\Entities\AbstractClasses\EntityAbstract;
  */
 class Script extends EntityAbstract
 {
+    use ImplementsAliasSubstitution;
+
     /**
      * 4-letter script code
      *
@@ -37,8 +39,9 @@ class Script extends EntityAbstract
     public function __construct(string $code)
     {
         $this->keySourceUri = 'script.codes.json';
+        $this->aliasSourceUri = 'script.alias.json';
 
-        $this->assertCode($code);
+        $this->assertCode($this->getCodeFromAlias($code, $this->getDataSourceLoader()));
     }
 
     /**

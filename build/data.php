@@ -1019,6 +1019,7 @@ function handleScriptAlias($supplementalData = [])
     if (!isset($supplementalData['supplementalData']['metadata']['alias']['scriptAlias'])) {
         throw new Exception('Bad script alias data!');
     } else {
+        $scriptCodes = getJsonDataFileContentsAsArray(DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'script.codes.json');
         $scriptAlias = [];
         $aliasData = $supplementalData['supplementalData']['metadata']['alias']['scriptAlias'];
 
@@ -1027,16 +1028,25 @@ function handleScriptAlias($supplementalData = [])
                 'replacement' => $aliasData['@attributes']['replacement'],
                 'reason' => $aliasData['@attributes']['reason']
             ];
+
+            if (!in_array($aliasData['@attributes']['replacement'], $scriptCodes)) {
+                array_push($scriptCodes, $aliasData['@attributes']['replacement']);
+            }
         } else {
             foreach ($aliasData as $alias) {
                 $scriptAlias[$alias['@attributes']['type']] = [
                     'replacement' => $alias['@attributes']['replacement'],
                     'reason' => $alias['@attributes']['reason']
                 ];
+
+                if (!in_array($alias['@attributes']['replacement'], $scriptCodes)) {
+                    array_push($scriptCodes, $alias['@attributes']['replacement']);
+                }
             }
         }
 
         saveJsonFile($scriptAlias, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'script.alias.json');
+        saveJsonFile($scriptCodes, DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'script.codes.json');
         putSupplementalFileToFileList('script.alias.json');
 
         echo "Done.\n";

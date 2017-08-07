@@ -99,7 +99,24 @@ class ScriptTest extends OpenWorldTestCase
     }
 
     /**
+     * @param $scriptCode
+     * @param $expectedCode
+     *
+     * @test
+     * @dataProvider getValidScriptAliasCodes
+     */
+    public function it_checks_alias_substitution($scriptCode, $expectedCode)
+    {
+        $script = new Script($scriptCode);
+
+        $this->assertInstanceOf(Script::class, $script);
+        $this->assertEquals(strtolower($expectedCode), strtolower($script->getCode()));
+    }
+
+    /**
      * Provides valid script codes data
+     *
+     * @return array
      */
     public function getValidScriptCodes()
     {
@@ -108,7 +125,19 @@ class ScriptTest extends OpenWorldTestCase
             ['Latn'],
             ['Takr'],
             ['cyrl'],
-            ['lAtN']
+            ['lAtN'],
+        ];
+    }
+
+    /**
+     * Provides script code aliases
+     *
+     * @return array
+     */
+    public function getValidScriptAliasCodes()
+    {
+        return [
+            ['Qaai', 'Zinh']
         ];
     }
 }

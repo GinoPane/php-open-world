@@ -81,7 +81,7 @@ abstract class EntityAbstract
      *
      * @return OpenWorldDataSource
      */
-    protected function getDataSourceLoader(): OpenWorldDataSource
+    protected static function getDataSourceLoader(): OpenWorldDataSource
     {
         return new OpenWorldDataSource(
             new GeneralProvider(

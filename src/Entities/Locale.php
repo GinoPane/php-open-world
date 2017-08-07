@@ -49,7 +49,7 @@ class Locale extends EntityAbstract
      *
      * @var string
      */
-    private $likelySubtagsSourceUri = "likely.subtags.json";
+    private static $likelySubtagsSourceUri = "likely.subtags.json";
 
     /**
      * Locale constructor
@@ -67,6 +67,31 @@ class Locale extends EntityAbstract
         if (!$script || !$territory) {
             $this->fillMissingSubtags();
         }
+    }
+
+    /**
+     * Creates Locale instance from locale string. String will be passed through likelySubtags verification.
+     * Locale string should be formatted in a proper way: language[[_script][_territory]]
+     *
+     * @param string $localeString
+     *
+     * @return Locale
+     */
+    public static function fromString(string $localeString): Locale
+    {
+        $localeString = str_replace('-', '_', $localeString);
+
+        if ($subtags = self::getSubtags($localeString)) {
+            list('locale' => $languageCode, 'script' => $scriptCode, 'territory' => $territoryCode) = $subtags;
+        } else {
+            @list($languageCode, $scriptCode, $territoryCode) = explode("_", $localeString, 3);
+        }
+
+        return new Locale(
+            new Language($languageCode),
+            $scriptCode ? new Script($scriptCode) : null,
+            $territoryCode ? new Territory($territoryCode) : null
+        );
     }
 
     /**
@@ -114,23 +139,69 @@ class Locale extends EntityAbstract
      */
     public function getCode(): string
     {
-        // TODO: Implement getCode() method.
+        $code = $this->getLanguage()->getCode();
+
+        if ($this->getScript()) {
+            $code .= "_{$this->getScript()->getCode()}";
+        }
+
+        if ($this->getTerritory()) {
+            $code .= "_{$this->getTerritory()->getCode()}";
+        }
+
+        return $code;
+    }
+
+    /**
+     * Gets the array of relevant subtags
+     *
+     * @param string $languageString
+     * @param Script|null $script
+     * @param Territory|null $territory
+     * @return array
+     */
+    protected static function getSubtags(string $languageString, Script $script = null, Territory $territory = null): array
+    {
+        $likelySubtags = self::getDataSourceLoader()->loadGeneral(self::$likelySubtagsSourceUri)->asArray();
+
+        $subtagsKeysToCheck = [];
+
+        if (is_null($script) && $territory) {
+            $subtagsKeysToCheck[] = "{$languageString}_{$territory->getCode()}";
+        } elseif ($script && is_null($territory)) {
+            $subtagsKeysToCheck[] = "{$languageString}_{$script->getCode()}";
+        }
+
+        $subtagsKeysToCheck[] = $languageString;
+
+        $subtags = [];
+
+        foreach($subtagsKeysToCheck as $key) {
+            if (!empty($likelySubtags[$key])) {
+                $subtags = $likelySubtags[$key];
+
+                break;
+            }
+        }
+
+        return $subtags;
     }
 
     /**
      * Tries to fill missing subtags (script, territory) from likely-subtags data.
-     * Missing subtags are not a big problem, so Exceptions would be converted to warnings
+     * Missing subtags are not a big problem, so Exceptions would be converted to warnings.
+     * Important: likely subtags may contain deprecated languages within full locale codes, so they would be
+     * handled by Locale::createFromString
      *
+     * @see Locale::createFromString
      * @return void
      */
     protected function fillMissingSubtags(): void
     {
         try {
-            $likelySubtags = $this->getDataSourceLoader()->loadGeneral($this->likelySubtagsSourceUri)->asArray();
+            $subtags = self::getSubtags($this->getLanguage()->getCode(), $this->getScript(), $this->getTerritory());
 
-            if (!empty($likelySubtags[$this->language->getCode()])) {
-                $subtags = $likelySubtags[$this->language->getCode()];
-
+            if ($subtags) {
                 if (is_null($this->getScript())) {
                     $this->script = new Script($subtags['script']);
                 }
