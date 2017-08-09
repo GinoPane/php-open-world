@@ -63,7 +63,7 @@ class Language extends EntityAbstract
      *
      * @return void
      */
-    public function assertCode(string $code, Closure $keyPredicate = null): void
+    protected function assertCode(string $code, Closure $keyPredicate = null): void
     {
         $this->code = $this->getAssertedCode($code, $keyPredicate);
     }

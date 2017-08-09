@@ -79,7 +79,8 @@ class LocaleTest extends PHPUnit_Framework_TestCase
             ['rus_Cyrl_BEL', 'ru_Cyrl_BE'],
             ['und_NC', 'fr_Latn_NC'],
             ['und_Hani', 'zh_Hani_CN'],
-            ['und_Latn_TN', 'fr_Latn_TN']
+            ['und_Latn_TN', 'fr_Latn_TN'],
+            ['es_419', 'es_Latn_419']
         ];
     }
 }

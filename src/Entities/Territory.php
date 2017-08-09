@@ -114,6 +114,57 @@ class Territory extends EntityAbstract
     }
 
     /**
+     * Get the code for original code type
+     *
+     * @return string
+     */
+    public function getCode(): string
+    {
+        return $this->getCodeByType($this->originCodeType);
+    }
+
+    /**
+     * Get the code by supplied code type
+     *
+     * @param string $type
+     * @return null|string
+     */
+    public function getCodeByType(string $type = self::ISO_3166_A2): ?string
+    {
+        $this->assertCodeType($type);
+
+        return $this->{$type};
+    }
+
+    /**
+     * Get codes of territory's parents. By default it gets all parents until it reaches the root.
+     * This behavior is controlled by $expand parameter which is 'true' by default. Set it to 'false'
+     * if you do not want to get the full list of parents except the closest one.
+     *
+     * @param bool $expand
+     *
+     * @return array
+     */
+    public function getParentCodes($expand = true): array
+    {
+
+    }
+
+    /**
+     * Get codes of territory's children. By default it gets only closest first-level children.
+     * This behavior is controlled by $expand parameter which is 'false' by default. Set it to 'true'
+     * if you want to get the full list of children expanded to specific territories.
+     *
+     * @param bool $expand
+     *
+     * @return array
+     */
+    public function getChildrenCodes($expand = false): array
+    {
+
+    }
+
+    /**
      * Asserts that the code value is valid (exists within the source)
      *
      * @param string $code
@@ -121,7 +172,7 @@ class Territory extends EntityAbstract
      *
      * @return void
      */
-    public function assertCode(string $code, Closure $keyPredicate = null): void
+    protected function assertCode(string $code, Closure $keyPredicate = null): void
     {
         list(
             self::ISO_3166_A2   => $this->iso3166alpha2,
@@ -144,29 +195,6 @@ class Territory extends EntityAbstract
         if (!in_array($codeType, self::$validCodeTypes) || !property_exists($this, $codeType)) {
             throw new InvalidTerritoryCodeTypeException($codeType);
         }
-    }
-
-    /**
-     * Get the code for original code type
-     *
-     * @return string
-     */
-    public function getCode(): string
-    {
-        return $this->getCodeByType($this->originCodeType);
-    }
-
-    /**
-     * Get the code by supplied code type
-     *
-     * @param string $type
-     * @return null|string
-     */
-    public function getCodeByType(string $type = self::ISO_3166_A2): ?string
-    {
-        $this->assertCodeType($type);
-
-        return $this->{$type};
     }
 
     /**

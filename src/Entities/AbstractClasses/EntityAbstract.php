@@ -8,11 +8,8 @@
 namespace OpenWorld\Entities\AbstractClasses;
 
 use Closure;
+use OpenWorld\OpenWorld;
 use OpenWorld\Data\GeneralClasses\OpenWorldDataSource;
-use OpenWorld\Data\GeneralClasses\Providers\GeneralProvider;
-use OpenWorld\Data\GeneralClasses\Providers\LocaleProvider;
-use OpenWorld\Data\GeneralClasses\SourceLoaderResults\Factories\JsonResultFactory;
-use OpenWorld\Data\GeneralClasses\SourceLoaders\FileSourceLoader;
 use OpenWorld\Exceptions\InvalidKeyPropertyValueException;
 
 /**
@@ -39,7 +36,7 @@ abstract class EntityAbstract
      * @throws InvalidKeyPropertyValueException
      * @return void
      */
-    public abstract function assertCode(string $code, Closure $keyPredicate = null): void;
+    protected abstract function assertCode(string $code, Closure $keyPredicate = null): void;
 
     /**
      * Asserts that the code value is valid (exists within the source)
@@ -83,15 +80,6 @@ abstract class EntityAbstract
      */
     protected static function getDataSourceLoader(): OpenWorldDataSource
     {
-        return new OpenWorldDataSource(
-            new GeneralProvider(
-                new FileSourceLoader(),
-                new JsonResultFactory()
-            ),
-            new LocaleProvider(
-                new FileSourceLoader(),
-                new JsonResultFactory()
-            )
-        );
+        return OpenWorld::getDataSourceLoader();
     }
 }

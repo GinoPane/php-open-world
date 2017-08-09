@@ -6,6 +6,11 @@
  */
 
 namespace OpenWorld;
+use OpenWorld\Data\GeneralClasses\OpenWorldDataSource;
+use OpenWorld\Data\GeneralClasses\Providers\GeneralProvider;
+use OpenWorld\Data\GeneralClasses\Providers\LocaleProvider;
+use OpenWorld\Data\GeneralClasses\SourceLoaderResults\Factories\JsonResultFactory;
+use OpenWorld\Data\GeneralClasses\SourceLoaders\FileSourceLoader;
 
 /**
  * Class OpenWorld
@@ -16,8 +21,38 @@ namespace OpenWorld;
  */
 class OpenWorld
 {
+    /**
+     * DataSource instance
+     *
+     * @var OpenWorldDataSource
+     */
+    private static $dataSource = null;
+
     public static function get()
     {
 
+    }
+
+    /**
+     * Gets DataSource instance for loading data sources
+     *
+     * @return OpenWorldDataSource
+     */
+    public static function getDataSourceLoader(): OpenWorldDataSource
+    {
+        if (!self::$dataSource) {
+            self::$dataSource = new OpenWorldDataSource(
+                new GeneralProvider(
+                    new FileSourceLoader(),
+                    new JsonResultFactory()
+                ),
+                new LocaleProvider(
+                    new FileSourceLoader(),
+                    new JsonResultFactory()
+                )
+            );
+        }
+
+        return self::$dataSource;
     }
 }

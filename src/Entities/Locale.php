@@ -85,6 +85,15 @@ class Locale extends EntityAbstract
             list('locale' => $languageCode, 'script' => $scriptCode, 'territory' => $territoryCode) = $subtags;
         } else {
             @list($languageCode, $scriptCode, $territoryCode) = explode("_", $localeString, 3);
+
+            if ($scriptCode && !$territoryCode) {
+                try {
+                    new Script($scriptCode);
+                } catch (InvalidKeyPropertyValueException $e) {
+                    $territoryCode = $scriptCode;
+                    $scriptCode = null;
+                }
+            }
         }
 
         return new Locale(
@@ -127,7 +136,7 @@ class Locale extends EntityAbstract
      * @throws InvalidKeyPropertyValueException
      * @return void
      */
-    public function assertCode(string $code, Closure $keyPredicate = null): void
+    protected function assertCode(string $code, Closure $keyPredicate = null): void
     {
         // TODO: Implement assertCode() method.
     }
