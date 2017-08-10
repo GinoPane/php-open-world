@@ -111,7 +111,8 @@ class Territory extends EntityAbstract
     public function __construct(string $code, string $codeType = '')
     {
         $this->keySourceUri = 'territory.codes.json';
-        $this->aliasSourceUri = 'territory.alias.json';
+
+        self::$aliasSourceUri = 'territory.alias.json';
 
         $this->assertCode($code, function($code, $source) use ($codeType) {
             return $this->fillTerritoryCodes($code, $codeType, $source);
@@ -261,7 +262,7 @@ class Territory extends EntityAbstract
 
         //detect codeType by looking through the source
         if (!$codeType) {
-            $code = $this->getCodeFromAlias($code, $this->getDataSourceLoader());
+            $code = self::getCodeFromAlias($code, self::getDataSourceLoader());
 
             foreach($sourceKeysToCheck as $key) {
                 if (!empty($source[$key]) && in_array($code, $source[$key])) {

@@ -8,8 +8,8 @@
 namespace OpenWorld\Entities;
 use Closure;
 use Exception;
-use OpenWorld\Data\GeneralClasses\OpenWorldDataSource;
 use OpenWorld\Entities\AbstractClasses\EntityAbstract;
+use OpenWorld\Entities\Traits\ImplementsAliasSubstitution;
 use OpenWorld\Exceptions\InvalidKeyPropertyValueException;
 
 /**
@@ -19,6 +19,8 @@ use OpenWorld\Exceptions\InvalidKeyPropertyValueException;
  */
 class Locale extends EntityAbstract
 {
+    use ImplementsAliasSubstitution;
+
     /**
      * Language entity
      *
@@ -60,6 +62,8 @@ class Locale extends EntityAbstract
      */
     public function __construct(Language $language, Script $script = null, Territory $territory = null)
     {
+        self::$aliasSourceUri = 'language.alias.json';
+
         $this->language = $language;
         $this->script = $script;
         $this->territory = $territory;
@@ -80,6 +84,8 @@ class Locale extends EntityAbstract
     public static function fromString(string $localeString): Locale
     {
         $localeString = str_replace('-', '_', $localeString);
+
+        $localeString = self::getCodeFromAlias($localeString, self::getDataSourceLoader());
 
         if ($subtags = self::getSubtags($localeString)) {
             list('locale' => $languageCode, 'script' => $scriptCode, 'territory' => $territoryCode) = $subtags;

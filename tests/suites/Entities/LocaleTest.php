@@ -80,7 +80,8 @@ class LocaleTest extends PHPUnit_Framework_TestCase
             ['und_NC', 'fr_Latn_NC'],
             ['und_Hani', 'zh_Hani_CN'],
             ['und_Latn_TN', 'fr_Latn_TN'],
-            ['es_419', 'es_Latn_419']
+            ['es_419', 'es_Latn_419'],
+            ['aa_SAAHO', 'ssy_Latn_ER']
         ];
     }
 }

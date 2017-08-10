@@ -40,9 +40,10 @@ class Language extends EntityAbstract
     public function __construct(string $code)
     {
         $this->keySourceUri = 'language.codes.json';
-        $this->aliasSourceUri = 'language.alias.json';
 
-        $this->assertCode($this->getCodeFromAlias($code, $this->getDataSourceLoader()));
+        self::$aliasSourceUri = 'language.alias.json';
+
+        $this->assertCode(self::getCodeFromAlias($code, self::getDataSourceLoader()));
     }
 
     /**

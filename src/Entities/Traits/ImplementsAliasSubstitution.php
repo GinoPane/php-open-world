@@ -22,7 +22,7 @@ trait ImplementsAliasSubstitution
      *
      * @var string
      */
-    protected $aliasSourceUri = '';
+    protected static $aliasSourceUri = '';
 
     /**
      * Checks if the code is actually an alias for a real code
@@ -33,9 +33,9 @@ trait ImplementsAliasSubstitution
      *
      * @return string
      */
-    protected function getCodeFromAlias(string $code, OpenWorldDataSource $dataSource): string
+    protected static function getCodeFromAlias(string $code, OpenWorldDataSource $dataSource): string
     {
-        $aliasData = $dataSource->loadGeneral($this->aliasSourceUri);
+        $aliasData = $dataSource->loadGeneral(self::$aliasSourceUri);
 
         if (!empty($aliasData[$code])) {
             $replacementData = $aliasData[$code];

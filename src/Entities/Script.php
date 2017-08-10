@@ -39,9 +39,10 @@ class Script extends EntityAbstract
     public function __construct(string $code)
     {
         $this->keySourceUri = 'script.codes.json';
-        $this->aliasSourceUri = 'script.alias.json';
 
-        $this->assertCode($this->getCodeFromAlias($code, $this->getDataSourceLoader()));
+        self::$aliasSourceUri = 'script.alias.json';
+
+        $this->assertCode(self::getCodeFromAlias($code, self::getDataSourceLoader()));
     }
 
     /**
