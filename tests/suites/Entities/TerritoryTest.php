@@ -29,7 +29,7 @@ class TerritoryTest extends PHPUnit_Framework_TestCase
      *
      * @dataProvider getValidTerritoryCodes
      */
-    public function it_checks_that_codes_filled_correctly($code, $codeType, array $expectedCodes, $expectedOriginalCode = null)
+    public function it_checks_that_codes_filled_correctly(string $code, string $codeType, array $expectedCodes, string $expectedOriginalCode = null)
     {
         $territory = new Territory($code, $codeType);
 
@@ -63,7 +63,7 @@ class TerritoryTest extends PHPUnit_Framework_TestCase
      * @param $code
      * @param $codeType
      */
-    public function it_throws_exception_for_invalid_code($code, $codeType)
+    public function it_throws_exception_for_invalid_code(string $code, string $codeType)
     {
         $this->expectException(InvalidTerritoryCodeException::class);
 
@@ -71,6 +71,39 @@ class TerritoryTest extends PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(Territory::class, $territory);
     }
+
+    /**
+     * @test
+     * @dataProvider getTerritoryParentCodes
+     *
+     *
+     * @param string $code
+     * @param array $expectedParents
+     * @param bool $expand
+     */
+    public function it_gets_territory_parent_codes(string $code, array $expectedParents, bool $expand = true)
+    {
+        $territory = new Territory($code);
+
+        $this->assertEquals($expectedParents, $territory->getParentCodes($expand));
+    }
+
+    /**
+     * @test
+     * @dataProvider getTerritoryChildrenCodes
+     *
+     *
+     * @param string $code
+     * @param array $expectedChildren
+     * @param bool $expand
+     */
+    public function it_gets_territory_children_codes(string $code, array $expectedChildren, bool $expand = false)
+    {
+        $territory = new Territory($code);
+
+        $this->assertEquals($expectedChildren, $territory->getChildrenCodes($expand));
+    }
+
 
     /**
      * Returns valid territory codes and expected codes to be set
@@ -143,6 +176,293 @@ class TerritoryTest extends PHPUnit_Framework_TestCase
             ['Foo', ''],
             ['AA', Territory::ISO_3166_A3],
             ['BLR', Territory::ISO_3166_A2]
+        ];
+    }
+
+    /**
+     * Returns valid territory parent codes
+     *
+     * @return array
+     */
+    public function getTerritoryParentCodes()
+    {
+        return [
+            ['BY', ['151', 'UN'], false],
+            ['BY', ['001', '150', 'UN', '151']],
+            ['FR', ['001', '150', 'UN', 'EZ', 'EU', '155']],
+            ['001', []]
+        ];
+    }
+
+    /**
+     * Returns valid territory parent codes
+     *
+     * @return array
+     */
+    public function getTerritoryChildrenCodes()
+    {
+        return [
+            ['BY', []],
+            ['BY', [], true],
+            ['001', ['019', '002', '150', '142', '009']],
+            ['001', array (
+                'AC',
+                'AD',
+                'AE',
+                'AF',
+                'AG',
+                'AI',
+                'AL',
+                'AM',
+                'AO',
+                'AQ',
+                'AR',
+                'AS',
+                'AT',
+                'AU',
+                'AW',
+                'AX',
+                'AZ',
+                'BA',
+                'BB',
+                'BD',
+                'BE',
+                'BF',
+                'BG',
+                'BH',
+                'BI',
+                'BJ',
+                'BL',
+                'BM',
+                'BN',
+                'BO',
+                'BQ',
+                'BR',
+                'BS',
+                'BT',
+                'BV',
+                'BW',
+                'BY',
+                'BZ',
+                'CA',
+                'CC',
+                'CD',
+                'CF',
+                'CG',
+                'CH',
+                'CI',
+                'CK',
+                'CL',
+                'CM',
+                'CN',
+                'CO',
+                'CP',
+                'CR',
+                'CU',
+                'CV',
+                'CW',
+                'CX',
+                'CY',
+                'CZ',
+                'DE',
+                'DG',
+                'DJ',
+                'DK',
+                'DM',
+                'DO',
+                'DZ',
+                'EA',
+                'EC',
+                'EE',
+                'EG',
+                'EH',
+                'ER',
+                'ES',
+                'ET',
+                'FI',
+                'FJ',
+                'FK',
+                'FM',
+                'FO',
+                'FR',
+                'GA',
+                'GB',
+                'GD',
+                'GE',
+                'GF',
+                'GG',
+                'GH',
+                'GI',
+                'GL',
+                'GM',
+                'GN',
+                'GP',
+                'GQ',
+                'GR',
+                'GS',
+                'GT',
+                'GU',
+                'GW',
+                'GY',
+                'HK',
+                'HM',
+                'HN',
+                'HR',
+                'HT',
+                'HU',
+                'IC',
+                'ID',
+                'IE',
+                'IL',
+                'IM',
+                'IN',
+                'IO',
+                'IQ',
+                'IR',
+                'IS',
+                'IT',
+                'JE',
+                'JM',
+                'JO',
+                'JP',
+                'KE',
+                'KG',
+                'KH',
+                'KI',
+                'KM',
+                'KN',
+                'KP',
+                'KR',
+                'KW',
+                'KY',
+                'KZ',
+                'LA',
+                'LB',
+                'LC',
+                'LI',
+                'LK',
+                'LR',
+                'LS',
+                'LT',
+                'LU',
+                'LV',
+                'LY',
+                'MA',
+                'MC',
+                'MD',
+                'ME',
+                'MF',
+                'MG',
+                'MH',
+                'MK',
+                'ML',
+                'MM',
+                'MN',
+                'MO',
+                'MP',
+                'MQ',
+                'MR',
+                'MS',
+                'MT',
+                'MU',
+                'MV',
+                'MW',
+                'MX',
+                'MY',
+                'MZ',
+                'NA',
+                'NC',
+                'NE',
+                'NF',
+                'NG',
+                'NI',
+                'NL',
+                'NO',
+                'NP',
+                'NR',
+                'NU',
+                'NZ',
+                'OM',
+                'PA',
+                'PE',
+                'PF',
+                'PG',
+                'PH',
+                'PK',
+                'PL',
+                'PM',
+                'PN',
+                'PR',
+                'PS',
+                'PT',
+                'PW',
+                'PY',
+                'QA',
+                'RE',
+                'RO',
+                'RS',
+                'RU',
+                'RW',
+                'SA',
+                'SB',
+                'SC',
+                'SD',
+                'SE',
+                'SG',
+                'SH',
+                'SI',
+                'SJ',
+                'SK',
+                'SL',
+                'SM',
+                'SN',
+                'SO',
+                'SR',
+                'SS',
+                'ST',
+                'SV',
+                'SX',
+                'SY',
+                'SZ',
+                'TA',
+                'TC',
+                'TD',
+                'TF',
+                'TG',
+                'TH',
+                'TJ',
+                'TK',
+                'TL',
+                'TM',
+                'TN',
+                'TO',
+                'TR',
+                'TT',
+                'TV',
+                'TW',
+                'TZ',
+                'UA',
+                'UG',
+                'UM',
+                'US',
+                'UY',
+                'UZ',
+                'VA',
+                'VC',
+                'VE',
+                'VG',
+                'VI',
+                'VN',
+                'VU',
+                'WF',
+                'WS',
+                'XK',
+                'YE',
+                'YT',
+                'ZA',
+                'ZM',
+                'ZW',
+            ), true],
         ];
     }
 }

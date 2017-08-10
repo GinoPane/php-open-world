@@ -95,6 +95,11 @@ class Territory extends EntityAbstract
     private $unm49 = '';
 
     /**
+     * @var string
+     */
+    private $containmentSourceUri = 'territory.containment.json';
+
+    /**
      * Territory constructor
      *
      * @param string $code  Can be one of the following codes: ISO 3166-1 Alpha 2, ISO 3166-1 Alpha 3, ISO 3166-1 Numeric,
@@ -147,7 +152,20 @@ class Territory extends EntityAbstract
      */
     public function getParentCodes($expand = true): array
     {
+        $territoryContainmentData = self::getDataSourceLoader()->loadGeneral($this->containmentSourceUri);
 
+        if (!$expand) {
+            $parentCodes = $territoryContainmentData['flat'][$this->getCode()] ?? [];
+        } else {
+            $parentCodes =
+                array_values(
+                    array_unique(
+                        array_reverse($this->buildParentCodes($this->getCode(), $territoryContainmentData))
+                    )
+                );
+        }
+
+        return $parentCodes;
     }
 
     /**
@@ -161,7 +179,22 @@ class Territory extends EntityAbstract
      */
     public function getChildrenCodes($expand = false): array
     {
+        $territoryContainmentData = self::getDataSourceLoader()->loadGeneral($this->containmentSourceUri);
 
+        if (!$expand) {
+            $childrenCodes = $territoryContainmentData['containment'][$this->getCode()]['contains'] ?? [];
+        } else {
+            $childrenCodes =
+                array_values(
+                    array_unique(
+                        array_reverse($this->buildChildrenCodes($this->getCode(), $territoryContainmentData))
+                    )
+                );
+
+            sort($childrenCodes);
+        }
+
+        return $childrenCodes;
     }
 
     /**
@@ -282,5 +315,58 @@ class Territory extends EntityAbstract
         }
 
         return $returnCodes;
+    }
+
+    /**
+     * Recursive function to build the list of parent codes
+     *
+     * @param string $code
+     * @param array $data
+     * @return array
+     */
+    private function buildParentCodes(string $code, array $data): array
+    {
+        $parentCodes = $data['flat'][$code] ?? [];
+
+        if ($parentCodes) {
+            $upperLevelCodes = [];
+
+            foreach($parentCodes as $code) {
+                $upperLevelCodes = array_merge($this->buildParentCodes($code, $data), $upperLevelCodes);
+            }
+
+            $parentCodes = array_merge($parentCodes, $upperLevelCodes);
+        }
+
+        return $parentCodes;
+    }
+
+    /**
+     * Recursive function to build the list of children codes
+     *
+     * @param string $code
+     * @param array $data
+     * @return array
+     */
+    private function buildChildrenCodes(string $code, array $data): array
+    {
+        $rawChildrenCodes = $data['containment'][$code]['contains'] ?? [];
+        $childrenCodes = [];
+
+        if ($rawChildrenCodes) {
+            $upperLevelCodes = [];
+
+            foreach($rawChildrenCodes as $code) {
+                if (!empty($data['containment'][$code]['contains'])) {
+                    $upperLevelCodes = array_merge($this->buildChildrenCodes($code, $data), $upperLevelCodes);
+                } else {
+                    $childrenCodes[] = $code;
+                }
+            }
+
+            $childrenCodes = array_merge($childrenCodes, $upperLevelCodes);
+        }
+
+        return $childrenCodes;
     }
 }

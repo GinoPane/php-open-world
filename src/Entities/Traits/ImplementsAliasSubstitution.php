@@ -35,7 +35,7 @@ trait ImplementsAliasSubstitution
      */
     protected function getCodeFromAlias(string $code, OpenWorldDataSource $dataSource): string
     {
-        $aliasData = $dataSource->loadGeneral($this->aliasSourceUri)->asArray();
+        $aliasData = $dataSource->loadGeneral($this->aliasSourceUri);
 
         if (!empty($aliasData[$code])) {
             $replacementData = $aliasData[$code];

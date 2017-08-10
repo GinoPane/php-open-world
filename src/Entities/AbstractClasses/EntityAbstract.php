@@ -49,7 +49,7 @@ abstract class EntityAbstract
      */
     public function getAssertedCode(string $code, Closure $keyPredicate = null)
     {
-        $keySource = $this->getDataSourceLoader()->loadGeneral($this->keySourceUri)->asArray();
+        $keySource = $this->getDataSourceLoader()->loadGeneral($this->keySourceUri);
 
         if (
             (is_null($keyPredicate) && ($keyIndex = array_search(strtolower($code), array_map('strtolower', $keySource))) === false)

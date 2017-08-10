@@ -171,7 +171,7 @@ class Locale extends EntityAbstract
      */
     protected static function getSubtags(string $languageString, Script $script = null, Territory $territory = null): array
     {
-        $likelySubtags = self::getDataSourceLoader()->loadGeneral(self::$likelySubtagsSourceUri)->asArray();
+        $likelySubtags = self::getDataSourceLoader()->loadGeneral(self::$likelySubtagsSourceUri);
 
         $subtagsKeysToCheck = [];
 
