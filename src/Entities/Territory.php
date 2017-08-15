@@ -159,9 +159,11 @@ class Territory extends EntityAbstract
             $parentCodes = $territoryContainmentData['flat'][$this->getCode()] ?? [];
         } else {
             $parentCodes =
-                array_values(
-                    array_unique(
-                        array_reverse($this->buildParentCodes($this->getCode(), $territoryContainmentData))
+                array_reverse(
+                    array_values(
+                        array_unique(
+                            array_reverse($this->buildParentCodes($this->getCode(), $territoryContainmentData))
+                        )
                     )
                 );
         }

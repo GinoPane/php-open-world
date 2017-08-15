@@ -11,6 +11,7 @@ use Exception;
 use OpenWorld\Entities\AbstractClasses\EntityAbstract;
 use OpenWorld\Entities\Traits\ImplementsAliasSubstitution;
 use OpenWorld\Exceptions\InvalidKeyPropertyValueException;
+use OpenWorld\OpenWorld;
 
 /**
  * Class Locale
@@ -52,6 +53,13 @@ class Locale extends EntityAbstract
      * @var string
      */
     private static $likelySubtagsSourceUri = "likely.subtags.json";
+
+    /**
+     * Source for parent locales
+     *
+     * @var string
+     */
+    private static $parentSourceUri = "locale.parents.json";
 
     /**
      * Locale constructor
@@ -134,20 +142,6 @@ class Locale extends EntityAbstract
     }
 
     /**
-     * Asserts that the code value is valid (exists within the source)
-     *
-     * @param string $code
-     * @param Closure $keyPredicate use Closure is your assert logic is more complicated than array check only
-     *
-     * @throws InvalidKeyPropertyValueException
-     * @return void
-     */
-    protected function assertCode(string $code, Closure $keyPredicate = null): void
-    {
-        // TODO: Implement assertCode() method.
-    }
-
-    /**
      * Returns Locale code. The pattern is language_script_territory
      *
      * @return string
@@ -168,6 +162,93 @@ class Locale extends EntityAbstract
     }
 
     /**
+     * Gets the closest parent code
+     *
+     * @return null|string
+     */
+    public function getParentCode(): ?string
+    {
+        $parentCodes = self::getDataSourceLoader()->loadGeneral(self::$parentSourceUri);
+
+        $languageCode = $this->getLanguage()->getCode();
+        $scriptCode = $this->getScript() ? $this->getScript()->getCode() : null;
+        $territoryCode = $this->getTerritory() ? $this->getTerritory()->getCode() : null;
+
+        if (!empty($parentCodes["{$languageCode}_{$scriptCode}_{$territoryCode}"])) {
+            return $parentCodes["{$languageCode}_{$scriptCode}_{$territoryCode}"];
+        } elseif (!empty($parentCodes["{$languageCode}_{$scriptCode}"])) {
+            return $parentCodes["{$languageCode}_{$scriptCode}"];
+        } elseif (!empty($parentCodes["{$languageCode}_{$territoryCode}"])) {
+            return $parentCodes["{$languageCode}_{$territoryCode}"];
+        } elseif (!empty($parentCodes["{$languageCode}"])) {
+            return $parentCodes["{$languageCode}"];
+        }
+
+        return null;
+    }
+
+    /**
+     * Gets alternative locales for a given locale
+     *
+     * @param bool $includeFallback
+     * @return array
+     */
+    public function getAlternativeCodes(bool $includeFallback = true): array
+    {
+        $alternatives = $this->buildAlternativeLocales($this);
+
+        if ($includeFallback) {
+            $alternatives = array_merge(
+                $alternatives,
+                $this->buildAlternativeLocales(Locale::fromString(OpenWorld::FALLBACK_LOCALE_CODE))
+            );
+        }
+
+        return array_unique($alternatives);
+    }
+
+    /**
+     * @param Locale $locale
+     *
+     * @return array
+     */
+    private function buildAlternativeLocales(Locale $locale)
+    {
+        $alternatives[] = $locale->getCode();
+
+        $languageCode = $locale->getLanguage()->getCode();
+        $scriptCode = $locale->getScript() ? $locale->getScript()->getCode() : null;
+        $parentLocaleCode = $locale->getParentCode();
+
+        if ($locale->getTerritory()) {
+            $parentTerritoryCodes = array_merge(
+                [$locale->getTerritory()->getCode()],
+                $locale->getTerritory()->getParentCodes()
+            );
+
+            foreach ($parentTerritoryCodes as $territoryCode) {
+                $alternatives[] = implode("_", array_filter([
+                    $languageCode,
+                    $scriptCode,
+                    $territoryCode
+                ]));
+            }
+
+            if ($scriptCode) {
+                foreach ($parentTerritoryCodes as $territoryCode) {
+                    $alternatives[] = "{$languageCode}_{$territoryCode}";
+                }
+            }
+        }
+
+        if ($parentLocaleCode) {
+            $alternatives += $this->buildAlternativeLocales(Locale::fromString($parentLocaleCode));
+        }
+
+        return $alternatives;
+    }
+
+    /**
      * Gets the array of relevant subtags
      *
      * @param string $languageString
@@ -175,7 +256,7 @@ class Locale extends EntityAbstract
      * @param Territory|null $territory
      * @return array
      */
-    protected static function getSubtags(string $languageString, Script $script = null, Territory $territory = null): array
+    private static function getSubtags(string $languageString, Script $script = null, Territory $territory = null): array
     {
         $likelySubtags = self::getDataSourceLoader()->loadGeneral(self::$likelySubtagsSourceUri);
 
@@ -211,7 +292,7 @@ class Locale extends EntityAbstract
      * @see Locale::createFromString
      * @return void
      */
-    protected function fillMissingSubtags(): void
+    private function fillMissingSubtags(): void
     {
         try {
             $subtags = self::getSubtags($this->getLanguage()->getCode(), $this->getScript(), $this->getTerritory());

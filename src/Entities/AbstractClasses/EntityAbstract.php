@@ -36,7 +36,10 @@ abstract class EntityAbstract
      * @throws InvalidKeyPropertyValueException
      * @return void
      */
-    protected abstract function assertCode(string $code, Closure $keyPredicate = null): void;
+    protected function assertCode(string $code, Closure $keyPredicate = null): void
+    {
+        return;
+    }
 
     /**
      * Asserts that the code value is valid (exists within the source)

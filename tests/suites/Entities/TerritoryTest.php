@@ -85,7 +85,7 @@ class TerritoryTest extends PHPUnit_Framework_TestCase
     {
         $territory = new Territory($code);
 
-        $this->assertEquals($expectedParents, $territory->getParentCodes($expand));
+        $this->assertEquals($expectedParents, $territory->getParentCodes($expand), '', 0, 10, true);
     }
 
     /**
@@ -101,7 +101,7 @@ class TerritoryTest extends PHPUnit_Framework_TestCase
     {
         $territory = new Territory($code);
 
-        $this->assertEquals($expectedChildren, $territory->getChildrenCodes($expand));
+        $this->assertEquals($expectedChildren, $territory->getChildrenCodes($expand), '', 0, 10, true);
     }
 
 
@@ -188,9 +188,9 @@ class TerritoryTest extends PHPUnit_Framework_TestCase
     {
         return [
             ['BY', ['151', 'UN'], false],
-            ['BY', ['001', '150', 'UN', '151']],
+            ['BY', ['151', 'UN', '150', '001']],
             ['FR', ['001', '150', 'UN', 'EZ', 'EU', '155']],
-            ['001', []]
+            ['001', []],
         ];
     }
 
