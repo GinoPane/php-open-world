@@ -23,10 +23,17 @@ class ScriptTest extends OpenWorldTestCase
 
         $script = $this->getMockBuilder(Script::class)->setMethodsExcept(['getAssertedCode'])->disableOriginalConstructor()->getMock();
 
+        $keySourceUri = $this->getInternalProperty($script, 'keySourceUri');
         $this->setInternalProperty($script, 'keySourceUri', 'foo');
         $assertKey = $this->getInternalMethod($script, 'getAssertedCode');
 
-        $assertKey->invoke($script, '');
+        try {
+            $assertKey->invoke($script, '');
+        } catch (Exception $e) {
+            throw $e;
+        } finally {
+            $this->setInternalProperty($script, 'keySourceUri', $keySourceUri);
+        }
     }
 
     /**

@@ -8,9 +8,8 @@
 namespace OpenWorld\Entities;
 
 use Closure;
-use OpenWorld\Data\GeneralClasses\OpenWorldDataSource;
-use OpenWorld\Entities\AbstractClasses\EntityAbstract;
 use OpenWorld\Entities\Traits\ImplementsAliasSubstitution;
+use OpenWorld\Entities\AbstractClasses\CodeAssertedEntityAbstract;
 
 /**
  * Class Language
@@ -21,7 +20,7 @@ use OpenWorld\Entities\Traits\ImplementsAliasSubstitution;
  *
  * @package OpenWorld\Entities
  */
-class Language extends EntityAbstract
+class Language extends CodeAssertedEntityAbstract
 {
     use ImplementsAliasSubstitution;
 
@@ -32,6 +31,8 @@ class Language extends EntityAbstract
      */
     protected $code = '';
 
+    protected static $keySourceUri = 'language.codes.json';
+
     /**
      * Script constructor
      *
@@ -39,8 +40,6 @@ class Language extends EntityAbstract
      */
     public function __construct(string $code)
     {
-        $this->keySourceUri = 'language.codes.json';
-
         self::$aliasSourceUri = 'language.alias.json';
 
         $this->assertCode(self::getCodeFromAlias($code, self::getDataSourceLoader()));

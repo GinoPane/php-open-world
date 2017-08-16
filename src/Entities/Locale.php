@@ -6,7 +6,7 @@
  */
 
 namespace OpenWorld\Entities;
-use Closure;
+
 use Exception;
 use OpenWorld\Entities\AbstractClasses\EntityAbstract;
 use OpenWorld\Entities\Traits\ImplementsAliasSubstitution;
@@ -70,7 +70,7 @@ class Locale extends EntityAbstract
      */
     public function __construct(Language $language, Script $script = null, Territory $territory = null)
     {
-        self::$aliasSourceUri = 'language.alias.json';
+        self::fillSourceUri();
 
         $this->language = $language;
         $this->script = $script;
@@ -91,6 +91,8 @@ class Locale extends EntityAbstract
      */
     public static function fromString(string $localeString): Locale
     {
+        self::fillSourceUri();
+
         $localeString = str_replace('-', '_', $localeString);
 
         $localeString = self::getCodeFromAlias($localeString, self::getDataSourceLoader());
@@ -204,7 +206,7 @@ class Locale extends EntityAbstract
             );
         }
 
-        return array_unique($alternatives);
+        return array_values(array_unique($alternatives));
     }
 
     /**
@@ -309,5 +311,13 @@ class Locale extends EntityAbstract
         } catch (Exception $exception) {
             trigger_error("Likely subtags could not be loaded: {$exception->getMessage()}", E_USER_WARNING);
         }
+    }
+
+    /**
+     * Fill missing source URIs for static usage purposes
+     */
+    private static function fillSourceUri()
+    {
+        self::$aliasSourceUri = 'language.alias.json';
     }
 }

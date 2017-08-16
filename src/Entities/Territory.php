@@ -8,17 +8,17 @@
 namespace OpenWorld\Entities;
 
 use Closure;
-use OpenWorld\Entities\AbstractClasses\EntityAbstract;
 use OpenWorld\Exceptions\InvalidTerritoryCodeException;
 use OpenWorld\Entities\Traits\ImplementsAliasSubstitution;
 use OpenWorld\Exceptions\InvalidTerritoryCodeTypeException;
+use OpenWorld\Entities\AbstractClasses\CodeAssertedEntityAbstract;
 
 /**
  * Class Territory
  *
  * @package OpenWorld\Entities
  */
-class Territory extends EntityAbstract
+class Territory extends CodeAssertedEntityAbstract
 {
     use ImplementsAliasSubstitution;
 
@@ -97,7 +97,9 @@ class Territory extends EntityAbstract
     /**
      * @var string
      */
-    private $containmentSourceUri = 'territory.containment.json';
+    private static $containmentSourceUri = 'territory.containment.json';
+
+    protected static $keySourceUri = 'territory.codes.json';
 
     /**
      * Territory constructor
@@ -110,8 +112,6 @@ class Territory extends EntityAbstract
      */
     public function __construct(string $code, string $codeType = '')
     {
-        $this->keySourceUri = 'territory.codes.json';
-
         self::$aliasSourceUri = 'territory.alias.json';
 
         $this->assertCode($code, function($code, $source) use ($codeType) {
@@ -153,7 +153,7 @@ class Territory extends EntityAbstract
      */
     public function getParentCodes($expand = true): array
     {
-        $territoryContainmentData = self::getDataSourceLoader()->loadGeneral($this->containmentSourceUri);
+        $territoryContainmentData = self::getDataSourceLoader()->loadGeneral(self::$containmentSourceUri);
 
         if (!$expand) {
             $parentCodes = $territoryContainmentData['flat'][$this->getCode()] ?? [];
@@ -182,7 +182,7 @@ class Territory extends EntityAbstract
      */
     public function getChildrenCodes($expand = false): array
     {
-        $territoryContainmentData = self::getDataSourceLoader()->loadGeneral($this->containmentSourceUri);
+        $territoryContainmentData = self::getDataSourceLoader()->loadGeneral(self::$containmentSourceUri);
 
         if (!$expand) {
             $childrenCodes = $territoryContainmentData['containment'][$this->getCode()]['contains'] ?? [];

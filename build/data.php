@@ -1455,6 +1455,11 @@ function handleSingleLocaleData($locale, $localeFile)
                 putLocaleFileToFileList($locale, 'script.names.json');
             }
 
+            if (isset($localeData['ldml']['localeDisplayNames']['variants']['variant'])) {
+                handleSingleLocaleDataSimpleNames('variant', $localeData['ldml']['localeDisplayNames']['variants']['variant'], $localeDirectory, 'variant.names.json');
+                putLocaleFileToFileList($locale, 'variant.names.json');
+            }
+
             if (isset($localeData['ldml']['numbers']['currencies']['currency'])) {
                 handleSingleLocaleDataCurrencies($localeData['ldml']['numbers']['currencies']['currency'], $localeDirectory, 'currency.names.json');
                 putLocaleFileToFileList($locale, 'currency.names.json');
