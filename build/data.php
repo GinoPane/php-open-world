@@ -1390,7 +1390,10 @@ function handleSingleLocaleDataCurrencyFormats($formatsData = [], $destinationDi
  * @param $rawData
  * @param $destinationDir
  * @param $fileName
+ *
  * @throws Exception
+ *
+ * @return array
  */
 function handleSingleLocaleDataSimpleNames($type, $rawData, $destinationDir, $fileName)
 {
@@ -1416,6 +1419,8 @@ function handleSingleLocaleDataSimpleNames($type, $rawData, $destinationDir, $fi
     }
 
     saveJsonFile($data, $destinationDir . DIRECTORY_SEPARATOR . $fileName, JSON_FORCE_OBJECT);
+
+    return $data;
 }
 
 /**
@@ -1456,8 +1461,26 @@ function handleSingleLocaleData($locale, $localeFile)
             }
 
             if (isset($localeData['ldml']['localeDisplayNames']['variants']['variant'])) {
-                handleSingleLocaleDataSimpleNames('variant', $localeData['ldml']['localeDisplayNames']['variants']['variant'], $localeDirectory, 'variant.names.json');
+                $variantCodesFile = DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'variant.codes.json';
+
+                $variantCodes = [];
+
+                if (is_readable($variantCodesFile)) {
+                    $variantCodes = getJsonDataFileContentsAsArray(DESTINATION_GENERAL_DIR . DIRECTORY_SEPARATOR . 'variant.codes.json');
+                } else {
+                    saveJsonFile([], $variantCodesFile);
+                }
+
+                $variants = handleSingleLocaleDataSimpleNames('variant', $localeData['ldml']['localeDisplayNames']['variants']['variant'], $localeDirectory, 'variant.names.json');
+
+                $variantCodes = array_map(function($i) {return (string)$i;}, array_unique(array_merge($variantCodes, array_keys($variants))));
+
+                sort($variantCodes);
+
+                saveJsonFile($variantCodes, $variantCodesFile);
+
                 putLocaleFileToFileList($locale, 'variant.names.json');
+                putSupplementalFileToFileList('variant.codes.json');
             }
 
             if (isset($localeData['ldml']['numbers']['currencies']['currency'])) {
@@ -1871,7 +1894,9 @@ function putSupplementalFileToFileList(string $fileName)
 {
     global $result;
 
-    $result['data']['supplemental']['file-list'][] = $fileName;
+    if (!in_array($fileName, $result['data']['supplemental']['file-list'])) {
+        $result['data']['supplemental']['file-list'][] = $fileName;
+    }
 }
 
 /**
