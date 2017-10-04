@@ -68,7 +68,7 @@ class Territory extends CodeAssertedEntityAbstract
     private $iso3166alpha3 = '';
 
     /**
-     * ISO 3166-1 numeric territory code. Not to mess up with UN M.49. Their numbers do not intersect.
+     * ISO 3166-1 numeric territory code. Not to mess up with UN M.49. Their numbers do not intersect
      *
      * @link https://en.wikipedia.org/wiki/ISO_3166-1_numeric
      * @link https://en.wikipedia.org/wiki/UN_M.49
@@ -104,9 +104,10 @@ class Territory extends CodeAssertedEntityAbstract
     /**
      * Territory constructor
      *
-     * @param string $code  Can be one of the following codes: ISO 3166-1 Alpha 2, ISO 3166-1 Alpha 3, ISO 3166-1 Numeric,
-     *                      FIPS 10, UM M.49 (which includes ISO 3166-1 Numeric as a subset). Please note, that FIPS 10 codes
-     *                      have intersections with ISO 3166-1 Alpha 2, in this case code would be treated as ISO 3166-1 Alpha 2
+     * @param string $code  Can be one of the following codes: ISO 3166-1 Alpha 2, ISO 3166-1 Alpha 3,
+     *                      ISO 3166-1 Numeric, FIPS 10, UM M.49 (which includes ISO 3166-1 Numeric as a subset).
+     *                      Please note, that FIPS 10 codes have intersections with ISO 3166-1 Alpha 2,
+     *                      in this case code would be treated as ISO 3166-1 Alpha 2
      *
      * @param string $codeType
      */
@@ -114,7 +115,7 @@ class Territory extends CodeAssertedEntityAbstract
     {
         self::$aliasSourceUri = 'territory.alias.json';
 
-        $this->assertCode($code, function($code, $source) use ($codeType) {
+        $this->assertCode($code, function ($code, $source) use ($codeType) {
             return $this->fillTerritoryCodes($code, $codeType, $source);
         });
     }
@@ -145,7 +146,7 @@ class Territory extends CodeAssertedEntityAbstract
     /**
      * Get codes of territory's parents. By default it gets all parents until it reaches the root.
      * This behavior is controlled by $expand parameter which is 'true' by default. Set it to 'false'
-     * if you do not want to get the full list of parents except the closest one.
+     * if you do not want to get the full list of parents except the closest one
      *
      * @param bool $expand
      *
@@ -174,7 +175,7 @@ class Territory extends CodeAssertedEntityAbstract
     /**
      * Get codes of territory's children. By default it gets only closest first-level children.
      * This behavior is controlled by $expand parameter which is 'false' by default. Set it to 'true'
-     * if you want to get the full list of children expanded to specific territories.
+     * if you want to get the full list of children expanded to specific territories
      *
      * @param bool $expand
      *
@@ -266,7 +267,7 @@ class Territory extends CodeAssertedEntityAbstract
         if (!$codeType) {
             $code = self::getCodeFromAlias($code, self::getDataSourceLoader());
 
-            foreach($sourceKeysToCheck as $key) {
+            foreach ($sourceKeysToCheck as $key) {
                 if (!empty($source[$key]) && in_array($code, $source[$key])) {
                     $keyParts = explode('_', $key);
                     $codeType = end($keyParts);
@@ -280,7 +281,9 @@ class Territory extends CodeAssertedEntityAbstract
         } else {
             $this->assertCodeType($codeType);
             //we need to check that provided code exists within the codeType
-            if (!@in_array($code, $source[$codeType]) && !@in_array($code, $source[self::ISO_3166_A2 . "_to_" . $codeType])) {
+            if (!@in_array($code, $source[$codeType]) &&
+                !@in_array($code, $source[self::ISO_3166_A2 . "_to_" . $codeType])
+            ) {
                 throw new InvalidTerritoryCodeException($code, $codeType);
             }
         }
@@ -294,7 +297,9 @@ class Territory extends CodeAssertedEntityAbstract
 
             if ($codeType !== self::ISO_3166_A2) {
                 $returnCodes[self::ISO_3166_A2] =
-                    ($codeFound = array_search($code, $source[self::ISO_3166_A2 . "_to_" . $codeType])) ? $codeFound : null;
+                    ($codeFound = array_search($code, $source[self::ISO_3166_A2 . "_to_" . $codeType]))
+                        ? $codeFound
+                        : null;
             }
 
             if ($returnCodes[self::ISO_3166_A2]) {
@@ -334,7 +339,7 @@ class Territory extends CodeAssertedEntityAbstract
         if ($parentCodes) {
             $upperLevelCodes = [];
 
-            foreach($parentCodes as $code) {
+            foreach ($parentCodes as $code) {
                 $upperLevelCodes = array_merge($this->buildParentCodes($code, $data), $upperLevelCodes);
             }
 
@@ -359,7 +364,7 @@ class Territory extends CodeAssertedEntityAbstract
         if ($rawChildrenCodes) {
             $upperLevelCodes = [];
 
-            foreach($rawChildrenCodes as $code) {
+            foreach ($rawChildrenCodes as $code) {
                 if (!empty($data['containment'][$code]['contains'])) {
                     $upperLevelCodes = array_merge($this->buildChildrenCodes($code, $data), $upperLevelCodes);
                 } else {

@@ -8,8 +8,7 @@
 namespace OpenWorld\Entities\AbstractClasses;
 
 use Closure;
-use OpenWorld\OpenWorld;
-use OpenWorld\Data\GeneralClasses\OpenWorldDataSource;
+use Exception;
 use OpenWorld\Exceptions\InvalidKeyPropertyValueException;
 
 /**
@@ -19,7 +18,6 @@ use OpenWorld\Exceptions\InvalidKeyPropertyValueException;
  */
 abstract class CodeAssertedEntityAbstract extends EntityAbstract
 {
-
     /**
      * Key source URI which is a storage for assertion data
      *
@@ -36,7 +34,7 @@ abstract class CodeAssertedEntityAbstract extends EntityAbstract
      * @throws InvalidKeyPropertyValueException
      * @return void
      */
-    protected abstract function assertCode(string $code, Closure $keyPredicate = null): void;
+    abstract protected function assertCode(string $code, Closure $keyPredicate = null): void;
 
     /**
      * Asserts that the code value is valid (exists within the source)
@@ -51,9 +49,8 @@ abstract class CodeAssertedEntityAbstract extends EntityAbstract
     {
         $keySource = self::getDataSourceLoader()->loadGeneral(static::$keySourceUri);
 
-        if (
-            (is_null($keyPredicate) && ($keyIndex = array_search(strtolower($code), array_map('strtolower', $keySource))) === false)
-            ||
+        if ((is_null($keyPredicate) &&
+            ($keyIndex = array_search(strtolower($code), array_map('strtolower', $keySource))) === false) ||
             (!is_null($keyPredicate) && !($validKeyValue = $keyPredicate($code, $keySource)))
         ) {
             throw new InvalidKeyPropertyValueException($code, get_called_class());
@@ -64,5 +61,28 @@ abstract class CodeAssertedEntityAbstract extends EntityAbstract
                 return $keySource[$keyIndex];
             }
         }
+    }
+
+    /**
+     * Tries to instantiate the instance and returns 'false' on error.
+     * The return 'true' value means that code value is correct
+     *
+     * @param string $code
+     *
+     * @return bool
+     */
+    public static function checkIfCodeIsValid(string $code): bool
+    {
+        $codeIsValid = true;
+
+        try {
+            $entity = new static($code);
+        } catch (Exception $exception) {
+            $codeIsValid = false;
+        } finally {
+            unset($entity);
+        }
+
+        return $codeIsValid;
     }
 }

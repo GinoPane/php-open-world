@@ -274,7 +274,7 @@ class Locale extends EntityAbstract
 
         $subtags = [];
 
-        foreach($subtagsKeysToCheck as $key) {
+        foreach ($subtagsKeysToCheck as $key) {
             if (!empty($likelySubtags[$key])) {
                 $subtags = $likelySubtags[$key];
 

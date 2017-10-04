@@ -14,41 +14,35 @@ use OpenWorld\Entities\GeneralClasses\SingleCodeAssertedEntity;
 use OpenWorld\Entities\Traits\ImplementsAliasSubstitution;
 
 /**
- * Class Script
+ * Class Variant
  *
- * Represents ISO 15924 4-letter language script code
- *
- * @link https://en.wikipedia.org/wiki/ISO_15924
+ * Represents different variants or dialects of a single locale
  *
  * @package OpenWorld\Entities
  */
-class Script extends SingleCodeAssertedEntity
+class Variant extends SingleCodeAssertedEntity
 {
-    use ImplementsAliasSubstitution;
-
     /**
-     * 4-letter script code
+     * Variant code
      *
      * @var string
      */
     protected $code = '';
 
-    protected static $keySourceUri = 'script.codes.json';
+    protected static $keySourceUri = 'variant.codes.json';
 
     /**
-     * Script constructor
+     * Variant constructor
      *
-     * @param string $code Should be a valid ISO 15924 4-letter script code. This code is being validated
+     * @param string $code Should be a valid variant code. This code is being validated
      */
     public function __construct(string $code)
     {
-        self::$aliasSourceUri = 'script.alias.json';
-
-        $this->assertCode(self::getCodeFromAlias($code, self::getDataSourceLoader()));
+        $this->assertCode($code);
     }
 
     /**
-     * Get ISO 15924 4-letter language script code
+     * Get language variant code
      *
      * @return string
      */

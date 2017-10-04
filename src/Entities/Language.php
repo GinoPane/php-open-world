@@ -8,6 +8,7 @@
 namespace OpenWorld\Entities;
 
 use Closure;
+use OpenWorld\Entities\GeneralClasses\SingleCodeAssertedEntity;
 use OpenWorld\Entities\Traits\ImplementsAliasSubstitution;
 use OpenWorld\Entities\AbstractClasses\CodeAssertedEntityAbstract;
 
@@ -20,7 +21,7 @@ use OpenWorld\Entities\AbstractClasses\CodeAssertedEntityAbstract;
  *
  * @package OpenWorld\Entities
  */
-class Language extends CodeAssertedEntityAbstract
+class Language extends SingleCodeAssertedEntity
 {
     use ImplementsAliasSubstitution;
 
@@ -53,18 +54,5 @@ class Language extends CodeAssertedEntityAbstract
     public function getCode(): string
     {
         return $this->code;
-    }
-
-    /**
-     * Asserts that the code value is valid (exists within the source)
-     *
-     * @param string $code
-     * @param Closure|null $keyPredicate
-     *
-     * @return void
-     */
-    protected function assertCode(string $code, Closure $keyPredicate = null): void
-    {
-        $this->code = $this->getAssertedCode($code, $keyPredicate);
     }
 }
