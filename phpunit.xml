@@ -22,6 +22,7 @@
             <directory>./tests/suites/Data/</directory>
         </testsuite>
         <testsuite name="Entities tests">
+            <file>./tests/suites/Entities/VariantTest.php</file>
             <file>./tests/suites/Entities/ScriptTest.php</file>
             <file>./tests/suites/Entities/LanguageTest.php</file>
             <file>./tests/suites/Entities/TerritoryTest.php</file>

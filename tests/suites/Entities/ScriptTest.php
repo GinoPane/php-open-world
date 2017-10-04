@@ -21,7 +21,11 @@ class ScriptTest extends OpenWorldTestCase
     {
         $this->expectException(FileNotFoundException::class);
 
-        $script = $this->getMockBuilder(Script::class)->setMethodsExcept(['getAssertedCode'])->disableOriginalConstructor()->getMock();
+        $script = $this
+            ->getMockBuilder(Script::class)
+            ->setMethodsExcept(['getAssertedCode'])
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $keySourceUri = $this->getInternalProperty($script, 'keySourceUri');
         $this->setInternalProperty($script, 'keySourceUri', 'foo');
@@ -70,13 +74,17 @@ class ScriptTest extends OpenWorldTestCase
      */
     public function it_asserts_script_with_predicate($scriptCode)
     {
-        $script = $this->getMockBuilder(Script::class)->setMethodsExcept(['getAssertedCode'])->disableOriginalConstructor()->getMock();
+        $script = $this
+            ->getMockBuilder(Script::class)
+            ->setMethodsExcept(['getAssertedCode'])
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $this->setInternalProperty($script, 'keySourceUri', 'script.codes.json');
 
         $assertKey = $this->getInternalMethod($script, 'getAssertedCode');
 
-        $validKey = $assertKey->invoke($script, $scriptCode, function($key, $source) {
+        $validKey = $assertKey->invoke($script, $scriptCode, function ($key, $source) {
             $keyIndex = array_search(strtolower($key), array_map('strtolower', $source));
 
             return $keyIndex !== false ? $source[$keyIndex] : $keyIndex;
@@ -92,13 +100,17 @@ class ScriptTest extends OpenWorldTestCase
     {
         $this->expectException(InvalidKeyPropertyValueException::class);
 
-        $script = $this->getMockBuilder(Script::class)->setMethodsExcept(['getAssertedCode'])->disableOriginalConstructor()->getMock();
+        $script = $this
+            ->getMockBuilder(Script::class)
+            ->setMethodsExcept(['getAssertedCode'])
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $this->setInternalProperty($script, 'keySourceUri', 'script.codes.json');
 
         $assertKey = $this->getInternalMethod($script, 'getAssertedCode');
 
-        $validKey = $assertKey->invoke($script, 'Cyrl', function() {
+        $validKey = $assertKey->invoke($script, 'Cyrl', function () {
             return false;
         });
 

@@ -29,8 +29,12 @@ class TerritoryTest extends PHPUnit_Framework_TestCase
      *
      * @dataProvider getValidTerritoryCodes
      */
-    public function it_checks_that_codes_filled_correctly(string $code, string $codeType, array $expectedCodes, string $expectedOriginalCode = null)
-    {
+    public function it_checks_that_codes_filled_correctly(
+        string $code,
+        string $codeType,
+        array $expectedCodes,
+        string $expectedOriginalCode = null
+    ) {
         $territory = new Territory($code, $codeType);
 
         if (is_null($expectedOriginalCode)) {

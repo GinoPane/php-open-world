@@ -10,15 +10,16 @@ class LanguageTest extends OpenWorldTestCase
     /**
      * @test
      * @param $languageCode
+     * @param $expectedCode
      *
      * @dataProvider getValidLanguageCodes
      */
     public function it_creates_language_for_valid_identifier($languageCode, $expectedCode)
     {
-        $script = new Language($languageCode);
+        $language = new Language($languageCode);
 
-        $this->assertInstanceOf(Language::class, $script);
-        $this->assertEquals(strtolower($expectedCode), strtolower($script->getCode()));
+        $this->assertInstanceOf(Language::class, $language);
+        $this->assertEquals(strtolower($expectedCode), strtolower($language->getCode()));
     }
 
     /**

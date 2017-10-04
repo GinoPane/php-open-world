@@ -20,8 +20,12 @@ class LocaleTest extends PHPUnit_Framework_TestCase
      * @param $territoryCode
      * @param $expectedLocaleCode
      */
-    public function it_creates_locale_for_valid_identifier($languageCode, $scriptCode, $territoryCode, $expectedLocaleCode)
-    {
+    public function it_creates_locale_for_valid_identifier(
+        $languageCode,
+        $scriptCode,
+        $territoryCode,
+        $expectedLocaleCode
+    ) {
         $script = null;
         $territory = null;
 
