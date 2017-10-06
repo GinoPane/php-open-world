@@ -48,6 +48,13 @@ class Locale extends EntityAbstract
     private $territory = null;
 
     /**
+     * Variant entity
+     *
+     * @var Variant
+     */
+    private $variant = null;
+
+    /**
      * Source for likely-subtags data
      *
      * @var string
@@ -67,9 +74,14 @@ class Locale extends EntityAbstract
      * @param Language $language
      * @param Script $script
      * @param Territory $territory
+     * @param Variant $variant
      */
-    public function __construct(Language $language, Script $script = null, Territory $territory = null)
-    {
+    public function __construct(
+        Language $language,
+        Script $script = null,
+        Territory $territory = null,
+        Variant $variant = null
+    ) {
         self::fillSourceUri();
 
         $this->language = $language;
@@ -93,14 +105,12 @@ class Locale extends EntityAbstract
     {
         self::fillSourceUri();
 
-        $localeString = str_replace('-', '_', $localeString);
-
-        $localeString = self::getCodeFromAlias($localeString, self::getDataSourceLoader());
+        $localeString = self::getCodeFromAlias(str_replace('-', '_', $localeString), self::getDataSourceLoader());
 
         if ($subtags = self::getSubtags($localeString)) {
             list('locale' => $languageCode, 'script' => $scriptCode, 'territory' => $territoryCode) = $subtags;
         } else {
-            @list($languageCode, $scriptCode, $territoryCode) = explode("_", $localeString, 3);
+            @list($languageCode, $scriptCode, $territoryCode, $variantCode) = explode("_", $localeString, 4);
 
             if ($scriptCode && !$territoryCode) {
                 try {
@@ -114,8 +124,8 @@ class Locale extends EntityAbstract
 
         return new Locale(
             new Language($languageCode),
-            $scriptCode ? new Script($scriptCode) : null,
-            $territoryCode ? new Territory($territoryCode) : null
+            !empty($scriptCode) ? new Script($scriptCode) : null,
+            !empty($territoryCode) ? new Territory($territoryCode) : null
         );
     }
 
@@ -128,7 +138,7 @@ class Locale extends EntityAbstract
     }
 
     /**
-     * @return Script
+     * @return Script|null
      */
     public function getScript(): ?Script
     {
@@ -136,7 +146,7 @@ class Locale extends EntityAbstract
     }
 
     /**
-     * @return Territory
+     * @return Territory|null
      */
     public function getTerritory(): ?Territory
     {
@@ -144,23 +154,28 @@ class Locale extends EntityAbstract
     }
 
     /**
-     * Returns Locale code. The pattern is language_script_territory
+     * @return Variant|null
+     */
+    public function getVariant(): ?Variant
+    {
+        return $this->variant;
+    }
+
+    /**
+     * Returns Locale code. The pattern is language[_script[_territory[_variant]]
      *
      * @return string
      */
     public function getCode(): string
     {
-        $code = $this->getLanguage()->getCode();
+        $codes = [
+            $this->getLanguage()->getCode(),
+            $this->getScript() ? $this->getScript()->getCode() : null,
+            $this->getTerritory() ? $this->getTerritory()->getCode() : null,
+            $this->getVariant() ? $this->getVariant()->getCode() : null,
+        ];
 
-        if ($this->getScript()) {
-            $code .= "_{$this->getScript()->getCode()}";
-        }
-
-        if ($this->getTerritory()) {
-            $code .= "_{$this->getTerritory()->getCode()}";
-        }
-
-        return $code;
+        return implode("_", array_filter($codes));
     }
 
     /**
@@ -258,8 +273,11 @@ class Locale extends EntityAbstract
      * @param Territory|null $territory
      * @return array
      */
-    private static function getSubtags(string $languageString, Script $script = null, Territory $territory = null): array
-    {
+    private static function getSubtags(
+        string $languageString,
+        Script $script = null,
+        Territory $territory = null
+    ): array {
         $likelySubtags = self::getDataSourceLoader()->loadGeneral(self::$likelySubtagsSourceUri);
 
         $subtagsKeysToCheck = [];

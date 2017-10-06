@@ -54,6 +54,7 @@ class ScriptTest extends OpenWorldTestCase
 
     /**
      * @test
+     *
      * @param $scriptCode
      *
      * @dataProvider getValidScriptCodes
@@ -68,6 +69,20 @@ class ScriptTest extends OpenWorldTestCase
 
     /**
      * @test
+     *
+     * @param $scriptCode
+     * @param $expectedResult
+     *
+     * @dataProvider getVariousScriptCodes
+     */
+    public function it_validates_script_code($scriptCode, $expectedResult)
+    {
+        $this->assertEquals(Script::codeIsLikelyValid($scriptCode), $expectedResult);
+    }
+
+    /**
+     * @test
+     *
      * @param $scriptCode
      *
      * @dataProvider getValidScriptCodes
@@ -157,6 +172,23 @@ class ScriptTest extends OpenWorldTestCase
     {
         return [
             ['Qaai', 'Zinh']
+        ];
+    }
+
+    /**
+     * Provides script codes for validation
+     *
+     * @return array
+     */
+    public function getVariousScriptCodes()
+    {
+        return [
+            ['Cyrl', true],
+            ['123', false],
+            ['Latn', true],
+            ['FooBar', false],
+            ['FooBar', false],
+            ['Tale', true]
         ];
     }
 }

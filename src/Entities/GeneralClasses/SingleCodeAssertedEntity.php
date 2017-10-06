@@ -17,7 +17,7 @@ use OpenWorld\Exceptions\InvalidKeyPropertyValueException;
  *
  * @package OpenWorld\Entities\AbstractClasses
  */
-class SingleCodeAssertedEntity extends CodeAssertedEntityAbstract
+abstract class SingleCodeAssertedEntity extends CodeAssertedEntityAbstract
 {
     /**
      * Entity code

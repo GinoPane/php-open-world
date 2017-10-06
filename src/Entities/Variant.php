@@ -50,4 +50,16 @@ class Variant extends SingleCodeAssertedEntity
     {
         return $this->code;
     }
+
+    /**
+     * Validates the code with regular expression test
+     *
+     * @param string $code
+     *
+     * @return bool
+     */
+    public static function codeIsLikelyValid(string $code): bool
+    {
+        return boolval(preg_match('/^[0-9]{4}$|[0-9a-z]{5,}$/i', $code));
+    }
 }

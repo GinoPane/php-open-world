@@ -23,7 +23,22 @@ class LanguageTest extends OpenWorldTestCase
     }
 
     /**
+     * @test
+     *
+     * @param $languageCode
+     * @param $expectedResult
+     *
+     * @dataProvider getVariousLanguageCodes
+     */
+    public function it_validates_language_code($languageCode, $expectedResult)
+    {
+        $this->assertEquals(Language::codeIsLikelyValid($languageCode), $expectedResult);
+    }
+
+    /**
      * Provides valid language codes data
+     *
+     * @return array
      */
     public function getValidLanguageCodes()
     {
@@ -37,6 +52,25 @@ class LanguageTest extends OpenWorldTestCase
             ['bel', 'be'],
             ['rum', 'ro'],
             ['wel', 'cy']
+        ];
+    }
+
+    /**
+     * Provides various language codes data for validation
+     *
+     * @return array
+     */
+    public function getVariousLanguageCodes()
+    {
+        return [
+            ['RU', true],
+            ['be', true],
+            ['eN', true],
+            ['zu', true],
+            ['rus', true],
+            ['120', false],
+            ['a', false],
+            ['english', false]
         ];
     }
 }

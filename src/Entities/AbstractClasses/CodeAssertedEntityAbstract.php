@@ -45,7 +45,7 @@ abstract class CodeAssertedEntityAbstract extends EntityAbstract
      * @throws InvalidKeyPropertyValueException
      * @return mixed
      */
-    public function getAssertedCode(string $code, Closure $keyPredicate = null)
+    protected function getAssertedCode(string $code, Closure $keyPredicate = null)
     {
         $keySource = self::getDataSourceLoader()->loadGeneral(static::$keySourceUri);
 
@@ -64,25 +64,11 @@ abstract class CodeAssertedEntityAbstract extends EntityAbstract
     }
 
     /**
-     * Tries to instantiate the instance and returns 'false' on error.
-     * The return 'true' value means that code value is correct
+     * Validates the code with regular expression test
      *
      * @param string $code
      *
      * @return bool
      */
-    public static function checkIfCodeIsValid(string $code): bool
-    {
-        $codeIsValid = true;
-
-        try {
-            $entity = new static($code);
-        } catch (Exception $exception) {
-            $codeIsValid = false;
-        } finally {
-            unset($entity);
-        }
-
-        return $codeIsValid;
-    }
+    abstract public static function codeIsLikelyValid(string $code): bool;
 }

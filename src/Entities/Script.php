@@ -56,4 +56,16 @@ class Script extends SingleCodeAssertedEntity
     {
         return $this->code;
     }
+
+    /**
+     * Validates the code with regular expression test
+     *
+     * @param string $code
+     *
+     * @return bool
+     */
+    public static function codeIsLikelyValid(string $code): bool
+    {
+        return boolval(preg_match('/^[a-z]{4}$/i', $code));
+    }
 }

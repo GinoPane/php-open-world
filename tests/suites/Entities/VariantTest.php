@@ -23,7 +23,22 @@ class VariantTest extends OpenWorldTestCase
     }
 
     /**
+     * @test
+     *
+     * @param $variantCode
+     * @param $expectedResult
+     *
+     * @dataProvider getVariousVariantCodes
+     */
+    public function it_validates_variant_code($variantCode, $expectedResult)
+    {
+        $this->assertEquals(Variant::codeIsLikelyValid($variantCode), $expectedResult);
+    }
+
+    /**
      * Provides valid language codes data
+     *
+     * @return array
      */
     public function getValidVariantCodes()
     {
@@ -33,6 +48,24 @@ class VariantTest extends OpenWorldTestCase
             ['1994'],
             ['BAKU1926'],
             ['VALENCIA']
+        ];
+    }
+
+    /**
+     * Provides variant codes for validation
+     *
+     * @return array
+     */
+    public function getVariousVariantCodes()
+    {
+        return [
+            ['POSIX', true],
+            ['TARASK', true],
+            ['1994', true],
+            ['BAKU1926', true],
+            ['VALENCIA', true],
+            ['953', false],
+            ['Cyrl', false]
         ];
     }
 }

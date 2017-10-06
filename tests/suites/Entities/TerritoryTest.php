@@ -108,6 +108,19 @@ class TerritoryTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expectedChildren, $territory->getChildrenCodes($expand), '', 0, 10, true);
     }
 
+    /**
+     * @test
+     *
+     * @param $territoryCode
+     * @param $expectedResult
+     *
+     * @dataProvider getVariousTerritoryCodes
+     */
+    public function it_validates_territory_code($territoryCode, $expectedResult)
+    {
+        $this->assertEquals(Territory::codeIsLikelyValid($territoryCode), $expectedResult);
+    }
+
 
     /**
      * Returns valid territory codes and expected codes to be set
@@ -180,6 +193,25 @@ class TerritoryTest extends PHPUnit_Framework_TestCase
             ['Foo', ''],
             ['AA', Territory::ISO_3166_A3],
             ['BLR', Territory::ISO_3166_A2]
+        ];
+    }
+
+    /**
+     * Provides script codes for validation
+     *
+     * @return array
+     */
+    public function getVariousTerritoryCodes()
+    {
+        return [
+            ['001', true],
+            ['BY', true],
+            ['by', true],
+            ['150', true],
+            ['AAA', true],
+            ['AA', true],
+            ['1906', false],
+            ['A', false],
         ];
     }
 
