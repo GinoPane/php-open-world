@@ -54,7 +54,7 @@ class LocaleTest extends PHPUnit_Framework_TestCase
     {
         $locale = Locale::fromString($localeString);
 
-        $this->assertEquals($expectedLocaleCode, $locale->getCode());
+        $this->assertEquals($expectedLocaleCode, $locale->getCode(), "{$localeString} - {$expectedLocaleCode}");
     }
 
     /**
@@ -114,7 +114,8 @@ class LocaleTest extends PHPUnit_Framework_TestCase
             ['und_Latn_TN', 'fr_Latn_TN'],
             ['es_419', 'es_Latn_419'],
             ['aa_SAAHO', 'ssy_Latn_ER'],
-            ['en-US-POSIX', '']
+            ['en-US-POSIX', 'en_Latn_US_POSIX'],
+            ['ca-ES-VALENCIA', 'ca_Latn_ES_VALENCIA']
         ];
     }
 

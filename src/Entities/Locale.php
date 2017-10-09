@@ -87,6 +87,7 @@ class Locale extends EntityAbstract
         $this->language = $language;
         $this->script = $script;
         $this->territory = $territory;
+        $this->variant = $variant;
 
         if (!$script || !$territory) {
             $this->fillMissingSubtags();
@@ -112,12 +113,27 @@ class Locale extends EntityAbstract
         } else {
             @list($languageCode, $scriptCode, $territoryCode, $variantCode) = explode("_", $localeString, 4);
 
-            if ($scriptCode && !$territoryCode) {
-                try {
-                    new Script($scriptCode);
-                } catch (InvalidKeyPropertyValueException $e) {
+            //If both codes are empty, then $scriptCode potentially might be actual territory or variant code instead
+            //of the script code. It is done only for general solution, because in reality variants are defined only
+            //when at least territory defined
+            if (empty($variantCode) && empty($territoryCode) && !empty($scriptCode)) {
+                if (Territory::codeIsLikelyValid($scriptCode)) {
                     $territoryCode = $scriptCode;
-                    $scriptCode = null;
+                    unset($scriptCode);
+                } elseif (Variant::codeIsLikelyValid($scriptCode)) {
+                    $variantCode = $scriptCode;
+                    unset($scriptCode);
+                }
+            } elseif (empty($variantCode) && !empty($territoryCode)) {
+                if (Territory::codeIsLikelyValid($scriptCode)) {
+                    $variantCode = $territoryCode;
+                    $territoryCode = $scriptCode;
+
+                    unset($scriptCode);
+                } elseif (Variant::codeIsLikelyValid($territoryCode)) {
+                    $variantCode = $territoryCode;
+
+                    unset($territoryCode);
                 }
             }
         }
@@ -125,7 +141,8 @@ class Locale extends EntityAbstract
         return new Locale(
             new Language($languageCode),
             !empty($scriptCode) ? new Script($scriptCode) : null,
-            !empty($territoryCode) ? new Territory($territoryCode) : null
+            !empty($territoryCode) ? new Territory($territoryCode) : null,
+            !empty($variantCode) ? new Variant($variantCode) : null
         );
     }
 
