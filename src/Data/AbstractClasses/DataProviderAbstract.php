@@ -7,16 +7,16 @@
 
 namespace OpenWorld\Data\AbstractClasses;
 
-use OpenWorld\Data\GeneralClasses\Providers\Conditions\DataProviderCondition;
 use OpenWorld\Data\Interfaces\DataProviderInterface;
 use OpenWorld\Data\Interfaces\SourceLoaderInterface;
-use OpenWorld\Data\Interfaces\SourceLoaderResultFactoryInterface;
 use OpenWorld\Data\Interfaces\SourceLoaderResultInterface;
+use OpenWorld\Data\Interfaces\SourceLoaderResultFactoryInterface;
+use OpenWorld\Data\GeneralClasses\Providers\Conditions\DataProviderCondition;
 
 /**
  * Class ProviderAbstract
  *
- * Starting point for data provider classes.
+ * Starting point for data provider classes
  *
  * @package OpenWorld\Data\AbstractClasses
  */
@@ -24,28 +24,28 @@ abstract class DataProviderAbstract implements DataProviderInterface
 {
 
     /**
-     * Source loader instance.
+     * Source loader instance
      *
      * @var SourceLoaderInterface
      */
     protected $loader = null;
 
     /**
-     * Represents result of source loading.
+     * Represents result of source loading
      *
      * @var SourceLoaderResultFactoryInterface
      */
     protected $resultFactory = '';
 
     /**
-     * Condition key for accept matching.
+     * Condition key for accept matching
      *
      * @var string
      */
     protected static $conditionKey = __CLASS__;
 
     /**
-     * ProviderAbstract constructor.
+     * ProviderAbstract constructor
      *
      * @param SourceLoaderInterface $loader
      * @param SourceLoaderResultFactoryInterface $resultFactory
@@ -59,7 +59,7 @@ abstract class DataProviderAbstract implements DataProviderInterface
     }
 
     /**
-     * Set provider's source loader.
+     * Set provider's source loader
      *
      * @param SourceLoaderInterface $loader
      *
@@ -71,7 +71,7 @@ abstract class DataProviderAbstract implements DataProviderInterface
     }
 
     /**
-     * Get provider's source loader.
+     * Get provider's source loader
      *
      * @return SourceLoaderInterface
      */
@@ -81,7 +81,7 @@ abstract class DataProviderAbstract implements DataProviderInterface
     }
 
     /**
-     * Set the factory for source loader results.
+     * Set the factory for source loader results
      *
      * @param SourceLoaderResultFactoryInterface $resultFactory
      */
@@ -91,7 +91,7 @@ abstract class DataProviderAbstract implements DataProviderInterface
     }
 
     /**
-     * Returns the source loader results factory.
+     * Returns the source loader results factory
      *
      * @return SourceLoaderResultFactoryInterface
      */
@@ -101,7 +101,7 @@ abstract class DataProviderAbstract implements DataProviderInterface
     }
 
     /**
-     * Loads data specified by URI using providers selected by conditions.
+     * Loads data specified by URI using providers selected by conditions
      *
      * @param string $uri Path to the resource to load
      * @param DataProviderCondition $condition Conditions that should be accepted while loading data
@@ -122,7 +122,7 @@ abstract class DataProviderAbstract implements DataProviderInterface
     }
 
     /**
-     * Checks if provider accepts the condition.
+     * Checks if provider accepts the condition
      *
      * @param DataProviderCondition $condition
      *
@@ -138,7 +138,7 @@ abstract class DataProviderAbstract implements DataProviderInterface
     }
 
     /**
-     * Returns the condition key for current provider.
+     * Returns the condition key for current provider
      *
      * @return string
      */
@@ -155,5 +155,5 @@ abstract class DataProviderAbstract implements DataProviderInterface
      *
      * @return string
      */
-    protected abstract function adjustUri(string $uri, DataProviderCondition $condition): string;
+    abstract protected function adjustUri(string $uri, DataProviderCondition $condition): string;
 }

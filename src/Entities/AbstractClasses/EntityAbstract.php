@@ -22,7 +22,7 @@ abstract class EntityAbstract
      *
      * @return string
      */
-    public abstract function getCode(): string;
+    abstract public function getCode(): string;
 
     /**
      * Returns a string representation of an instance
@@ -41,6 +41,6 @@ abstract class EntityAbstract
      */
     protected static function getDataSourceLoader(): OpenWorldDataSource
     {
-        return OpenWorld::getDataSourceLoader();
+        return OpenWorldDataSource::getInstance();
     }
 }

@@ -22,7 +22,6 @@ use OpenWorld\Data\GeneralClasses\SourceLoaders\FileSourceLoader;
  */
 class OpenWorld
 {
-
     /**
      * Fallback locale to be used when no other locales work
      */
@@ -33,38 +32,8 @@ class OpenWorld
      */
     const ROOT_LOCALE_CODE      = "root";
 
-    /**
-     * DataSource instance
-     *
-     * @var OpenWorldDataSource
-     */
-    private static $dataSource = null;
-
     public static function get()
     {
 
-    }
-
-    /**
-     * Gets DataSource instance for loading data sources
-     *
-     * @return OpenWorldDataSource
-     */
-    public static function getDataSourceLoader(): OpenWorldDataSource
-    {
-        if (!self::$dataSource) {
-            self::$dataSource = new OpenWorldDataSource(
-                new GeneralProvider(
-                    new FileSourceLoader(),
-                    new JsonResultFactory()
-                ),
-                new LocaleProvider(
-                    new FileSourceLoader(),
-                    new JsonResultFactory()
-                )
-            );
-        }
-
-        return self::$dataSource;
     }
 }

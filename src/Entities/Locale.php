@@ -255,8 +255,10 @@ class Locale extends EntityAbstract
         $parentLocaleCode = $locale->getParentCode();
 
         if ($locale->getTerritory()) {
+            $localeTerritoryCode = $locale->getTerritory()->getCode();
+
             $parentTerritoryCodes = array_merge(
-                [$locale->getTerritory()->getCode()],
+                [$localeTerritoryCode],
                 $locale->getTerritory()->getParentCodes()
             );
 
@@ -269,6 +271,10 @@ class Locale extends EntityAbstract
             }
 
             if ($scriptCode) {
+                if ($locale->getVariant()) {
+                    $alternatives[] = "{$languageCode}_{$localeTerritoryCode}_{$locale->getVariant()->getCode()}";
+                }
+
                 foreach ($parentTerritoryCodes as $territoryCode) {
                     $alternatives[] = "{$languageCode}_{$territoryCode}";
                 }
@@ -278,6 +284,8 @@ class Locale extends EntityAbstract
         if ($parentLocaleCode) {
             $alternatives += $this->buildAlternativeLocales(Locale::fromString($parentLocaleCode));
         }
+
+        $alternatives[] = $languageCode;
 
         return $alternatives;
     }
