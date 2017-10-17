@@ -20,7 +20,7 @@ use OpenWorld\Data\GeneralClasses\Providers\Conditions\DataProviderCondition;
 class LocaleProvider extends DataProviderAbstract
 {
     /**
-     * Data subdirectory for general data
+     * Data subdirectory for locale data
      */
     const LOCALE_DATA_SUBDIRECTORY = 'locales';
 

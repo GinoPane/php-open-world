@@ -8,10 +8,8 @@
 namespace OpenWorld\Entities;
 
 use Exception;
-use OpenWorld\Entities\AbstractClasses\EntityAbstract;
-use OpenWorld\Entities\Traits\ImplementsAliasSubstitution;
-use OpenWorld\Exceptions\InvalidKeyPropertyValueException;
 use OpenWorld\OpenWorld;
+use OpenWorld\Entities\AbstractClasses\EntityAbstract;
 
 /**
  * Class Locale
@@ -20,8 +18,6 @@ use OpenWorld\OpenWorld;
  */
 class Locale extends EntityAbstract
 {
-    use ImplementsAliasSubstitution;
-
     /**
      * Language entity
      *
@@ -55,6 +51,13 @@ class Locale extends EntityAbstract
     private $variant = null;
 
     /**
+     * Source for locale aliases
+     *
+     * @var string
+     */
+    protected static $aliasSourceUri = 'language.alias.json';
+
+    /**
      * Source for likely-subtags data
      *
      * @var string
@@ -82,8 +85,6 @@ class Locale extends EntityAbstract
         Territory $territory = null,
         Variant $variant = null
     ) {
-        self::fillSourceUri();
-
         $this->language = $language;
         $this->script = $script;
         $this->territory = $territory;
@@ -104,9 +105,7 @@ class Locale extends EntityAbstract
      */
     public static function fromString(string $localeString): Locale
     {
-        self::fillSourceUri();
-
-        $localeString = self::getCodeFromAlias(str_replace('-', '_', $localeString), self::getDataSourceLoader());
+        $localeString = self::getCodeFromAlias(str_replace('-', '_', $localeString));
 
         if ($subtags = self::getSubtags($localeString)) {
             list('locale' => $languageCode, 'script' => $scriptCode, 'territory' => $territoryCode) = $subtags;
@@ -354,13 +353,5 @@ class Locale extends EntityAbstract
         } catch (Exception $exception) {
             trigger_error("Likely subtags could not be loaded: {$exception->getMessage()}", E_USER_WARNING);
         }
-    }
-
-    /**
-     * Fill missing source URIs for static usage purposes
-     */
-    private static function fillSourceUri()
-    {
-        self::$aliasSourceUri = 'language.alias.json';
     }
 }

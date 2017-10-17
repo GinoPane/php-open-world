@@ -23,8 +23,6 @@ use OpenWorld\Entities\AbstractClasses\CodeAssertedEntityAbstract;
  */
 class Language extends SingleCodeAssertedEntity
 {
-    use ImplementsAliasSubstitution;
-
     /**
      * 2/3-letter language code
      *
@@ -34,6 +32,8 @@ class Language extends SingleCodeAssertedEntity
 
     protected static $keySourceUri = 'language.codes.json';
 
+    protected static $aliasSourceUri = 'language.alias.json';
+
     /**
      * Script constructor
      *
@@ -41,9 +41,7 @@ class Language extends SingleCodeAssertedEntity
      */
     public function __construct(string $code)
     {
-        self::$aliasSourceUri = 'language.alias.json';
-
-        $this->assertCode(self::getCodeFromAlias($code, self::getDataSourceLoader()));
+        $this->assertCode(self::getCodeFromAlias($code));
     }
 
     /**

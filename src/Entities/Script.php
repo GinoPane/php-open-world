@@ -24,8 +24,6 @@ use OpenWorld\Entities\Traits\ImplementsAliasSubstitution;
  */
 class Script extends SingleCodeAssertedEntity
 {
-    use ImplementsAliasSubstitution;
-
     /**
      * 4-letter script code
      *
@@ -35,6 +33,8 @@ class Script extends SingleCodeAssertedEntity
 
     protected static $keySourceUri = 'script.codes.json';
 
+    protected static $aliasSourceUri = 'script.alias.json';
+
     /**
      * Script constructor
      *
@@ -42,8 +42,6 @@ class Script extends SingleCodeAssertedEntity
      */
     public function __construct(string $code)
     {
-        self::$aliasSourceUri = 'script.alias.json';
-
         $this->assertCode(self::getCodeFromAlias($code, self::getDataSourceLoader()));
     }
 

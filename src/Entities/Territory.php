@@ -20,8 +20,6 @@ use OpenWorld\Entities\AbstractClasses\CodeAssertedEntityAbstract;
  */
 class Territory extends CodeAssertedEntityAbstract
 {
-    use ImplementsAliasSubstitution;
-
     /**
      * Territory code types
      */
@@ -101,6 +99,8 @@ class Territory extends CodeAssertedEntityAbstract
 
     protected static $keySourceUri = 'territory.codes.json';
 
+    protected static $aliasSourceUri = 'territory.alias.json';
+
     /**
      * Territory constructor
      *
@@ -113,8 +113,6 @@ class Territory extends CodeAssertedEntityAbstract
      */
     public function __construct(string $code, string $codeType = '')
     {
-        self::$aliasSourceUri = 'territory.alias.json';
-
         $this->assertCode($code, function ($code, $source) use ($codeType) {
             return $this->fillTerritoryCodes($code, $codeType, $source);
         });
