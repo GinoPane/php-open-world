@@ -7,11 +7,7 @@
 
 namespace OpenWorld\Entities;
 
-use Closure;
-use OpenWorld\Entities\AbstractClasses\CodeAssertedEntityAbstract;
-use OpenWorld\Entities\AbstractClasses\EntityAbstract;
-use OpenWorld\Entities\GeneralClasses\SingleCodeAssertedEntity;
-use OpenWorld\Entities\Traits\ImplementsAliasSubstitution;
+use OpenWorld\Entities\AbstractClasses\SingleCodeAssertedEntity;
 
 /**
  * Class Script
@@ -42,7 +38,7 @@ class Script extends SingleCodeAssertedEntity
      */
     public function __construct(string $code)
     {
-        $this->assertCode(self::getCodeFromAlias($code, self::getDataSourceLoader()));
+        $this->assertCode(self::getCodeFromAlias($code));
     }
 
     /**

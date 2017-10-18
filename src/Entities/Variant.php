@@ -7,11 +7,7 @@
 
 namespace OpenWorld\Entities;
 
-use Closure;
-use OpenWorld\Entities\AbstractClasses\CodeAssertedEntityAbstract;
-use OpenWorld\Entities\AbstractClasses\EntityAbstract;
-use OpenWorld\Entities\GeneralClasses\SingleCodeAssertedEntity;
-use OpenWorld\Entities\Traits\ImplementsAliasSubstitution;
+use OpenWorld\Entities\AbstractClasses\SingleCodeAssertedEntity;
 
 /**
  * Class Variant

@@ -132,6 +132,9 @@ class Territory extends CodeAssertedEntityAbstract
      * Get the code by supplied code type
      *
      * @param string $type
+     *
+     * @throws InvalidTerritoryCodeTypeException
+     *
      * @return null|string
      */
     public function getCodeByType(string $type = self::ISO_3166_A2): ?string
@@ -263,7 +266,7 @@ class Territory extends CodeAssertedEntityAbstract
 
         //detect codeType by looking through the source
         if (!$codeType) {
-            $code = self::getCodeFromAlias($code, self::getDataSourceLoader());
+            $code = self::getCodeFromAlias($code);
 
             foreach ($sourceKeysToCheck as $key) {
                 if (!empty($source[$key]) && in_array($code, $source[$key])) {

@@ -5,11 +5,9 @@
  * @author: Sergey <Gino Pane> Karavay
  */
 
-namespace OpenWorld\Entities\GeneralClasses;
+namespace OpenWorld\Entities\AbstractClasses;
 
 use Closure;
-use Exception;
-use OpenWorld\Entities\AbstractClasses\CodeAssertedEntityAbstract;
 use OpenWorld\Exceptions\InvalidKeyPropertyValueException;
 
 /**
