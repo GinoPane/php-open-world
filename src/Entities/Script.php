@@ -7,7 +7,7 @@
 
 namespace OpenWorld\Entities;
 
-use OpenWorld\Entities\AbstractClasses\SingleCodeAssertedEntity;
+use OpenWorld\Entities\AbstractClasses\CodeAssertedEntityAbstract;
 
 /**
  * Class Script
@@ -18,7 +18,7 @@ use OpenWorld\Entities\AbstractClasses\SingleCodeAssertedEntity;
  *
  * @package OpenWorld\Entities
  */
-class Script extends SingleCodeAssertedEntity
+class Script extends CodeAssertedEntityAbstract
 {
     /**
      * 4-letter script code

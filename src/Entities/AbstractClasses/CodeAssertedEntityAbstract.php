@@ -8,7 +8,6 @@
 namespace OpenWorld\Entities\AbstractClasses;
 
 use Closure;
-use Exception;
 use OpenWorld\Exceptions\InvalidKeyPropertyValueException;
 
 /**
@@ -26,6 +25,13 @@ abstract class CodeAssertedEntityAbstract extends EntityAbstract
     protected static $keySourceUri = '';
 
     /**
+     * Entity code
+     *
+     * @var string
+     */
+    protected $code = '';
+
+    /**
      * Asserts that the code value is valid (exists within the source)
      *
      * @param string $code
@@ -34,7 +40,10 @@ abstract class CodeAssertedEntityAbstract extends EntityAbstract
      * @throws InvalidKeyPropertyValueException
      * @return void
      */
-    abstract protected function assertCode(string $code, Closure $keyPredicate = null): void;
+    protected function assertCode(string $code, Closure $keyPredicate = null): void
+    {
+        $this->code = $this->getAssertedCode($code, $keyPredicate);
+    }
 
     /**
      * Asserts that the code value is valid (exists within the source)

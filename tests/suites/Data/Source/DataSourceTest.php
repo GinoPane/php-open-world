@@ -197,6 +197,10 @@ class DataTest extends TestCase
         while ($filesToLoad--) {
             $randomLocaleKey = array_rand($localeList);
 
+            if ($randomLocaleKey == 'root') {
+                continue;
+            }
+
             $randomFileKey = array_rand($localeList[$randomLocaleKey]);
 
             $fileName = $localeList[$randomLocaleKey][$randomFileKey];

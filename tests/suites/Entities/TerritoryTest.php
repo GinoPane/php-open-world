@@ -42,6 +42,7 @@ class TerritoryTest extends PHPUnit_Framework_TestCase
         }
 
         $this->assertEquals($expectedOriginalCode, $territory->getCode());
+        $this->assertEquals($expectedOriginalCode, (string)$territory);
 
         foreach ($expectedCodes as $codeType => $codeValue) {
             $this->assertEquals($codeValue, $territory->getCodeByType($codeType));

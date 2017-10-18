@@ -7,7 +7,7 @@
 
 namespace OpenWorld\Entities;
 
-use OpenWorld\Entities\AbstractClasses\SingleCodeAssertedEntity;
+use OpenWorld\Entities\AbstractClasses\CodeAssertedEntityAbstract;
 
 /**
  * Class Variant
@@ -16,7 +16,7 @@ use OpenWorld\Entities\AbstractClasses\SingleCodeAssertedEntity;
  *
  * @package OpenWorld\Entities
  */
-class Variant extends SingleCodeAssertedEntity
+class Variant extends CodeAssertedEntityAbstract
 {
     /**
      * Variant code

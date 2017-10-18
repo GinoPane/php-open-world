@@ -9,7 +9,6 @@ namespace OpenWorld\Entities;
 
 use Closure;
 use OpenWorld\Exceptions\InvalidTerritoryCodeException;
-use OpenWorld\Entities\Traits\ImplementsAliasSubstitution;
 use OpenWorld\Exceptions\InvalidTerritoryCodeTypeException;
 use OpenWorld\Entities\AbstractClasses\CodeAssertedEntityAbstract;
 
@@ -50,12 +49,12 @@ class Territory extends CodeAssertedEntityAbstract
     private $originCodeType = '';
 
     /**
-     * ISO 3166-1 alpha 2 territory code
+     * ISO 3166-2 alpha 3 territory code
      *
      * @link https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
      * @var string
      */
-    private $iso3166alpha2 = '';
+    protected $iso3166alpha2 = '';
 
     /**
      * ISO 3166-1 alpha 3 territory code
@@ -63,7 +62,7 @@ class Territory extends CodeAssertedEntityAbstract
      * @link https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3
      * @var string
      */
-    private $iso3166alpha3 = '';
+    protected $iso3166alpha3 = '';
 
     /**
      * ISO 3166-1 numeric territory code. Not to mess up with UN M.49. Their numbers do not intersect
@@ -72,7 +71,7 @@ class Territory extends CodeAssertedEntityAbstract
      * @link https://en.wikipedia.org/wiki/UN_M.49
      * @var string
      */
-    private $iso3166numeric = '';
+    protected $iso3166numeric = '';
 
     /**
      * FIPS 10 territory code
@@ -82,7 +81,7 @@ class Territory extends CodeAssertedEntityAbstract
      *
      * @var string
      */
-    private $fips10 = '';
+    protected $fips10 = '';
 
     /**
      * UN M.49 territory code
@@ -90,7 +89,7 @@ class Territory extends CodeAssertedEntityAbstract
      * @link https://en.wikipedia.org/wiki/UN_M.49
      * @var string
      */
-    private $unm49 = '';
+    protected $unm49 = '';
 
     /**
      * @var string
@@ -391,3 +390,4 @@ class Territory extends CodeAssertedEntityAbstract
         return boolval(preg_match('/(^[a-z]{2,3}$)|(^[0-9]{3}$)/i', $code));
     }
 }
+

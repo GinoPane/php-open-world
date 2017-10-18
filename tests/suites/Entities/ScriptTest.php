@@ -65,6 +65,7 @@ class ScriptTest extends OpenWorldTestCase
 
         $this->assertInstanceOf(Script::class, $script);
         $this->assertEquals(strtolower($scriptCode), strtolower($script->getCode()));
+        $this->assertEquals(strtolower($scriptCode), strtolower((string)$script));
     }
 
     /**

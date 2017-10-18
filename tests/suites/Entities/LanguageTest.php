@@ -20,6 +20,7 @@ class LanguageTest extends OpenWorldTestCase
 
         $this->assertInstanceOf(Language::class, $language);
         $this->assertEquals(strtolower($expectedCode), strtolower($language->getCode()));
+        $this->assertEquals(strtolower($expectedCode), strtolower((string)$language));
     }
 
     /**

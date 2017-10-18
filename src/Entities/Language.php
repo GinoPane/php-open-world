@@ -7,7 +7,7 @@
 
 namespace OpenWorld\Entities;
 
-use OpenWorld\Entities\AbstractClasses\SingleCodeAssertedEntity;
+use OpenWorld\Entities\AbstractClasses\CodeAssertedEntityAbstract;
 
 /**
  * Class Language
@@ -18,7 +18,7 @@ use OpenWorld\Entities\AbstractClasses\SingleCodeAssertedEntity;
  *
  * @package OpenWorld\Entities
  */
-class Language extends SingleCodeAssertedEntity
+class Language extends CodeAssertedEntityAbstract
 {
     /**
      * 2/3-letter language code
