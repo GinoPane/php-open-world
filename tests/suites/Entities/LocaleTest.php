@@ -126,7 +126,9 @@ class LocaleTest extends PHPUnit_Framework_TestCase
     {
         return [
             ['pt_ST', 'pt_PT'],
-            ['rus_Cyrl_BLR', null]
+            ['rus_Cyrl_BLR', null],
+            ['zh_Hant_MO', 'zh_Hant_HK'],
+            ['zh_Hant', 'root']
         ];
     }
 
