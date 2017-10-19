@@ -213,8 +213,6 @@ class Locale extends EntityAbstract
             return $parentCodes["{$languageCode}_{$scriptCode}"];
         } elseif (!empty($parentCodes["{$languageCode}_{$territoryCode}"])) {
             return $parentCodes["{$languageCode}_{$territoryCode}"];
-        } elseif (!empty($parentCodes["{$languageCode}"])) {
-            return $parentCodes["{$languageCode}"];
         }
 
         return null;
