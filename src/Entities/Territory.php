@@ -96,8 +96,18 @@ class Territory extends CodeAssertedEntityAbstract
      */
     private static $containmentSourceUri = 'territory.containment.json';
 
+    /**
+     * Source for territory assertion data
+     *
+     * @var string
+     */
     protected static $keySourceUri = 'territory.codes.json';
 
+    /**
+     * Source for territory aliases
+     *
+     * @var string
+     */
     protected static $aliasSourceUri = 'territory.alias.json';
 
     /**

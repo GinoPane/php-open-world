@@ -27,8 +27,18 @@ class Script extends CodeAssertedEntityAbstract
      */
     protected $code = '';
 
+    /**
+     * Source for script assertion data
+     *
+     * @var string
+     */
     protected static $keySourceUri = 'script.codes.json';
 
+    /**
+     * Source script aliases
+     *
+     * @var string
+     */
     protected static $aliasSourceUri = 'script.alias.json';
 
     /**

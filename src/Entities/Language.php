@@ -27,8 +27,18 @@ class Language extends CodeAssertedEntityAbstract
      */
     protected $code = '';
 
+    /**
+     * Source for language assertion data
+     *
+     * @var string
+     */
     protected static $keySourceUri = 'language.codes.json';
 
+    /**
+     * Source for language aliases
+     *
+     * @var string
+     */
     protected static $aliasSourceUri = 'language.alias.json';
 
     /**

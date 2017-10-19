@@ -25,6 +25,11 @@ class Variant extends CodeAssertedEntityAbstract
      */
     protected $code = '';
 
+    /**
+     * Source for variant assertion data
+     *
+     * @var string
+     */
     protected static $keySourceUri = 'variant.codes.json';
 
     /**
