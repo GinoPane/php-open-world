@@ -9,7 +9,6 @@ namespace OpenWorld\Data\GeneralClasses\Providers;
 
 use OpenWorld\Data\GeneralClasses\OpenWorldDataSource as OWD;
 use OpenWorld\Data\AbstractClasses\DataProviderAbstract;
-use OpenWorld\Data\GeneralClasses\Providers\Conditions\DataProviderCondition;
 
 /**
  * Class GeneralProvider
@@ -34,13 +33,13 @@ class GeneralProvider extends DataProviderAbstract
      * Make URI appropriate for general provider
      *
      * @param string $uri
-     * @param DataProviderCondition $condition
+     *
      * @return string
      */
-    public function adjustUri(string $uri, DataProviderCondition $condition): string
+    public function adjustUri(string $uri): string
     {
-        $generalDataSubdirectory = OWD::getDataDirectory() . self::GENERAL_DATA_SUBDIRECTORY . DIRECTORY_SEPARATOR;
+        $dataSubdirectory = OWD::getDataDirectory() . self::GENERAL_DATA_SUBDIRECTORY . DIRECTORY_SEPARATOR;
 
-        return $generalDataSubdirectory . $uri;
+        return $dataSubdirectory . $uri;
     }
 }

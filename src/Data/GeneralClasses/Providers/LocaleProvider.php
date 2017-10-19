@@ -45,7 +45,7 @@ class LocaleProvider extends DataProviderAbstract
 
         $result->setContent(
             $this->getLoader()->loadSource(
-                $this->adjustUri($uri, $condition)
+                $this->adjustUri($uri)
             )
         );
 
@@ -56,13 +56,13 @@ class LocaleProvider extends DataProviderAbstract
      * Make URI appropriate for locale provider
      *
      * @param string $uri
-     * @param DataProviderCondition $condition
+     *
      * @return string
      */
-    public function adjustUri(string $uri, DataProviderCondition $condition): string
+    public function adjustUri(string $uri): string
     {
-        $localeDataSubdirectory = OWD::getDataDirectory() . self::LOCALE_DATA_SUBDIRECTORY . DIRECTORY_SEPARATOR;
+        $dataSubdirectory = OWD::getDataDirectory() . self::LOCALE_DATA_SUBDIRECTORY . DIRECTORY_SEPARATOR;
 
-        return $localeDataSubdirectory . $uri;
+        return $dataSubdirectory . $uri;
     }
 }

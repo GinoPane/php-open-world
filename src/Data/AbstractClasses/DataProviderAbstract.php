@@ -114,7 +114,7 @@ abstract class DataProviderAbstract implements DataProviderInterface
 
         $result->setContent(
             $this->getLoader()->loadSource(
-                $this->adjustUri($uri, $condition)
+                $this->adjustUri($uri)
             )
         );
 
@@ -151,9 +151,8 @@ abstract class DataProviderAbstract implements DataProviderInterface
      * Make URI appropriate for current provider
      *
      * @param string $uri
-     * @param DataProviderCondition $condition
      *
      * @return string
      */
-    abstract protected function adjustUri(string $uri, DataProviderCondition $condition): string;
+    abstract protected function adjustUri(string $uri): string;
 }
