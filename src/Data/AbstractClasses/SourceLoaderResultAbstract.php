@@ -21,14 +21,14 @@ abstract class SourceLoaderResultAbstract implements SourceLoaderResultInterface
 {
 
     /**
-     * Stored raw content.
+     * Stored raw content
      *
      * @var
      */
     protected $content;
 
     /**
-     * Get result data as string.
+     * Get result data as string
      *
      * @inheritdoc
      *
@@ -40,7 +40,7 @@ abstract class SourceLoaderResultAbstract implements SourceLoaderResultInterface
     }
 
     /**
-     * Get result data as array.
+     * Get result data as array
      *
      * @inheritdoc
      *
@@ -52,7 +52,7 @@ abstract class SourceLoaderResultAbstract implements SourceLoaderResultInterface
     }
 
     /**
-     * Get result data as object.
+     * Get result data as object
      *
      * @return mixed
      *
@@ -64,7 +64,7 @@ abstract class SourceLoaderResultAbstract implements SourceLoaderResultInterface
     }
 
     /**
-     * Set result content.
+     * Set result content
      *
      * @param $content
      * @return mixed
@@ -77,7 +77,7 @@ abstract class SourceLoaderResultAbstract implements SourceLoaderResultInterface
     }
 
     /**
-     * Get result's content.
+     * Get result's content
      *
      * @inheritdoc
      */
@@ -87,7 +87,7 @@ abstract class SourceLoaderResultAbstract implements SourceLoaderResultInterface
     }
 
     /**
-     * Checks whether content is valid for the result.
+     * Checks whether content is valid for the result
      *
      * @param $content
      * @return bool
@@ -95,7 +95,7 @@ abstract class SourceLoaderResultAbstract implements SourceLoaderResultInterface
     abstract public function isValid($content): bool;
 
     /**
-     * Makes sure that $content is valid for this SourceLoaderResultAbstract instance.
+     * Makes sure that $content is valid for this SourceLoaderResultAbstract instance
      *
      * @param $content
      *

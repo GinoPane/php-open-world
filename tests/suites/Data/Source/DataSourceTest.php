@@ -15,15 +15,15 @@ use OpenWorld\Entities\Locale;
 use OpenWorld\Data\Interfaces\DataProviderInterface;
 use OpenWorld\Collections\Interfaces\CollectionInterface;
 
-
 /**
- * Class DataTest
+ * Class DataSourceTest
  *
  * General low-level tests for data provider
  */
-class DataTest extends TestCase
+class DataSourceTest extends TestCase
 {
     const LOCALE_SPECIFIC_FILES_NUMBER_TO_TEST = 100;
+
     /**
      * @var string
      */
@@ -154,7 +154,12 @@ class DataTest extends TestCase
     {
         $locale = Locale::fromString($localeCode);
 
-        var_dump($locale->getCode());
+        $this->dataSource->load(
+            $fileName,
+            new DataProviderCondition(LocaleProvider::getConditionKey(), $locale)
+        );
+
+        var_dump($localeCode." -> ".$locale->getCode());
 
         $this->assertTrue(true);
     }

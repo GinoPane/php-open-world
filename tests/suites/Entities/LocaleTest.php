@@ -242,6 +242,25 @@ class LocaleTest extends PHPUnit_Framework_TestCase
                     'en_001',
                     'en'
                 ]
+            ],
+            ['en-HK',
+                [
+                    'en_Latn_US_POSIX',
+                    'en_Latn_US',
+                    'en_Latn_021',
+                    'en_Latn_UN',
+                    'en_Latn_003',
+                    'en_Latn_019',
+                    'en_Latn_001',
+                    'en_US_POSIX',
+                    'en_US',
+                    'en_021',
+                    'en_UN',
+                    'en_003',
+                    'en_019',
+                    'en_001',
+                    'en'
+                ]
             ]
         ];
     }

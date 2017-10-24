@@ -7,10 +7,12 @@
 
 namespace OpenWorld\Data\GeneralClasses\Providers;
 
+use Generator;
 use OpenWorld\Data\AbstractClasses\DataProviderAbstract;
 use OpenWorld\Data\Interfaces\SourceLoaderResultInterface;
 use OpenWorld\Data\GeneralClasses\OpenWorldDataSource as OWD;
 use OpenWorld\Data\GeneralClasses\Providers\Conditions\DataProviderCondition;
+use OpenWorld\Entities\Locale;
 
 /**
  * Class LocaleProvider
@@ -41,6 +43,17 @@ class LocaleProvider extends DataProviderAbstract
      */
     public function load(string $uri, DataProviderCondition $condition): SourceLoaderResultInterface
     {
+        //load locale alternatives
+
+        //filter alternatives and leave only existing directories
+
+        //load
+
+        foreach ($this->getLocaleDirectory($condition->getLocale()) as $localeDirectory) {
+            var_dump($localeDirectory);
+        }
+        echo "\n\n\n";
+
         $result = $this->getResultFactory()->get();
 
         $result->setContent(
@@ -64,5 +77,29 @@ class LocaleProvider extends DataProviderAbstract
         $dataSubdirectory = OWD::getDataDirectory() . self::LOCALE_DATA_SUBDIRECTORY . DIRECTORY_SEPARATOR;
 
         return $dataSubdirectory . $uri;
+    }
+
+    /**
+     * Gets existent locale directories
+     *
+     * @param Locale $locale
+     *
+     * @return Generator
+     */
+    private function getLocaleDirectory(Locale $locale): Generator
+    {
+        $alternativeLocales = $locale->getAlternativeCodes();
+
+        array_reverse($alternativeLocales);
+
+        foreach ($alternativeLocales as $locale) {
+            $locale = str_replace("_", "-", $locale);
+
+            $localeDirectory = $this->adjustUri($locale);
+
+            if (is_dir($localeDirectory)) {
+                yield $localeDirectory;
+            }
+        }
     }
 }
