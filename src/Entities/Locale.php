@@ -228,7 +228,7 @@ class Locale extends EntityAbstract
     {
         $alternatives = $this->buildAlternativeLocales($this);
 
-        if ($includeFallback) {
+        if ($includeFallback && !in_array(OpenWorld::FALLBACK_LOCALE_CODE, $alternatives)) {
             $alternatives = array_merge(
                 $alternatives,
                 $this->buildAlternativeLocales(Locale::fromString(OpenWorld::FALLBACK_LOCALE_CODE))
