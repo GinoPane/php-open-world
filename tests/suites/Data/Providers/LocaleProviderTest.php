@@ -57,8 +57,8 @@ class LocaleProviderTest extends TestCase
 
         $directories = [];
 
-        foreach($this->provider->getLocaleDirectory($locale) as $directory) {
-            $directories[] = $directory;
+        foreach ($this->provider->getLocaleDirectory($locale) as $directory) {
+            $directories[] = basename($directory);
         }
 
         $this->assertEquals($expectedDirectories, $directories);
@@ -72,15 +72,15 @@ class LocaleProviderTest extends TestCase
                 []
             ],
             [
-                'be',
+                'en',
                 []
             ],
             [
-                'en_HK',
+                'es',
                 []
             ],
             [
-                'en-US-POSIX',
+                'it',
                 []
             ]
         ];
