@@ -142,13 +142,14 @@ class DataSourceTest extends TestCase
     }
 
     /**
+     * @depends LocaleProviderTest::it_gets_a_list_of_locale_directories
+     *
      * @param string $localeCode
      * @param string $fileName
      * @param string $pathName
      *
      * @test
      * @dataProvider localeSpecificFilesProvider
-     *
      */
     public function it_loads_locale_specific_files(string $localeCode, string $fileName, string $pathName)
     {
@@ -196,7 +197,6 @@ class DataSourceTest extends TestCase
         $buildStatus = json_decode(file_get_contents($this->buildStatusFile), true);
 
         $localeDataDirectory = PROJECT_ROOT . $buildStatus['data']['locales']['directory'];
-
         $localeList = $buildStatus['data']['locales']['file-list'];
 
         while ($filesToLoad--) {

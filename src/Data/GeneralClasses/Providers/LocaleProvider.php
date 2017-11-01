@@ -86,7 +86,7 @@ class LocaleProvider extends DataProviderAbstract
      *
      * @return Generator
      */
-    private function getLocaleDirectory(Locale $locale): Generator
+    public function getLocaleDirectory(Locale $locale): Generator
     {
         $alternativeLocales = $locale->getAlternativeCodes();
 
