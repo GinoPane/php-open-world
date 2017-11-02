@@ -69,19 +69,41 @@ class LocaleProviderTest extends TestCase
         return [
             [
                 'ru',
-                []
+                [
+                    'ru-RU',
+                    'ru',
+                    'en-US',
+                    'en-001',
+                    'en',
+                ]
             ],
             [
                 'en',
-                []
+                [
+                    'en-US',
+                    'en-001',
+                    'en',
+                ]
             ],
             [
                 'es',
-                []
+                [
+                    'es-ES',
+                    'es',
+                    'en-US',
+                    'en-001',
+                    'en',
+                ]
             ],
             [
                 'it',
-                []
+                [
+                    'it-IT',
+                    'it',
+                    'en-US',
+                    'en-001',
+                    'en',
+                ]
             ]
         ];
     }
