@@ -5,19 +5,19 @@
  * @author: Sergey <Gino Pane> Karavay
  */
 
-namespace OpenWorld\Collections\GeneralClasses;
+namespace GinoPane\PhpOpenWorld\Collections\GeneralClasses;
 
 use Closure;
-use OpenWorld\Collections\Traits\ImplementsArray;
-use OpenWorld\Assertions\Interfaces\AssertionInterface;
-use OpenWorld\Collections\Interfaces\CollectionInterface;
+use GinoPane\PhpOpenWorld\Collections\Traits\ImplementsArray;
+use GinoPane\PhpOpenWorld\Assertions\Interfaces\AssertionInterface;
+use GinoPane\PhpOpenWorld\Collections\Interfaces\CollectionInterface;
 
 /**
  * Class AssertionStrictCollection
  *
  * TypeStrictCollection uses exception-based type checking to ensure, that its elements has necessary type
  *
- * @package OpenWorld\Collections
+ * @package GinoPane\PhpOpenWorld\Collections
  */
 class AssertionStrictCollection implements CollectionInterface
 {

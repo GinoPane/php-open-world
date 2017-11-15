@@ -1,11 +1,11 @@
 <?php
 
-use OpenWorld\Entities\Language;
+use GinoPane\PhpOpenWorld\Entities\Language;
 
 /**
  * Class LanguageTest
  */
-class LanguageTest extends OpenWorldTestCase
+class LanguageTest extends PhpOpenWorldTestCase
 {
     /**
      * @test

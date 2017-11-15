@@ -1,5 +1,5 @@
 {
-    "name": "OpenWorld",
+    "name": "PhpOpenWorld",
     "type": "library",
     "description": "World's internationalization library. Get and format currencies, numbers, dates and more in nice and easy way. All data is provided by Unicode Common Locale Data Repository.",
     "keywords": [
@@ -29,14 +29,14 @@
         "php": "^7.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "5.*",
-        "squizlabs/php_codesniffer": "2.*",
-        "phpmd/phpmd" : "@stable",
-        "phpdocumentor/phpdocumentor" : "2.*"
+        "phpunit/phpunit": "^6.0",
+        "squizlabs/php_codesniffer": "^3.0",
+        "phpmd/phpmd" : "^2.6",
+        "phpdocumentor/phpdocumentor" : "^2.0"
     },
     "autoload": {
         "psr-4": {
-            "OpenWorld\\": "src/"
+            "GinoPane\\PhpOpenWorld\\": "src/"
         }
     }
 }

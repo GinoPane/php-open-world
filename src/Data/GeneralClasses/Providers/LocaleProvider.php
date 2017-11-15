@@ -5,19 +5,19 @@
  * @author: Sergey <Gino Pane> Karavay
  */
 
-namespace OpenWorld\Data\GeneralClasses\Providers;
+namespace GinoPane\PhpOpenWorld\Data\GeneralClasses\Providers;
 
 use Generator;
-use OpenWorld\Data\AbstractClasses\DataProviderAbstract;
-use OpenWorld\Data\Interfaces\SourceLoaderResultInterface;
-use OpenWorld\Data\GeneralClasses\OpenWorldDataSource as OWD;
-use OpenWorld\Data\GeneralClasses\Providers\Conditions\DataProviderCondition;
-use OpenWorld\Entities\Locale;
+use GinoPane\PhpOpenWorld\Data\AbstractClasses\DataProviderAbstract;
+use GinoPane\PhpOpenWorld\Data\Interfaces\SourceLoaderResultInterface;
+use GinoPane\PhpOpenWorld\Data\GeneralClasses\OpenWorldDataSource as OWD;
+use GinoPane\PhpOpenWorld\Data\GeneralClasses\Providers\Conditions\DataProviderCondition;
+use GinoPane\PhpOpenWorld\Entities\Locale;
 
 /**
  * Class LocaleProvider
  *
- * @package OpenWorld\Data\GeneralClasses\Providers
+ * @package GinoPane\PhpOpenWorld\Data\GeneralClasses\Providers
  */
 class LocaleProvider extends DataProviderAbstract
 {

@@ -5,10 +5,10 @@
  * @author: Sergey <Gino Pane> Karavay
  */
 
-namespace OpenWorld\Assertions\GeneralClasses;
+namespace GinoPane\PhpOpenWorld\Assertions\GeneralClasses;
 
-use OpenWorld\Exceptions\InvalidTypeException;
-use OpenWorld\Assertions\Interfaces\AssertionInterface;
+use GinoPane\PhpOpenWorld\Exceptions\InvalidTypeException;
+use GinoPane\PhpOpenWorld\Assertions\Interfaces\AssertionInterface;
 
 /**
  * Class TypeAssertion
@@ -16,7 +16,7 @@ use OpenWorld\Assertions\Interfaces\AssertionInterface;
  * Makes sure that necessary type is being used.
  * Throws exception instead.
  *
- * @package OpenWorld\Assertions
+ * @package GinoPane\PhpOpenWorld\Assertions
  */
 class TypeAssertion implements AssertionInterface
 {

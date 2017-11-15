@@ -5,7 +5,7 @@
  * @author: Sergey <Gino Pane> Karavay
  */
 
-namespace OpenWorld\Entities;
+namespace GinoPane\PhpOpenWorld\Entities;
 
 
 class Currency

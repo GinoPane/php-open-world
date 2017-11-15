@@ -5,14 +5,14 @@
  * @author: Sergey <Gino Pane> Karavay
  */
 
-namespace OpenWorld\Entities\AbstractClasses;
+namespace GinoPane\PhpOpenWorld\Entities\AbstractClasses;
 
-use OpenWorld\Data\GeneralClasses\OpenWorldDataSource;
+use GinoPane\PhpOpenWorld\Data\GeneralClasses\OpenWorldDataSource;
 
 /**
  * Class EntityAbstract
  *
- * @package OpenWorld\Entities\AbstractClasses
+ * @package GinoPane\PhpOpenWorld\Entities\AbstractClasses
  */
 abstract class EntityAbstract
 {

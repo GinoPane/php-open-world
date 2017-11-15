@@ -5,7 +5,7 @@
  * @author: Sergey <Gino Pane> Karavay
  */
 
-namespace OpenWorld\Collections\Interfaces;
+namespace GinoPane\PhpOpenWorld\Collections\Interfaces;
 
 use Closure;
 use Countable;
@@ -14,7 +14,7 @@ use IteratorAggregate;
 
 /**
  * Interface CollectionInterface
- * @package OpenWorld\Collections\Interfaces
+ * @package GinoPane\PhpOpenWorld\Collections\Interfaces
  */
 interface CollectionInterface extends Countable, IteratorAggregate, ArrayAccess
 {

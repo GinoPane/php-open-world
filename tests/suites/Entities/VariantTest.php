@@ -1,11 +1,11 @@
 <?php
 
-use OpenWorld\Entities\Variant;
+use GinoPane\PhpOpenWorld\Entities\Variant;
 
 /**
  * Class VariantTest
  */
-class VariantTest extends OpenWorldTestCase
+class VariantTest extends PhpOpenWorldTestCase
 {
     /**
      * @test

@@ -5,19 +5,19 @@
  * @author: Sergey <Gino Pane> Karavay
  */
 
-namespace OpenWorld\Data\GeneralClasses\SourceLoaders;
+namespace GinoPane\PhpOpenWorld\Data\GeneralClasses\SourceLoaders;
 
-use OpenWorld\Exceptions\FileNotFoundException;
-use OpenWorld\Exceptions\FileNotValidException;
-use OpenWorld\Data\Interfaces\SourceLoaderInterface;
-use OpenWorld\Exceptions\BadDataFileContentsException;
+use GinoPane\PhpOpenWorld\Exceptions\FileNotFoundException;
+use GinoPane\PhpOpenWorld\Exceptions\FileNotValidException;
+use GinoPane\PhpOpenWorld\Data\Interfaces\SourceLoaderInterface;
+use GinoPane\PhpOpenWorld\Exceptions\BadDataFileContentsException;
 
 /**
  * Class FileSourceLoader
  *
  * Provides a method for loading json data files.
  *
- * @package OpenWorld\Data\Loaders
+ * @package GinoPane\PhpOpenWorld\Data\Loaders
  */
 class FileSourceLoader implements SourceLoaderInterface
 {

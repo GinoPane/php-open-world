@@ -5,17 +5,17 @@
  * @author: Sergey <Gino Pane> Karavay
  */
 
-namespace OpenWorld\Exceptions;
+namespace GinoPane\PhpOpenWorld\Exceptions;
 
-use OpenWorld\Data\GeneralClasses\Providers\Conditions\DataProviderCondition;
-use OpenWorld\Exceptions\AbstractClasses\ExceptionAbstract;
+use GinoPane\PhpOpenWorld\Data\GeneralClasses\Providers\Conditions\DataProviderCondition;
+use GinoPane\PhpOpenWorld\Exceptions\AbstractClasses\ExceptionAbstract;
 
 /**
  * Class NoDataProvidersAvailableException
  *
  * An exception raised when no providers were found for a source
  *
- * @package OpenWorld\Exceptions
+ * @package GinoPane\PhpOpenWorld\Exceptions
  */
 class NoDataProvidersAvailableException extends ExceptionAbstract
 {

@@ -5,16 +5,16 @@
  * @author: Sergey <Gino Pane> Karavay
  */
 
-namespace OpenWorld\Exceptions;
+namespace GinoPane\PhpOpenWorld\Exceptions;
 
-use OpenWorld\Exceptions\AbstractClasses\ExceptionAbstract;
+use GinoPane\PhpOpenWorld\Exceptions\AbstractClasses\ExceptionAbstract;
 
 /**
  * Class InvalidDataFileException
  *
  * An exception raised when an invalid data file has been hit.
  *
- * @package OpenWorld\Exceptions
+ * @package GinoPane\PhpOpenWorld\Exceptions
  */
 class InvalidDataFileException extends ExceptionAbstract
 {

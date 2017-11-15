@@ -5,16 +5,16 @@
  * @author: Sergey <Gino Pane> Karavay
  */
 
-namespace OpenWorld\Exceptions;
+namespace GinoPane\PhpOpenWorld\Exceptions;
 
-use OpenWorld\Exceptions\AbstractClasses\ExceptionAbstract;
+use GinoPane\PhpOpenWorld\Exceptions\AbstractClasses\ExceptionAbstract;
 
 /**
  * Class InvalidLocaleException
  *
  * An exception raised when an invalid locale specification has been hit
  *
- * @package OpenWorld\Exceptions
+ * @package GinoPane\PhpOpenWorld\Exceptions
  */
 class InvalidLocaleException extends ExceptionAbstract
 {

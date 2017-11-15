@@ -5,16 +5,16 @@
  * @author: Sergey <Gino Pane> Karavay
  */
 
-namespace OpenWorld\Entities;
+namespace GinoPane\PhpOpenWorld\Entities;
 
 use Exception;
-use OpenWorld\OpenWorld;
-use OpenWorld\Entities\AbstractClasses\EntityAbstract;
+use GinoPane\PhpOpenWorld\PhpOpenWorld;
+use GinoPane\PhpOpenWorld\Entities\AbstractClasses\EntityAbstract;
 
 /**
  * Class Locale
  *
- * @package OpenWorld\Entities
+ * @package GinoPane\PhpOpenWorld\Entities
  */
 class Locale extends EntityAbstract
 {
@@ -228,10 +228,10 @@ class Locale extends EntityAbstract
     {
         $alternatives = $this->buildAlternativeLocales($this);
 
-        if ($includeFallback && !in_array(OpenWorld::FALLBACK_LOCALE_CODE, $alternatives)) {
+        if ($includeFallback && !in_array(PhpOpenWorld::FALLBACK_LOCALE_CODE, $alternatives)) {
             $alternatives = array_merge(
                 $alternatives,
-                $this->buildAlternativeLocales(Locale::fromString(OpenWorld::FALLBACK_LOCALE_CODE))
+                $this->buildAlternativeLocales(Locale::fromString(PhpOpenWorld::FALLBACK_LOCALE_CODE))
             );
         }
 

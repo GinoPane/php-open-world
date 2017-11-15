@@ -5,12 +5,12 @@
  * @author: Sergey <Gino Pane> Karavay
  */
 
-namespace OpenWorld\Data\Interfaces;
+namespace GinoPane\PhpOpenWorld\Data\Interfaces;
 
 /**
  * Interface SourceLoaderResultInterface
  *
- * @package OpenWorld\Data\Interfaces
+ * @package GinoPane\PhpOpenWorld\Data\Interfaces
  */
 interface SourceLoaderResultInterface
 {

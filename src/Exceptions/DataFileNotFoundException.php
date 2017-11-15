@@ -5,16 +5,16 @@
  * @author: Sergey <Gino Pane> Karavay
  */
 
-namespace OpenWorld\Exceptions;
+namespace GinoPane\PhpOpenWorld\Exceptions;
 
-use OpenWorld\Exceptions\AbstractClasses\ExceptionAbstract;
+use GinoPane\PhpOpenWorld\Exceptions\AbstractClasses\ExceptionAbstract;
 
 /**
  * Class DataFileNotFoundException
  *
  * An exception raised when a data file has not been found.
  *
- * @package OpenWorld\Exceptions
+ * @package GinoPane\PhpOpenWorld\Exceptions
  */
 class DataFileNotFoundException extends ExceptionAbstract
 {

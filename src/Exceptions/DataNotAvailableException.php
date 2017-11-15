@@ -5,17 +5,17 @@
  * @author: Sergey <Gino Pane> Karavay
  */
 
-namespace OpenWorld\Exceptions;
+namespace GinoPane\PhpOpenWorld\Exceptions;
 
-use OpenWorld\Data\GeneralClasses\Providers\Conditions\DataProviderCondition;
-use OpenWorld\Exceptions\AbstractClasses\ExceptionAbstract;
+use GinoPane\PhpOpenWorld\Data\GeneralClasses\Providers\Conditions\DataProviderCondition;
+use GinoPane\PhpOpenWorld\Exceptions\AbstractClasses\ExceptionAbstract;
 
 /**
  * Class DataNotAvailableException
  *
  * An exception raised when a necessary data was not loaded.
  *
- * @package OpenWorld\Exceptions
+ * @package GinoPane\PhpOpenWorld\Exceptions
  */
 class DataNotAvailableException extends ExceptionAbstract
 {

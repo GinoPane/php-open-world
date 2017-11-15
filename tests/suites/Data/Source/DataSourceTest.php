@@ -2,7 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 
-use OpenWorld\Data\GeneralClasses\{
+use GinoPane\PhpOpenWorld\Data\GeneralClasses\{
     DataSource,
     Providers\Conditions\DataProviderCondition,
     Providers\LocaleProvider,
@@ -11,9 +11,9 @@ use OpenWorld\Data\GeneralClasses\{
     SourceLoaderResults\Factories\JsonResultFactory
 };
 
-use OpenWorld\Entities\Locale;
-use OpenWorld\Data\Interfaces\DataProviderInterface;
-use OpenWorld\Collections\Interfaces\CollectionInterface;
+use GinoPane\PhpOpenWorld\Entities\Locale;
+use GinoPane\PhpOpenWorld\Data\Interfaces\DataProviderInterface;
+use GinoPane\PhpOpenWorld\Collections\Interfaces\CollectionInterface;
 
 /**
  * Class DataSourceTest
@@ -70,7 +70,7 @@ class DataSourceTest extends TestCase
      */
     public function it_tries_to_load_with_unacceptable_condition()
     {
-        $this->expectException(\OpenWorld\Exceptions\NoDataProvidersAvailableException::class);
+        $this->expectException(\GinoPane\PhpOpenWorld\Exceptions\NoDataProvidersAvailableException::class);
 
         $fileName = "someFile";
 
@@ -129,7 +129,7 @@ class DataSourceTest extends TestCase
         string $fileName,
         string $pathName
     ) {
-        $this->expectException(\OpenWorld\Exceptions\NoDataProvidersAvailableException::class);
+        $this->expectException(\GinoPane\PhpOpenWorld\Exceptions\NoDataProvidersAvailableException::class);
 
         $this->dataSource->clearCache();
 

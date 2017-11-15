@@ -1,14 +1,14 @@
 <?php
 
-use OpenWorld\Data\GeneralClasses\Providers\LocaleProvider;
+use GinoPane\PhpOpenWorld\Data\GeneralClasses\Providers\LocaleProvider;
 use PHPUnit\Framework\TestCase;
 
-use OpenWorld\Data\GeneralClasses\Providers\GeneralProvider;
-use OpenWorld\Data\GeneralClasses\SourceLoaders\FileSourceLoader;
-use OpenWorld\Data\GeneralClasses\SourceLoaderResults\Factories\JsonResultFactory;
-use OpenWorld\Data\Interfaces\SourceLoaderInterface;
-use OpenWorld\Data\Interfaces\SourceLoaderResultFactoryInterface;
-use OpenWorld\Entities\Locale;
+use GinoPane\PhpOpenWorld\Data\GeneralClasses\Providers\GeneralProvider;
+use GinoPane\PhpOpenWorld\Data\GeneralClasses\SourceLoaders\FileSourceLoader;
+use GinoPane\PhpOpenWorld\Data\GeneralClasses\SourceLoaderResults\Factories\JsonResultFactory;
+use GinoPane\PhpOpenWorld\Data\Interfaces\SourceLoaderInterface;
+use GinoPane\PhpOpenWorld\Data\Interfaces\SourceLoaderResultFactoryInterface;
+use GinoPane\PhpOpenWorld\Entities\Locale;
 
 /**
  * Class LocaleProviderTest

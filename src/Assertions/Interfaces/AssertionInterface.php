@@ -5,14 +5,14 @@
  * @author: Sergey <Gino Pane> Karavay
  */
 
-namespace OpenWorld\Assertions\Interfaces;
+namespace GinoPane\PhpOpenWorld\Assertions\Interfaces;
 
 /**
  * Interface AssertionInterface
  *
  * Provides methods for making exception-based assertions.
  *
- * @package OpenWorld\Assertions\Interfaces
+ * @package GinoPane\PhpOpenWorld\Assertions\Interfaces
  */
 interface AssertionInterface
 {

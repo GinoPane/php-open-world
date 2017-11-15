@@ -5,16 +5,16 @@
  * @author: Sergey <Gino Pane> Karavay
  */
 
-namespace OpenWorld\Collections\Traits;
+namespace GinoPane\PhpOpenWorld\Collections\Traits;
 
 use Closure;
 use ArrayIterator;
-use OpenWorld\Collections\Interfaces\CollectionInterface;
+use GinoPane\PhpOpenWorld\Collections\Interfaces\CollectionInterface;
 
 /**
  * Class ImplementsArray
  *
- * @package OpenWorld\Collections\Traits
+ * @package GinoPane\PhpOpenWorld\Collections\Traits
  */
 trait ImplementsArray
 {

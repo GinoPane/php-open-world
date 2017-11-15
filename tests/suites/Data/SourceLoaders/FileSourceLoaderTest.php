@@ -1,15 +1,15 @@
 <?php
 
 //for monkey-patching
-namespace OpenWorld\Data\GeneralClasses\SourceLoaders;
+namespace GinoPane\PhpOpenWorld\Data\GeneralClasses\SourceLoaders;
 
 use PHPUnit\Framework\TestCase;
 
 use DirectoryIterator;
 
-use OpenWorld\Exceptions\FileNotFoundException;
-use OpenWorld\Exceptions\FileNotValidException;
-use OpenWorld\Exceptions\BadDataFileContentsException;
+use GinoPane\PhpOpenWorld\Exceptions\FileNotFoundException;
+use GinoPane\PhpOpenWorld\Exceptions\FileNotValidException;
+use GinoPane\PhpOpenWorld\Exceptions\BadDataFileContentsException;
 
 /**
  * Override system function is_file or not
@@ -90,6 +90,15 @@ class FileSourceLoaderTest extends TestCase
     public function setUp()
     {
         $this->loader = new FileSourceLoader();
+    }
+
+    public function tearDown()
+    {
+        //disable monkey-patching here to override is_file()
+        global $overrideIsFile, $overrideIsDir, $overrideIsReadable;
+        $overrideIsFile = false;
+        $overrideIsDir = false;
+        $overrideIsReadable = false;
     }
 
     /**

@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Class OpenWorldTestCase
+ * Class PhpOpenWorldTestCase
  */
-class OpenWorldTestCase extends PHPUnit_Framework_TestCase
+class PhpOpenWorldTestCase extends PHPUnit\Framework\TestCase
 {
     /**
      * @param $object

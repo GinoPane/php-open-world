@@ -5,16 +5,16 @@
  * @author: Sergey <Gino Pane> Karavay
  */
 
-namespace OpenWorld\Entities\Interfaces;
+namespace GinoPane\PhpOpenWorld\Entities\Interfaces;
 
-use OpenWorld\Entities\Territory;
+use GinoPane\PhpOpenWorld\Entities\Territory;
 
 /**
  * Interface Territorial
  *
  * Represents the interface for territory-dependent entities
  *
- * @package OpenWorld\Entities\Interfaces
+ * @package GinoPane\PhpOpenWorld\Entities\Interfaces
  */
 interface Territorial
 {

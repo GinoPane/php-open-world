@@ -5,22 +5,22 @@
  * @author: Sergey <Gino Pane> Karavay
  */
 
-namespace OpenWorld\Data\GeneralClasses;
+namespace GinoPane\PhpOpenWorld\Data\GeneralClasses;
 
-use OpenWorld\Data\GeneralClasses\SourceLoaderResults\Factories\JsonResultFactory;
-use OpenWorld\Data\GeneralClasses\SourceLoaders\FileSourceLoader;
-use OpenWorld\Entities\Locale;
-use OpenWorld\Data\Interfaces\SourceLoaderResultInterface;
-use OpenWorld\Data\GeneralClasses\Providers\LocaleProvider;
-use OpenWorld\Data\GeneralClasses\Providers\GeneralProvider;
-use OpenWorld\Data\GeneralClasses\Providers\Conditions\DataProviderCondition;
+use GinoPane\PhpOpenWorld\Data\GeneralClasses\SourceLoaderResults\Factories\JsonResultFactory;
+use GinoPane\PhpOpenWorld\Data\GeneralClasses\SourceLoaders\FileSourceLoader;
+use GinoPane\PhpOpenWorld\Entities\Locale;
+use GinoPane\PhpOpenWorld\Data\Interfaces\SourceLoaderResultInterface;
+use GinoPane\PhpOpenWorld\Data\GeneralClasses\Providers\LocaleProvider;
+use GinoPane\PhpOpenWorld\Data\GeneralClasses\Providers\GeneralProvider;
+use GinoPane\PhpOpenWorld\Data\GeneralClasses\Providers\Conditions\DataProviderCondition;
 
 /**
  * Class OpenWorldDataSource
  *
  * PHP OpenWorld's specific data source
  *
- * @package OpenWorld\Data\GeneralClasses
+ * @package GinoPane\PhpOpenWorld\Data\GeneralClasses
  */
 class OpenWorldDataSource extends DataSource
 {

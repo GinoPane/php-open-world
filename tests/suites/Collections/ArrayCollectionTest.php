@@ -1,13 +1,13 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use OpenWorld\Collections\GeneralClasses\ArrayCollection;
+use GinoPane\PhpOpenWorld\Collections\GeneralClasses\ArrayCollection;
 
 /**
  *
  * Tests for
  *
- * @see OpenWorld\Collections\GeneralClasses\ArrayCollection
+ * @see GinoPane\PhpOpenWorld\Collections\GeneralClasses\ArrayCollection
  *
  */
 class ArrayCollectionTest extends TestCase

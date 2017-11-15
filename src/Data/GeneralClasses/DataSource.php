@@ -5,21 +5,21 @@
  * @author: Sergey <Gino Pane> Karavay
  */
 
-namespace OpenWorld\Data\GeneralClasses;
+namespace GinoPane\PhpOpenWorld\Data\GeneralClasses;
 
-use OpenWorld\Data\Interfaces\DataSourceInterface;
-use OpenWorld\Data\Interfaces\DataProviderInterface;
-use OpenWorld\Assertions\GeneralClasses\TypeAssertion;
-use OpenWorld\Collections\Interfaces\CollectionInterface;
-use OpenWorld\Data\Interfaces\SourceLoaderResultInterface;
-use OpenWorld\Exceptions\NoDataProvidersAvailableException;
-use OpenWorld\Collections\GeneralClasses\AssertionStrictCollection;
-use OpenWorld\Data\GeneralClasses\Providers\Conditions\DataProviderCondition;
+use GinoPane\PhpOpenWorld\Data\Interfaces\DataSourceInterface;
+use GinoPane\PhpOpenWorld\Data\Interfaces\DataProviderInterface;
+use GinoPane\PhpOpenWorld\Assertions\GeneralClasses\TypeAssertion;
+use GinoPane\PhpOpenWorld\Collections\Interfaces\CollectionInterface;
+use GinoPane\PhpOpenWorld\Data\Interfaces\SourceLoaderResultInterface;
+use GinoPane\PhpOpenWorld\Exceptions\NoDataProvidersAvailableException;
+use GinoPane\PhpOpenWorld\Collections\GeneralClasses\AssertionStrictCollection;
+use GinoPane\PhpOpenWorld\Data\GeneralClasses\Providers\Conditions\DataProviderCondition;
 
 /**
  * Class DataSource
  *
- * @package OpenWorld\Data\GeneralClasses
+ * @package GinoPane\PhpOpenWorld\Data\GeneralClasses
  */
 class DataSource implements DataSourceInterface
 {

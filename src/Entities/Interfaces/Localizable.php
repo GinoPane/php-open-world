@@ -5,16 +5,16 @@
  * @author: Sergey <Gino Pane> Karavay
  */
 
-namespace OpenWorld\Entities\Interfaces;
+namespace GinoPane\PhpOpenWorld\Entities\Interfaces;
 
-use OpenWorld\Entities\Locale;
+use GinoPane\PhpOpenWorld\Entities\Locale;
 
 /**
  * Interface Localizable
  *
  * Represents the interface for localizable entities
  *
- * @package OpenWorld\Entities\Interfaces
+ * @package GinoPane\PhpOpenWorld\Entities\Interfaces
  */
 interface Localizable
 {

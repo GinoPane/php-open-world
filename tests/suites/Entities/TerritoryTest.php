@@ -1,13 +1,13 @@
 <?php
 
-use OpenWorld\Entities\Territory;
-use OpenWorld\Exceptions\InvalidTerritoryCodeException;
-use OpenWorld\Exceptions\InvalidTerritoryCodeTypeException;
+use GinoPane\PhpOpenWorld\Entities\Territory;
+use GinoPane\PhpOpenWorld\Exceptions\InvalidTerritoryCodeException;
+use GinoPane\PhpOpenWorld\Exceptions\InvalidTerritoryCodeTypeException;
 
 /**
  * Class TerritoryTest
  */
-class TerritoryTest extends PHPUnit_Framework_TestCase
+class TerritoryTest extends PhpOpenWorldTestCase
 {
     /**
      * @test

@@ -2,10 +2,10 @@
 
 use PHPUnit\Framework\TestCase;
 
-use OpenWorld\Data\GeneralClasses\SourceLoaderResults\JsonResult;
-use OpenWorld\Data\GeneralClasses\SourceLoaderResults\Factories\JsonResultFactory;
+use GinoPane\PhpOpenWorld\Data\GeneralClasses\SourceLoaderResults\JsonResult;
+use GinoPane\PhpOpenWorld\Data\GeneralClasses\SourceLoaderResults\Factories\JsonResultFactory;
 
-use OpenWorld\Exceptions\InvalidContentException;
+use GinoPane\PhpOpenWorld\Exceptions\InvalidContentException;
 
 /**
  * Class JsonResultTest

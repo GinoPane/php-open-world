@@ -5,20 +5,20 @@
  * @author: Sergey <Gino Pane> Karavay
  */
 
-namespace OpenWorld\Data\AbstractClasses;
+namespace GinoPane\PhpOpenWorld\Data\AbstractClasses;
 
-use OpenWorld\Data\Interfaces\DataProviderInterface;
-use OpenWorld\Data\Interfaces\SourceLoaderInterface;
-use OpenWorld\Data\Interfaces\SourceLoaderResultInterface;
-use OpenWorld\Data\Interfaces\SourceLoaderResultFactoryInterface;
-use OpenWorld\Data\GeneralClasses\Providers\Conditions\DataProviderCondition;
+use GinoPane\PhpOpenWorld\Data\Interfaces\DataProviderInterface;
+use GinoPane\PhpOpenWorld\Data\Interfaces\SourceLoaderInterface;
+use GinoPane\PhpOpenWorld\Data\Interfaces\SourceLoaderResultInterface;
+use GinoPane\PhpOpenWorld\Data\Interfaces\SourceLoaderResultFactoryInterface;
+use GinoPane\PhpOpenWorld\Data\GeneralClasses\Providers\Conditions\DataProviderCondition;
 
 /**
  * Class ProviderAbstract
  *
  * Starting point for data provider classes
  *
- * @package OpenWorld\Data\AbstractClasses
+ * @package GinoPane\PhpOpenWorld\Data\AbstractClasses
  */
 abstract class DataProviderAbstract implements DataProviderInterface
 {

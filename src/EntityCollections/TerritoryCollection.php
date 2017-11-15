@@ -5,14 +5,14 @@
  * @author: Sergey <Gino Pane> Karavay
  */
 
-namespace OpenWorld\EntityCollections;
+namespace GinoPane\PhpOpenWorldEntityCollections;
 
 /**
  * Class TerritoryCollection
  *
  * Represents a collection of Territory Entities
  *
- * @package OpenWorld\EntityCollections
+ * @package GinoPane\PhpOpenWorldEntityCollections
  */
 class TerritoryCollection
 {

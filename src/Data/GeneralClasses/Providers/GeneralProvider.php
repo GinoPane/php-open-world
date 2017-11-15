@@ -5,15 +5,15 @@
  * @author: Sergey <Gino Pane> Karavay
  */
 
-namespace OpenWorld\Data\GeneralClasses\Providers;
+namespace GinoPane\PhpOpenWorld\Data\GeneralClasses\Providers;
 
-use OpenWorld\Data\GeneralClasses\OpenWorldDataSource as OWD;
-use OpenWorld\Data\AbstractClasses\DataProviderAbstract;
+use GinoPane\PhpOpenWorld\Data\GeneralClasses\OpenWorldDataSource as OWD;
+use GinoPane\PhpOpenWorld\Data\AbstractClasses\DataProviderAbstract;
 
 /**
  * Class GeneralProvider
  *
- * @package OpenWorld\Data\GeneralClasses\Providers
+ * @package GinoPane\PhpOpenWorld\Data\GeneralClasses\Providers
  */
 class GeneralProvider extends DataProviderAbstract
 {

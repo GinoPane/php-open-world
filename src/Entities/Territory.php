@@ -5,17 +5,17 @@
  * @author: Sergey <Gino Pane> Karavay
  */
 
-namespace OpenWorld\Entities;
+namespace GinoPane\PhpOpenWorld\Entities;
 
 use Closure;
-use OpenWorld\Exceptions\InvalidTerritoryCodeException;
-use OpenWorld\Exceptions\InvalidTerritoryCodeTypeException;
-use OpenWorld\Entities\AbstractClasses\CodeAssertedEntityAbstract;
+use GinoPane\PhpOpenWorld\Exceptions\InvalidTerritoryCodeException;
+use GinoPane\PhpOpenWorld\Exceptions\InvalidTerritoryCodeTypeException;
+use GinoPane\PhpOpenWorld\Entities\AbstractClasses\CodeAssertedEntityAbstract;
 
 /**
  * Class Territory
  *
- * @package OpenWorld\Entities
+ * @package GinoPane\PhpOpenWorld\Entities
  */
 class Territory extends CodeAssertedEntityAbstract
 {

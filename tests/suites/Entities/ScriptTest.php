@@ -1,18 +1,18 @@
 <?php
 
-use OpenWorld\Entities\Script;
-use OpenWorld\Exceptions\FileNotFoundException;
-use OpenWorld\Data\GeneralClasses\OpenWorldDataSource;
-use OpenWorld\Exceptions\InvalidKeyPropertyValueException;
-use OpenWorld\Data\GeneralClasses\Providers\LocaleProvider;
-use OpenWorld\Data\GeneralClasses\Providers\GeneralProvider;
-use OpenWorld\Data\GeneralClasses\SourceLoaders\FileSourceLoader;
-use OpenWorld\Data\GeneralClasses\SourceLoaderResults\Factories\JsonResultFactory;
+use GinoPane\PhpOpenWorld\Entities\Script;
+use GinoPane\PhpOpenWorld\Exceptions\FileNotFoundException;
+use GinoPane\PhpOpenWorld\Data\GeneralClasses\OpenWorldDataSource;
+use GinoPane\PhpOpenWorld\Exceptions\InvalidKeyPropertyValueException;
+use GinoPane\PhpOpenWorld\Data\GeneralClasses\Providers\LocaleProvider;
+use GinoPane\PhpOpenWorld\Data\GeneralClasses\Providers\GeneralProvider;
+use GinoPane\PhpOpenWorld\Data\GeneralClasses\SourceLoaders\FileSourceLoader;
+use GinoPane\PhpOpenWorld\Data\GeneralClasses\SourceLoaderResults\Factories\JsonResultFactory;
 
 /**
  * Class ScriptTest
  */
-class ScriptTest extends OpenWorldTestCase
+class ScriptTest extends PhpOpenWorldTestCase
 {
     /**
      * @test

@@ -5,14 +5,14 @@
  * @author: Sergey <Gino Pane> Karavay
  */
 
-namespace OpenWorld\Data\Interfaces;
+namespace GinoPane\PhpOpenWorld\Data\Interfaces;
 
-use OpenWorld\Data\GeneralClasses\Providers\Conditions\DataProviderCondition;
+use GinoPane\PhpOpenWorld\Data\GeneralClasses\Providers\Conditions\DataProviderCondition;
 
 /**
  * Interface DataSourceInterface
  *
- * @package OpenWorld\Data\Interfaces
+ * @package GinoPane\PhpOpenWorld\Data\Interfaces
  */
 interface DataSourceInterface
 {

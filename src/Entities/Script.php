@@ -5,9 +5,9 @@
  * @author: Sergey <Gino Pane> Karavay
  */
 
-namespace OpenWorld\Entities;
+namespace GinoPane\PhpOpenWorld\Entities;
 
-use OpenWorld\Entities\AbstractClasses\CodeAssertedEntityAbstract;
+use GinoPane\PhpOpenWorld\Entities\AbstractClasses\CodeAssertedEntityAbstract;
 
 /**
  * Class Script
@@ -16,7 +16,7 @@ use OpenWorld\Entities\AbstractClasses\CodeAssertedEntityAbstract;
  *
  * @link https://en.wikipedia.org/wiki/ISO_15924
  *
- * @package OpenWorld\Entities
+ * @package GinoPane\PhpOpenWorld\Entities
  */
 class Script extends CodeAssertedEntityAbstract
 {

@@ -5,14 +5,14 @@
  * @author: Sergey <Gino Pane> Karavay
  */
 
-namespace OpenWorld\Data\GeneralClasses\Providers\Conditions;
+namespace GinoPane\PhpOpenWorld\Data\GeneralClasses\Providers\Conditions;
 
-use OpenWorld\Entities\Locale;
+use GinoPane\PhpOpenWorld\Entities\Locale;
 
 /**
  * Class DataProviderCondition
  *
- * @package OpenWorld\Data\GeneralClasses\Providers\Conditions
+ * @package GinoPane\PhpOpenWorld\Data\GeneralClasses\Providers\Conditions
  */
 class DataProviderCondition
 {

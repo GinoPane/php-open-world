@@ -5,14 +5,14 @@
  * @author: Sergey <Gino Pane> Karavay
  */
 
-namespace OpenWorld\Data\Interfaces;
+namespace GinoPane\PhpOpenWorld\Data\Interfaces;
 
 /**
  * Interface SourceLoaderResultFactoryInterface
  *
  * Returns new SourceLoaderResultInterface instances.
  *
- * @package OpenWorld\Data\Interfaces
+ * @package GinoPane\PhpOpenWorld\Data\Interfaces
  */
 interface SourceLoaderResultFactoryInterface
 {

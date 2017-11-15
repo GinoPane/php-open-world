@@ -2,10 +2,10 @@
 
 use PHPUnit\Framework\TestCase;
 
-use OpenWorld\Assertions\GeneralClasses\TypeAssertion;
-use OpenWorld\Exceptions\InvalidTypeException;
-use OpenWorld\Collections\GeneralClasses\ArrayCollection;
-use OpenWorld\Collections\GeneralClasses\AssertionStrictCollection;
+use GinoPane\PhpOpenWorld\Assertions\GeneralClasses\TypeAssertion;
+use GinoPane\PhpOpenWorld\Exceptions\InvalidTypeException;
+use GinoPane\PhpOpenWorld\Collections\GeneralClasses\ArrayCollection;
+use GinoPane\PhpOpenWorld\Collections\GeneralClasses\AssertionStrictCollection;
 
 /**
  * Class TypeAssertionTest
@@ -53,7 +53,7 @@ class TypeAssertionTest extends TestCase
     {
         $this->expectException(InvalidTypeException::class);
 
-        $assertion = new TypeAssertion('OpenWorld\Assertions\Interfaces\AssertionInterface', TypeAssertion::CLASS_IMPLEMENTS_TYPE);
+        $assertion = new TypeAssertion('GinoPane\PhpOpenWorld\Assertions\Interfaces\AssertionInterface', TypeAssertion::CLASS_IMPLEMENTS_TYPE);
 
         $assertion->assertSingle(null);
     }
@@ -63,7 +63,7 @@ class TypeAssertionTest extends TestCase
      */
     public function it_checks_valid_interface_assertion()
     {
-        $assertion = new TypeAssertion('OpenWorld\Assertions\Interfaces\AssertionInterface', TypeAssertion::CLASS_IMPLEMENTS_TYPE);
+        $assertion = new TypeAssertion('GinoPane\PhpOpenWorld\Assertions\Interfaces\AssertionInterface', TypeAssertion::CLASS_IMPLEMENTS_TYPE);
 
         $assertion->assertSingle($assertion);
     }
@@ -85,7 +85,7 @@ class TypeAssertionTest extends TestCase
      */
     public function it_checks_valid_trait_assertion()
     {
-        $assertion = new TypeAssertion('OpenWorld\Collections\Traits\ImplementsArray', TypeAssertion::CLASS_USES_TYPE);
+        $assertion = new TypeAssertion('GinoPane\PhpOpenWorld\Collections\Traits\ImplementsArray', TypeAssertion::CLASS_USES_TYPE);
 
         $assertion->assertSingle(new ArrayCollection());
     }
@@ -107,7 +107,7 @@ class TypeAssertionTest extends TestCase
      */
     public function it_checks_valid_self_inheritance_with_string_as_parameter()
     {
-        $assertion = new TypeAssertion('OpenWorld\Collections\GeneralClasses\AssertionStrictCollection', TypeAssertion::CLASS_INHERITS_TYPE);
+        $assertion = new TypeAssertion('GinoPane\PhpOpenWorld\Collections\GeneralClasses\AssertionStrictCollection', TypeAssertion::CLASS_INHERITS_TYPE);
 
         $assertion->assertSingle(new AssertionStrictCollection(new TypeAssertion('integer')));
     }
@@ -212,7 +212,7 @@ class TypeAssertionTest extends TestCase
             [null, 'null'],
             [true, 'boolean'],
             [new stdClass(), 'object'],
-            [new TypeAssertion('integer'), 'OpenWorld\Assertions\GeneralClasses\TypeAssertion'],
+            [new TypeAssertion('integer'), 'GinoPane\PhpOpenWorld\Assertions\GeneralClasses\TypeAssertion'],
         ];
     }
 

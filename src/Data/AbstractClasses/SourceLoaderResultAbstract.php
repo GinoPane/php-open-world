@@ -5,17 +5,17 @@
  * @author: Sergey <Gino Pane> Karavay
  */
 
-namespace OpenWorld\Data\AbstractClasses;
+namespace GinoPane\PhpOpenWorld\Data\AbstractClasses;
 
-use OpenWorld\Data\Interfaces\SourceLoaderResultInterface;
-use OpenWorld\Exceptions\InvalidContentException;
-use OpenWorld\Exceptions\NotImplementedException;
+use GinoPane\PhpOpenWorld\Data\Interfaces\SourceLoaderResultInterface;
+use GinoPane\PhpOpenWorld\Exceptions\InvalidContentException;
+use GinoPane\PhpOpenWorld\Exceptions\NotImplementedException;
 use stdClass;
 
 /**
  * Class SourceLoaderResultAbstract
  *
- * @package OpenWorld\Data\AbstractClasses
+ * @package GinoPane\PhpOpenWorld\Data\AbstractClasses
  */
 abstract class SourceLoaderResultAbstract implements SourceLoaderResultInterface
 {

@@ -5,15 +5,15 @@
  * @author: Sergey <Gino Pane> Karavay
  */
 
-namespace OpenWorld\Entities\AbstractClasses;
+namespace GinoPane\PhpOpenWorld\Entities\AbstractClasses;
 
 use Closure;
-use OpenWorld\Exceptions\InvalidKeyPropertyValueException;
+use GinoPane\PhpOpenWorld\Exceptions\InvalidKeyPropertyValueException;
 
 /**
  * Class CodeAssertedEntityAbstract
  *
- * @package OpenWorld\Entities\AbstractClasses
+ * @package GinoPane\PhpOpenWorld\Entities\AbstractClasses
  */
 abstract class CodeAssertedEntityAbstract extends EntityAbstract
 {

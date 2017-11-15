@@ -2,15 +2,15 @@
 
 use PHPUnit\Framework\TestCase;
 
-use OpenWorld\Assertions\GeneralClasses\TypeAssertion;
-use OpenWorld\Exceptions\InvalidTypeException;
-use OpenWorld\Collections\GeneralClasses\AssertionStrictCollection;
+use GinoPane\PhpOpenWorld\Assertions\GeneralClasses\TypeAssertion;
+use GinoPane\PhpOpenWorld\Exceptions\InvalidTypeException;
+use GinoPane\PhpOpenWorld\Collections\GeneralClasses\AssertionStrictCollection;
 
 /**
  *
  * Tests for
  *
- * @see OpenWorld\Collections\GeneralClasses\AssertionStrictCollection
+ * @see GinoPane\PhpOpenWorld\Collections\GeneralClasses\AssertionStrictCollection
  *
  */
 class AssertionStrictCollectionTest extends TestCase

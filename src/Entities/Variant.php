@@ -5,16 +5,16 @@
  * @author: Sergey <Gino Pane> Karavay
  */
 
-namespace OpenWorld\Entities;
+namespace GinoPane\PhpOpenWorld\Entities;
 
-use OpenWorld\Entities\AbstractClasses\CodeAssertedEntityAbstract;
+use GinoPane\PhpOpenWorld\Entities\AbstractClasses\CodeAssertedEntityAbstract;
 
 /**
  * Class Variant
  *
  * Represents different variants or dialects of a single locale
  *
- * @package OpenWorld\Entities
+ * @package GinoPane\PhpOpenWorld\Entities
  */
 class Variant extends CodeAssertedEntityAbstract
 {

@@ -5,7 +5,7 @@
  * @author: Sergey <Gino Pane> Karavay
  */
 
-namespace OpenWorld\Exceptions\AbstractClasses;
+namespace GinoPane\PhpOpenWorld\Exceptions\AbstractClasses;
 
 /**
  * An exception raised by and associated to OpenWorld.

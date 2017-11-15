@@ -5,18 +5,18 @@
  * @author: Sergey <Gino Pane> Karavay
  */
 
-namespace OpenWorld\Data\GeneralClasses\SourceLoaderResults\Factories;
+namespace GinoPane\PhpOpenWorld\Data\GeneralClasses\SourceLoaderResults\Factories;
 
-use OpenWorld\Data\Interfaces\SourceLoaderResultInterface;
-use OpenWorld\Data\GeneralClasses\SourceLoaderResults\JsonResult;
-use OpenWorld\Data\Interfaces\SourceLoaderResultFactoryInterface;
+use GinoPane\PhpOpenWorld\Data\Interfaces\SourceLoaderResultInterface;
+use GinoPane\PhpOpenWorld\Data\GeneralClasses\SourceLoaderResults\JsonResult;
+use GinoPane\PhpOpenWorld\Data\Interfaces\SourceLoaderResultFactoryInterface;
 
 /**
  * Class JsonResultFactory
  *
  * Returns new JsonSourceLoaderResults instances.
  *
- * @package OpenWorld\Data\SourceLoaderResults\Factories
+ * @package GinoPane\PhpOpenWorld\Data\SourceLoaderResults\Factories
  */
 class JsonResultFactory implements SourceLoaderResultFactoryInterface
 {

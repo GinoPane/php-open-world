@@ -5,10 +5,10 @@
  * @author: Sergey <Gino Pane> Karavay
  */
 
-namespace OpenWorld\Data\GeneralClasses\SourceLoaderResults;
+namespace GinoPane\PhpOpenWorld\Data\GeneralClasses\SourceLoaderResults;
 
-use OpenWorld\Exceptions\InvalidContentException;
-use OpenWorld\Data\AbstractClasses\SourceLoaderResultAbstract;
+use GinoPane\PhpOpenWorld\Exceptions\InvalidContentException;
+use GinoPane\PhpOpenWorld\Data\AbstractClasses\SourceLoaderResultAbstract;
 
 
 /**
@@ -16,7 +16,7 @@ use OpenWorld\Data\AbstractClasses\SourceLoaderResultAbstract;
  *
  * Provides access to loaded json data.
  *
- * @package OpenWorld\Data\SourceLoaderResults
+ * @package GinoPane\PhpOpenWorld\Data\SourceLoaderResults
  */
 class JsonResult extends SourceLoaderResultAbstract
 {

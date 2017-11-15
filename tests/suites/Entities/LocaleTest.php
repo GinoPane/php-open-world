@@ -1,15 +1,14 @@
 <?php
 
-use OpenWorld\Entities\Locale;
-use OpenWorld\Entities\Script;
-use OpenWorld\Entities\Language;
-use OpenWorld\Entities\Territory;
-
+use GinoPane\PhpOpenWorld\Entities\Locale;
+use GinoPane\PhpOpenWorld\Entities\Script;
+use GinoPane\PhpOpenWorld\Entities\Language;
+use GinoPane\PhpOpenWorld\Entities\Territory;
 
 /**
  * Class LocaleTest
  */
-class LocaleTest extends PHPUnit_Framework_TestCase
+class LocaleTest extends PhpOpenWorldTestCase
 {
     /**
      * @test
