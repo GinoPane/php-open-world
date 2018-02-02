@@ -1,5 +1,5 @@
 {
-    "name": "PhpOpenWorld",
+    "name": "gino-pane/php-open-world",
     "type": "library",
     "description": "World's internationalization library. Get and format currencies, numbers, dates and more in nice and easy way. All data is provided by Unicode Common Locale Data Repository.",
     "keywords": [
