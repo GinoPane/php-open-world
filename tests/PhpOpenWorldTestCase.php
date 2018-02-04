@@ -10,7 +10,7 @@ class PhpOpenWorldTestCase extends PHPUnit\Framework\TestCase
      * @param $property
      * @return ReflectionProperty
      */
-    public function getReflectionProperty($object, $property)
+    protected function getReflectionProperty($object, $property)
     {
         $reflection         = new ReflectionClass($object);
         $reflectionProperty = $reflection->getProperty($property);

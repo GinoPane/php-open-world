@@ -228,6 +228,7 @@ class TerritoryTest extends PhpOpenWorldTestCase
             ['BY', ['151', 'UN', '150', '001']],
             ['FR', ['001', '150', 'UN', 'EZ', 'EU', '155']],
             ['001', []],
+            ['ST', ['001', '002', '017', '202', 'UN']]
         ];
     }
 

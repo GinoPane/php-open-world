@@ -39,5 +39,28 @@
         "psr-4": {
             "GinoPane\\PhpOpenWorld\\": "src/"
         }
+    },
+    "scripts": {
+        "test": [
+            "@php vendor/bin/phpunit"
+        ],
+        "psr2check": [
+            "@php vendor/bin/phpcs --standard=PSR2 src/"
+        ],
+        "psr2autofix": [
+            "@php vendor/bin/phpcbf --standard=PSR2 src/"
+        ],
+        "docs": [
+            "@php vendor/bin/phpdoc -d \"src\" -t \"docs\""
+        ],
+        "full-data": [
+            "@php build/data.php --all-locales"
+        ],
+        "full-debug-data": [
+            "@php build/data.php --all-locales --debug"
+        ],
+        "minimal-data": [
+            "@php build/data.php"
+        ]
     }
 }

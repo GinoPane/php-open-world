@@ -1,5 +1,6 @@
 <?php
 
+use GinoPane\PhpOpenWorld\Exceptions\NoDataProvidersAvailableException;
 use PHPUnit\Framework\TestCase;
 
 use GinoPane\PhpOpenWorld\Data\GeneralClasses\{
@@ -142,12 +143,13 @@ class DataSourceTest extends TestCase
     }
 
     /**
-     * @depends LocaleProviderTest::it_gets_a_list_of_locale_directories
+     * @depends      LocaleProviderTest::it_gets_a_list_of_locale_directories
      *
      * @param string $localeCode
      * @param string $fileName
      * @param string $pathName
      *
+     * @throws NoDataProvidersAvailableException
      * @test
      * @dataProvider localeSpecificFilesProvider
      */

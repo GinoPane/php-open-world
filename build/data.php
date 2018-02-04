@@ -64,7 +64,7 @@ if ($options) {
     }
 }
 
-defined('CLDR_VERSION') or define('CLDR_VERSION', '30');
+defined('CLDR_VERSION') or define('CLDR_VERSION', '32');
 define('LOCAL_VCS_DIR', SOURCE_DIR . DIRECTORY_SEPARATOR . 'cldr-' . CLDR_VERSION . '-source');
 
 defined('DEBUG') or define('DEBUG', false);
